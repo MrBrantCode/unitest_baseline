@@ -1,0 +1,53 @@
+"""
+QUESTION:
+Given an array A(A0, A1…. An-1) of n integers. Your task is to find the smallest number larger than a given no. X in the range [l,r] inclusive. Indexing is 0 based. If there is no greater no. than X in the specified range output -1.
+
+For example: A=[1 2 3 8 15 6 7 1 8 7], l=1 and r=5
+
+For X=1 answer should be 2
+For X=2, answer should be 3
+For X=5, answer should be 6
+For X=20, answer should be -1.
+
+Input
+
+First line contains for integers n, l, r and Q, Q denotes no. of queries. Next line contains n integers denoting array A. In the next line, Q space separated integers are given each integer represents the value X for a query.
+
+Output
+
+Print the just largest no. for each query.
+
+Constraints
+
+1 ≤ n ≤ 1000
+1 ≤ A[i] ≤ 10^5
+1 ≤ X ≤ 10^5
+1 ≤ Q ≤ 1000
+0 ≤ l, r<n
+
+SAMPLE INPUT
+10 1 5 4
+1 2 3 8 15 6 7 1 8 7
+1 2 5 20
+
+SAMPLE OUTPUT
+2
+3
+6
+-1
+"""
+
+def find_smallest_larger_than_x(A, l, r, X):
+    # Extract the subarray from index l to r (inclusive)
+    subarray = A[l:r+1]
+    
+    # Sort the subarray
+    sorted_subarray = sorted(subarray)
+    
+    # Find the smallest number larger than X
+    for num in sorted_subarray:
+        if num > X:
+            return num
+    
+    # If no number is found, return -1
+    return -1

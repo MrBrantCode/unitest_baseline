@@ -1,0 +1,112 @@
+{
+  "task_id": "cf_17194",
+  "entry_point": "validate_input_date",
+  "mutant_count": 15,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "date_format = \"%Y/%m/%d\"",
+      "mutated_line": "date_format = ''",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = ''\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "time_format = \"%H:%M:%S\"",
+      "mutated_line": "time_format = ''",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = ''\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz < start_date and input_datetime_tz > end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date and input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz <= start_date or input_datetime_tz > end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz <= start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz >= start_date or input_datetime_tz > end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz >= start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz != start_date or input_datetime_tz > end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz != start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz < start_date or input_datetime_tz >= end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz >= end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz < start_date or input_datetime_tz <= end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz <= end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if input_datetime_tz < start_date or input_datetime_tz > end_date:",
+      "mutated_line": "if input_datetime_tz < start_date or input_datetime_tz != end_date:",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz != end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return True\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return True\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return True\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return True\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return False\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import datetime\nfrom datetime import datetime as dt\nimport pytz\n\ndef validate_input_date(input_date, input_time, timezone, start_date, end_date):\n    date_format = '%Y/%m/%d'\n    time_format = '%H:%M:%S'\n    try:\n        date_obj = dt.strptime(input_date, date_format)\n    except ValueError:\n        return False\n    try:\n        dt.strptime(input_time, time_format)\n    except ValueError:\n        return False\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.UnknownTimeZoneError:\n        return False\n    try:\n        input_datetime = dt.combine(date_obj, dt.strptime(input_time, time_format).time())\n        input_datetime_tz = tz.localize(input_datetime)\n    except Exception:\n        return True\n    if input_datetime_tz < start_date or input_datetime_tz > end_date:\n        return False\n    return True"
+    }
+  ]
+}

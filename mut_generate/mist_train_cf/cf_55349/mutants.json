@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_55349",
+  "entry_point": "find_url",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\(\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')",
+      "mutated_line": "url_pattern = re.compile('')",
+      "code": "import re\n\ndef find_url(string, forbidden):\n    url_pattern = re.compile('')\n    urls = url_pattern.findall(string)\n    return [url for url in urls if not any((word in url for word in forbidden))]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return [url for url in urls if not any(word in url for word in forbidden)]",
+      "mutated_line": "return [url for url in urls if not any((word not in url for word in forbidden))]",
+      "code": "import re\n\ndef find_url(string, forbidden):\n    url_pattern = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\\\\\(\\\\\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')\n    urls = url_pattern.findall(string)\n    return [url for url in urls if not any((word not in url for word in forbidden))]"
+    }
+  ]
+}

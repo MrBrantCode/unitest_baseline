@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_11536",
+  "entry_point": "extract_keys",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 6,
+      "original_line": "keys += extract_keys(value)",
+      "mutated_line": "keys -= extract_keys(value)",
+      "code": "def extract_keys(dictionary):\n    keys = []\n    for (key, value) in dictionary.items():\n        if isinstance(value, dict):\n            keys -= extract_keys(value)\n        elif not key.startswith('a') and isinstance(value, str):\n            keys.append(key)\n    return sorted(keys, reverse=True)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "elif not key.startswith('a') and isinstance(value, str):",
+      "mutated_line": "elif not key.startswith('a') or isinstance(value, str):",
+      "code": "def extract_keys(dictionary):\n    keys = []\n    for (key, value) in dictionary.items():\n        if isinstance(value, dict):\n            keys += extract_keys(value)\n        elif not key.startswith('a') or isinstance(value, str):\n            keys.append(key)\n    return sorted(keys, reverse=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return sorted(keys, reverse=True)",
+      "mutated_line": "return sorted(keys, reverse=False)",
+      "code": "def extract_keys(dictionary):\n    keys = []\n    for (key, value) in dictionary.items():\n        if isinstance(value, dict):\n            keys += extract_keys(value)\n        elif not key.startswith('a') and isinstance(value, str):\n            keys.append(key)\n    return sorted(keys, reverse=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "elif not key.startswith('a') and isinstance(value, str):",
+      "mutated_line": "elif not key.startswith('') and isinstance(value, str):",
+      "code": "def extract_keys(dictionary):\n    keys = []\n    for (key, value) in dictionary.items():\n        if isinstance(value, dict):\n            keys += extract_keys(value)\n        elif not key.startswith('') and isinstance(value, str):\n            keys.append(key)\n    return sorted(keys, reverse=True)"
+    }
+  ]
+}

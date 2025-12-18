@@ -1,0 +1,245 @@
+{
+  "task_id": "cf_65154",
+  "entry_point": "arrange_matrix",
+  "mutant_count": 34,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if i == len(matrix):",
+      "mutated_line": "if i != len(matrix):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i != len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return False",
+      "mutated_line": "sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return True\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] - sorted_matrix[i][1:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] - sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] * sorted_matrix[i][1:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] * sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "can_be_arranged = solve(sorted_matrix, 0, set())",
+      "mutated_line": "can_be_arranged = solve(sorted_matrix, 1, set())",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 1, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "can_be_arranged = solve(sorted_matrix, 0, set())",
+      "mutated_line": "can_be_arranged = solve(sorted_matrix, -1, set())",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, -1, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "can_be_arranged = solve(sorted_matrix, 0, set())",
+      "mutated_line": "can_be_arranged = solve(sorted_matrix, 1, set())",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 1, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\"",
+      "mutated_line": "return sorted_matrix if can_be_arranged else ''",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return False\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if all(matrix[i][j] != matrix[k][j] for k in range(i)) and j not in used:",
+      "mutated_line": "if all((matrix[i][j] != matrix[k][j] for k in range(i))) or j not in used:",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) or j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if all(matrix[i][j] != matrix[k][j] for k in range(i)) and j not in used:",
+      "mutated_line": "if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j in used:",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "sorted_matrix = [ sorted_matrix[i:i+len(matrix)] for i in range(0, len(sorted_matrix), len(matrix)) ]",
+      "mutated_line": "sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i - len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "sorted_matrix = [ sorted_matrix[i:i+len(matrix)] for i in range(0, len(sorted_matrix), len(matrix)) ]",
+      "mutated_line": "sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i * len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "sorted_matrix = [ sorted_matrix[i:i+len(matrix)] for i in range(0, len(sorted_matrix), len(matrix)) ]",
+      "mutated_line": "sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(1, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "sorted_matrix = [ sorted_matrix[i:i+len(matrix)] for i in range(0, len(sorted_matrix), len(matrix)) ]",
+      "mutated_line": "sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(-1, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "sorted_matrix = [ sorted_matrix[i:i+len(matrix)] for i in range(0, len(sorted_matrix), len(matrix)) ]",
+      "mutated_line": "sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(1, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sorted_matrix = [ [cell[0] for cell in row] for row in sorted_matrix ]",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[1] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sorted_matrix = [ [cell[0] for cell in row] for row in sorted_matrix ]",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[-1] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sorted_matrix = [ [cell[0] for cell in row] for row in sorted_matrix ]",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[1] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i - 1, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i - 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i * 1, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i * 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return False\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] + sorted_matrix[i][2:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][2:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] + sorted_matrix[i][0:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][0:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] + sorted_matrix[i][0:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][0:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "sorted_matrix[i] = [v] + sorted_matrix[i][1:]",
+      "mutated_line": "sorted_matrix[i] = [v] + sorted_matrix[i][-1:]",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][-1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if all(matrix[i][j] != matrix[k][j] for k in range(i)) and j not in used:",
+      "mutated_line": "if all((matrix[i][j] == matrix[k][j] for k in range(i))) and j not in used:",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] == matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i + 2, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 2, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i + 0, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 0, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i + 0, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 0, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if solve(matrix, i+1, used):",
+      "mutated_line": "if solve(matrix, i + -1, used):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + -1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[0], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for v, i in sorted(sorted((row[0], i) for i, row in enumerate(sorted_matrix))):",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[1], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[1], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for v, i in sorted(sorted((row[0], i) for i, row in enumerate(sorted_matrix))):",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[-1], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[-1], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for v, i in sorted(sorted((row[0], i) for i, row in enumerate(sorted_matrix))):",
+      "mutated_line": "for (v, i) in sorted(sorted(((row[1], i) for (i, row) in enumerate(sorted_matrix)))):",
+      "code": "def arrange_matrix(matrix):\n\n    def solve(matrix, i, used):\n        if i == len(matrix):\n            return True\n        for j in range(len(matrix)):\n            if all((matrix[i][j] != matrix[k][j] for k in range(i))) and j not in used:\n                used.add(j)\n                if solve(matrix, i + 1, used):\n                    return True\n                used.remove(j)\n        return False\n    sorted_matrix = sorted(((v, i) for (i, row) in enumerate(matrix) for v in sorted(row)))\n    sorted_matrix = [sorted_matrix[i:i + len(matrix)] for i in range(0, len(sorted_matrix), len(matrix))]\n    sorted_matrix = [[cell[0] for cell in row] for row in sorted_matrix]\n    for (v, i) in sorted(sorted(((row[1], i) for (i, row) in enumerate(sorted_matrix)))):\n        sorted_matrix[i] = [v] + sorted_matrix[i][1:]\n    can_be_arranged = solve(sorted_matrix, 0, set())\n    return sorted_matrix if can_be_arranged else \"Matrix can't be arranged\""
+    }
+  ]
+}

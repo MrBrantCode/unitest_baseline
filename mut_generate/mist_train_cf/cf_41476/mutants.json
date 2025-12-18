@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_41476",
+  "entry_point": "custom_garbage_collection",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def custom_garbage_collection(root_set):\n    \"\"\"\"\"\"\n    marked_objects = set()\n\n    def mark_phase(object):\n        if id(object) in marked_objects:\n            return\n        marked_objects.add(id(object))\n        for ref in gc.get_referents(object):\n            mark_phase(ref)\n    for object in root_set:\n        mark_phase(object)\n    for object in gc.get_objects():\n        if id(object) not in marked_objects:\n            del object\n    gc.collect()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if id(object) in marked_objects:",
+      "mutated_line": "if id(object) not in marked_objects:",
+      "code": "def custom_garbage_collection(root_set):\n    \"\"\"\n    Custom garbage collection algorithm using a mark-and-sweep approach.\n\n    Args:\n    root_set (set): The root set of objects, including global variables and active function call frames.\n\n    Returns:\n    None\n    \"\"\"\n    marked_objects = set()\n\n    def mark_phase(object):\n        if id(object) not in marked_objects:\n            return\n        marked_objects.add(id(object))\n        for ref in gc.get_referents(object):\n            mark_phase(ref)\n    for object in root_set:\n        mark_phase(object)\n    for object in gc.get_objects():\n        if id(object) not in marked_objects:\n            del object\n    gc.collect()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "if id(object) not in marked_objects:",
+      "mutated_line": "if id(object) in marked_objects:",
+      "code": "def custom_garbage_collection(root_set):\n    \"\"\"\n    Custom garbage collection algorithm using a mark-and-sweep approach.\n\n    Args:\n    root_set (set): The root set of objects, including global variables and active function call frames.\n\n    Returns:\n    None\n    \"\"\"\n    marked_objects = set()\n\n    def mark_phase(object):\n        if id(object) in marked_objects:\n            return\n        marked_objects.add(id(object))\n        for ref in gc.get_referents(object):\n            mark_phase(ref)\n    for object in root_set:\n        mark_phase(object)\n    for object in gc.get_objects():\n        if id(object) in marked_objects:\n            del object\n    gc.collect()"
+    }
+  ]
+}

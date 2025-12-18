@@ -1,0 +1,413 @@
+{
+  "task_id": "cf_26994",
+  "entry_point": "escape_string",
+  "mutant_count": 58,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "escaped = \"\"",
+      "mutated_line": "escaped = 'MUTATED'",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = 'MUTATED'\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if char == '\\\\':",
+      "mutated_line": "if char != '\\\\':",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char != '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 5,
+      "original_line": "escaped += '\\\\\\\\'  # Escape backslashes as double backslashes",
+      "mutated_line": "escaped -= '\\\\\\\\'",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped -= '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if char == '\\\\':",
+      "mutated_line": "if char == '':",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "escaped += '\\\\\\\\'  # Escape backslashes as double backslashes",
+      "mutated_line": "escaped += ''",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += ''\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char not in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char not in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped -= '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' - format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' * format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) >= 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) <= 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) != 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "escaped += char",
+      "mutated_line": "escaped -= char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped -= char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char in ['', '\\t', '\\r', '\\x08', '\\x0c']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char in ['\\n', '', '\\r', '\\x08', '\\x0c']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char in ['\\n', '\\t', '', '\\x08', '\\x0c']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char in ['\\n', '\\t', '\\r', '', '\\x0c']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif char in ['\\n', '\\t', '\\r', '\\b', '\\f']:",
+      "mutated_line": "elif char in ['\\n', '\\t', '\\r', '\\x08', '']:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 128:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 126:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 0:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 1:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if ord(char) > 127:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > -127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) <= 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) >= 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) != 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped -= '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped -= '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(3)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(1)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(0)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(1)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(-2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65537:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65535:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 0:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 1:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if ord(char) < 0x10000:",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < -65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' - format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' * format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' - format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' * format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "escaped += '\\\\' + format(ord(char), 'x').zfill(2)  # Using '\\\\xYY' format",
+      "mutated_line": "elif ord(char) > 127:",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), '').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(5)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(3)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(0)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(1)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(-4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(9)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(7)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(0)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(1)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(-8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "escaped += '\\\\u' + format(ord(char), 'x').zfill(4)  # Using '\\\\uYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), '').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), 'x').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "escaped += '\\\\U' + format(ord(char), 'x').zfill(8)  # Using '\\\\UYYYYYYYY' format for Unicode characters",
+      "mutated_line": "escaped += char",
+      "code": "def escape_string(pth: str) -> str:\n    escaped = ''\n    for char in pth:\n        if char == '\\\\':\n            escaped += '\\\\\\\\'\n        elif char in ['\\n', '\\t', '\\r', '\\x08', '\\x0c']:\n            escaped += '\\\\' + format(ord(char), 'x').zfill(2)\n        elif ord(char) > 127:\n            if ord(char) < 65536:\n                escaped += '\\\\u' + format(ord(char), 'x').zfill(4)\n            else:\n                escaped += '\\\\U' + format(ord(char), '').zfill(8)\n        else:\n            escaped += char\n    return escaped"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "task_id": "cf_65044",
+  "entry_point": "check_expression",
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if not (isinstance(node.op, ast.Add) or",
+      "mutated_line": "if not (isinstance(node.op, ast.Add) and isinstance(node.op, ast.Sub) and isinstance(node.op, ast.Mult) and isinstance(node.op, ast.Div) and isinstance(node.op, ast.FloorDiv) and isinstance(node.op, ast.Mod)):",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) and isinstance(node.op, ast.Sub) and isinstance(node.op, ast.Mult) and isinstance(node.op, ast.Div) and isinstance(node.op, ast.FloorDiv) and isinstance(node.op, ast.Mod)):\n            self.errors.append(f'Unsupported operator at lineno {node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (False, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (False, visitor.errors)\n    else:\n        return (True, 'This expression is valid')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "return False, visitor.errors",
+      "mutated_line": "return (True, visitor.errors)",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) or isinstance(node.op, ast.Sub) or isinstance(node.op, ast.Mult) or isinstance(node.op, ast.Div) or isinstance(node.op, ast.FloorDiv) or isinstance(node.op, ast.Mod)):\n            self.errors.append(f'Unsupported operator at lineno {node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (False, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (True, visitor.errors)\n    else:\n        return (True, 'This expression is valid')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return True, \"This expression is valid\"",
+      "mutated_line": "return (False, 'This expression is valid')",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) or isinstance(node.op, ast.Sub) or isinstance(node.op, ast.Mult) or isinstance(node.op, ast.Div) or isinstance(node.op, ast.FloorDiv) or isinstance(node.op, ast.Mod)):\n            self.errors.append(f'Unsupported operator at lineno {node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (False, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (False, visitor.errors)\n    else:\n        return (False, 'This expression is valid')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return True, \"This expression is valid\"",
+      "mutated_line": "return (True, '')",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) or isinstance(node.op, ast.Sub) or isinstance(node.op, ast.Mult) or isinstance(node.op, ast.Div) or isinstance(node.op, ast.FloorDiv) or isinstance(node.op, ast.Mod)):\n            self.errors.append(f'Unsupported operator at lineno {node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (False, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (False, visitor.errors)\n    else:\n        return (True, '')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "return False, str(e)",
+      "mutated_line": "return (True, str(e))",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) or isinstance(node.op, ast.Sub) or isinstance(node.op, ast.Mult) or isinstance(node.op, ast.Div) or isinstance(node.op, ast.FloorDiv) or isinstance(node.op, ast.Mod)):\n            self.errors.append(f'Unsupported operator at lineno {node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (True, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (False, visitor.errors)\n    else:\n        return (True, 'This expression is valid')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "self.errors.append(f\"Unsupported operator at lineno {node.lineno}\")",
+      "mutated_line": "self.errors.append(f'{node.lineno}')",
+      "code": "import ast\n\nclass Visitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.errors = []\n\n    def visit_BinOp(self, node):\n        if not (isinstance(node.op, ast.Add) or isinstance(node.op, ast.Sub) or isinstance(node.op, ast.Mult) or isinstance(node.op, ast.Div) or isinstance(node.op, ast.FloorDiv) or isinstance(node.op, ast.Mod)):\n            self.errors.append(f'{node.lineno}')\n        self.generic_visit(node)\n\ndef check_expression(expr_str):\n    try:\n        tree = ast.parse(expr_str)\n    except SyntaxError as e:\n        return (False, str(e))\n    visitor = Visitor()\n    visitor.visit(tree)\n    if visitor.errors:\n        return (False, visitor.errors)\n    else:\n        return (True, 'This expression is valid')"
+    }
+  ]
+}

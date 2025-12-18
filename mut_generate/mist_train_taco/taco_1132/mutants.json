@@ -1,0 +1,14 @@
+{
+  "task_id": "taco_1132",
+  "entry_point": "unpack_nested_elements",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "elif isinstance(element, Iterable) and not isinstance(element, (str, bytes)):",
+      "mutated_line": "elif isinstance(element, Iterable) or not isinstance(element, (str, bytes)):",
+      "code": "from collections.abc import Iterable\n\ndef unpack_nested_elements(iterable):\n    result = []\n    for element in iterable:\n        if isinstance(element, dict):\n            element = unpack_nested_elements(element.items())\n        elif isinstance(element, str):\n            element = [element]\n        elif isinstance(element, Iterable) or not isinstance(element, (str, bytes)):\n            element = unpack_nested_elements(element)\n        else:\n            element = [element]\n        result.extend(element)\n    return result"
+    }
+  ]
+}

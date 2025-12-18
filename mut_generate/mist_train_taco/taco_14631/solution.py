@@ -1,0 +1,65 @@
+"""
+QUESTION:
+Chef has opened a new airline. Chef has 10 airplanes where each airplane has a capacity of X passengers.  
+On the first day itself, Y people are willing to book a seat in any one of Chef's airplanes. 
+
+Given that Chef charges Z rupees for each ticket, find the maximum amount he can earn on the first day.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases.
+- Each test case consists of three space-separated integers X, Y, and Z — the capacity of each airplane, the number of people willing to book a seat in any one of Chef's airplanes on the first day, and the cost of each seat respectively.
+
+------ Output Format ------ 
+
+For each test case, output on a new line, the maximum amount Chef can earn on the first day.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1 ≤ X, Y, Z ≤ 100$
+
+----- Sample Input 1 ------ 
+4
+2 15 10
+1 10 1
+5 60 100
+1 11 7
+
+----- Sample Output 1 ------ 
+150
+10
+5000
+70
+
+----- explanation 1 ------ 
+Test case $1$: Chef has $10$ airplanes and each airplane has a capacity of $2$ passengers. Thus, there are $20$ seats available in total.  
+There are $15$ people who want to book a seat. Since we have enough seats for everyone, all $15$ people can book their seats and pay $10$ rupees each. The total money Chef earns is $15\cdot 10 = 150$.
+
+Test case $2$: Chef has $10$ airplanes and each airplane has a capacity of $1$ passenger. Thus, there are $10$ seats available in total.  
+There are $10$ people who want to book a seat. Since we have enough seats for everyone, all $10$ people can book their seats and pay $1$ rupee each. The total money Chef earns is $10\cdot 1 = 10$.
+
+Test case $3$: Chef has $10$ airplanes and each airplane has a capacity of $5$ passengers. Thus, there are $50$ seats available in total.  
+There are $60$ people who want to book a seat. Since we have only $50$ seats, only $50$ people can book their seats and pay $100$ rupees each. The total money Chef earns is $50\cdot 100 = 5000$.
+
+Test case $4$: Chef has $10$ airplanes and each airplane has a capacity of $1$ passenger. Thus, there are $10$ seats available in total.  
+There are $11$ people who want to book a seat. Since we have only $10$ seats, only $10$ people can book their seats and pay $7$ rupees each. The total money Chef earns is $10\cdot 7 = 70$.
+"""
+
+def calculate_max_earnings(X: int, Y: int, Z: int) -> int:
+    """
+    Calculate the maximum amount Chef can earn on the first day.
+
+    Parameters:
+    - X (int): Capacity of each airplane.
+    - Y (int): Number of people willing to book a seat.
+    - Z (int): Cost of each seat.
+
+    Returns:
+    - int: The maximum amount Chef can earn.
+    """
+    total_seats = X * 10  # Since Chef has 10 airplanes
+    if total_seats > Y:
+        return Y * Z
+    else:
+        return total_seats * Z

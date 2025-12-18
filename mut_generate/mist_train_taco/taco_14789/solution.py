@@ -1,0 +1,56 @@
+"""
+QUESTION:
+Given an array arr of size n. Arrange the elements of the array in a way similar to the to-and-fro movement of a Pendulum.
+	The minimum element out of the list of integers, must come in center position of array. If there are even elements, then minimum element should be moved to (n-1)/2 index (considering that indexes start from 0)
+	The next number (next to minimum) in the ascending order, goes to the right, the next to next number goes to the left of minimum number and it continues like a Pendulum.
+	As higher numbers are reached, one goes to one side in a to-and-fro manner similar to that of a Pendulum
+Example 1:
+Input : 
+n = 5
+arr[] = {1, 3, 2, 5, 4}
+Output :
+5 3 1 2 4
+Explanation: 
+The minimum element is 1, so it is 
+moved to the middle. The next higher
+element 2  is moved to the right of 
+the middle element while the next 
+higher element 3 is moved to the left 
+of the middle element and this process
+is continued.
+Example 2:
+Input :
+n = 5 
+arr[] = {11, 12, 31, 14, 5}
+Output :
+31 12 5 11 14
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function pendulumArrangement() which takes the array arr[] and its size n as inputs and returns  the vector array in Pendulum Arrangement.
+Expected Time Complexity: O(n. Log(n))
+Expected Auxiliary Space: O(n)
+Constraints:
+	1 <= n <= 10^{5}
+	0 <= arr[i] <= 10^{5}
+"""
+
+def pendulum_arrangement(arr, n):
+    # Sort the array
+    arr.sort()
+    
+    # Initialize two lists to hold elements in the pendulum arrangement
+    left_half = []
+    right_half = []
+    
+    # Distribute elements to left and right halves based on their indices
+    for i in range(1, n, 2):
+        right_half.append(arr[i])
+    for i in range(0, n, 2):
+        left_half.append(arr[i])
+    
+    # Reverse the left half to simulate the pendulum swing
+    left_half.reverse()
+    
+    # Combine the left half and right half to form the final pendulum arrangement
+    pendulum_array = left_half + right_half
+    
+    return pendulum_array

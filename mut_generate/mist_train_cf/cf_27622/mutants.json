@@ -1,0 +1,182 @@
+{
+  "task_id": "cf_27622",
+  "entry_point": "parse_setup_file",
+  "mutant_count": 25,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if node.targets[0].id == 'python_requires':",
+      "mutated_line": "if node.targets[0].id != 'python_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id != 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "print(\"Invalid setup.py file format\")",
+      "mutated_line": "print('')",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if node.targets[0].id == 'python_requires':",
+      "mutated_line": "if node.targets[0].id == '':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == '':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "elif node.targets[0].id == 'install_requires':",
+      "mutated_line": "elif node.targets[0].id != 'install_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id != 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "setup_dict['python_requires'] = value",
+      "mutated_line": "setup_dict[''] = value",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict[''] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif node.targets[0].id == 'install_requires':",
+      "mutated_line": "elif node.targets[0].id == '':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == '':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "elif node.targets[0].id == 'tests_require':",
+      "mutated_line": "elif node.targets[0].id != 'tests_require':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id != 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if node.targets[0].id == 'python_requires':",
+      "mutated_line": "if node.targets[1].id == 'python_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[1].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if node.targets[0].id == 'python_requires':",
+      "mutated_line": "if node.targets[-1].id == 'python_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[-1].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if node.targets[0].id == 'python_requires':",
+      "mutated_line": "if node.targets[1].id == 'python_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[1].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "setup_dict['install_requires'] = value",
+      "mutated_line": "setup_dict[''] = value",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict[''] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif node.targets[0].id == 'tests_require':",
+      "mutated_line": "elif node.targets[0].id == '':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == '':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "elif node.targets[0].id == 'classifiers':",
+      "mutated_line": "elif node.targets[0].id != 'classifiers':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id != 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif node.targets[0].id == 'install_requires':",
+      "mutated_line": "elif node.targets[1].id == 'install_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[1].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif node.targets[0].id == 'install_requires':",
+      "mutated_line": "elif node.targets[-1].id == 'install_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[-1].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif node.targets[0].id == 'install_requires':",
+      "mutated_line": "elif node.targets[1].id == 'install_requires':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[1].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "setup_dict['tests_require'] = value",
+      "mutated_line": "setup_dict[''] = value",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict[''] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "elif node.targets[0].id == 'classifiers':",
+      "mutated_line": "elif node.targets[0].id == '':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == '':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif node.targets[0].id == 'tests_require':",
+      "mutated_line": "elif node.targets[1].id == 'tests_require':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[1].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif node.targets[0].id == 'tests_require':",
+      "mutated_line": "elif node.targets[-1].id == 'tests_require':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[-1].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif node.targets[0].id == 'tests_require':",
+      "mutated_line": "elif node.targets[1].id == 'tests_require':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[1].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "setup_dict['classifiers'] = value",
+      "mutated_line": "setup_dict[''] = value",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[0].id == 'classifiers':\n                    setup_dict[''] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "elif node.targets[0].id == 'classifiers':",
+      "mutated_line": "elif node.targets[1].id == 'classifiers':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[1].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "elif node.targets[0].id == 'classifiers':",
+      "mutated_line": "elif node.targets[-1].id == 'classifiers':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[-1].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "elif node.targets[0].id == 'classifiers':",
+      "mutated_line": "elif node.targets[1].id == 'classifiers':",
+      "code": "import ast\n\ndef parse_setup_file(setup_content: str) -> dict:\n    setup_dict = {}\n    try:\n        setup_ast = ast.parse(setup_content)\n        for node in setup_ast.body:\n            if isinstance(node, ast.Assign):\n                if isinstance(node.value, ast.List):\n                    value = [ast.literal_eval(v) for v in node.value.elts]\n                elif isinstance(node.value, ast.Str):\n                    value = node.value.s\n                else:\n                    continue\n                if node.targets[0].id == 'python_requires':\n                    setup_dict['python_requires'] = value\n                elif node.targets[0].id == 'install_requires':\n                    setup_dict['install_requires'] = value\n                elif node.targets[0].id == 'tests_require':\n                    setup_dict['tests_require'] = value\n                elif node.targets[1].id == 'classifiers':\n                    setup_dict['classifiers'] = value\n    except SyntaxError:\n        print('Invalid setup.py file format')\n    return setup_dict"
+    }
+  ]
+}

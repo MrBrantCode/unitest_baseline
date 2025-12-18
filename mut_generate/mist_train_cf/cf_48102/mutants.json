@@ -1,0 +1,441 @@
+{
+  "task_id": "cf_48102",
+  "entry_point": "reformat_date",
+  "mutant_count": 62,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if len(day) == 1:",
+      "mutated_line": "if len(day) != 1:",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) != 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) + '-' + month + '-' - day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' - day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = (str(year) + '-' + month + '-') * day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = (str(year) + '-' + month + '-') * day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "return formatted_date + \", \" + days[date_object.weekday()]",
+      "mutated_line": "return formatted_date + ', ' - days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' - days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "return formatted_date + \", \" + days[date_object.weekday()]",
+      "mutated_line": "return (formatted_date + ', ') * days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return (formatted_date + ', ') * days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', '': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', '': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', '': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', '': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', '': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', '': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', '': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', '': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', '': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', '': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', '': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'",
+      "mutated_line": "(day, month, year) = date.split(' ')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': ''}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "day, month, year = date.split(' ')",
+      "mutated_line": "(day, month, year) = date.split('')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split('')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if len(day) == 1:",
+      "mutated_line": "if len(day) == 2:",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 2:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if len(day) == 1:",
+      "mutated_line": "if len(day) == 0:",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 0:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if len(day) == 1:",
+      "mutated_line": "if len(day) == 0:",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 0:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if len(day) == 1:",
+      "mutated_line": "if len(day) == -1:",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == -1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "day = '0' + day",
+      "mutated_line": "day = '0' - day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' - day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "day = '0' + day",
+      "mutated_line": "day = '0' * day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' * day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) + '-' + month - '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month - '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = (str(year) + '-' + month) * '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = (str(year) + '-' + month) * '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "date_object = datetime.strptime(formatted_date, '%Y-%m-%d')",
+      "mutated_line": "date_object = datetime.strptime(formatted_date, '')",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', '', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', '', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', '', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', '', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', '', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "days = [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"]",
+      "mutated_line": "return formatted_date + ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', '']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "return formatted_date + \", \" + days[date_object.weekday()]",
+      "mutated_line": "return formatted_date - ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date - ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "return formatted_date + \", \" + days[date_object.weekday()]",
+      "mutated_line": "return formatted_date * ', ' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date * ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:+2]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:+2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "day = '0' + day",
+      "mutated_line": "day = '' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) + '-' - month + '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' - month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = (str(year) + '-') * month + '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = (str(year) + '-') * month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) + '-' + month + '' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return formatted_date + \", \" + days[date_object.weekday()]",
+      "mutated_line": "return formatted_date + '' + days[date_object.weekday()]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + '' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:-3]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-3]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:-1]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-1]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:-0]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-0]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:-1]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-1]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "day = day[:-2]",
+      "mutated_line": "day = day[:--2]",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:--2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) - '-' + month + '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) - '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) * '-' + month + '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) * '-' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "formatted_date = str(year) + '-' + month + '-' + day",
+      "mutated_line": "formatted_date = str(year) + '' + month + '-' + day",
+      "code": "from datetime import datetime\n\ndef reformat_date(date):\n    month_map = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}\n    (day, month, year) = date.split(' ')\n    day = day[:-2]\n    if len(day) == 1:\n        day = '0' + day\n    month = month_map[month]\n    formatted_date = str(year) + '' + month + '-' + day\n    date_object = datetime.strptime(formatted_date, '%Y-%m-%d')\n    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']\n    return formatted_date + ', ' + days[date_object.weekday()]"
+    }
+  ]
+}

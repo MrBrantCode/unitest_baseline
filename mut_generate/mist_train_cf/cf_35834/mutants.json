@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_35834",
+  "entry_point": "get_imported_models",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "subpackage = importlib.import_module(f'.{subpackage_name}.models', package='package')",
+      "mutated_line": "subpackage = importlib.import_module(f'{subpackage_name}.models', package='package')",
+      "code": "from typing import List\nimport importlib\n\ndef get_imported_models(subpackage_name: str) -> List[str]:\n    imported_models = []\n    try:\n        subpackage = importlib.import_module(f'{subpackage_name}.models', package='package')\n        for name in dir(subpackage.models):\n            obj = getattr(subpackage.models, name)\n            if isinstance(obj, type):\n                imported_models.append(name)\n    except ModuleNotFoundError:\n        pass\n    return imported_models"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "subpackage = importlib.import_module(f'.{subpackage_name}.models', package='package')",
+      "mutated_line": "subpackage = importlib.import_module(f'.{subpackage_name}', package='package')",
+      "code": "from typing import List\nimport importlib\n\ndef get_imported_models(subpackage_name: str) -> List[str]:\n    imported_models = []\n    try:\n        subpackage = importlib.import_module(f'.{subpackage_name}', package='package')\n        for name in dir(subpackage.models):\n            obj = getattr(subpackage.models, name)\n            if isinstance(obj, type):\n                imported_models.append(name)\n    except ModuleNotFoundError:\n        pass\n    return imported_models"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "subpackage = importlib.import_module(f'.{subpackage_name}.models', package='package')",
+      "mutated_line": "subpackage = importlib.import_module(f'.{subpackage_name}.models', package='')",
+      "code": "from typing import List\nimport importlib\n\ndef get_imported_models(subpackage_name: str) -> List[str]:\n    imported_models = []\n    try:\n        subpackage = importlib.import_module(f'.{subpackage_name}.models', package='')\n        for name in dir(subpackage.models):\n            obj = getattr(subpackage.models, name)\n            if isinstance(obj, type):\n                imported_models.append(name)\n    except ModuleNotFoundError:\n        pass\n    return imported_models"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese, Russian and Vietnamese as well. 
+
+Last week Penguin Charlie had a birthday. Chef presented him a string S.
+
+Unfortunately, Charlie doesn't like string S, he likes string F. Charlie wants to create a few strings F from S by cutting. Cutting means getting some substrings from S that are equal to F and delete them from string S. After deleting a substring, the left and right parts of the resulting string remain separated. Note, a substring of a string S is a consecutive sequence of characters in S.
+
+In some cases Charlie can still get substrings equal to F from the pieces that remain after cutting the original string. Your task is to calculate the number of ways to cut out at least one occurrence of the substring F in S. As this number may be too large, print it modulo 10^{9} + 7.
+
+------ Input ------ 
+
+Input begins with an integer T: the number of test cases.
+
+Each test case consists of a two lines with two strings: S, F.
+
+------ Output ------ 
+
+For each test case, output a single line indicating the number of ways Charlie can cut at least one occurrence of F from S modulo 10^{9} + 7.
+
+------ 
+------ Constraints -----
+$1 ≤ T ≤ 10 Subtask 1 : 10 points  
+1 ≤ |F| ≤ |S| ≤ 100 
+
+Subtask 2 : 30 points  
+1 ≤ |F| ≤ |S| ≤ 5000 
+
+Subtask 3 : 60 points
+1 ≤ |F| ≤ |S| ≤ 300000 
+
+----- Sample Input 1 ------ 
+3
+chefandcharliethebest
+charliethebest
+heknowsimeanityeahyouknowimeanityouknow
+imeanit
+aaaaa
+aa
+----- Sample Output 1 ------ 
+1
+3
+7
+----- explanation 1 ------ 
+
+Example case 1.
+chefand|charliethebest|
+1 way to cut 1 string "charliethebest" from the string S:Example case 2.
+heknows|imeanit|yeahyouknow|imeanit|youknow
+2 ways to cut 1 string "imeanit" from the string S - take one of them
+1 way to cut 2 strings "imeanit" from the string S - take both:Example case 3.
+4 ways to cut 1 string "aa" from the string "aaaaa": |aa|aaa, a|aa|aa, aa|aa|a, aaa|aa|
+3 ways to cut 2 strings "aa" from the string "aaaaa": |aa||aa|a, |aa|a|aa|, a|aa||aa|.
+"""
+
+M = 10 ** 9 + 7
+
+def lps_compute(s):
+    n = len(s)
+    lps = [0] * n
+    curr = 0
+    lps[0] = 0
+    i = 1
+    while i < n:
+        if s[i] == s[curr]:
+            curr += 1
+            lps[i] = curr
+            i += 1
+        elif curr != 0:
+            curr = lps[curr - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return lps
+
+def kmp(s1, s2):
+    (n, m) = (len(s1), len(s2))
+    lps = lps_compute(s2)
+    ans = [0] * n
+    (i, j) = (0, 0)
+    while i < n:
+        if s1[i] == s2[j]:
+            i += 1
+            j += 1
+        elif j == 0:
+            i += 1
+        else:
+            j = lps[j - 1]
+        if j == m:
+            ans[i - 1] = 1
+            j = lps[j - 1]
+    return ans
+
+def count_ways_to_cut_substring(S, F):
+    (n, m) = (len(S), len(F))
+    arr = kmp(S, F)
+    dp = [0] * n
+    if arr[0] == 1:
+        dp[0] = 1
+    for i in range(1, n):
+        if arr[i] == 1:
+            if i == m - 1:
+                dp[i] = 1
+            else:
+                dp[i] = (1 + dp[i - m]) % M
+        dp[i] = (dp[i - 1] + dp[i]) % M
+    return dp[-1]

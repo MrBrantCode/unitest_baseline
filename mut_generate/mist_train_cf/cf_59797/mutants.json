@@ -1,0 +1,70 @@
+{
+  "task_id": "cf_59797",
+  "entry_point": "is_boolean",
+  "mutant_count": 9,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return True\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "def get_boolean_keys(d, parent_key=''):",
+      "mutated_line": "def get_boolean_keys(d, parent_key='MUTATED'):",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key='MUTATED'):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return False\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 4,
+      "original_line": "elif isinstance(v, list) and all(isinstance(x, bool) for x in v):",
+      "mutated_line": "elif isinstance(v, list) or all((isinstance(x, bool) for x in v)):",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) or all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return False\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "new_key = f'{parent_key}.{k}' if parent_key else k",
+      "mutated_line": "new_key = f'{parent_key}{k}' if parent_key else k",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "elif isinstance(v, list) and all(isinstance(x, dict) for x in v):",
+      "mutated_line": "elif isinstance(v, list) or all((isinstance(x, dict) for x in v)):",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) or all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))",
+      "mutated_line": "keys.extend(get_boolean_keys(dict_value, f'{new_key}{i}]'))",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}{i}]'))\n    return keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}]'))",
+      "mutated_line": "keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}'))",
+      "code": "def is_boolean(v):\n    if isinstance(v, bool):\n        return True\n    elif isinstance(v, list) and all((isinstance(x, bool) for x in v)):\n        return True\n    return False\n\ndef get_boolean_keys(d, parent_key=''):\n    keys = []\n    for (k, v) in d.items():\n        new_key = f'{parent_key}.{k}' if parent_key else k\n        if is_boolean(v):\n            keys.append(new_key)\n        elif isinstance(v, dict):\n            keys.extend(get_boolean_keys(v, new_key))\n        elif isinstance(v, list) and all((isinstance(x, dict) for x in v)):\n            for (i, dict_value) in enumerate(v):\n                keys.extend(get_boolean_keys(dict_value, f'{new_key}[{i}'))\n    return keys"
+    }
+  ]
+}

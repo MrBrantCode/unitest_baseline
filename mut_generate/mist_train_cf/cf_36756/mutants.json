@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_36756",
+  "entry_point": "string_expansion",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "for match in re.finditer(r'\\${(.*?)\\.(.*?)}', expanded):",
+      "mutated_line": "for match in re.finditer('', expanded):",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if group == \"Params\":",
+      "mutated_line": "if group != 'Params':",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group != 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "if group == \"Params\":",
+      "mutated_line": "if group == '':",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == '':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)",
+      "mutated_line": "collection = getattr(context, 'Descriptor', None) or getattr(context.Descriptor, 'Parameters', None)",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) or getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "elif group == \"Publish\":",
+      "mutated_line": "elif group != 'Publish':",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group != 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'",
+      "mutated_line": "value = collection.get(key, default) if collection is None else f'<<UNKNOWN GROUP {group}>>'",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif group == \"Publish\":",
+      "mutated_line": "elif group == '':",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == '':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'",
+      "mutated_line": "value = collection.get(key, default) if collection is not None else f'{group}>>'",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'{group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'",
+      "mutated_line": "value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}'",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "expanded = expanded.replace(match.group(0), str(value))",
+      "mutated_line": "expanded = expanded.replace(match.group(1), str(value))",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(1), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "expanded = expanded.replace(match.group(0), str(value))",
+      "mutated_line": "expanded = expanded.replace(match.group(-1), str(value))",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(-1), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "expanded = expanded.replace(match.group(0), str(value))",
+      "mutated_line": "expanded = expanded.replace(match.group(1), str(value))",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(1), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)",
+      "mutated_line": "collection = getattr(context, '', None) and getattr(context.Descriptor, 'Parameters', None)",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, '', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)",
+      "mutated_line": "collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, '', None)",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, '', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "collection = getattr(context, 'params', None)",
+      "mutated_line": "collection = getattr(context, '', None)",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, '', None)\n        else:\n            collection = getattr(context, 'params', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "collection = getattr(context, 'params', None)",
+      "mutated_line": "collection = getattr(context, '', None)",
+      "code": "import re\n\ndef string_expansion(expanded: str, context: object, default: str) -> str:\n    for match in re.finditer('\\\\${(.*?)\\\\.(.*?)}', expanded):\n        (group, key) = match.groups()\n        if group == 'Params':\n            collection = getattr(context, 'Descriptor', None) and getattr(context.Descriptor, 'Parameters', None)\n        elif group == 'Publish':\n            collection = getattr(context, 'params', None)\n        else:\n            collection = getattr(context, '', None)\n        value = collection.get(key, default) if collection is not None else f'<<UNKNOWN GROUP {group}>>'\n        expanded = expanded.replace(match.group(0), str(value))\n    return expanded"
+    }
+  ]
+}

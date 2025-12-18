@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_42771",
+  "entry_point": "get_output_tensors",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if model_output not in user_shape_dict:",
+      "mutated_line": "if model_output in user_shape_dict:",
+      "code": "def get_output_tensors(subgraph):\n    output_tensors = OrderedDict()\n    model_outputs = subgraph.OutputsAsNumpy()\n    for model_output in model_outputs:\n        if model_output in user_shape_dict:\n            raise Exception('Please specify all output layers in data_shape.')\n        output_tensors[model_output] = model_output_tensor\n    return output_tensors"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "raise Exception(\"Please specify all output layers in data_shape.\")",
+      "mutated_line": "raise Exception('')",
+      "code": "def get_output_tensors(subgraph):\n    output_tensors = OrderedDict()\n    model_outputs = subgraph.OutputsAsNumpy()\n    for model_output in model_outputs:\n        if model_output not in user_shape_dict:\n            raise Exception('')\n        output_tensors[model_output] = model_output_tensor\n    return output_tensors"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_42131",
+  "entry_point": "recursively_resolve_dependencies",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if project_name not in dependency_tree:",
+      "mutated_line": "if project_name in dependency_tree:",
+      "code": "class DependencyNode:\n\n    def __init__(self, name):\n        self.name = name\n        self.children = []\n\ndef recursively_resolve_dependencies(project_name, resolved_dependencies, dependency_tree):\n    if project_name in dependency_tree:\n        return None\n    node = DependencyNode(project_name)\n    for dependency in dependency_tree[project_name]:\n        if dependency not in resolved_dependencies:\n            child_node = recursively_resolve_dependencies(dependency, resolved_dependencies, dependency_tree)\n            if child_node:\n                node.children.append(child_node)\n    return node"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if dependency not in resolved_dependencies:",
+      "mutated_line": "if dependency in resolved_dependencies:",
+      "code": "class DependencyNode:\n\n    def __init__(self, name):\n        self.name = name\n        self.children = []\n\ndef recursively_resolve_dependencies(project_name, resolved_dependencies, dependency_tree):\n    if project_name not in dependency_tree:\n        return None\n    node = DependencyNode(project_name)\n    for dependency in dependency_tree[project_name]:\n        if dependency in resolved_dependencies:\n            child_node = recursively_resolve_dependencies(dependency, resolved_dependencies, dependency_tree)\n            if child_node:\n                node.children.append(child_node)\n    return node"
+    }
+  ]
+}

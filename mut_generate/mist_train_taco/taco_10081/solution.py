@@ -1,0 +1,40 @@
+"""
+QUESTION:
+Given a number N, find the number of digits in the Nth Fibonacci Number.
+ 
+Example 1:
+Input:
+N = 5
+Output:
+1
+Explanation:
+5th fibonacci number is 5
+which contains only one digit
+Example 2:
+Input:
+N = 12
+Output:
+3
+Explanation:
+12th fibonacci number is 144
+which contains three digits
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function noOfDigits() which takes an integer N as input parameters and returns an integer, number of digits in Nth Fibonacci number
+ 
+Expected Time Complexity: O(1)
+Expected Space Complexity: O(1)
+ 
+Constraints:
+1 <= N <= 10^{3}
+"""
+
+def no_of_digits(N: int) -> int:
+    if N == 1:
+        return 1
+    
+    a, b = 0, 1
+    for _ in range(1, N):
+        c = a + b
+        a, b = b, c
+    
+    return len(str(c))

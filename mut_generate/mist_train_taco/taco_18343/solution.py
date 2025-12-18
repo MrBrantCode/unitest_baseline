@@ -1,0 +1,17 @@
+"""
+QUESTION:
+An `non decreasing` number is one containing no two consecutive digits (left to right), whose the first is higer than the second. For example, 1235 is an non decreasing number, 1229 is too, but 123429 isn't.
+
+Write a function that finds the number of non decreasing numbers up to `10**N` (exclusive) where N is the input of your function. For example, if `N=3`, you have to count all non decreasing numbers from 0 to 999.
+
+ You'll definitely need something smarter than brute force for large values of N!
+"""
+
+def count_non_decreasing_numbers(N):
+    def increasing_numbers(d):
+        s = 1
+        for i in range(1, 10):
+            s = s * (i + d) // i
+        return s
+    
+    return increasing_numbers(N)

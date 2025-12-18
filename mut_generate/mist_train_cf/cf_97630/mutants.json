@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_97630",
+  "entry_point": "generate_passphrase",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import hashlib\nimport binascii\n\ndef generate_passphrase(words, salt, iterations):\n    \"\"\"\"\"\"\n    hashes = [hashlib.sha256(word.encode()).digest() for word in words]\n    concatenated = b''.join(hashes)\n    passphrase = hashlib.pbkdf2_hmac('sha256', concatenated, salt, iterations)\n    passphrase_str = binascii.hexlify(passphrase).decode()\n    return passphrase_str"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "passphrase = hashlib.pbkdf2_hmac('sha256', concatenated, salt, iterations)",
+      "mutated_line": "passphrase = hashlib.pbkdf2_hmac('', concatenated, salt, iterations)",
+      "code": "import hashlib\nimport binascii\n\ndef generate_passphrase(words, salt, iterations):\n    \"\"\"\n    Generate a passphrase from a list of words, salt, and iteration count.\n\n    Args:\n        words (list): A list of unique words.\n        salt (bytes): The salt value.\n        iterations (int): The iteration count.\n\n    Returns:\n        str: The generated passphrase.\n    \"\"\"\n    hashes = [hashlib.sha256(word.encode()).digest() for word in words]\n    concatenated = b''.join(hashes)\n    passphrase = hashlib.pbkdf2_hmac('', concatenated, salt, iterations)\n    passphrase_str = binascii.hexlify(passphrase).decode()\n    return passphrase_str"
+    }
+  ]
+}

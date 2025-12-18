@@ -1,0 +1,70 @@
+"""
+QUESTION:
+Chef has an array A of length N. He defines the *alternating sum* of the array as:
+S = |A_{1}| - |A_{2}| + |A_{3}| - |A_{4}| + \ldots (-1)^{N-1}\cdot |A_{N}|
+
+Chef is allowed to perform the following operation on the array at most once:
+Choose two indices i and j (1 ≤ i <  j ≤ N) and swap the elements A_{i} and A_{j}.
+
+Find the maximum *alternating sum* Chef can achieve by performing the operation at most once.
+
+Note: |X| denotes the absolute value of X. For example, |-4| = 4 and |7| = 7.
+
+------ Input Format ------ 
+
+- The first line will contain T - the number of test cases. Then the test cases follow.
+- First line of each test case contains a single integer N - size of the array A.
+- Second line of each test case contains N space separated integers - denoting the elements of array A.
+
+------ Output Format ------ 
+
+For each testcase, output in a single line, the maximum *alternating sum* Chef can obtain by performing the operation at most once.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$2 ≤ N ≤ 10^{5}$
+$-10^{9} ≤ A_{i} ≤ 10^{9}$
+- Sum of $N$ over all test cases does not exceed $2 \cdot 10^{5}$.
+
+----- Sample Input 1 ------ 
+2
+2
+10 -10
+7
+-3 -2 -1 0 1 2 3
+
+----- Sample Output 1 ------ 
+0
+6
+
+----- explanation 1 ------ 
+Test Case $1$: One optimal way is to perform no operations. Thus the alternating sum is $|10| - |-10| = 10 - 10 = 0$.
+
+Test Case $2$: One optimal way is to choose $i = 2$ and $j = 5$. After swapping, the array is $[-3, 1, -1, 0, -2, 2, 3]$. The alternating sum in this case is $|-3| - |1| + |-1| - |0| + |-2| - |2| + |3| = 6$.
+"""
+
+def max_alternating_sum(A, N):
+    odd = []
+    even = []
+    
+    # Separate the absolute values into odd and even indexed positions
+    for i in range(N):
+        if (i + 1) % 2 == 1:
+            odd.append(abs(A[i]))
+        else:
+            even.append(abs(A[i]))
+    
+    # Sort the lists to find the smallest odd and largest even
+    odd.sort()
+    even.sort()
+    
+    # Calculate the initial alternating sum
+    s = sum(odd) - sum(even)
+    
+    # Check if swapping the smallest odd with the largest even improves the sum
+    if odd[0] < even[-1]:
+        s -= 2 * odd[0]
+        s += 2 * even[-1]
+    
+    return s

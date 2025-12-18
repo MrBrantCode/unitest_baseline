@@ -1,0 +1,1092 @@
+{
+  "task_id": "taco_2045",
+  "entry_point": "calculate_approval_probability",
+  "mutant_count": 155,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [0] / n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] / n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [0] + n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] + n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [0] ** n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] ** n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt >= n / 2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt >= n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt <= n / 2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt <= n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt != n / 2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt != n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cur >= n:",
+      "mutated_line": "if cur > n:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur > n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cur >= n:",
+      "mutated_line": "if cur < n:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur < n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cur >= n:",
+      "mutated_line": "if cur == n:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur == n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "mx = 0.0",
+      "mutated_line": "mx = 1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 1.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "mx = 0.0",
+      "mutated_line": "mx = -1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = -1.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "mx = 0.0",
+      "mutated_line": "mx = 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 1\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "return dfs(0, min(k, mx_bribe))",
+      "mutated_line": "return dfs(1, min(k, mx_bribe))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(1, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "return dfs(0, min(k, mx_bribe))",
+      "mutated_line": "return dfs(-1, min(k, mx_bribe))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(-1, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "return dfs(0, min(k, mx_bribe))",
+      "mutated_line": "return dfs(1, min(k, mx_bribe))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(1, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) / 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) / 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) * 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) * 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [1] * n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [1] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [-1] * n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [-1] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "bribe = [0] * n",
+      "mutated_line": "bribe = [1] * n",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [1] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (1, 0, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (1, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (-1, 0, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (-1, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (1, 0, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (1, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 1, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 1, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, -1, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, -1, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 1, 1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 1, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 0, 2.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 2.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 0, 0.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 0.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 0, 0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "bsum, cnt, p = 0, 0, 1.0",
+      "mutated_line": "(bsum, cnt, p) = (0, 0, -1.0)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, -1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "if votes & 1 << i:",
+      "mutated_line": "if votes | 1 << i:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes | 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p /= (loy + bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p /= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 10,
+      "original_line": "cnt += 1",
+      "mutated_line": "cnt -= 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt -= 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p /= (100 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p /= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 13,
+      "original_line": "bsum += lvl",
+      "mutated_line": "bsum -= lvl",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum -= lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n * 2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n * 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n // 2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n // 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p * A * (A + bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A * (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p * A // (A + bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A // (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk >= 0:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk >= 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk <= 0:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk <= 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk != 0:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk != 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "sm = 0.0",
+      "mutated_line": "sm = 1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 1.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "sm = 0.0",
+      "mutated_line": "sm = -1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = -1.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "sm = 0.0",
+      "mutated_line": "sm = 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 1\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 25,
+      "original_line": "sm += calc(i)",
+      "mutated_line": "sm -= calc(i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm -= calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk - 1):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk - 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk * 1):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk * 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] >= 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] >= 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] <= 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] <= 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] != 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] != 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i / 10",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i / 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i + 10",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i + 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i ** 10",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i ** 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 + loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 + loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum((100 * loy // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum((100 * loy // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) // 11 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 11 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) // 9 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 9 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) // 0 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 0 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) // 1 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 1 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((100 - loy) // -10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // -10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) * 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) * 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) // 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) // 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cnt += 1",
+      "mutated_line": "cnt += 2",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 2\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cnt += 1",
+      "mutated_line": "cnt += 0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 0\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cnt += 1",
+      "mutated_line": "cnt += 0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 0\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cnt += 1",
+      "mutated_line": "cnt += -1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += -1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) * 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) * 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) // 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) // 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n / 3:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 3:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n / 1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 1:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n / 0:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 0:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n / 1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 1:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cnt > n / 2:",
+      "mutated_line": "if cnt > n / -2:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / -2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p / A / (A + bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p / A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return (p + A) / (A + bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return (p + A) / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p ** A / (A + bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p ** A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p * A / (A - bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A - bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return p * A / (A + bsum)",
+      "mutated_line": "return p * A / (A * bsum)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A * bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk > 1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 1:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk > -1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > -1:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if rk > 0:",
+      "mutated_line": "if rk > 1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 1:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return 0.0",
+      "mutated_line": "return 1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 1.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return 0.0",
+      "mutated_line": "return -1.0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return -1.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return 0.0",
+      "mutated_line": "return 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 1\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk + 2):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 2):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk + 0):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 0):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk + 0):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 0):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "for i in range(rk + 1):",
+      "mutated_line": "for i in range(rk + -1):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + -1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 - senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 - senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 * senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 * senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] > 101:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 101:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] > 99:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 99:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] > 0:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 0:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] > 1:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 1:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][1] > -100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > -100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i * 11",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 11\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i * 9",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 9\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i * 0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 0\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i * 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 1\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "bribe[cur] = i * 10",
+      "mutated_line": "bribe[cur] = i * -10",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * -10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur - 1, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur - 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur * 1, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur * 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + 1, rk + i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk + i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + 1, rk * i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk * i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((101 - loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((101 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((99 - loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((99 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((0 - loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((0 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((1 - loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((1 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "mx_bribe = sum((100 - loy) // 10 for _, loy in senators)",
+      "mutated_line": "mx_bribe = sum(((-100 - loy) // 10 for (_, loy) in senators))",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((-100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if votes & 1 << i:",
+      "mutated_line": "if votes & 2 << i:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 2 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if votes & 1 << i:",
+      "mutated_line": "if votes & 0 << i:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 0 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if votes & 1 << i:",
+      "mutated_line": "if votes & 0 << i:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 0 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if votes & 1 << i:",
+      "mutated_line": "if votes & -1 << i:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & -1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy - bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= loy * bribe[i] / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= loy * bribe[i] / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) / 101",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 101\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) / 99",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 99\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) / 0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 0\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) / 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 1\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "p *= (loy + bribe[i]) / 100",
+      "mutated_line": "p *= (loy + bribe[i]) / -100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / -100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy + bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy + bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy) * bribe[i] / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy) * bribe[i] / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) / 101",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 101\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) / 99",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 99\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) / 0",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 0\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) / 1",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 1\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 - loy - bribe[i]) / -100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / -100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "for i in range(1 << n):",
+      "mutated_line": "for i in range(2 << n):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(2 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "for i in range(1 << n):",
+      "mutated_line": "for i in range(0 << n):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(0 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "for i in range(1 << n):",
+      "mutated_line": "for i in range(0 << n):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(0 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "for i in range(1 << n):",
+      "mutated_line": "for i in range(-1 << n):",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(-1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i / 10 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i / 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i + 10 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i + 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i ** 10 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i ** 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + 2, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 2, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + 0, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 0, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + 0, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 0, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "tmp = dfs(cur + 1, rk - i)",
+      "mutated_line": "tmp = dfs(cur + -1, rk - i)",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + -1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 + loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 + loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (100 * loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 * loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 11 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 11 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 9 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 9 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 0 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 0 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 1 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 1 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * -10 + senators[cur][1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * -10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][2] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][2] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][0] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][0] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][0] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][0] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "if i * 10 + senators[cur][1] > 100:",
+      "mutated_line": "if i * 10 + senators[cur][-1] > 100:",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][-1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (101 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (101 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (99 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (99 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (0 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (0 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (1 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (1 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "p *= (100 - loy - bribe[i]) / 100",
+      "mutated_line": "p *= (-100 - loy - bribe[i]) / 100",
+      "code": "def calculate_approval_probability(n, k, A, senators):\n    mx_bribe = sum(((100 - loy) // 10 for (_, loy) in senators))\n    bribe = [0] * n\n\n    def calc(votes):\n        (bsum, cnt, p) = (0, 0, 1.0)\n        for (i, (lvl, loy)) in enumerate(senators):\n            if votes & 1 << i:\n                p *= (loy + bribe[i]) / 100\n                cnt += 1\n            else:\n                p *= (-100 - loy - bribe[i]) / 100\n                bsum += lvl\n        if cnt > n / 2:\n            return p\n        else:\n            return p * A / (A + bsum)\n\n    def dfs(cur, rk):\n        if cur >= n:\n            if rk > 0:\n                return 0.0\n            sm = 0.0\n            for i in range(1 << n):\n                sm += calc(i)\n            return sm\n        mx = 0.0\n        for i in range(rk + 1):\n            if i * 10 + senators[cur][1] > 100:\n                break\n            bribe[cur] = i * 10\n            tmp = dfs(cur + 1, rk - i)\n            mx = max(tmp, mx)\n        return mx\n    return dfs(0, min(k, mx_bribe))"
+    }
+  ]
+}

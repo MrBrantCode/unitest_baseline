@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_49917",
+  "entry_point": "handle_dict_keys",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "def __init__(self, message=\"Input is not a dictionary\"):",
+      "mutated_line": "",
+      "code": "class InvalidDataTypeException(Exception):\n\n    def __init__(self, message=''):\n        super().__init__(message)\n\ndef handle_dict_keys(d):\n    if not isinstance(d, dict):\n        raise InvalidDataTypeException()\n    result = {}\n    for key in d.keys():\n        key_type = type(key)\n        if key_type not in result:\n            result[key_type] = [key]\n        else:\n            result[key_type].append(key)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if key_type not in result:",
+      "mutated_line": "if key_type in result:",
+      "code": "class InvalidDataTypeException(Exception):\n\n    def __init__(self, message='Input is not a dictionary'):\n        super().__init__(message)\n\ndef handle_dict_keys(d):\n    if not isinstance(d, dict):\n        raise InvalidDataTypeException()\n    result = {}\n    for key in d.keys():\n        key_type = type(key)\n        if key_type in result:\n            result[key_type] = [key]\n        else:\n            result[key_type].append(key)\n    return result"
+    }
+  ]
+}

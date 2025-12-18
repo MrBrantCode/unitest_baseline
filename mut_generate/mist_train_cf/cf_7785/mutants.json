@@ -1,0 +1,105 @@
+{
+  "task_id": "cf_7785",
+  "entry_point": "parse_xml",
+  "mutant_count": 14,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "if encoding and encoding.lower() == \"utf-16le\":",
+      "mutated_line": "xml_string = xml_string.encode('utf-16le').decode('utf-16le')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding or encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "encoding = root.get(\"encoding\")",
+      "mutated_line": "xml_string = xml_string.encode('utf-16le').decode('utf-16le')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if encoding and encoding.lower() == \"utf-16le\":",
+      "mutated_line": "xml_string = xml_string.encode('utf-16le').decode('utf-16le')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() != 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for item in root.findall(\".//item\"):",
+      "mutated_line": "for item in root.findall(''):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall(''):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if item.get(\"status\") == \"active\":",
+      "mutated_line": "if item.get('status') != 'active':",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') != 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if encoding and encoding.lower() == \"utf-16le\":",
+      "mutated_line": "xml_string = xml_string.encode('utf-16le').decode('utf-16le')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == '':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "xml_string = xml_string.encode(\"utf-16le\").decode(\"utf-16le\")",
+      "mutated_line": "xml_string = xml_string.encode('utf-16le').decode('')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "if item.get(\"status\") == \"active\":",
+      "mutated_line": "if item.get('status') == '':",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == '':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if sub_element is not None and sub_element.text:",
+      "mutated_line": "if sub_element is not None or sub_element.text:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None or sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "print(\"Error parsing XML:\", e)",
+      "mutated_line": "print('', e)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "if item.get(\"status\") == \"active\":",
+      "mutated_line": "if item.get('') == 'active':",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sub_element = item.find(\"sub_element\")",
+      "mutated_line": "sub_element = item.find('')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if sub_element is not None and sub_element.text:",
+      "mutated_line": "if sub_element is None and sub_element.text:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('utf-16le').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "xml_string = xml_string.encode(\"utf-16le\").decode(\"utf-16le\")",
+      "mutated_line": "xml_string = xml_string.encode('').decode('utf-16le')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n        encoding = root.get('encoding')\n        if encoding and encoding.lower() == 'utf-16le':\n            xml_string = xml_string.encode('').decode('utf-16le')\n        data_points = []\n        for item in root.findall('.//item'):\n            if item.get('status') == 'active':\n                sub_element = item.find('sub_element')\n                if sub_element is not None and sub_element.text:\n                    data_points.append(sub_element.text)\n        return data_points\n    except (ET.ParseError, AttributeError) as e:\n        print('Error parsing XML:', e)\n        return []"
+    }
+  ]
+}

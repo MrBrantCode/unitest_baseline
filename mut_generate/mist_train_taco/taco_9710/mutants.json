@@ -1,0 +1,609 @@
+{
+  "task_id": "taco_9710",
+  "entry_point": "count_failed_searches",
+  "mutant_count": 86,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "isroot = [True for _ in range(n)]",
+      "mutated_line": "isroot = [False for _ in range(n)]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [False for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l == -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l == -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r == -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r == -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "root = isroot.index(True)",
+      "mutated_line": "root = isroot.index(False)",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(False)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-1) != 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) != 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl < v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl < v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl > v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl > v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl == v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl == v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 or R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 or R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l + (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l + (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l * (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l * (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r + (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r + (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r * (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r * (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l != +1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != +1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "isroot[l] = False",
+      "mutated_line": "isroot[l] = True",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = True\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r != +1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != +1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "isroot[r] = False",
+      "mutated_line": "isroot[r] = True",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = True\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-1) == 2:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 2:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-1) == 0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 0:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-1) == 0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 0:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-1) == -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == -1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl < v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl < v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl > v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl > v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if vl <= v <= vr:",
+      "mutated_line": "if vl == v <= vr:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl == v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L == -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L == -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L == -1 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L == -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R == -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R == -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "res = sum((1 for v in vs if v not in found))",
+      "mutated_line": "res = sum((2 for v in vs if v not in found))",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((2 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "res = sum((1 for v in vs if v not in found))",
+      "mutated_line": "res = sum((0 for v in vs if v not in found))",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((0 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "res = sum((1 for v in vs if v not in found))",
+      "mutated_line": "res = sum((0 for v in vs if v not in found))",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((0 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "res = sum((1 for v in vs if v not in found))",
+      "mutated_line": "res = sum((-1 for v in vs if v not in found))",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((-1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l != -2:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -2:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -0:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -0:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if l != -1:",
+      "mutated_line": "if l != --1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != --1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r != -2:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -2:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -0:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -0:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if r != -1:",
+      "mutated_line": "if r != --1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != --1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(+1) == 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(+1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L != +1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != +1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != +1 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != +1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R != +1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != +1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 44,
+      "original_line": "res = sum((1 for v in vs if v not in found))",
+      "mutated_line": "res = sum((1 for v in vs if v in found))",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l <= 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l <= 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l >= 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l >= 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l != 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l != 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (-1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (-1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (1 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 2), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 2), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 0), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 0), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 0), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 0), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else -1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else -1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r <= 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r <= 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r >= 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r >= 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r != 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r != 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (1 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (1 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (-1 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (-1 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (1 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (1 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 2)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 2)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 0)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 0)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 0)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 0)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else -1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else -1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-2) == 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-2) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-0) == 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-0) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(-0) == 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-0) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "while vlrs[U].count(-1) == 1:",
+      "mutated_line": "while vlrs[U].count(--1) == 1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(--1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L != -2:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -2:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -0:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -0:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if L != -1:",
+      "mutated_line": "if L != --1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != --1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -2 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -2 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -0 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -0 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -0 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -0 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != --1 and R != -1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != --1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R != -2:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -2:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -0:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R != -0:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -0:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "if L != -1 and R != -1:",
+      "mutated_line": "if L != -1 and R != --1:",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != --1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < -1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < -1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 1 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 1 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 1 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < -1 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < -1 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 0 else 1)) for (v, l, r) in vlrs]",
+      "mutated_line": "vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 1 else 1)) for (v, l, r) in vlrs]",
+      "code": "def count_failed_searches(n, vlrs):\n    vlrs = [(v, l - (0 if l < 0 else 1), r - (0 if r < 1 else 1)) for (v, l, r) in vlrs]\n    isroot = [True for _ in range(n)]\n    for (v, l, r) in vlrs:\n        if l != -1:\n            isroot[l] = False\n        if r != -1:\n            isroot[r] = False\n    root = isroot.index(True)\n    vs = [v for (v, l, r) in vlrs]\n    vmin = min(vs)\n    vmax = max(vs)\n    found = set()\n\n    def DFS(U, vl, vr):\n        while vlrs[U].count(-1) == 1:\n            (v, L, R) = vlrs[U]\n            if vl <= v <= vr:\n                found.add(v)\n            if L != -1:\n                (U, vl, vr) = (L, vl, min(v, vr))\n            else:\n                (U, vl, vr) = (R, max(v, vl), vr)\n        (v, L, R) = vlrs[U]\n        if vl <= v <= vr:\n            found.add(v)\n        if L != -1 and R != -1:\n            DFS(L, vl, min(v, vr))\n            DFS(R, max(v, vl), vr)\n    DFS(root, vmin, vmax)\n    res = sum((1 for v in vs if v not in found))\n    return res"
+    }
+  ]
+}

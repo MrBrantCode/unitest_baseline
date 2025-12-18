@@ -1,0 +1,42 @@
+"""
+QUESTION:
+Subodh is celebrating its annual Techno-Cultural Fest. The IT student Kejal has agreed to supply candies for this festive season.
+
+The Kejal has prepared N boxes of candies, numbered 1 to N (Each number occurring exactly once ). The Kejal is very particular about the arrangement of boxes. She wants boxes to be arranged in a particular order, but unfortunately Kejal is busy. She has asked you to rearrange the boxes for her.
+
+Given the current order of boxes, you have to rearrange the boxes in the specified order. However there is a restriction.You can only swap two adjacent boxes to achieve the required order. Output, the minimum number of such adjacent swaps required.
+
+Input
+
+First line of input contains a single integer T, number of test cases. Each test case contains 3 lines, first line contains a single integer N, number of boxes. Next 2 lines contains N numbers each, first row is the given order of boxes while second row is the required order.
+
+Output
+
+For each test case, output a single integer 'K', minimum number of adjacent swaps required. 
+
+Constraints:
+
+1 ≤ T ≤ 10
+1 ≤ N ≤ 10^5
+
+SAMPLE INPUT
+1
+
+3
+1 2 3
+3 1 2
+
+SAMPLE OUTPUT
+2
+"""
+
+def minimum_adjacent_swaps(current_order, required_order):
+    count = 0
+    while len(current_order) > 0:
+        x = 0
+        while current_order[x] != required_order[0]:
+            x += 1
+            count += 1
+        del current_order[x]
+        del required_order[0]
+    return count

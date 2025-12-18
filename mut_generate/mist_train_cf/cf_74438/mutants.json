@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_74438",
+  "entry_point": "search",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "for student in tree.findall(\".//student\"):",
+      "mutated_line": "for student in tree.findall(''):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef search(tree, attribute, value):\n    for student in tree.findall(''):\n        if student.attrib.get(attribute) == value:\n            return student.attrib\n        for child in student:\n            if child.attrib.get(attribute) == value:\n                return {**student.attrib, **child.attrib}\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if student.attrib.get(attribute) == value:",
+      "mutated_line": "if student.attrib.get(attribute) != value:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef search(tree, attribute, value):\n    for student in tree.findall('.//student'):\n        if student.attrib.get(attribute) != value:\n            return student.attrib\n        for child in student:\n            if child.attrib.get(attribute) == value:\n                return {**student.attrib, **child.attrib}\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if child.attrib.get(attribute) == value:",
+      "mutated_line": "if child.attrib.get(attribute) != value:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef search(tree, attribute, value):\n    for student in tree.findall('.//student'):\n        if student.attrib.get(attribute) == value:\n            return student.attrib\n        for child in student:\n            if child.attrib.get(attribute) != value:\n                return {**student.attrib, **child.attrib}\n    return None"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+"""
+QUESTION:
+Before becoming a successful trader William got a university degree. During his education an interesting situation happened, after which William started to listen to homework assignments much more attentively. What follows is the correct formal description of the homework assignment:
+
+You are given a string $s$ of length $n$ only consisting of characters "a", "b" and "c". There are $q$ queries of format ($pos, c$), meaning replacing the element of string $s$ at position $pos$ with character $c$. After each query you must output the minimal number of characters in the string, which have to be replaced, so that the string doesn't contain string "abc" as a substring. A valid replacement of a character is replacing it with "a", "b" or "c".
+
+A string $x$ is a substring of a string $y$ if $x$ can be obtained from $y$ by deletion of several (possibly, zero or all) characters from the beginning and several (possibly, zero or all) characters from the end.
+
+
+-----Input-----
+
+The first line contains two integers $n$ and $q$ $(1 \le n, q \le 10^5)$, the length of the string and the number of queries, respectively.
+
+The second line contains the string $s$, consisting of characters "a", "b" and "c".
+
+Each of the next $q$ lines contains an integer $i$ and character $c$ $(1 \le i \le n)$, index and the value of the new item in the string, respectively. It is guaranteed that character's $c$ value is "a", "b" or "c".
+
+
+-----Output-----
+
+For each query output the minimal number of characters that would have to be replaced so that the string doesn't contain "abc" as a substring.
+
+
+-----Examples-----
+
+Input
+9 10
+abcabcabc
+1 a
+1 b
+2 c
+3 a
+4 b
+5 c
+8 a
+9 b
+1 c
+4 a
+Output
+3
+2
+2
+2
+1
+2
+1
+1
+1
+0
+
+
+-----Note-----
+
+Let's consider the state of the string after each query:
+
+$s =$ "abcabcabc". In this case $3$ replacements can be performed to get, for instance, string $s =$ "bbcaccabb". This string does not contain "abc" as a substring.
+
+$s =$ "bbcabcabc". In this case $2$ replacements can be performed to get, for instance, string $s =$ "bbcbbcbbc". This string does not contain "abc" as a substring.
+
+$s =$ "bccabcabc". In this case $2$ replacements can be performed to get, for instance, string $s =$ "bccbbcbbc". This string does not contain "abc" as a substring.
+
+$s =$ "bcaabcabc". In this case $2$ replacements can be performed to get, for instance, string $s =$ "bcabbcbbc". This string does not contain "abc" as a substring.
+
+$s =$ "bcabbcabc". In this case $1$ replacements can be performed to get, for instance, string $s =$ "bcabbcabb". This string does not contain "abc" as a substring.
+
+$s =$ "bcabccabc". In this case $2$ replacements can be performed to get, for instance, string $s =$ "bcabbcabb". This string does not contain "abc" as a substring.
+
+$s =$ "bcabccaac". In this case $1$ replacements can be performed to get, for instance, string $s =$ "bcabbcaac". This string does not contain "abc" as a substring.
+
+$s =$ "bcabccaab". In this case $1$ replacements can be performed to get, for instance, string $s =$ "bcabbcaab". This string does not contain "abc" as a substring.
+
+$s =$ "ccabccaab". In this case $1$ replacements can be performed to get, for instance, string $s =$ "ccabbcaab". This string does not contain "abc" as a substring.
+
+$s =$ "ccaaccaab". In this case the string does not contain "abc" as a substring and no replacements are needed.
+"""
+
+def minimal_replacements_after_queries(s: str, q: int, queries: list) -> list:
+    """
+    Given a string `s` of length `n` consisting of characters "a", "b", and "c", and a list of `q` queries,
+    each query being a tuple `(pos, char)`, this function returns the minimal number of characters
+    that need to be replaced so that the string doesn't contain "abc" as a substring after each query.
+
+    Parameters:
+    - s (str): The initial string of length `n`.
+    - q (int): The number of queries.
+    - queries (list): A list of tuples where each tuple is `(pos, char)`.
+
+    Returns:
+    - list: A list of integers where each integer represents the minimal number of characters
+            that need to be replaced after each query.
+    """
+    n = len(s)
+    cnt = 0
+    for i in range(n):
+        if i + 2 < n and s[i:i + 3] == 'abc':
+            cnt += 1
+    s = list(s)
+    results = []
+    for pos, char in queries:
+        pos -= 1  # Convert to 0-based index
+        if s[pos] != char:
+            if s[pos] == 'a' and pos + 2 < n and (s[pos:pos + 3] == ['a', 'b', 'c']):
+                cnt -= 1
+            elif s[pos] == 'b' and 0 < pos < n - 1 and (s[pos - 1:pos + 2] == ['a', 'b', 'c']):
+                cnt -= 1
+            elif s[pos] == 'c' and pos > 1 and (s[pos - 2:pos + 1] == ['a', 'b', 'c']):
+                cnt -= 1
+            s[pos] = char
+            if s[pos] == 'a' and pos + 2 < n and (s[pos:pos + 3] == ['a', 'b', 'c']):
+                cnt += 1
+            elif s[pos] == 'b' and 0 < pos < n - 1 and (s[pos - 1:pos + 2] == ['a', 'b', 'c']):
+                cnt += 1
+            elif s[pos] == 'c' and pos > 1 and (s[pos - 2:pos + 1] == ['a', 'b', 'c']):
+                cnt += 1
+        results.append(cnt)
+    return results

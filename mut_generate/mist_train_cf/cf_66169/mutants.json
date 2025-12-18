@@ -1,0 +1,140 @@
+{
+  "task_id": "cf_66169",
+  "entry_point": "categorize_mac",
+  "mutant_count": 19,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "pattern = \"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$\"",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = ''\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:  # Dell OUIs",
+      "mutated_line": "if oui not in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui not in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:8].upper().replace('', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:8].upper().replace('-', '')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', '')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:  # Apple OUIs",
+      "mutated_line": "elif oui not in ['00:1C:B3', '00:1D:4F', '00:61:71']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui not in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:  # Dell OUIs",
+      "mutated_line": "if oui in ['', 'E0:5F:B9', '04:0C:CE']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:  # Dell OUIs",
+      "mutated_line": "if oui in ['00:25:BC', '', '04:0C:CE']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', '', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:  # Dell OUIs",
+      "mutated_line": "if oui in ['00:25:BC', 'E0:5F:B9', '']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:  # Apple OUIs",
+      "mutated_line": "elif oui in ['', '00:1D:4F', '00:61:71']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:  # Apple OUIs",
+      "mutated_line": "elif oui in ['00:1C:B3', '', '00:61:71']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:  # Apple OUIs",
+      "mutated_line": "elif oui in ['00:1C:B3', '00:1D:4F', '']:",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "categorized_mac.setdefault('Dell', []).append(mac)",
+      "mutated_line": "categorized_mac.setdefault('', []).append(mac)",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "categorized_mac.setdefault('Apple', []).append(mac)",
+      "mutated_line": "categorized_mac.setdefault('', []).append(mac)",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "categorized_mac.setdefault('Other', []).append(mac)",
+      "mutated_line": "categorized_mac.setdefault('', []).append(mac)",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:9].upper().replace('-', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:9].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:7].upper().replace('-', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:7].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:0].upper().replace('-', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:0].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:1].upper().replace('-', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:1].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "oui = mac[:8].upper().replace(\"-\", \":\")",
+      "mutated_line": "oui = mac[:-8].upper().replace('-', ':')",
+      "code": "import re\n\ndef categorize_mac(mac_addresses):\n    pattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'\n    categorized_mac = {}\n    for mac in mac_addresses:\n        if re.fullmatch(pattern, mac):\n            oui = mac[:-8].upper().replace('-', ':')\n            if oui in ['00:25:BC', 'E0:5F:B9', '04:0C:CE']:\n                categorized_mac.setdefault('Dell', []).append(mac)\n            elif oui in ['00:1C:B3', '00:1D:4F', '00:61:71']:\n                categorized_mac.setdefault('Apple', []).append(mac)\n            else:\n                categorized_mac.setdefault('Other', []).append(mac)\n    return categorized_mac"
+    }
+  ]
+}

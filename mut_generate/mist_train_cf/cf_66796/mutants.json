@@ -1,0 +1,721 @@
+{
+  "task_id": "cf_66796",
+  "entry_point": "minDistance",
+  "mutant_count": 102,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 29,
+      "original_line": "total_distance += distance - heuristic(nut, tree)",
+      "mutated_line": "total_distance -= distance - heuristic(nut, tree)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance -= distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) - abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) - abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) * abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) * abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)",
+      "mutated_line": "distance = astar(squirrel, nut) - astar(nut, tree, avoid=squirrel)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) - astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)",
+      "mutated_line": "distance = astar(squirrel, nut) * astar(nut, tree, avoid=squirrel)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) * astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 27,
+      "original_line": "if distance == float('inf'):",
+      "mutated_line": "if distance != float('inf'):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance != float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "total_distance += distance - heuristic(nut, tree)",
+      "mutated_line": "total_distance += distance + heuristic(nut, tree)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance + heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "total_distance += distance - heuristic(nut, tree)",
+      "mutated_line": "total_distance += distance * heuristic(nut, tree)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance * heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if pos == goal:",
+      "mutated_line": "if pos != goal:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos != goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if pos in visited:",
+      "mutated_line": "if pos not in visited:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos not in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return float('inf')",
+      "mutated_line": "return float('')",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 28,
+      "original_line": "return -1",
+      "mutated_line": "return +1",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return +1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] + b[0]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] + b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] * b[0]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] * b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] + b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] + b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] * b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] * b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "queue = [(0, start)]",
+      "mutated_line": "queue = [(1, start)]",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(1, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "queue = [(0, start)]",
+      "mutated_line": "queue = [(-1, start)]",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(-1, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "queue = [(0, start)]",
+      "mutated_line": "queue = [(1, start)]",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(1, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height or 0 <= y < width or (x, y) not in obstacles or ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height or 0 <= y < width or (x, y) not in obstacles or ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "if distance == float('inf'):",
+      "mutated_line": "if distance == float(''):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float(''):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return -1",
+      "mutated_line": "return -2",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -2\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -0\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -0\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return -1",
+      "mutated_line": "return --1",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return --1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(2, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(2, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(0, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(0, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(0, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(0, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(-1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(-1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 1), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 1), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, -1), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, -1), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 1), (-1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 1), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (+1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (+1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 1), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 1), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, -1), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, -1), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 1), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 1), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (1, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (1, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (-1, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (-1, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (1, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (1, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 2), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 2), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 0), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 0), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 0), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 0), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, -1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, -1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (1, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (1, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (-1, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (-1, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (1, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (1, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, +1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, +1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] - dx, pos[1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] - dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] * dx, pos[1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] * dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[1] - dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] - dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[1] * dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] * dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 < x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 < x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 > x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 > x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 == x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 == x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and 0 < y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 < y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and 0 > y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 > y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and 0 == y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 == y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "(x, y) not in obstacles and (x, y) != avoid):",
+      "mutated_line": "if 0 <= x < height and 0 <= y < width and ((x, y) in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "(x, y) not in obstacles and (x, y) != avoid):",
+      "mutated_line": "if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) == avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) == avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[1] - b[0]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[1] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[-1] - b[0]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[-1] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[1] - b[0]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[1] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[1]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[1]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[-1]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[-1]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[1]) + abs(a[1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[1]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[2] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[2] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[0] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[0] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[0] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[0] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[-1] - b[1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[-1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] - b[2])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[2])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] - b[0])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[0])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] - b[0])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[0])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return abs(a[0] - b[0]) + abs(a[1] - b[1])",
+      "mutated_line": "return abs(a[0] - b[0]) + abs(a[1] - b[-1])",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[-1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-2, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-2, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-0, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-0, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-0, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-0, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (--1, 0), (0, 1), (0, -1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (--1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -2)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -2)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -0)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -0)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -0)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -0)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:",
+      "mutated_line": "for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, --1)]:",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, --1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if -1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if -1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 1 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and 1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and -1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and -1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if (0 <= x < height and 0 <= y < width and",
+      "mutated_line": "if 0 <= x < height and 1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 1 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[1] + dx, pos[1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[1] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[-1] + dx, pos[1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[-1] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[1] + dx, pos[1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[1] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[2] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[2] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[0] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[0] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[0] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[0] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "x, y = pos[0] + dx, pos[1] + dy",
+      "mutated_line": "(x, y) = (pos[0] + dx, pos[-1] + dy)",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[-1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost + 1 - heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 1 - heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, ((cost + 1) * heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, ((cost + 1) * heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost - 1 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost - 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost * 1 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost * 1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost + 2 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 2 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost + 0 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 0 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost + 0 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + 0 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "heapq.heappush(queue, (cost + 1 + heuristic((x, y), goal), (x, y)))",
+      "mutated_line": "heapq.heappush(queue, (cost + -1 + heuristic((x, y), goal), (x, y)))",
+      "code": "import heapq\n\ndef minDistance(height, width, tree, squirrel, nuts, obstacles):\n\n    def heuristic(a, b):\n        return abs(a[0] - b[0]) + abs(a[1] - b[1])\n\n    def astar(start, goal, avoid=None):\n        queue = [(0, start)]\n        visited = set()\n        while queue:\n            (cost, pos) = heapq.heappop(queue)\n            if pos == goal:\n                return cost\n            if pos in visited:\n                continue\n            visited.add(pos)\n            for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                (x, y) = (pos[0] + dx, pos[1] + dy)\n                if 0 <= x < height and 0 <= y < width and ((x, y) not in obstacles) and ((x, y) != avoid):\n                    heapq.heappush(queue, (cost + -1 + heuristic((x, y), goal), (x, y)))\n        return float('inf')\n    total_distance = sum((heuristic(nut, tree) for nut in nuts))\n    for nut in nuts:\n        distance = astar(squirrel, nut) + astar(nut, tree, avoid=squirrel)\n        if distance == float('inf'):\n            return -1\n        total_distance += distance - heuristic(nut, tree)\n    return total_distance"
+    }
+  ]
+}

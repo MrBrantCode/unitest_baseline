@@ -1,0 +1,57 @@
+"""
+QUESTION:
+Write a program which reads two integers a, b and an operator op, and then prints the value of a op b.
+
+The operator op is '+', '-', '*' or '/' (sum, difference, product or quotient). The division should truncate any fractional part.
+
+Constraints
+
+* 0 ≤ a, b ≤ 20000
+* No divisions by zero are given.
+
+Input
+
+The input consists of multiple datasets. Each dataset is given in the following format.
+
+
+a op b
+
+
+The input ends with a dataset where op = '?'. Your program should not process for this dataset.
+
+Output
+
+For each dataset, print the value in a line.
+
+Example
+
+Input
+
+1 + 2
+56 - 18
+13 * 2
+100 / 10
+27 + 81
+0 ? 0
+
+
+Output
+
+3
+38
+26
+10
+108
+"""
+
+def calculate_operation(a: int, b: int, op: str) -> int:
+    if op == '+':
+        return a + b
+    elif op == '-':
+        return a - b
+    elif op == '*':
+        return a * b
+    elif op == '/':
+        return int(a / b)
+    else:
+        raise ValueError("Invalid operator")

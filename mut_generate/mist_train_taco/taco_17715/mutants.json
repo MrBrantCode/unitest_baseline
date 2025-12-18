@@ -1,0 +1,483 @@
+{
+  "task_id": "taco_17715",
+  "entry_point": "tallest_billboard",
+  "mutant_count": 68,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] -= psum[i + 1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] -= psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if idx == n:",
+      "mutated_line": "if idx != n:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx != n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if diff > psum[idx]:",
+      "mutated_line": "if diff >= psum[idx]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff >= psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if diff > psum[idx]:",
+      "mutated_line": "if diff <= psum[idx]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff <= psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if diff > psum[idx]:",
+      "mutated_line": "if diff != psum[idx]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff != psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(1, 0)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(-1, 0)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(-1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(1, 0)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(0, 1)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 1)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(0, -1)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, -1)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return dfs(0, 0)",
+      "mutated_line": "return dfs(0, 1)",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 1)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 5,
+      "original_line": "rods = sorted(rods)[::-1]",
+      "mutated_line": "rods = sorted(rods)[::+1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::+1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n + 1)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n + 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n * 1)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n * 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 1)[::+1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::+1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i - 1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i - 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i * 1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i * 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 16,
+      "original_line": "return -float('inf')",
+      "mutated_line": "return +float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return +float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) - min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) - min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) * min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) * min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "rods = sorted(rods)[::-1]",
+      "mutated_line": "rods = sorted(rods)[::-2]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-2]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "rods = sorted(rods)[::-1]",
+      "mutated_line": "rods = sorted(rods)[::-0]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-0]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "rods = sorted(rods)[::-1]",
+      "mutated_line": "rods = sorted(rods)[::-0]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-0]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "rods = sorted(rods)[::-1]",
+      "mutated_line": "rods = sorted(rods)[::--1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::--1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 2)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 2)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 0)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 0)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 0)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 0)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - -1)[::-1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - -1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 1)[::-2]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-2]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 1)[::-0]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-0]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 1)[::-0]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-0]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for i in range(n - 1)[::-1]:",
+      "mutated_line": "for i in range(n - 1)[::--1]:",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::--1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i + 2]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 2]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i + 0]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 0]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i + 0]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 0]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "psum[i] += psum[i + 1]",
+      "mutated_line": "psum[i] += psum[i + -1]",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + -1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff != 0 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff != 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 1 if diff == 0 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 1 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return -1 if diff == 0 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return -1 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 1 if diff == 0 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 1 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff == 0 else +float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else +float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx - 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx - 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx * 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx * 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx - 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx - 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx * 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx * 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff - rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff - rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff * rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff * rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff == 1 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 1 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff == -1 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == -1 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff == 1 else -float('inf')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 1 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "return -float('inf')",
+      "mutated_line": "return -float('')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 2, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 2, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 0, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 0, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 0, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 0, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + -1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + -1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 2, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 2, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 0, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 0, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 0, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 0, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + -1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + -1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx - 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx - 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx * 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx * 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return 0 if diff == 0 else -float('inf')",
+      "mutated_line": "return 0 if diff == 0 else -float('')",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 2, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 2, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 0, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 0, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 0, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 0, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + -1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + -1, abs(diff - rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff + rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff + rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff - rods[idx])) + min(diff, rods[idx]))",
+      "mutated_line": "return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff * rods[idx])) + min(diff, rods[idx]))",
+      "code": "from functools import lru_cache\nfrom typing import List\n\ndef tallest_billboard(rods: List[int]) -> int:\n    rods = sorted(rods)[::-1]\n    n = len(rods)\n    psum = rods.copy()\n    for i in range(n - 1)[::-1]:\n        psum[i] += psum[i + 1]\n\n    @lru_cache(None)\n    def dfs(idx, diff):\n        if idx == n:\n            return 0 if diff == 0 else -float('inf')\n        if diff > psum[idx]:\n            return -float('inf')\n        return max(dfs(idx + 1, diff), dfs(idx + 1, diff + rods[idx]), dfs(idx + 1, abs(diff * rods[idx])) + min(diff, rods[idx]))\n    return dfs(0, 0)"
+    }
+  ]
+}

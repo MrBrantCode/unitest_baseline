@@ -1,0 +1,68 @@
+"""
+QUESTION:
+Let's introduce a number system which is based on a roman digits. There are digits I, V, X, L which correspond to the numbers 1, 5, 10 and 50 respectively. The use of other roman digits is not allowed.
+
+Numbers in this system are written as a sequence of one or more digits. We define the value of the sequence simply as the sum of digits in it.
+
+For example, the number XXXV evaluates to 35 and the number IXI — to 12.
+
+Pay attention to the difference to the traditional roman system — in our system any sequence of digits is valid, moreover the order of digits doesn't matter, for example IX means 11, not 9.
+
+One can notice that this system is ambiguous, and some numbers can be written in many different ways. Your goal is to determine how many distinct integers can be represented by exactly n roman digits I, V, X, L.
+
+Input
+
+The only line of the input file contains a single integer n (1 ≤ n ≤ 10^9) — the number of roman digits to use.
+
+Output
+
+Output a single integer — the number of distinct integers which can be represented using n roman digits exactly.
+
+Examples
+
+Input
+
+1
+
+
+Output
+
+4
+
+
+Input
+
+2
+
+
+Output
+
+10
+
+
+Input
+
+10
+
+
+Output
+
+244
+
+Note
+
+In the first sample there are exactly 4 integers which can be represented — I, V, X and L.
+
+In the second sample it is possible to represent integers 2 (II), 6 (VI), 10 (VV), 11 (XI), 15 (XV), 20 (XX), 51 (IL), 55 (VL), 60 (XL) and 100 (LL).
+"""
+
+def count_distinct_integers(n: int) -> int:
+    # Precomputed values for the first 11 values of n
+    a = [0, 4, 10, 20, 35, 56, 83, 116, 155, 198, 244, 292]
+    
+    # If n is within the precomputed range, return the corresponding value
+    if n < len(a):
+        return a[n]
+    else:
+        # For n >= 12, use the formula a[11] + 49 * (n - 11)
+        return a[11] + 49 * (n - 11)

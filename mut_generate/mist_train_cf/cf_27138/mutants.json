@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_27138",
+  "entry_point": "extract_meta_tags",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "meta_tags = re.findall(r'<meta\\s+([^>]+)>', html_code)",
+      "mutated_line": "meta_tags = re.findall('', html_code)",
+      "code": "import re\n\ndef extract_meta_tags(html_code):\n    meta_tags = re.findall('', html_code)\n    meta_info = {}\n    for tag in meta_tags:\n        attributes = re.findall('(\\\\w+)\\\\s*=\\\\s*\\\\\"([^\\\\\"]+)\\\\\"', tag)\n        for (attr, value) in attributes:\n            if attr in meta_info:\n                if isinstance(meta_info[attr], list):\n                    meta_info[attr].append(value)\n                else:\n                    meta_info[attr] = [meta_info[attr], value]\n            else:\n                meta_info[attr] = value\n    return meta_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "attributes = re.findall(r'(\\w+)\\s*=\\s*\\\"([^\\\"]+)\\\"', tag)",
+      "mutated_line": "attributes = re.findall('', tag)",
+      "code": "import re\n\ndef extract_meta_tags(html_code):\n    meta_tags = re.findall('<meta\\\\s+([^>]+)>', html_code)\n    meta_info = {}\n    for tag in meta_tags:\n        attributes = re.findall('', tag)\n        for (attr, value) in attributes:\n            if attr in meta_info:\n                if isinstance(meta_info[attr], list):\n                    meta_info[attr].append(value)\n                else:\n                    meta_info[attr] = [meta_info[attr], value]\n            else:\n                meta_info[attr] = value\n    return meta_info"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if attr in meta_info:",
+      "mutated_line": "if attr not in meta_info:",
+      "code": "import re\n\ndef extract_meta_tags(html_code):\n    meta_tags = re.findall('<meta\\\\s+([^>]+)>', html_code)\n    meta_info = {}\n    for tag in meta_tags:\n        attributes = re.findall('(\\\\w+)\\\\s*=\\\\s*\\\\\"([^\\\\\"]+)\\\\\"', tag)\n        for (attr, value) in attributes:\n            if attr not in meta_info:\n                if isinstance(meta_info[attr], list):\n                    meta_info[attr].append(value)\n                else:\n                    meta_info[attr] = [meta_info[attr], value]\n            else:\n                meta_info[attr] = value\n    return meta_info"
+    }
+  ]
+}

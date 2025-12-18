@@ -1,0 +1,420 @@
+{
+  "task_id": "taco_4200",
+  "entry_point": "maximize_universal_quantifiers",
+  "mutant_count": 59,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if len(toposort) != n:",
+      "mutated_line": "if len(toposort) == n:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) == n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "lens[nb] -= 1",
+      "mutated_line": "lens[nb] += 1",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] += 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 22,
+      "original_line": "return -1",
+      "mutated_line": "return +1",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return +1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b + 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b + 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b * 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b * 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a + 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a + 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a * 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a * 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "stack = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "stack = [x for x in range(n) if lens[x] != 0]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] != 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "toposort = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "toposort = [x for x in range(n) if lens[x] != 0]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] != 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "lens[nb] -= 1",
+      "mutated_line": "lens[nb] -= 2",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 2\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "lens[nb] -= 1",
+      "mutated_line": "lens[nb] -= 0",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 0\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "lens[nb] -= 1",
+      "mutated_line": "lens[nb] -= 0",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 0\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "lens[nb] -= 1",
+      "mutated_line": "lens[nb] -= -1",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= -1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if lens[nb] == 0:",
+      "mutated_line": "if lens[nb] != 0:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] != 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return -1",
+      "mutated_line": "return -2",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -2\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -0\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -0\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return -1",
+      "mutated_line": "return --1",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return --1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if min_above[j] < min_above[i]:",
+      "mutated_line": "if min_above[j] <= min_above[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] <= min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if min_above[j] < min_above[i]:",
+      "mutated_line": "if min_above[j] >= min_above[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] >= min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if min_above[j] < min_above[i]:",
+      "mutated_line": "if min_above[j] != min_above[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] != min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if min_below[j] < min_below[i]:",
+      "mutated_line": "if min_below[j] <= min_below[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] <= min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if min_below[j] < min_below[i]:",
+      "mutated_line": "if min_below[j] >= min_below[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] >= min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if min_below[j] < min_below[i]:",
+      "mutated_line": "if min_below[j] != min_below[i]:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] != min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 37,
+      "original_line": "qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]",
+      "mutated_line": "qt = ['A' if min_below[i] != min_above[i] == i else 'E' for i in range(n)]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] != min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]",
+      "mutated_line": "qt = ['' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]",
+      "mutated_line": "qt = ['A' if min_below[i] == min_above[i] == i else '' for i in range(n)]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else '' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b - 2)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 2)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b - 0)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 0)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b - 0)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 0)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 1].append(b - -1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - -1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a - 2)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 2)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a - 0)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 0)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a - 0)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 0)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 1].append(a - -1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - -1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "stack = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "stack = [x for x in range(n) if lens[x] == 1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 1]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "stack = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "stack = [x for x in range(n) if lens[x] == -1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == -1]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "stack = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "stack = [x for x in range(n) if lens[x] == 1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 1]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "toposort = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "toposort = [x for x in range(n) if lens[x] == 1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 1]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "toposort = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "toposort = [x for x in range(n) if lens[x] == -1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == -1]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "toposort = [x for x in range(n) if lens[x] == 0]",
+      "mutated_line": "toposort = [x for x in range(n) if lens[x] == 1]",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 1]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if lens[nb] == 0:",
+      "mutated_line": "if lens[nb] == 1:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 1:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if lens[nb] == 0:",
+      "mutated_line": "if lens[nb] == -1:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == -1:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if lens[nb] == 0:",
+      "mutated_line": "if lens[nb] == 1:",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 1:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 38,
+      "original_line": "max_universals = len([x for x in qt if x == 'A'])",
+      "mutated_line": "max_universals = len([x for x in qt if x != 'A'])",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x != 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "return max_universals, ''.join(qt)",
+      "mutated_line": "return (max_universals, 'MUTATED'.join(qt))",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, 'MUTATED'.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a + 1].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a + 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a * 1].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a * 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b + 1].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b + 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b * 1].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b * 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "max_universals = len([x for x in qt if x == 'A'])",
+      "mutated_line": "max_universals = len([x for x in qt if x == ''])",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == ''])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 2].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 2].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 0].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 0].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - 0].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 0].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "adj_for[a - 1].append(b - 1)",
+      "mutated_line": "adj_for[a - -1].append(b - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - -1].append(b - 1)\n        adj_back[b - 1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 2].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 2].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 0].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 0].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - 0].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - 0].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "adj_back[b - 1].append(a - 1)",
+      "mutated_line": "adj_back[b - -1].append(a - 1)",
+      "code": "def maximize_universal_quantifiers(n, m, inequalities):\n    adj_for = [[] for _ in range(n)]\n    adj_back = [[] for _ in range(n)]\n    for (a, b) in inequalities:\n        adj_for[a - 1].append(b - 1)\n        adj_back[b - -1].append(a - 1)\n    lens = [len(adj_back[i]) for i in range(n)]\n    stack = [x for x in range(n) if lens[x] == 0]\n    toposort = [x for x in range(n) if lens[x] == 0]\n    while stack:\n        cur = stack.pop()\n        for nb in adj_for[cur]:\n            lens[nb] -= 1\n            if lens[nb] == 0:\n                toposort.append(nb)\n                stack.append(nb)\n    if len(toposort) != n:\n        return -1\n    min_above = list(range(n))\n    min_below = list(range(n))\n    for i in toposort:\n        for j in adj_back[i]:\n            if min_above[j] < min_above[i]:\n                min_above[i] = min_above[j]\n    for i in reversed(toposort):\n        for j in adj_for[i]:\n            if min_below[j] < min_below[i]:\n                min_below[i] = min_below[j]\n    qt = ['A' if min_below[i] == min_above[i] == i else 'E' for i in range(n)]\n    max_universals = len([x for x in qt if x == 'A'])\n    return (max_universals, ''.join(qt))"
+    }
+  ]
+}

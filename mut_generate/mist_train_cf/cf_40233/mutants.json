@@ -1,0 +1,63 @@
+{
+  "task_id": "cf_40233",
+  "entry_point": "process_dependencies",
+  "mutant_count": 8,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return {'dependencies': dependencies, 'patches': patches}",
+      "mutated_line": "return {'': dependencies, 'patches': patches}",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return {'dependencies': dependencies, 'patches': patches}",
+      "mutated_line": "return {'dependencies': dependencies, '': patches}",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, '': patches}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if line.startswith('dependency'):",
+      "mutated_line": "if line.startswith(''):",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith(''):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "match = re.search(r\"dependency\\('(.+?)', when='(.+?)', sha256='(.+?)'\\)\", line)",
+      "mutated_line": "match = re.search('', line)",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search('', line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if name not in dependencies:",
+      "mutated_line": "if name in dependencies:",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "elif line.startswith('patch'):",
+      "mutated_line": "elif line.startswith(''):",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith(''):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "match = re.search(r\"patch\\('(.+?)', sha256='(.+?)', when='(.+?)'\\)\", line)",
+      "mutated_line": "match = re.search('', line)",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search('', line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version not in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if version not in patches:",
+      "mutated_line": "if version in patches:",
+      "code": "import re\n\ndef process_dependencies(input_list):\n    dependencies = {}\n    patches = {}\n    for line in input_list:\n        if line.startswith('dependency'):\n            match = re.search(\"dependency\\\\('(.+?)', when='(.+?)', sha256='(.+?)'\\\\)\", line)\n            if match:\n                (name, version, sha256) = match.groups()\n                if name not in dependencies:\n                    dependencies[name] = {}\n                dependencies[name][version] = sha256\n        elif line.startswith('patch'):\n            match = re.search(\"patch\\\\('(.+?)', sha256='(.+?)', when='(.+?)'\\\\)\", line)\n            if match:\n                (url, sha256, version) = match.groups()\n                if version in patches:\n                    patches[version] = {}\n                patches[version][url] = sha256\n    return {'dependencies': dependencies, 'patches': patches}"
+    }
+  ]
+}

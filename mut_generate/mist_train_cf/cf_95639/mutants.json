@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_95639",
+  "entry_point": "get_keys_sorted_by_value_length",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if key in values_lengths:",
+      "mutated_line": "if key not in values_lengths:",
+      "code": "from typing import List\n\ndef get_keys_sorted_by_value_length(my_list: List[dict]) -> List[str]:\n    keys = set()\n    values_lengths = {}\n    for record in my_list:\n        for (key, value) in record.items():\n            keys.add(key)\n            if key not in values_lengths:\n                values_lengths[key].append(len(str(value)))\n            else:\n                values_lengths[key] = [len(str(value))]\n    sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=True)\n    return sorted_keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=True)",
+      "mutated_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=False)",
+      "code": "from typing import List\n\ndef get_keys_sorted_by_value_length(my_list: List[dict]) -> List[str]:\n    keys = set()\n    values_lengths = {}\n    for record in my_list:\n        for (key, value) in record.items():\n            keys.add(key)\n            if key in values_lengths:\n                values_lengths[key].append(len(str(value)))\n            else:\n                values_lengths[key] = [len(str(value))]\n    sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=False)\n    return sorted_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=True)",
+      "mutated_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) * len(values_lengths[k]), reverse=True)",
+      "code": "from typing import List\n\ndef get_keys_sorted_by_value_length(my_list: List[dict]) -> List[str]:\n    keys = set()\n    values_lengths = {}\n    for record in my_list:\n        for (key, value) in record.items():\n            keys.add(key)\n            if key in values_lengths:\n                values_lengths[key].append(len(str(value)))\n            else:\n                values_lengths[key] = [len(str(value))]\n    sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) * len(values_lengths[k]), reverse=True)\n    return sorted_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) / len(values_lengths[k]), reverse=True)",
+      "mutated_line": "sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) // len(values_lengths[k]), reverse=True)",
+      "code": "from typing import List\n\ndef get_keys_sorted_by_value_length(my_list: List[dict]) -> List[str]:\n    keys = set()\n    values_lengths = {}\n    for record in my_list:\n        for (key, value) in record.items():\n            keys.add(key)\n            if key in values_lengths:\n                values_lengths[key].append(len(str(value)))\n            else:\n                values_lengths[key] = [len(str(value))]\n    sorted_keys = sorted(keys, key=lambda k: sum(values_lengths[k]) // len(values_lengths[k]), reverse=True)\n    return sorted_keys"
+    }
+  ]
+}

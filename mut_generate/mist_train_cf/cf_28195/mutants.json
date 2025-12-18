@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_28195",
+  "entry_point": "encode_string_hex",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "encoded_dict[encoding] = \"ERROR\"",
+      "mutated_line": "encoded_dict[encoding] = ''",
+      "code": "from typing import List, Dict, Union\n\ndef encode_string_hex(string: str, encodings: List[str]) -> Dict[str, Union[str, bytes]]:\n    encoded_dict = {}\n    for encoding in encodings:\n        try:\n            bytes = string.encode(encoding)\n            dump = ' '.join(('%02X' % byte for byte in bytes))\n            encoded_dict[encoding] = dump\n        except Exception as e:\n            encoded_dict[encoding] = ''\n    return encoded_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "dump = ' '.join('%02X' % byte for byte in bytes)",
+      "mutated_line": "dump = ''.join(('%02X' % byte for byte in bytes))",
+      "code": "from typing import List, Dict, Union\n\ndef encode_string_hex(string: str, encodings: List[str]) -> Dict[str, Union[str, bytes]]:\n    encoded_dict = {}\n    for encoding in encodings:\n        try:\n            bytes = string.encode(encoding)\n            dump = ''.join(('%02X' % byte for byte in bytes))\n            encoded_dict[encoding] = dump\n        except Exception as e:\n            encoded_dict[encoding] = 'ERROR'\n    return encoded_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "dump = ' '.join('%02X' % byte for byte in bytes)",
+      "mutated_line": "dump = ' '.join(('%02X' * byte for byte in bytes))",
+      "code": "from typing import List, Dict, Union\n\ndef encode_string_hex(string: str, encodings: List[str]) -> Dict[str, Union[str, bytes]]:\n    encoded_dict = {}\n    for encoding in encodings:\n        try:\n            bytes = string.encode(encoding)\n            dump = ' '.join(('%02X' * byte for byte in bytes))\n            encoded_dict[encoding] = dump\n        except Exception as e:\n            encoded_dict[encoding] = 'ERROR'\n    return encoded_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "dump = ' '.join('%02X' % byte for byte in bytes)",
+      "mutated_line": "dump = ' '.join(('%02X' + byte for byte in bytes))",
+      "code": "from typing import List, Dict, Union\n\ndef encode_string_hex(string: str, encodings: List[str]) -> Dict[str, Union[str, bytes]]:\n    encoded_dict = {}\n    for encoding in encodings:\n        try:\n            bytes = string.encode(encoding)\n            dump = ' '.join(('%02X' + byte for byte in bytes))\n            encoded_dict[encoding] = dump\n        except Exception as e:\n            encoded_dict[encoding] = 'ERROR'\n    return encoded_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "dump = ' '.join('%02X' % byte for byte in bytes)",
+      "mutated_line": "dump = ' '.join(('' % byte for byte in bytes))",
+      "code": "from typing import List, Dict, Union\n\ndef encode_string_hex(string: str, encodings: List[str]) -> Dict[str, Union[str, bytes]]:\n    encoded_dict = {}\n    for encoding in encodings:\n        try:\n            bytes = string.encode(encoding)\n            dump = ' '.join(('' % byte for byte in bytes))\n            encoded_dict[encoding] = dump\n        except Exception as e:\n            encoded_dict[encoding] = 'ERROR'\n    return encoded_dict"
+    }
+  ]
+}

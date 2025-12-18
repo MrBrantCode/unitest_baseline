@@ -1,0 +1,70 @@
+"""
+QUESTION:
+To improve the participation in the IndiaHacks 2016, its organizers have planned a word of mouth advertising campaign. The organizers have identified a target audience of size N and want to invite each of these people to the contest. But being very busy, they cannot possibly go to each one of them personally.So, they have come up with a way in which they would invite a few people from the target audience and these chosen few would further invite their friends and so on. So, given the size of the target audience N and the friendship relation between members of the audience, can you give the minimum number of people that the organizers need to reach out to?
+
+If still you have not registered for the IndiaHacks 2016 do it now here.
+
+Input Format
+
+The first line of input contains the number of test cases T. (1 ≤ T ≤ 10)
+
+The second line of input contains the number of people N. (1 ≤ N ≤ 100,000)
+
+The people are numbered from 0 to N-1.
+
+The third line contains the number of friendship entries e. (0 ≤ e ≤ N-1)
+
+Then e lines follow, each describing a friendship entry.
+
+A friendship entry is a line containing 2 space separated integers a,b such that a is a friend of b and vice versa. (0 ≤ a,b ≤ N-1 and a,b are distinct)
+
+Output Fomat
+
+For each test case, a single line containing the minimum number of people that the organizers need to reach out to.
+Register for IndiaHacksSAMPLE INPUT
+2
+4
+2
+0 1
+1 2
+3
+0
+
+SAMPLE OUTPUT
+2
+3
+
+Register for IndiaHacks
+"""
+
+def minimum_people_to_reach_out(test_cases):
+    def find(a):
+        if p[a] != -1:
+            p[a] = find(p[a])
+            return p[a]
+        else:
+            return a
+
+    results = []
+    
+    for case in test_cases:
+        n = case['n']
+        e = case['e']
+        friendships = case['friendships']
+        
+        ans = 0
+        p = [-1] * n
+        
+        for a, b in friendships:
+            pa = find(a)
+            pb = find(b)
+            if pa != pb:
+                p[pa] = pb
+        
+        for i in range(n):
+            if p[i] == -1:
+                ans += 1
+        
+        results.append(ans)
+    
+    return results

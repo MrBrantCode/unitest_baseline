@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_74673",
+  "entry_point": "xml_to_dict",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if child.tag in dict_data:",
+      "mutated_line": "if child.tag not in dict_data:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_dict(element):\n    dict_data = {}\n    for (key, value) in element.attrib.items():\n        dict_data['@{}'.format(key)] = value\n    for child in element:\n        child_data = xml_to_dict(child)\n        if child.tag not in dict_data:\n            if type(dict_data[child.tag]) is list:\n                dict_data[child.tag].append(child_data)\n            else:\n                dict_data[child.tag] = [dict_data[child.tag], child_data]\n        else:\n            dict_data[child.tag] = child_data\n    text = element.text\n    if text:\n        dict_data['#text'] = text\n    return dict_data"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if type(dict_data[child.tag]) is list:",
+      "mutated_line": "if type(dict_data[child.tag]) is not list:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_dict(element):\n    dict_data = {}\n    for (key, value) in element.attrib.items():\n        dict_data['@{}'.format(key)] = value\n    for child in element:\n        child_data = xml_to_dict(child)\n        if child.tag in dict_data:\n            if type(dict_data[child.tag]) is not list:\n                dict_data[child.tag].append(child_data)\n            else:\n                dict_data[child.tag] = [dict_data[child.tag], child_data]\n        else:\n            dict_data[child.tag] = child_data\n    text = element.text\n    if text:\n        dict_data['#text'] = text\n    return dict_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "dict_data['#text'] = text",
+      "mutated_line": "dict_data[''] = text",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_dict(element):\n    dict_data = {}\n    for (key, value) in element.attrib.items():\n        dict_data['@{}'.format(key)] = value\n    for child in element:\n        child_data = xml_to_dict(child)\n        if child.tag in dict_data:\n            if type(dict_data[child.tag]) is list:\n                dict_data[child.tag].append(child_data)\n            else:\n                dict_data[child.tag] = [dict_data[child.tag], child_data]\n        else:\n            dict_data[child.tag] = child_data\n    text = element.text\n    if text:\n        dict_data[''] = text\n    return dict_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "dict_data[\"@{}\".format(key)] = value",
+      "mutated_line": "dict_data[''.format(key)] = value",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_dict(element):\n    dict_data = {}\n    for (key, value) in element.attrib.items():\n        dict_data[''.format(key)] = value\n    for child in element:\n        child_data = xml_to_dict(child)\n        if child.tag in dict_data:\n            if type(dict_data[child.tag]) is list:\n                dict_data[child.tag].append(child_data)\n            else:\n                dict_data[child.tag] = [dict_data[child.tag], child_data]\n        else:\n            dict_data[child.tag] = child_data\n    text = element.text\n    if text:\n        dict_data['#text'] = text\n    return dict_data"
+    }
+  ]
+}

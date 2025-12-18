@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_83885",
+  "entry_point": "wordBreak",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if s in memo: # Memorization to avoid recalculating the break for a substring",
+      "mutated_line": "if s not in memo:",
+      "code": "def wordBreak(s, wordDict):\n    (wordSet, memo) = (set(wordDict), {})\n\n    def dfs(s):\n        if not s:\n            return [[]]\n        if s not in memo:\n            return memo[s]\n        res = []\n        for word in wordSet:\n            if s.startswith(word):\n                for rest in dfs(s[len(word):]):\n                    res.append([word] + rest)\n        memo[s] = res\n        return res\n    return [' '.join(words) for words in dfs(s)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return [\" \".join(words) for words in dfs(s)]",
+      "mutated_line": "return [''.join(words) for words in dfs(s)]",
+      "code": "def wordBreak(s, wordDict):\n    (wordSet, memo) = (set(wordDict), {})\n\n    def dfs(s):\n        if not s:\n            return [[]]\n        if s in memo:\n            return memo[s]\n        res = []\n        for word in wordSet:\n            if s.startswith(word):\n                for rest in dfs(s[len(word):]):\n                    res.append([word] + rest)\n        memo[s] = res\n        return res\n    return [''.join(words) for words in dfs(s)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "res.append([word] + rest)",
+      "mutated_line": "res.append([word] - rest)",
+      "code": "def wordBreak(s, wordDict):\n    (wordSet, memo) = (set(wordDict), {})\n\n    def dfs(s):\n        if not s:\n            return [[]]\n        if s in memo:\n            return memo[s]\n        res = []\n        for word in wordSet:\n            if s.startswith(word):\n                for rest in dfs(s[len(word):]):\n                    res.append([word] - rest)\n        memo[s] = res\n        return res\n    return [' '.join(words) for words in dfs(s)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "res.append([word] + rest)",
+      "mutated_line": "res.append([word] * rest)",
+      "code": "def wordBreak(s, wordDict):\n    (wordSet, memo) = (set(wordDict), {})\n\n    def dfs(s):\n        if not s:\n            return [[]]\n        if s in memo:\n            return memo[s]\n        res = []\n        for word in wordSet:\n            if s.startswith(word):\n                for rest in dfs(s[len(word):]):\n                    res.append([word] * rest)\n        memo[s] = res\n        return res\n    return [' '.join(words) for words in dfs(s)]"
+    }
+  ]
+}

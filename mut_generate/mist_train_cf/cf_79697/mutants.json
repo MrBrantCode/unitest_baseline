@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_79697",
+  "entry_point": "get_names",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if \"name\" in obj:",
+      "mutated_line": "if 'name' not in obj:",
+      "code": "import json\n\ndef get_names(json_str):\n    try:\n        obj = json.loads(json_str)\n    except Exception as e:\n        raise Exception(f'Error parsing JSON: {e}')\n\n    def extract_names(obj):\n        names = []\n        if 'name' not in obj:\n            names.append(obj['name'])\n        for key in obj:\n            if isinstance(obj[key], dict):\n                names.extend(extract_names(obj[key]))\n        return names\n    return extract_names(obj)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if \"name\" in obj:",
+      "mutated_line": "if '' in obj:",
+      "code": "import json\n\ndef get_names(json_str):\n    try:\n        obj = json.loads(json_str)\n    except Exception as e:\n        raise Exception(f'Error parsing JSON: {e}')\n\n    def extract_names(obj):\n        names = []\n        if '' in obj:\n            names.append(obj['name'])\n        for key in obj:\n            if isinstance(obj[key], dict):\n                names.extend(extract_names(obj[key]))\n        return names\n    return extract_names(obj)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "raise Exception(f\"Error parsing JSON: {e}\")",
+      "mutated_line": "raise Exception(f'{e}')",
+      "code": "import json\n\ndef get_names(json_str):\n    try:\n        obj = json.loads(json_str)\n    except Exception as e:\n        raise Exception(f'{e}')\n\n    def extract_names(obj):\n        names = []\n        if 'name' in obj:\n            names.append(obj['name'])\n        for key in obj:\n            if isinstance(obj[key], dict):\n                names.extend(extract_names(obj[key]))\n        return names\n    return extract_names(obj)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "names.append(obj[\"name\"])",
+      "mutated_line": "names.append(obj[''])",
+      "code": "import json\n\ndef get_names(json_str):\n    try:\n        obj = json.loads(json_str)\n    except Exception as e:\n        raise Exception(f'Error parsing JSON: {e}')\n\n    def extract_names(obj):\n        names = []\n        if 'name' in obj:\n            names.append(obj[''])\n        for key in obj:\n            if isinstance(obj[key], dict):\n                names.extend(extract_names(obj[key]))\n        return names\n    return extract_names(obj)"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "task_id": "cf_36443",
+  "entry_point": "parse_key_value",
+  "mutant_count": 33,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cur_key = \"\"",
+      "mutated_line": "cur_key = 'MUTATED'",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = 'MUTATED'\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "cur_val = \"\"",
+      "mutated_line": "cur_val = 'MUTATED'",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = 'MUTATED'\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "reading_key = True",
+      "mutated_line": "reading_key = False",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = False\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "escaped = False",
+      "mutated_line": "escaped = True",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = True\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "raise InvalidArgument('Bad KV spec empty key')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key != '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if cur_key in key_value_map:",
+      "mutated_line": "raise InvalidArgument('Bad KV spec duplicated key')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key not in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 12,
+      "original_line": "if c == '=' and not escaped:",
+      "mutated_line": "if c == '=' or not escaped:",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' or not escaped:\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "raise InvalidArgument('Bad KV spec empty key')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == 'MUTATED':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if c == '=' and not escaped:",
+      "mutated_line": "if c != '=' and (not escaped):",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c != '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "if cur_key != '':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key != '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "reading_key = False",
+      "mutated_line": "reading_key = True",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = True\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "elif c == ',' and not escaped:",
+      "mutated_line": "elif c == ',' or not escaped:",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' or not escaped:\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "raise InvalidArgument(\"Bad KV spec empty key\")",
+      "mutated_line": "raise InvalidArgument('')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "raise InvalidArgument(\"Bad KV spec duplicated key\")",
+      "mutated_line": "raise InvalidArgument('')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if c == '=' and not escaped:",
+      "mutated_line": "if c == '' and (not escaped):",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "if cur_key == 'MUTATED':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == 'MUTATED':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "elif c == ',' and not escaped:",
+      "mutated_line": "elif c != ',' and (not escaped):",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c != ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "if cur_key != '':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key != '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if cur_key in key_value_map:",
+      "mutated_line": "if cur_key not in key_value_map:",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key not in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "cur_key = \"\"",
+      "mutated_line": "cur_key = 'MUTATED'",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = 'MUTATED'\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "cur_val = \"\"",
+      "mutated_line": "cur_val = 'MUTATED'",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = 'MUTATED'\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "reading_key = True",
+      "mutated_line": "reading_key = False",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = False\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "elif c == '\\\\':",
+      "mutated_line": "elif c != '\\\\':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c != '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "raise InvalidArgument(\"Bad KV spec empty key\")",
+      "mutated_line": "raise InvalidArgument('')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "elif c == ',' and not escaped:",
+      "mutated_line": "elif c == '' and (not escaped):",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == '' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if cur_key == \"\":",
+      "mutated_line": "if cur_key == 'MUTATED':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == 'MUTATED':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "elif c == '\\\\':",
+      "mutated_line": "elif c == '':",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "escaped = True",
+      "mutated_line": "escaped = False",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = False\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 29,
+      "original_line": "cur_key += c",
+      "mutated_line": "cur_key -= c",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key -= c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 31,
+      "original_line": "cur_val += c",
+      "mutated_line": "cur_val -= c",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val -= c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "escaped = False",
+      "mutated_line": "escaped = True",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = True\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "raise InvalidArgument(\"Bad KV spec empty key\")",
+      "mutated_line": "raise InvalidArgument('')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('')\n            if cur_key in key_value_map:\n                raise InvalidArgument('Bad KV spec duplicated key')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "raise InvalidArgument(\"Bad KV spec duplicated key\")",
+      "mutated_line": "raise InvalidArgument('')",
+      "code": "class InvalidArgument(Exception):\n    pass\n\ndef parse_key_value(input_string):\n    key_value_map = {}\n    cur_key = ''\n    cur_val = ''\n    reading_key = True\n    escaped = False\n    for c in input_string:\n        if c == '=' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            reading_key = False\n        elif c == ',' and (not escaped):\n            if cur_key == '':\n                raise InvalidArgument('Bad KV spec empty key')\n            if cur_key in key_value_map:\n                raise InvalidArgument('')\n            key_value_map[cur_key] = cur_val\n            cur_key = ''\n            cur_val = ''\n            reading_key = True\n        elif c == '\\\\':\n            escaped = True\n        else:\n            if reading_key:\n                cur_key += c\n            else:\n                cur_val += c\n            escaped = False\n    if cur_key == '':\n        raise InvalidArgument('Bad KV spec empty key')\n    if cur_key in key_value_map:\n        raise InvalidArgument('Bad KV spec duplicated key')\n    key_value_map[cur_key] = cur_val\n    return key_value_map"
+    }
+  ]
+}

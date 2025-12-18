@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_41236",
+  "entry_point": "extract_nested_data",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 11,
+      "original_line": "elif key == 'n' and isinstance(value, dict):",
+      "mutated_line": "elif key == 'n' or isinstance(value, dict):",
+      "code": "from typing import List, Tuple, Union\nimport json\n\ndef extract_nested_data(json_data: List[str]) -> List[Tuple[str, Union[int, bool, str]]]:\n    result = []\n    for data in json_data:\n        json_obj = json.loads(data)\n        for (key, value) in json_obj.items():\n            if isinstance(value, (bool, int)):\n                result.append((key, value))\n            elif key == 'n' or isinstance(value, dict):\n                for (nested_key, nested_value) in value.items():\n                    if isinstance(nested_value, list) and all((isinstance(item, str) for item in nested_value)):\n                        for item in nested_value:\n                            result.append(('s', item))\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "elif key == 'n' and isinstance(value, dict):",
+      "mutated_line": "elif key != 'n' and isinstance(value, dict):",
+      "code": "from typing import List, Tuple, Union\nimport json\n\ndef extract_nested_data(json_data: List[str]) -> List[Tuple[str, Union[int, bool, str]]]:\n    result = []\n    for data in json_data:\n        json_obj = json.loads(data)\n        for (key, value) in json_obj.items():\n            if isinstance(value, (bool, int)):\n                result.append((key, value))\n            elif key != 'n' and isinstance(value, dict):\n                for (nested_key, nested_value) in value.items():\n                    if isinstance(nested_value, list) and all((isinstance(item, str) for item in nested_value)):\n                        for item in nested_value:\n                            result.append(('s', item))\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "elif key == 'n' and isinstance(value, dict):",
+      "mutated_line": "elif key == '' and isinstance(value, dict):",
+      "code": "from typing import List, Tuple, Union\nimport json\n\ndef extract_nested_data(json_data: List[str]) -> List[Tuple[str, Union[int, bool, str]]]:\n    result = []\n    for data in json_data:\n        json_obj = json.loads(data)\n        for (key, value) in json_obj.items():\n            if isinstance(value, (bool, int)):\n                result.append((key, value))\n            elif key == '' and isinstance(value, dict):\n                for (nested_key, nested_value) in value.items():\n                    if isinstance(nested_value, list) and all((isinstance(item, str) for item in nested_value)):\n                        for item in nested_value:\n                            result.append(('s', item))\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "if isinstance(nested_value, list) and all(isinstance(item, str) for item in nested_value):",
+      "mutated_line": "if isinstance(nested_value, list) or all((isinstance(item, str) for item in nested_value)):",
+      "code": "from typing import List, Tuple, Union\nimport json\n\ndef extract_nested_data(json_data: List[str]) -> List[Tuple[str, Union[int, bool, str]]]:\n    result = []\n    for data in json_data:\n        json_obj = json.loads(data)\n        for (key, value) in json_obj.items():\n            if isinstance(value, (bool, int)):\n                result.append((key, value))\n            elif key == 'n' and isinstance(value, dict):\n                for (nested_key, nested_value) in value.items():\n                    if isinstance(nested_value, list) or all((isinstance(item, str) for item in nested_value)):\n                        for item in nested_value:\n                            result.append(('s', item))\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "result.append(('s', item))",
+      "mutated_line": "result.append(('', item))",
+      "code": "from typing import List, Tuple, Union\nimport json\n\ndef extract_nested_data(json_data: List[str]) -> List[Tuple[str, Union[int, bool, str]]]:\n    result = []\n    for data in json_data:\n        json_obj = json.loads(data)\n        for (key, value) in json_obj.items():\n            if isinstance(value, (bool, int)):\n                result.append((key, value))\n            elif key == 'n' and isinstance(value, dict):\n                for (nested_key, nested_value) in value.items():\n                    if isinstance(nested_value, list) and all((isinstance(item, str) for item in nested_value)):\n                        for item in nested_value:\n                            result.append(('', item))\n    return result"
+    }
+  ]
+}

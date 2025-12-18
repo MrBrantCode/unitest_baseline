@@ -1,0 +1,22 @@
+"""
+QUESTION:
+Write a function `rob(nums)` that takes an integer array `nums` representing the amount of money in each house arranged in a circle. The function should return the maximum amount of money that can be robbed without triggering the police, with the constraint that no two houses separated by only one house can be robbed. The input array `nums` has a length between 1 and 100, and each element is an integer between 0 and 1000.
+"""
+
+def rob(nums):
+    if not nums:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    if len(nums) == 2:
+        return max(nums[0], nums[1])
+    
+    def rob_helper(nums):
+        dp = [0]*len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+        return dp[-1]
+    
+    return max(rob_helper(nums[:-1]), rob_helper(nums[1:]))

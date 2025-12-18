@@ -1,0 +1,868 @@
+{
+  "task_id": "cf_44464",
+  "entry_point": "median",
+  "mutant_count": 123,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 2 == 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 == 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) / 2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) / 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) * 2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) * 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if left == right:",
+      "mutated_line": "if left != right:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left != right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 27,
+      "original_line": "if k == pivot:",
+      "mutated_line": "if k != pivot:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k != pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length * 2 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length * 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length + 2 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length + 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 2 != 1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 1:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 2 != -1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != -1:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 2 != 1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 1:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 / (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 / (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 + (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 + (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 ** (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 ** (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right - left) // 2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right - left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = right * left // 2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = right * left // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) // 3",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 3\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) // 1",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 1\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) // 0",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 0\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) // 1",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 1\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mid = (right + left) // 2",
+      "mutated_line": "mid = (right + left) // -2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // -2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[1][2]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][2]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[1][0]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][0]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[1][0]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][0]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[1][-1]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][-1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) <= 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) <= 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) >= 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) >= 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) != 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "j += 1",
+      "mutated_line": "j -= 1",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j -= 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "elif k < pivot:",
+      "mutated_line": "elif k <= pivot:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k <= pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "elif k < pivot:",
+      "mutated_line": "elif k >= pivot:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k >= pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "elif k < pivot:",
+      "mutated_line": "elif k != pivot:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k != pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 3 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 3 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 1 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 1 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 0 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 0 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % 1 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 1 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if length % 2 != 0:",
+      "mutated_line": "if length % -2 != 0:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % -2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(1, length - 1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(1, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(-1, length - 1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(-1, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(1, length - 1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(1, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length + 1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length + 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length * 1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length * 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length / 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length / 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length * 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length * 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 1.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 1.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return -0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return -0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 1 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 1 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return -0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return -0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) - select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) - select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) * select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) * select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[2][1]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[2][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[0][1]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[0][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[0][1]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[0][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return s[1][1]",
+      "mutated_line": "return s[-1][1]",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[-1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) < 1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 1:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) < -1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < -1:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if cmp_func(l[i], l[right]) < 0:",
+      "mutated_line": "if cmp_func(l[i], l[right]) < 1:",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 1:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "j += 1",
+      "mutated_line": "j += 2",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 2\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "j += 1",
+      "mutated_line": "j += 0",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 0\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "j += 1",
+      "mutated_line": "j += 0",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 0\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "j += 1",
+      "mutated_line": "j += -1",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += -1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 2, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 2, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 0, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 0, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 0, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 0, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - -1, length // 2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - -1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length // 3)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 3)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length // 1)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 1)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length // 0)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 0)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length // 1)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 1)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "return select(0, length - 1, length // 2)",
+      "mutated_line": "return select(0, length - 1, length // -2)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // -2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot + 1, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot + 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot * 1, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot * 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot - 1, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot - 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot * 1, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot * 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(-1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(-1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(1, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length + 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length + 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length * 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length * 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 + 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 + 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 * 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 * 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(1, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(1, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(-1, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(-1, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(1, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(1, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length + 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length + 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length * 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length * 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length / 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length / 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length * 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length * 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])",
+      "mutated_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[1])",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[1])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])",
+      "mutated_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[-1])",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[-1])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])",
+      "mutated_line": "s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[1])",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[1])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot - 2, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 2, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot - 0, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 0, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot - 0, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 0, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return select(left, pivot - 1, k)",
+      "mutated_line": "return select(left, pivot - -1, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - -1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot + 2, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 2, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot + 0, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 0, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot + 0, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 0, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return select(pivot + 1, right, k)",
+      "mutated_line": "return select(pivot + -1, right, k)",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + -1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 2, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 2, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 0, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 0, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 0, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 0, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - -1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - -1, length // 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length / 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length / 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length * 2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length * 2 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 2) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 2) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 0) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 0) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 0) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 0) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - -1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - -1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 2, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 2, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 0, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 0, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 0, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 0, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - -1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - -1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 3))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 3))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 1))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 1))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 0))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 0))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 1))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 1))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // -2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // -2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 3 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 3 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 1 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 1 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 0 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 0 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // 1 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // 1 - 1) + select(0, length - 1, length // 2))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return 0.5 * (select(0, length - 1, length // 2 - 1) + select(0, length - 1, length // 2))",
+      "mutated_line": "return 0.5 * (select(0, length - 1, length // -2 - 1) + select(0, length - 1, length // 2))",
+      "code": "def median(l: list, cmp_func: callable):\n    length = len(l)\n\n    def pivot_fn(left, right):\n        mid = (right + left) // 2\n        s = sorted([(l[left], left), (l[mid], mid), (l[right], right)], key=lambda x: x[0])\n        return s[1][1]\n\n    def partition(left, right, pivot):\n        (l[pivot], l[right]) = (l[right], l[pivot])\n        j = left\n        for i in range(left, right):\n            if cmp_func(l[i], l[right]) < 0:\n                (l[i], l[j]) = (l[j], l[i])\n                j += 1\n        (l[right], l[j]) = (l[j], l[right])\n        return j\n\n    def select(left, right, k):\n        if left == right:\n            return l[left]\n        pivot = pivot_fn(left, right)\n        pivot = partition(left, right, pivot)\n        if k == pivot:\n            return l[k]\n        elif k < pivot:\n            return select(left, pivot - 1, k)\n        else:\n            return select(pivot + 1, right, k)\n    if length % 2 != 0:\n        return select(0, length - 1, length // 2)\n    else:\n        return 0.5 * (select(0, length - 1, length // -2 - 1) + select(0, length - 1, length // 2))"
+    }
+  ]
+}

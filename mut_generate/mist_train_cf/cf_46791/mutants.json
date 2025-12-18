@@ -1,0 +1,70 @@
+{
+  "task_id": "cf_46791",
+  "entry_point": "check_dissimilar",
+  "mutant_count": 9,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "keys = set(t1 + t2)",
+      "mutated_line": "keys = set(t1 - t2)",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 - t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "keys = set(t1 + t2)",
+      "mutated_line": "keys = set(t1 * t2)",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 * t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "if key in t1 and key in t2:",
+      "mutated_line": "if key in t1 or key in t2:",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 or key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if key in t1 and key in t2:",
+      "mutated_line": "if key not in t1 and key in t2:",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key not in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if key in t1 and key in t2:",
+      "mutated_line": "if key in t1 and key not in t2:",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key not in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "elif key in t1:",
+      "mutated_line": "elif key not in t1:",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key not in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "result[key] = ([t1.count(key), t2.count(key)], 'both')",
+      "mutated_line": "result[key] = ([t1.count(key), t2.count(key)], '')",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], '')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "result[key] = (t1.count(key), 'tuple1')",
+      "mutated_line": "result[key] = (t1.count(key), '')",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), '')\n        else:\n            result[key] = (t2.count(key), 'tuple2')\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "result[key] = (t2.count(key), 'tuple2')",
+      "mutated_line": "result[key] = (t2.count(key), '')",
+      "code": "def check_dissimilar(t1, t2):\n\n    def flatten(s):\n        if isinstance(s, (set, tuple, list)):\n            return [a for i in s for a in flatten(i)]\n        elif isinstance(s, dict):\n            return [a for i in s.items() for a in flatten(i)]\n        else:\n            return [s]\n    (t1, t2) = (flatten(t1), flatten(t2))\n    keys = set(t1 + t2)\n    result = {}\n    for key in keys:\n        if key in t1 and key in t2:\n            result[key] = ([t1.count(key), t2.count(key)], 'both')\n        elif key in t1:\n            result[key] = (t1.count(key), 'tuple1')\n        else:\n            result[key] = (t2.count(key), '')\n    return result"
+    }
+  ]
+}

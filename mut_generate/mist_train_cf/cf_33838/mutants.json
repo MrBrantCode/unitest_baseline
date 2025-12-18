@@ -1,0 +1,112 @@
+{
+  "task_id": "cf_33838",
+  "entry_point": "check_lambda_expression",
+  "mutant_count": 15,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "match = re.search(r'# CHECK-TREE: (.+)', expression)",
+      "mutated_line": "match = re.search('', expression)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return False  # Annotation not found",
+      "mutated_line": "return True",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return True\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "for line in expression.split('\\n'):",
+      "mutated_line": "for line in expression.split(''):",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split(''):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if '=' in line:",
+      "mutated_line": "if '=' not in line:",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' not in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if var != 'expression':",
+      "mutated_line": "if var == 'expression':",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var == 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "return actual_tree == ast.literal_eval(expected_tree)",
+      "mutated_line": "return actual_tree != ast.literal_eval(expected_tree)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree != ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "expected_tree = match.group(1)",
+      "mutated_line": "expected_tree = match.group(2)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(2)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "expected_tree = match.group(1)",
+      "mutated_line": "expected_tree = match.group(0)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(0)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "expected_tree = match.group(1)",
+      "mutated_line": "expected_tree = match.group(0)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(0)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "expected_tree = match.group(1)",
+      "mutated_line": "expected_tree = match.group(-1)",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(-1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if '=' in line:",
+      "mutated_line": "if '' in line:",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if var != 'expression':",
+      "mutated_line": "if var != '':",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != '':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "return False  # Invalid expected tree format",
+      "mutated_line": "return True",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "var, expr = line.split('=')",
+      "mutated_line": "(var, expr) = line.split('')",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return False\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return False  # Invalid expression format",
+      "mutated_line": "return True",
+      "code": "import re\nimport ast\n\ndef check_lambda_expression(expression: str) -> bool:\n    match = re.search('# CHECK-TREE: (.+)', expression)\n    if match:\n        expected_tree = match.group(1)\n    else:\n        return False\n    assignments = {}\n    for line in expression.split('\\n'):\n        if '=' in line:\n            (var, expr) = line.split('=')\n            assignments[var.strip()] = expr.strip()\n    actual_tree = {}\n    for (var, expr) in assignments.items():\n        if var != 'expression':\n            try:\n                value = ast.literal_eval(expr)\n                actual_tree[var] = value\n            except (SyntaxError, ValueError):\n                return True\n    try:\n        return actual_tree == ast.literal_eval(expected_tree)\n    except (SyntaxError, ValueError):\n        return False"
+    }
+  ]
+}

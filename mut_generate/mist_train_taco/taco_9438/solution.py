@@ -1,0 +1,33 @@
+"""
+QUESTION:
+You are given two positive integers A and B. Compare the magnitudes of these numbers.
+
+-----Constraints-----
+ - 1 ≤ A, B ≤ 10^{100}
+ - Neither A nor B begins with a 0.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+A
+B
+
+-----Output-----
+Print GREATER if A>B, LESS if A<B and EQUAL if A=B.
+
+-----Sample Input-----
+36
+24
+
+-----Sample Output-----
+GREATER
+
+Since 36>24, print GREATER.
+"""
+
+def compare_magnitudes(A: str, B: str) -> str:
+    if A > B:
+        return 'GREATER'
+    elif A == B:
+        return 'EQUAL'
+    else:
+        return 'LESS'

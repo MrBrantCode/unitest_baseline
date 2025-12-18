@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_21360",
+  "entry_point": "parse_html",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "class_attr = dict(attrs).get('class')",
+      "mutated_line": "class_attr = dict(attrs).get('')",
+      "code": "from html.parser import HTMLParser\n\nclass ClassParser(HTMLParser):\n\n    def __init__(self):\n        super().__init__()\n        self.classes = []\n\n    def handle_starttag(self, tag, attrs):\n        class_attr = dict(attrs).get('')\n        if class_attr:\n            self.classes.extend(class_attr.split())\n\ndef parse_html(html_string):\n    parser = ClassParser()\n    parser.feed(html_string)\n    return parser.classes"
+    }
+  ]
+}

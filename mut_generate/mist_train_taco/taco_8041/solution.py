@@ -1,0 +1,110 @@
+"""
+QUESTION:
+Professor Abacus has just built a new computing engine for making numerical tables. It was designed to calculate the values of a polynomial function in one variable at several points at a time. With the polynomial function f(x) = x2 + 2x + 1, for instance, a possible expected calculation result is 1 (= f(0)), 4 (= f(1)), 9 (= f(2)), 16 (= f(3)), and 25 (= f(4)).
+
+It is a pity, however, the engine seemingly has faulty components and exactly one value among those calculated simultaneously is always wrong. With the same polynomial function as above, it can, for instance, output 1, 4, 12, 16, and 25 instead of 1, 4, 9, 16, and 25.
+
+You are requested to help the professor identify the faulty components. As the first step, you should write a program that scans calculation results of the engine and finds the wrong values.
+
+
+
+Input
+
+The input is a sequence of datasets, each representing a calculation result in the following format.
+
+d
+v0
+v1
+...
+vd+2
+
+
+Here, d in the first line is a positive integer that represents the degree of the polynomial, namely, the highest exponent of the variable. For instance, the degree of 4x5 + 3x + 0.5 is five and that of 2.4x + 3.8 is one. d is at most five.
+
+The following d + 3 lines contain the calculation result of f(0), f(1), ... , and f(d + 2) in this order, where f is the polynomial function. Each of the lines contains a decimal fraction between -100.0 and 100.0, exclusive.
+
+You can assume that the wrong value, which is exactly one of f(0), f(1), ... , and f(d+2), has an error greater than 1.0. Since rounding errors are inevitable, the other values may also have errors but they are small and never exceed 10-6.
+
+The end of the input is indicated by a line containing a zero.
+
+Output
+
+For each dataset, output i in a line when vi is wrong.
+
+Example
+
+Input
+
+2
+1.0
+4.0
+12.0
+16.0
+25.0
+1
+-30.5893962764
+5.76397083962
+39.3853798058
+74.3727663177
+4
+42.4715310246
+79.5420238202
+28.0282396675
+-30.3627807522
+-49.8363481393
+-25.5101480106
+7.58575761381
+5
+-21.9161699038
+-48.469304271
+-24.3188578417
+-2.35085940324
+-9.70239202086
+-47.2709510623
+-93.5066246072
+-82.5073836498
+0
+
+
+Output
+
+2
+1
+1
+6
+"""
+
+from itertools import combinations
+
+def build(X, Y):
+    A = []
+    for x in X:
+        res = 1
+        for xi in X:
+            if x == xi:
+                continue
+            res *= x - xi
+        A.append(Y[x] / res)
+    return A
+
+def calc(X, A, x):
+    base = 1
+    for xi in X:
+        base *= x - xi
+    return sum((base / (x - xi) * a for (xi, a) in zip(X, A)))
+
+def identify_faulty_value(d, Y):
+    N = d + 3
+    cnts = [0] * N
+    for X in combinations(range(N), d + 1):
+        U = [0] * N
+        for x in X:
+            U[x] = 1
+        A = build(X, Y)
+        for i in range(N):
+            if U[i]:
+                continue
+            res = calc(X, A, i)
+            if abs(Y[i] - res) > 0.5:
+                cnts[i] += 1
+    return cnts.index(max(cnts))

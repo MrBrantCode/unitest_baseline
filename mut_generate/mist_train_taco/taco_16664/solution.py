@@ -1,0 +1,91 @@
+"""
+QUESTION:
+Read problems statements in [Hindi], [Mandarin Chinese], [Russian], [Vietnamese] and [Bengali] as well.
+
+Two players (let's call them A and B) are playing a game on a row of cells. A cell may contain the character 'A', contain the character 'B' or be empty. Each character may only be moved from a cell $c_{i}$ to a cell $c_{f}$ if cell $c_{f}$ and all cells between $c_{i}$ and $c_{f}$ are currently empty. The leftmost (first) character may only be moved to the right, the second character may only be moved to the left, the next character to the right, and so on. Each character may be moved any number of times, including zero.
+
+The players alternate turns; player A starts. On each turn, the current player must choose a cell containing their own character ('A' for player A, 'B' for player B) and move it to a different cell. This cell may be chosen arbitrarily as long as all rules described above are satisfied. The first player that cannot move a character loses.
+
+Note that each character is always moved in a fixed direction, so the game is finite. Determine the winner of the game if both players play optimally.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first and only line of each test case contains a single string $s$ describing the initial state of the row of cells. Each character of $s$ is either 'A', 'B' or '.', denoting a cell containing 'A', a cell containing 'B' or an empty cell respectively.
+
+------  Output ------
+For each test case, print a single line containing the string "A" if player A wins or "B" if player B wins.
+
+------  Constraints ------
+$1 ≤ T ≤ 10^{5}$
+$1 ≤ |s| ≤ 10^{5}$
+the sum of $|s|$ over all test cases does not exceed $10^{6}$
+
+----- Sample Input 1 ------ 
+3
+A.B
+A..B
+A..B.A..B
+----- Sample Output 1 ------ 
+A
+A
+B
+----- explanation 1 ------ 
+Example case 1: Player A can move the first character 'A' one cell to the right. Now, player B cannot move and loses.
+
+Example case 2: Player A can move the first character two cells to the right (to the cell adjacent to 'B'). Again, player B cannot move and loses.
+"""
+
+def determine_winner(test_cases):
+    results = []
+    
+    for s in test_cases:
+        string = ''
+        pair = -1
+        (Amoves, Bmoves, count) = (0, 0, 0)
+        nim = [0, 0]
+        
+        for i in s:
+            if pair == -1:
+                if i == '.':
+                    continue
+                string = i
+                pair = 0
+            elif pair == 0:
+                if i == '.':
+                    count += 1
+                elif string == i:
+                    if string == 'A':
+                        Amoves += count
+                    else:
+                        Bmoves += count
+                    pair = 1
+                    count = 0
+                else:
+                    nim.append(count)
+                    count = 0
+                    pair = 1
+            elif pair == 1:
+                if i != '.':
+                    string = i
+                    pair = 0
+        
+        if pair == 0:
+            if string == 'A':
+                Amoves += count
+            else:
+                Bmoves += count
+        
+        if Amoves > Bmoves:
+            results.append('A')
+        elif Bmoves > Amoves:
+            results.append('B')
+        else:
+            x = nim[0]
+            for i in nim[1:]:
+                x = x ^ i
+            if x == 0:
+                results.append('B')
+            else:
+                results.append('A')
+    
+    return results

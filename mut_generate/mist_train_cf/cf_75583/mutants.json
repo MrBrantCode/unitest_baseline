@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_75583",
+  "entry_point": "punctuate_numeral_words",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "numeral_words = [word for word in words if any(c.isdigit() for c in word) and any(c in word for c in l)]",
+      "mutated_line": "numeral_words = [word for word in words if any((c.isdigit() for c in word)) or any((c in word for c in l))]",
+      "code": "import re\n\ndef punctuate_numeral_words(s, l):\n    words = re.findall('\\\\b\\\\w+[\\\\w{}]*\\\\b'.format(''.join([re.escape(c) for c in l])), s)\n    numeral_words = [word for word in words if any((c.isdigit() for c in word)) or any((c in word for c in l))]\n    return numeral_words"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "words = re.findall(r'\\b\\w+[\\w{}]*\\b'.format(''.join([re.escape(c) for c in l])), s)",
+      "mutated_line": "words = re.findall(''.format(''.join([re.escape(c) for c in l])), s)",
+      "code": "import re\n\ndef punctuate_numeral_words(s, l):\n    words = re.findall(''.format(''.join([re.escape(c) for c in l])), s)\n    numeral_words = [word for word in words if any((c.isdigit() for c in word)) and any((c in word for c in l))]\n    return numeral_words"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "words = re.findall(r'\\b\\w+[\\w{}]*\\b'.format(''.join([re.escape(c) for c in l])), s)",
+      "mutated_line": "words = re.findall('\\\\b\\\\w+[\\\\w{}]*\\\\b'.format('MUTATED'.join([re.escape(c) for c in l])), s)",
+      "code": "import re\n\ndef punctuate_numeral_words(s, l):\n    words = re.findall('\\\\b\\\\w+[\\\\w{}]*\\\\b'.format('MUTATED'.join([re.escape(c) for c in l])), s)\n    numeral_words = [word for word in words if any((c.isdigit() for c in word)) and any((c in word for c in l))]\n    return numeral_words"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "numeral_words = [word for word in words if any(c.isdigit() for c in word) and any(c in word for c in l)]",
+      "mutated_line": "numeral_words = [word for word in words if any((c.isdigit() for c in word)) and any((c not in word for c in l))]",
+      "code": "import re\n\ndef punctuate_numeral_words(s, l):\n    words = re.findall('\\\\b\\\\w+[\\\\w{}]*\\\\b'.format(''.join([re.escape(c) for c in l])), s)\n    numeral_words = [word for word in words if any((c.isdigit() for c in word)) and any((c not in word for c in l))]\n    return numeral_words"
+    }
+  ]
+}

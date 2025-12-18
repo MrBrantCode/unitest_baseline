@@ -1,0 +1,168 @@
+{
+  "task_id": "cf_39202",
+  "entry_point": "reconstruct_hits_and_tracks",
+  "mutant_count": 23,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) > 2:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) > 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) < 2:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) < 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) == 2:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) == 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] >= 0:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] >= 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] <= 0:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] <= 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] != 0:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] != 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) >= 3:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 3:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) >= 1:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 1:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) >= 0:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 0:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) >= 1:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 1:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(reconstructed_hits) >= 2:  # Require at least two reconstructed hits for track fitting",
+      "mutated_line": "if len(reconstructed_hits) >= -2:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= -2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "m, c = np.linalg.lstsq(A, y_values, rcond=None)[0]",
+      "mutated_line": "(m, c) = np.linalg.lstsq(A, y_values, rcond=None)[1]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[1]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "m, c = np.linalg.lstsq(A, y_values, rcond=None)[0]",
+      "mutated_line": "(m, c) = np.linalg.lstsq(A, y_values, rcond=None)[-1]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[-1]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "m, c = np.linalg.lstsq(A, y_values, rcond=None)[0]",
+      "mutated_line": "(m, c) = np.linalg.lstsq(A, y_values, rcond=None)[1]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[1]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "return {'slope': m, 'intercept': c}",
+      "mutated_line": "return {'': m, 'intercept': c}",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "return {'slope': m, 'intercept': c}",
+      "mutated_line": "return {'slope': m, '': c}",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, '': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] > 1:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 1:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] > -1:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > -1:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit['energy'] > 1:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 1:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if hit['energy'] > 0:  # Consider hits with non-zero energy",
+      "mutated_line": "if hit[''] > 0:",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit[''] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "x_values = [hit['x'] for hit in reconstructed_hits]",
+      "mutated_line": "x_values = [hit[''] for hit in reconstructed_hits]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit[''] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "y_values = [hit['y'] for hit in reconstructed_hits]",
+      "mutated_line": "y_values = [hit[''] for hit in reconstructed_hits]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit[''] for hit in reconstructed_hits]\n        z_values = [hit['z'] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "z_values = [hit['z'] for hit in reconstructed_hits]",
+      "mutated_line": "z_values = [hit[''] for hit in reconstructed_hits]",
+      "code": "def reconstruct_hits_and_tracks(raw_hits_data):\n    reconstructed_hits = []\n    local_tracks = []\n    for hit in raw_hits_data:\n        if hit['energy'] > 0:\n            reconstructed_hits.append(hit)\n    if len(reconstructed_hits) >= 2:\n        x_values = [hit['x'] for hit in reconstructed_hits]\n        y_values = [hit['y'] for hit in reconstructed_hits]\n        z_values = [hit[''] for hit in reconstructed_hits]\n        track_params = perform_linear_regression(x_values, y_values, z_values)\n        local_tracks.append(track_params)\n    return (reconstructed_hits, local_tracks)\n\ndef perform_linear_regression(x_values, y_values, z_values):\n    import numpy as np\n    A = np.vstack([x_values, np.ones(len(x_values))]).T\n    (m, c) = np.linalg.lstsq(A, y_values, rcond=None)[0]\n    return {'slope': m, 'intercept': c}"
+    }
+  ]
+}

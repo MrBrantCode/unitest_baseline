@@ -1,0 +1,46 @@
+"""
+QUESTION:
+There are N people living on a number line.
+The i-th person lives at coordinate X_i.
+You are going to hold a meeting that all N people have to attend.
+The meeting can be held at any integer coordinate. If you choose to hold the meeting at coordinate P, the i-th person will spend (X_i - P)^2 points of stamina to attend the meeting.
+Find the minimum total points of stamina the N people have to spend.
+
+-----Constraints-----
+ - All values in input are integers.
+ - 1 \leq N \leq 100
+ - 1 \leq X_i \leq 100
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+X_1 X_2 ... X_N
+
+-----Output-----
+Print the minimum total stamina the N people have to spend.
+
+-----Sample Input-----
+2
+1 4
+
+-----Sample Output-----
+5
+
+Assume the meeting is held at coordinate 2. In this case, the first person will spend (1 - 2)^2 points of stamina, and the second person will spend (4 - 2)^2 = 4 points of stamina, for a total of 5 points of stamina. This is the minimum total stamina that the 2 people have to spend.
+Note that you can hold the meeting only at an integer coordinate.
+"""
+
+def calculate_minimum_stamina(N, X):
+    # Initialize the minimum stamina to a large number
+    min_stamina = float('inf')
+    
+    # Iterate over all possible meeting points from the minimum to the maximum coordinate
+    for p in range(min(X), max(X) + 1):
+        # Calculate the total stamina for the current meeting point
+        total_stamina = sum((x - p) ** 2 for x in X)
+        
+        # Update the minimum stamina if the current total is smaller
+        if total_stamina < min_stamina:
+            min_stamina = total_stamina
+    
+    return min_stamina

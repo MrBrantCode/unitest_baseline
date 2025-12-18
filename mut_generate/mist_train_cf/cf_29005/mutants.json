@@ -1,0 +1,105 @@
+{
+  "task_id": "cf_29005",
+  "entry_point": "find_true_keys",
+  "mutant_count": 14,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def process_json(obj, prefix=\"\"):",
+      "mutated_line": "def process_json(obj, prefix='MUTATED'):",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix='MUTATED'):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if isinstance(value, bool) and value:",
+      "mutated_line": "if isinstance(value, bool) or value:",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) or value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "true_keys.append(prefix + key)",
+      "mutated_line": "true_keys.append(prefix - key)",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix - key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "true_keys.append(prefix + key)",
+      "mutated_line": "true_keys.append(prefix * key)",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix * key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "process_json(item, prefix + str(i) + \".\")",
+      "mutated_line": "process_json(item, prefix + str(i) - '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) - '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "process_json(item, prefix + str(i) + \".\")",
+      "mutated_line": "process_json(item, (prefix + str(i)) * '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, (prefix + str(i)) * '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "process_json(value, prefix + key + \".\")",
+      "mutated_line": "process_json(value, prefix + key - '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key - '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "process_json(value, prefix + key + \".\")",
+      "mutated_line": "process_json(value, (prefix + key) * '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, (prefix + key) * '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "process_json(item, prefix + str(i) + \".\")",
+      "mutated_line": "process_json(item, prefix - str(i) + '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix - str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "process_json(item, prefix + str(i) + \".\")",
+      "mutated_line": "process_json(item, prefix * str(i) + '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix * str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "process_json(item, prefix + str(i) + \".\")",
+      "mutated_line": "process_json(item, prefix + str(i) + '')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "process_json(value, prefix + key + \".\")",
+      "mutated_line": "process_json(value, prefix - key + '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix - key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "process_json(value, prefix + key + \".\")",
+      "mutated_line": "process_json(value, prefix * key + '.')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix * key + '.')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "process_json(value, prefix + key + \".\")",
+      "mutated_line": "process_json(value, prefix + key + '')",
+      "code": "def find_true_keys(json_obj: dict) -> list:\n    true_keys = []\n\n    def process_json(obj, prefix=''):\n        if isinstance(obj, dict):\n            for (key, value) in obj.items():\n                if isinstance(value, bool) and value:\n                    true_keys.append(prefix + key)\n                elif isinstance(value, (dict, list)):\n                    process_json(value, prefix + key + '')\n        elif isinstance(obj, list):\n            for (i, item) in enumerate(obj):\n                process_json(item, prefix + str(i) + '.')\n    process_json(json_obj)\n    return true_keys"
+    }
+  ]
+}

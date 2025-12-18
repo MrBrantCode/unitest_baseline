@@ -1,0 +1,36 @@
+"""
+QUESTION:
+Rajat Singh , a student of Delhi University is learning the ways of finding the mean of N numbers. Rajat is a weak students as far as mathematics is concerned and his teacher gave lots of problem sets to find the means. Please help rajat with his homework.
+Note:- Truncate the Fraction Part of result.
+
+Input
+
+First Line contains Number of testcases. First line of each test case contains single integer N and next line contains N  integer.
+
+Output
+
+Output a single Integer mean of data set in a single line  
+
+Constraints
+1 ≤ T ≤ 10  
+1 ≤ N ≤ 100  
+1 ≤ x ≤ 10^9    
+
+SAMPLE INPUT
+1
+4
+10
+12
+23
+24
+
+SAMPLE OUTPUT
+17
+"""
+
+def calculate_mean_of_test_cases(test_cases):
+    results = []
+    for case in test_cases:
+        mean_value = sum(case) // len(case)  # Truncate the fraction part
+        results.append(mean_value)
+    return results

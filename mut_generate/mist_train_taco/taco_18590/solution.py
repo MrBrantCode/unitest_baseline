@@ -1,0 +1,51 @@
+"""
+QUESTION:
+Regular Tic-Tac-Toe is boring.
+
+That's why in this Kata you will be playing  Tic-Tac-Toe in **3D** using a 4 x 4 x 4 matrix!
+
+
+
+# Kata Task
+
+Play the game. Work out who wins.
+
+Return a string
+
+* `O wins after  moves`
+* `X wins after  moves`
+* `No winner`
+
+# Rules
+
+* Player `O` always goes first
+* Input `moves` is list/array/tuple of `[x,y,z]` (zero based)
+* Each player takes a turn until you find a winner, or there are no moves left
+* Four of the same symbols in a row wins
+* There may be more moves provided than are necessary to finish the game - that is for you to figure out
+
+
+
+Good Luck!
+DM
+"""
+
+from itertools import product
+
+def winning_lines(size, dimension):
+    if dimension == 1:
+        return frozenset({frozenset({(n,) for n in range(size)})})
+    lines = set()
+    for (line, idx, val) in product(winning_lines(size, dimension - 1), range(dimension), range(size)):
+        lines.add(frozenset({cell[:idx] + (val,) + cell[idx:] for cell in line}))
+    for dirs in product((-1, 1), repeat=dimension - 1):
+        lines.add(frozenset(zip(*(range(size)[::d] for d in [1] + list(dirs)))))
+    return lines
+
+def determine_3d_tic_tac_toe_winner(moves):
+    (grid, lines) = ([], winning_lines(4, 3))
+    for m in moves:
+        grid.append(tuple(m))
+        if any((line <= set(grid[-1::-2]) for line in lines)):
+            return '{} wins after {} moves'.format('XO'[len(grid) % 2], len(grid))
+    return 'No winner'

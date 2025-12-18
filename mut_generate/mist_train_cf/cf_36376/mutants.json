@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_36376",
+  "entry_point": "find_dependencies",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if dep not in transitive_dependencies:",
+      "mutated_line": "if dep in transitive_dependencies:",
+      "code": "def find_dependencies(dependencies, package):\n    direct_dependencies = dependencies.get(package, [])\n    transitive_dependencies = []\n\n    def get_transitive_deps(pkg):\n        nonlocal transitive_dependencies\n        for dep in dependencies.get(pkg, []):\n            if dep in transitive_dependencies:\n                transitive_dependencies.append(dep)\n                get_transitive_deps(dep)\n    get_transitive_deps(package)\n    return list(set(direct_dependencies + transitive_dependencies))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "return list(set(direct_dependencies + transitive_dependencies))",
+      "mutated_line": "return list(set(direct_dependencies - transitive_dependencies))",
+      "code": "def find_dependencies(dependencies, package):\n    direct_dependencies = dependencies.get(package, [])\n    transitive_dependencies = []\n\n    def get_transitive_deps(pkg):\n        nonlocal transitive_dependencies\n        for dep in dependencies.get(pkg, []):\n            if dep not in transitive_dependencies:\n                transitive_dependencies.append(dep)\n                get_transitive_deps(dep)\n    get_transitive_deps(package)\n    return list(set(direct_dependencies - transitive_dependencies))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "return list(set(direct_dependencies + transitive_dependencies))",
+      "mutated_line": "return list(set(direct_dependencies * transitive_dependencies))",
+      "code": "def find_dependencies(dependencies, package):\n    direct_dependencies = dependencies.get(package, [])\n    transitive_dependencies = []\n\n    def get_transitive_deps(pkg):\n        nonlocal transitive_dependencies\n        for dep in dependencies.get(pkg, []):\n            if dep not in transitive_dependencies:\n                transitive_dependencies.append(dep)\n                get_transitive_deps(dep)\n    get_transitive_deps(package)\n    return list(set(direct_dependencies * transitive_dependencies))"
+    }
+  ]
+}

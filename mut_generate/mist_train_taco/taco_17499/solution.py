@@ -1,0 +1,105 @@
+"""
+QUESTION:
+Yaroslav, Andrey and Roman can play cubes for hours and hours. But the game is for three, so when Roman doesn't show up, Yaroslav and Andrey play another game. 
+
+Roman leaves a word for each of them. Each word consists of 2·n binary characters "0" or "1". After that the players start moving in turns. Yaroslav moves first. During a move, a player must choose an integer from 1 to 2·n, which hasn't been chosen by anybody up to that moment. Then the player takes a piece of paper and writes out the corresponding character from his string. 
+
+Let's represent Yaroslav's word as s = s1s2... s2n. Similarly, let's represent Andrey's word as t = t1t2... t2n. Then, if Yaroslav choose number k during his move, then he is going to write out character sk on the piece of paper. Similarly, if Andrey choose number r during his move, then he is going to write out character tr on the piece of paper.
+
+The game finishes when no player can make a move. After the game is over, Yaroslav makes some integer from the characters written on his piece of paper (Yaroslav can arrange these characters as he wants). Andrey does the same. The resulting numbers can contain leading zeroes. The person with the largest number wins. If the numbers are equal, the game ends with a draw.
+
+You are given two strings s and t. Determine the outcome of the game provided that Yaroslav and Andrey play optimally well.
+
+Input
+
+The first line contains integer n (1 ≤ n ≤ 106). The second line contains string s — Yaroslav's word. The third line contains string t — Andrey's word.
+
+It is guaranteed that both words consist of 2·n characters "0" and "1".
+
+Output
+
+Print "First", if both players play optimally well and Yaroslav wins. If Andrey wins, print "Second" and if the game ends with a draw, print "Draw". Print the words without the quotes.
+
+Examples
+
+Input
+
+2
+0111
+0001
+
+
+Output
+
+First
+
+
+Input
+
+3
+110110
+001001
+
+
+Output
+
+First
+
+
+Input
+
+3
+111000
+000111
+
+
+Output
+
+Draw
+
+
+Input
+
+4
+01010110
+00101101
+
+
+Output
+
+First
+
+
+Input
+
+4
+01100000
+10010011
+
+
+Output
+
+Second
+"""
+
+def determine_game_outcome(n, s, t):
+    # Convert strings to lists for easier manipulation
+    s = list(s)
+    t = list(t)
+    
+    # Count the occurrences of ('1', '1'), ('1', '0'), and ('0', '1')
+    a = len([_ for _ in zip(s, t) if _ == ('1', '1')])
+    b = len([_ for _ in zip(s, t) if _ == ('1', '0')])
+    c = len([_ for _ in zip(s, t) if _ == ('0', '1')])
+    
+    # Calculate the maximum possible scores for Yaroslav and Andrey
+    f = b + (a + 1) // 2
+    s = c + a // 2
+    
+    # Determine the outcome based on the scores
+    if f > s:
+        return 'First'
+    elif f + 1 < s:
+        return 'Second'
+    else:
+        return 'Draw'

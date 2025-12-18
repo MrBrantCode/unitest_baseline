@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_64450",
+  "entry_point": "ordered_default_dict",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if default_factory is None:",
+      "mutated_line": "if default_factory is not None:",
+      "code": "from collections import OrderedDict\n\ndef ordered_default_dict(default_factory=None, *args, **kwargs):\n    if default_factory is not None:\n        return OrderedDict(*args, **kwargs)\n    else:\n        ordered_dict = OrderedDict(*args, **kwargs)\n\n        def __missing__(key):\n            value = default_factory()\n            ordered_dict[key] = value\n            return value\n        ordered_dict.__missing__ = __missing__\n        return ordered_dict"
+    }
+  ]
+}

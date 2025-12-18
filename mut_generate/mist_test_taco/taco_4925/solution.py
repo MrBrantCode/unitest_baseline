@@ -1,0 +1,107 @@
+"""
+QUESTION:
+Read problems statements in Mandarin chinese, Russian and Vietnamese as well. 
+
+You are given a convex polygon with N vertices.
+
+You have to find any ⌊N/10⌋ distinct points with integer coordinates that lie strictly inside the polygon, or determine that such a set of points doesn't exist.
+
+Note: ⌊⌋ denotes the floor function, typically used in integer division.
+
+------ Input ------ 
+
+The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.
+The first line of each test case contains a single integer N denoting the number of vertices of the polygon.
+The following N lines describe the vertices of the polygon in anticlockwise order. Each of these lines contains two space-separated integers x and y denoting the coordinates of one vertex.
+
+------ Output ------ 
+
+For each test case, if a valid set of points doesn't exist, print a single line containing the integer -1. Otherwise, print ⌊N/10⌋ lines. Each of these lines should contain two space-separated integers denoting the coordinates of one point.
+
+The coordinates of all points should be integers with absolute value not exceeding 10^{9}. If there are multiple solutions, you may print any one.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$10 ≤ N ≤ 10^{5}$
+$sum of N over all test cases ≤ 5 · 10^{5}$
+$|x|, |y| ≤ 10^{9}$
+$no three vertices of the polygon will be collinear$
+
+------ Subtasks ------ 
+
+Subtask #1 (30 points): 1 ≤ T ≤ 100, 10 ≤
+N ≤ 100
+
+Subtask #2 (70 points): original constraints
+
+------ Example ------ 
+
+------ Input Format ------ 
+
+1
+11
+0 0
+1 1
+2 3
+2 5
+0 10
+-2 10
+-5 9
+-8 7
+-8 4
+-6 1
+-2 0
+
+------ Output Format ------ 
+
+0 1
+
+------ Explanation ------ 
+
+Example case 1: The polygon is shown in the picture:
+
+You are required to output exactly ⌊N/10⌋ = ⌊11/10⌋ = 1 point.
+
+One possible point that you can output is (0, 1). You can also output (0, 2), (-1, 3) or (1, 3).
+
+However, (0, 0) is a wrong answer, because this point lies on the border of the convex polygon.
+
+If you output (-1, -1), that's also a wrong answer, because this point lies outside the convex polygon. You can't output (1.1, 1.5) either, because it doesn't have integer coordinates, though it lies strictly inside the polygon.
+"""
+
+def side(point1, point2, point):
+    return (point2[0] - point1[0]) * (point1[1] - point[1]) - (point2[1] - point1[1]) * (point1[0] - point[0])
+
+def find_interior_points(vertices, num_points):
+    n = len(vertices)
+    req = num_points
+    got = 0
+    ans = []
+    
+    for i in range(n):
+        point = vertices[i]
+        point_before = vertices[(n + i - 1) % n]
+        point_after = vertices[(i + 1) % n]
+        P = [point[0] - 1, point[1]]
+        if P not in ans:
+            if side(point_before, point, P) < 0 and side(point, point_after, P) < 0:
+                ans.append(P)
+                got += 1
+                if got == req:
+                    return ans
+    
+    if req != got:
+        for i in range(n):
+            point = vertices[i]
+            point_before = vertices[(n + i - 1) % n]
+            point_after = vertices[(i + 1) % n]
+            P = [point[0] + 1, point[1]]
+            if P not in ans:
+                if side(point_before, point, P) < 0 and side(point, point_after, P) < 0:
+                    ans.append(P)
+                    got += 1
+                    if got == req:
+                        return ans
+    
+    return -1

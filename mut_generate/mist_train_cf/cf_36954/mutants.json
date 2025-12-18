@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_36954",
+  "entry_point": "expose_methods",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) and not method.startswith('__')]",
+      "mutated_line": "exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) or not method.startswith('__')]",
+      "code": "def expose_methods(modules):\n    exposed_methods = {}\n    for module_name in modules:\n        module = globals()[module_name]\n        exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) or not method.startswith('__')]\n    return exposed_methods"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) and not method.startswith('__')]",
+      "mutated_line": "exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) and (not method.startswith(''))]",
+      "code": "def expose_methods(modules):\n    exposed_methods = {}\n    for module_name in modules:\n        module = globals()[module_name]\n        exposed_methods[module_name] = [method for method in dir(module) if callable(getattr(module, method)) and (not method.startswith(''))]\n    return exposed_methods"
+    }
+  ]
+}

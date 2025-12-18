@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_49757",
+  "entry_point": "reduce_data_skew",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def reduce_data_skew(data, partition_keys):\n    \"\"\"\"\"\"\n    redistributed_data = {key: [] for key in partition_keys}\n    for (node_id, values) in data.items():\n        for value in values:\n            partition_key_index = hash(value) % len(partition_keys)\n            partition_key = partition_keys[partition_key_index]\n            redistributed_data[partition_key].append(value)\n    return redistributed_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "partition_key_index = hash(value) % len(partition_keys)",
+      "mutated_line": "partition_key_index = hash(value) * len(partition_keys)",
+      "code": "def reduce_data_skew(data, partition_keys):\n    \"\"\"\n    Redistribute data across the cluster using the provided partition keys to mitigate data skew.\n\n    Args:\n        data (dict): A dictionary where keys are node IDs and values are lists of data.\n        partition_keys (list): A list of new partition keys.\n\n    Returns:\n        dict: A new dictionary where data is redistributed across the cluster.\n    \"\"\"\n    redistributed_data = {key: [] for key in partition_keys}\n    for (node_id, values) in data.items():\n        for value in values:\n            partition_key_index = hash(value) * len(partition_keys)\n            partition_key = partition_keys[partition_key_index]\n            redistributed_data[partition_key].append(value)\n    return redistributed_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "partition_key_index = hash(value) % len(partition_keys)",
+      "mutated_line": "partition_key_index = hash(value) + len(partition_keys)",
+      "code": "def reduce_data_skew(data, partition_keys):\n    \"\"\"\n    Redistribute data across the cluster using the provided partition keys to mitigate data skew.\n\n    Args:\n        data (dict): A dictionary where keys are node IDs and values are lists of data.\n        partition_keys (list): A list of new partition keys.\n\n    Returns:\n        dict: A new dictionary where data is redistributed across the cluster.\n    \"\"\"\n    redistributed_data = {key: [] for key in partition_keys}\n    for (node_id, values) in data.items():\n        for value in values:\n            partition_key_index = hash(value) + len(partition_keys)\n            partition_key = partition_keys[partition_key_index]\n            redistributed_data[partition_key].append(value)\n    return redistributed_data"
+    }
+  ]
+}

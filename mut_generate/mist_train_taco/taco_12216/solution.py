@@ -1,0 +1,50 @@
+"""
+QUESTION:
+E869120 found a chest which is likely to contain treasure.
+
+However, the chest is locked. In order to open it, he needs to enter a string S consisting of lowercase English letters.
+
+He also found a string S', which turns out to be the string S with some of its letters (possibly all or none) replaced with ?.  
+One more thing he found is a sheet of paper with the following facts written on it:  
+ - Condition 1: The string S contains a string T as a contiguous substring.
+ - Condition 2: S is the lexicographically smallest string among the ones that satisfy Condition 1.
+Print the string S.
+
+If such a string does not exist, print UNRESTORABLE.  
+
+-----Constraints-----
+ - 1 \leq |S'|, |T| \leq 50
+ - S' consists of lowercase English letters and ?.
+ - T consists of lowercase English letters.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+S
+T'
+
+-----Output-----
+Print the string S.
+
+If such a string does not exist, print UNRESTORABLE instead.  
+
+-----Sample Input-----
+?tc????
+coder
+
+-----Sample Output-----
+atcoder
+
+There are 26 strings that satisfy Condition 1: atcoder, btcoder, ctcoder,..., ztcoder.
+Among them, the lexicographically smallest is atcoder, so we can say S = atcoder.
+"""
+
+import re
+
+def find_lexicographically_smallest_string(s_dash: str, t: str) -> str:
+    for i in reversed(range(len(s_dash) - len(t) + 1)):
+        matchobj = re.match(s_dash[i:i + len(t)].replace('?', '[a-z]'), t)
+        if matchobj:
+            _s = list(s_dash)
+            _s[i:i + len(t)] = t
+            return ''.join(_s).replace('?', 'a')
+    return 'UNRESTORABLE'

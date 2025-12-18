@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_53351",
+  "entry_point": "match_date",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "pattern1 = \"\\d{1,2}[-/]\\d{1,2}[-/]\\d{4}\"  # pattern for dd/mm/yyyy or dd-mm-yyyy",
+      "mutated_line": "pattern1 = ''",
+      "code": "import re\n\ndef match_date(date):\n    pattern1 = ''\n    pattern2 = '\\\\d{4}[-/]\\\\d{1,2}[-/]\\\\d{1,2}'\n    return bool(re.match(pattern1, date) or re.match(pattern2, date))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "pattern2 = \"\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}\"  # pattern for yyyy/mm/dd or yyyy-mm-dd",
+      "mutated_line": "pattern2 = ''",
+      "code": "import re\n\ndef match_date(date):\n    pattern1 = '\\\\d{1,2}[-/]\\\\d{1,2}[-/]\\\\d{4}'\n    pattern2 = ''\n    return bool(re.match(pattern1, date) or re.match(pattern2, date))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "return bool(re.match(pattern1, date) or re.match(pattern2, date))  # return True if either of the patterns matches the date",
+      "mutated_line": "return bool(re.match(pattern1, date) and re.match(pattern2, date))",
+      "code": "import re\n\ndef match_date(date):\n    pattern1 = '\\\\d{1,2}[-/]\\\\d{1,2}[-/]\\\\d{4}'\n    pattern2 = '\\\\d{4}[-/]\\\\d{1,2}[-/]\\\\d{1,2}'\n    return bool(re.match(pattern1, date) and re.match(pattern2, date))"
+    }
+  ]
+}

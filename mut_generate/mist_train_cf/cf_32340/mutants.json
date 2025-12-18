@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_32340",
+  "entry_point": "validate_docker_swarm_config",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if hostname in MANAGER_HOSTS:",
+      "mutated_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname not in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "MANAGER_HOSTS = ['manager1', 'manager2']  # Replace with actual manager hostnames",
+      "mutated_line": "MANAGER_HOSTS = ['', 'manager2']",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "MANAGER_HOSTS = ['manager1', 'manager2']  # Replace with actual manager hostnames",
+      "mutated_line": "MANAGER_HOSTS = ['manager1', '']",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', '']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "WORKER_HOSTS = ['worker1', 'worker2']  # Replace with actual worker hostnames",
+      "mutated_line": "WORKER_HOSTS = ['', 'worker2']",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "WORKER_HOSTS = ['worker1', 'worker2']  # Replace with actual worker hostnames",
+      "mutated_line": "WORKER_HOSTS = ['worker1', '']",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', '']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' in docker_info or 'Nodes: 3' in docker_info or 'Managers: 2' in docker_info",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info or 'Nodes: 3' in docker_info or 'Managers: 2' in docker_info\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "elif hostname in WORKER_HOSTS:",
+      "mutated_line": "elif hostname not in WORKER_HOSTS:",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname not in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' not in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' not in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' not in docker_info and ('Managers: 2' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' not in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' not in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' not in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "return 'Is Manager: false' in docker_info",
+      "mutated_line": "return 'Is Manager: false' not in docker_info",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' not in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return '' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return '' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' in docker_info and '' in docker_info and ('Managers: 2' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and '' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and 'Managers: 2' in docker_info",
+      "mutated_line": "return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('' in docker_info)",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return 'Is Manager: false' in docker_info\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 'Is Manager: false' in docker_info",
+      "mutated_line": "return '' in docker_info",
+      "code": "def validate_docker_swarm_config(hostname: str, docker_info: str) -> bool:\n    MANAGER_HOSTS = ['manager1', 'manager2']\n    WORKER_HOSTS = ['worker1', 'worker2']\n    if hostname in MANAGER_HOSTS:\n        return 'Is Manager: true' in docker_info and 'Nodes: 3' in docker_info and ('Managers: 2' in docker_info)\n    elif hostname in WORKER_HOSTS:\n        return '' in docker_info\n    else:\n        return False"
+    }
+  ]
+}

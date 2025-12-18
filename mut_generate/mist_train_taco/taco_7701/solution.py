@@ -1,0 +1,57 @@
+"""
+QUESTION:
+Phone number in Berland is a sequence of n digits. Often, to make it easier to memorize the number, it is divided into groups of two or three digits. For example, the phone number 1198733 is easier to remember as 11-987-33. Your task is to find for a given phone number any of its divisions into groups of two or three digits.
+
+Input
+
+The first line contains integer n (2 ≤ n ≤ 100) — amount of digits in the phone number. The second line contains n digits — the phone number to divide into groups.
+
+Output
+
+Output any of divisions of the given phone number into groups of two or three digits. Separate groups by single character -. If the answer is not unique, output any.
+
+Examples
+
+Input
+
+6
+549871
+
+
+Output
+
+54-98-71
+
+Input
+
+7
+1198733
+
+
+Output
+
+11-987-33
+"""
+
+def format_berland_phone_number(n: int, phone_number: str) -> str:
+    """
+    Formats a phone number in Berland by dividing it into groups of two or three digits.
+
+    Parameters:
+    - n (int): The number of digits in the phone number.
+    - phone_number (str): The phone number to be formatted.
+
+    Returns:
+    - str: The formatted phone number with groups separated by hyphens.
+    """
+    result = []
+    while len(phone_number) > 4:
+        result.append(phone_number[:2])
+        phone_number = phone_number[2:]
+    if len(phone_number) <= 3:
+        result.append(phone_number)
+    else:
+        result.append(phone_number[:2])
+        result.append(phone_number[2:])
+    
+    return '-'.join(result)

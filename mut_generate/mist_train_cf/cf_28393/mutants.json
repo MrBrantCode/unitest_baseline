@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_28393",
+  "entry_point": "execute_attack",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "attack_module = __import__(f\".{attack_module_name}\", fromlist=[attack_module_name])",
+      "mutated_line": "attack_module = __import__(f'{attack_module_name}', fromlist=[attack_module_name])",
+      "code": "def execute_attack(attack_module_name, data_rep_extractor):\n    try:\n        attack_module = __import__(f'{attack_module_name}', fromlist=[attack_module_name])\n        attack_class = getattr(attack_module, attack_module_name)\n        attack_instance = attack_class()\n        result = attack_instance.execute_attack(data_rep_extractor)\n        return result\n    except (ImportError, AttributeError) as e:\n        return f'Error executing the attack: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return f\"Error executing the attack: {e}\"",
+      "mutated_line": "return f'{e}'",
+      "code": "def execute_attack(attack_module_name, data_rep_extractor):\n    try:\n        attack_module = __import__(f'.{attack_module_name}', fromlist=[attack_module_name])\n        attack_class = getattr(attack_module, attack_module_name)\n        attack_instance = attack_class()\n        result = attack_instance.execute_attack(data_rep_extractor)\n        return result\n    except (ImportError, AttributeError) as e:\n        return f'{e}'"
+    }
+  ]
+}

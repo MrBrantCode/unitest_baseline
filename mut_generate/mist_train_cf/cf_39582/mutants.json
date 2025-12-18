@@ -1,0 +1,224 @@
+{
+  "task_id": "cf_39582",
+  "entry_point": "version_control",
+  "mutant_count": 31,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if action == \"commit\":",
+      "mutated_line": "if action != 'commit':",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action != 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if action == \"commit\":",
+      "mutated_line": "if action == '':",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == '':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if file_name not in file_versions:",
+      "mutated_line": "if file_name in file_versions:",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "elif action == \"checkout\":",
+      "mutated_line": "elif action != 'checkout':",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action != 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_name = args[0]",
+      "mutated_line": "file_name = args[1]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[1]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_name = args[0]",
+      "mutated_line": "file_name = args[-1]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[-1]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_name = args[0]",
+      "mutated_line": "file_name = args[1]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[1]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) - 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) - 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) * 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) * 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "elif action == \"checkout\":",
+      "mutated_line": "elif action == '':",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == '':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if file_name in file_versions and int(version) <= len(file_versions[file_name]):",
+      "mutated_line": "if file_name in file_versions or int(version) <= len(file_versions[file_name]):",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions or int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 13,
+      "original_line": "latest_version = file_versions[file_name][-1]",
+      "mutated_line": "latest_version = file_versions[file_name][+1]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][+1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) + 2",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 2\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) + 0",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 0\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) + 0",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 0\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[1]) + -1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + -1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if file_name in file_versions and int(version) <= len(file_versions[file_name]):",
+      "mutated_line": "if file_name not in file_versions and int(version) <= len(file_versions[file_name]):",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name not in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if file_name in file_versions and int(version) <= len(file_versions[file_name]):",
+      "mutated_line": "if file_name in file_versions and int(version) < len(file_versions[file_name]):",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) < len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if file_name in file_versions and int(version) <= len(file_versions[file_name]):",
+      "mutated_line": "if file_name in file_versions and int(version) > len(file_versions[file_name]):",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) > len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if file_name in file_versions and int(version) <= len(file_versions[file_name]):",
+      "mutated_line": "if file_name in file_versions and int(version) == len(file_versions[file_name]):",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) == len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_versions[file_name] = [f\"{file_name}_v1\"]",
+      "mutated_line": "file_versions[file_name] = [f'{file_name}']",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "latest_version = file_versions[file_name][-1]",
+      "mutated_line": "latest_version = file_versions[file_name][-2]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-2]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "latest_version = file_versions[file_name][-1]",
+      "mutated_line": "latest_version = file_versions[file_name][-0]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-0]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "latest_version = file_versions[file_name][-1]",
+      "mutated_line": "latest_version = file_versions[file_name][-0]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-0]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "latest_version = file_versions[file_name][-1]",
+      "mutated_line": "latest_version = file_versions[file_name][--1]",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][--1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "file_versions[file_name].append(f\"{file_name}_v{version_number}\")",
+      "mutated_line": "file_versions[file_name].append(f'{file_name}{version_number}')",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[1]) + 1\n                file_versions[file_name].append(f'{file_name}{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[2]) + 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[2]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[0]) + 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[0]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[0]) + 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[0]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('_v')[-1]) + 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('_v')[-1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "version_number = int(latest_version.split(\"_v\")[1]) + 1",
+      "mutated_line": "version_number = int(latest_version.split('')[1]) + 1",
+      "code": "from typing import List, Dict\n\ndef version_control(commands: List[str]) -> Dict[str, List[str]]:\n    file_versions = {}\n    for command in commands:\n        (action, *args) = command.split()\n        if action == 'commit':\n            file_name = args[0]\n            if file_name not in file_versions:\n                file_versions[file_name] = [f'{file_name}_v1']\n            else:\n                latest_version = file_versions[file_name][-1]\n                version_number = int(latest_version.split('')[1]) + 1\n                file_versions[file_name].append(f'{file_name}_v{version_number}')\n        elif action == 'checkout':\n            (file_name, version) = args\n            if file_name in file_versions and int(version) <= len(file_versions[file_name]):\n                file_versions[file_name] = file_versions[file_name][:int(version)]\n    return file_versions"
+    }
+  ]
+}

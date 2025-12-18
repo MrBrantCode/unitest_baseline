@@ -1,0 +1,581 @@
+{
+  "task_id": "taco_13692",
+  "entry_point": "calculate_full_playoff_patterns",
+  "mutant_count": 82,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 7,
+      "original_line": "x -= 1",
+      "mutated_line": "x += 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x += 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "y -= 1",
+      "mutated_line": "y += 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y += 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [0] / n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] / n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [0] + n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] + n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [0] ** n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] ** n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n / 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n / 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n * 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n * 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "result = [[None] * n for _ in range(n)]",
+      "mutated_line": "result = [[None] / n for _ in range(n)]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] / n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "result = [[None] * n for _ in range(n)]",
+      "mutated_line": "result = [[None] + n for _ in range(n)]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] + n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "result = [[None] * n for _ in range(n)]",
+      "mutated_line": "result = [[None] ** n for _ in range(n)]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] ** n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "x -= 1",
+      "mutated_line": "x -= 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 2\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "x -= 1",
+      "mutated_line": "x -= 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 0\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "x -= 1",
+      "mutated_line": "x -= 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 0\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "x -= 1",
+      "mutated_line": "x -= -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= -1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "y -= 1",
+      "mutated_line": "y -= 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 2\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "y -= 1",
+      "mutated_line": "y -= 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 0\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "y -= 1",
+      "mutated_line": "y -= 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 0\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "y -= 1",
+      "mutated_line": "y -= -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= -1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "result[x][y] = True",
+      "mutated_line": "result[x][y] = False",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = False\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result[y][x] = False",
+      "mutated_line": "result[y][x] = True",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = True\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n // 3",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 3\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n // 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 1\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n // 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 0\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n // 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 1\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "limit = n // 2",
+      "mutated_line": "limit = n // -2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // -2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "if (x, tuple(t_count)) in memo:",
+      "mutated_line": "if (x, tuple(t_count)) not in memo:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) not in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if x == n:",
+      "mutated_line": "if x != n:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x != n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "choice_num = limit - t_count[x]",
+      "mutated_line": "choice_num = limit + t_count[x]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit + t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "choice_num = limit - t_count[x]",
+      "mutated_line": "choice_num = limit * t_count[x]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit * t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 0 and choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 and choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 33,
+      "original_line": "rest_num = empty_nums[x] - choice_num",
+      "mutated_line": "rest_num = empty_nums[x] + choice_num",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] + choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 33,
+      "original_line": "rest_num = empty_nums[x] - choice_num",
+      "mutated_line": "rest_num = empty_nums[x] * choice_num",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] * choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "ret = 0",
+      "mutated_line": "ret = 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 1\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "ret = 0",
+      "mutated_line": "ret = -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = -1\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "ret = 0",
+      "mutated_line": "ret = 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 1\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret -= search(x + 1, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret -= search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return search(0, t_count)",
+      "mutated_line": "return search(1, t_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(1, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return search(0, t_count)",
+      "mutated_line": "return search(-1, t_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(-1, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return search(0, t_count)",
+      "mutated_line": "return search(1, t_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(1, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "t_count = [lst.count(True) for lst in result]",
+      "mutated_line": "t_count = [lst.count(False) for lst in result]",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(False) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [1] * n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [1] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [-1] * n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [-1] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "empty_nums = [0] * n",
+      "mutated_line": "empty_nums = [1] * n",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [1] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i - 1, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i - 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i * 1, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i * 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if result[i][j] is None:",
+      "mutated_line": "if result[i][j] is not None:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is not None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "empty_nums[i] += 1",
+      "mutated_line": "empty_nums[i] -= 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] -= 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return 1",
+      "mutated_line": "return 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 2\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return 1",
+      "mutated_line": "return 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 0\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return 1",
+      "mutated_line": "return 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 0\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return 1",
+      "mutated_line": "return -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return -1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num <= 0 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num <= 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num >= 0 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num >= 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num != 0 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num != 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 0 or choice_num >= empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num >= empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 0 or choice_num <= empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num <= empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 0 or choice_num != empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num != empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 1\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return -1\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 1\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 38,
+      "original_line": "new_count[ind] += 1",
+      "mutated_line": "new_count[ind] -= 1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] -= 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i + 2, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 2, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i + 0, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 0, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i + 0, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 0, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for j in range(i + 1, n):",
+      "mutated_line": "for j in range(i + -1, n):",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + -1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "empty_nums[i] += 1",
+      "mutated_line": "empty_nums[i] += 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 2\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "empty_nums[i] += 1",
+      "mutated_line": "empty_nums[i] += 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 0\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "empty_nums[i] += 1",
+      "mutated_line": "empty_nums[i] += 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 0\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "empty_nums[i] += 1",
+      "mutated_line": "empty_nums[i] += -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += -1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 1 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 1 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < -1 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < -1 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "if choice_num < 0 or choice_num > empty_nums[x]:",
+      "mutated_line": "if choice_num < 1 or choice_num > empty_nums[x]:",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 1 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "new_count[ind] += 1",
+      "mutated_line": "new_count[ind] += 2",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 2\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "new_count[ind] += 1",
+      "mutated_line": "new_count[ind] += 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 0\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "new_count[ind] += 1",
+      "mutated_line": "new_count[ind] += 0",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 0\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "new_count[ind] += 1",
+      "mutated_line": "new_count[ind] += -1",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += -1\n            ret += search(x + 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x - 1, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x - 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x * 1, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x * 1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x + 2, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 2, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x + 0, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 0, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x + 0, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + 0, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "ret += search(x + 1, new_count)",
+      "mutated_line": "ret += search(x + -1, new_count)",
+      "code": "from itertools import combinations as comb\n\ndef calculate_full_playoff_patterns(n, m, matches):\n    result = [[None] * n for _ in range(n)]\n    for (x, y) in matches:\n        x -= 1\n        y -= 1\n        result[x][y] = True\n        result[y][x] = False\n    t_count = [lst.count(True) for lst in result]\n    empty_index = [[] for _ in range(n)]\n    empty_nums = [0] * n\n    for i in range(n):\n        for j in range(i + 1, n):\n            if result[i][j] is None:\n                empty_index[i].append(j)\n                empty_nums[i] += 1\n    memo = {}\n    limit = n // 2\n\n    def search(x, t_count):\n        if (x, tuple(t_count)) in memo:\n            return memo[x, tuple(t_count)]\n        if x == n:\n            return 1\n        choice_num = limit - t_count[x]\n        if choice_num < 0 or choice_num > empty_nums[x]:\n            return 0\n        rest_num = empty_nums[x] - choice_num\n        ret = 0\n        for inds in comb(empty_index[x], rest_num):\n            new_count = t_count[:]\n            for ind in inds:\n                new_count[ind] += 1\n            ret += search(x + -1, new_count)\n        memo[x, tuple(t_count)] = ret\n        return ret\n    return search(0, t_count)"
+    }
+  ]
+}

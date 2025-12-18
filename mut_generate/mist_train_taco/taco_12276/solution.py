@@ -1,0 +1,75 @@
+"""
+QUESTION:
+Little Stuart has reached the final level of 'Code Hunt', the annual treasure hunt organised by HackerEarth. Now for the final level, Little Stuart has to choose a door from infinite number of doors numbered from 1 to infinity. Out of these only one door contains the grand prize. The clue for finding the correct door is as follows 
+
+Your task is to help Little Stuart find the correct door, so that he can win.
+DoorNumber=0
+
+for (i=0;i<ArraySize-1;i++)
+
+  for(j=i+1;j<ArraySize;j++)
+
+       if(GCD(a[i],a[j])==a[j])
+
+             if(GCD(2^a[i]-1,2^a[j]-1)==2^a[j]-1)
+
+                  DoorNumber=DoorNumber+1;
+             else 
+                  DoorNumber=DoorNumber-GCD(2^a[i]-1,2^a[j]-1);
+
+print DoorNumber
+
+NOTE:Here "^" is not xor operator , it is meant for power here.
+Input:
+First line contains a integer "T" ,number of test cases .Each test case contain two lines , first line contains value of ArraySize (size of array) and second line contain values of array elements.
+
+Output:
+For each test case print the value of DoorNumber.
+
+Constraints:
+1 ≤ T ≤ 20
+1 ≤ ArraySize ≤ 10^5
+1 ≤ a[i] ≤ 100
+
+SAMPLE INPUT
+2
+3
+10 2 3
+2
+3 5
+
+SAMPLE OUTPUT
+1
+0
+"""
+
+def calculate_door_number(test_cases):
+    results = []
+    
+    for case in test_cases:
+        ArraySize, array = case
+        cnt = [0] * 105
+        count = [0] * 105
+        Count = 0
+        
+        for num in array:
+            cnt[num] += 1
+        
+        for i in range(ArraySize):
+            count[array[i]] += 1
+            j = 1
+            while j * j <= array[i]:
+                num = array[i]
+                if num % j == 0:
+                    divisor1 = j
+                    divisor2 = num // j
+                    if divisor1 == divisor2:
+                        Count += (cnt[divisor1] - count[divisor1])
+                    else:
+                        Count += (cnt[divisor1] - count[divisor1])
+                        Count += (cnt[divisor2] - count[divisor2])
+                j += 1
+        
+        results.append(Count)
+    
+    return results

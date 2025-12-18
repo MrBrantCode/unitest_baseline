@@ -1,0 +1,39 @@
+"""
+QUESTION:
+We have weather records at AtCoder Town for some consecutive three days. A string of length 3, S, represents the records - if the i-th character is S, it means it was sunny on the i-th day; if that character is R, it means it was rainy on that day.
+Find the maximum number of consecutive rainy days in this period.
+
+-----Constraints-----
+ - |S| = 3
+ - Each character of S is S or R.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+S
+
+-----Output-----
+Print the maximum number of consecutive rainy days in the period.
+
+-----Sample Input-----
+RRS
+
+-----Sample Output-----
+2
+
+We had rain on the 1-st and 2-nd days in the period. Here, the maximum number of consecutive rainy days is 2, so we should print 2.
+"""
+
+def max_consecutive_rainy_days(S: str) -> int:
+    """
+    Calculate the maximum number of consecutive rainy days in a period of three days.
+
+    Parameters:
+    S (str): A string of length 3 where each character is either 'R' (rainy) or 'S' (sunny).
+
+    Returns:
+    int: The maximum number of consecutive rainy days in the period.
+    """
+    if S == 'RSR':
+        return 2
+    else:
+        return S.count('R')

@@ -1,0 +1,94 @@
+"""
+QUESTION:
+Today s kilometer long auto race takes place in Berland. The track is represented by a straight line as long as s kilometers. There are n cars taking part in the race, all of them start simultaneously at the very beginning of the track. For every car is known its behavior — the system of segments on each of which the speed of the car is constant. The j-th segment of the i-th car is pair (vi, j, ti, j), where vi, j is the car's speed on the whole segment in kilometers per hour and ti, j is for how many hours the car had been driving at that speed. The segments are given in the order in which they are "being driven on" by the cars.
+
+Your task is to find out how many times during the race some car managed to have a lead over another car. A lead is considered a situation when one car appears in front of another car. It is known, that all the leads happen instantly, i. e. there are no such time segment of positive length, during which some two cars drive "together". At one moment of time on one and the same point several leads may appear. In this case all of them should be taken individually. Meetings of cars at the start and finish are not considered to be counted as leads.
+
+Input
+
+The first line contains two integers n and s (2 ≤ n ≤ 100, 1 ≤ s ≤ 106) — the number of cars and the length of the track in kilometers. Then follow n lines — the description of the system of segments for each car. Every description starts with integer k (1 ≤ k ≤ 100) — the number of segments in the system. Then k space-separated pairs of integers are written. Each pair is the speed and time of the segment. These integers are positive and don't exceed 1000. It is guaranteed, that the sum of lengths of all segments (in kilometers) for each car equals to s; and all the leads happen instantly.
+
+Output
+
+Print the single number — the number of times some car managed to take the lead over another car during the race.
+
+Examples
+
+Input
+
+2 33
+2 5 1 2 14
+1 3 11
+
+
+Output
+
+1
+
+
+Input
+
+2 33
+2 1 3 10 3
+1 11 3
+
+
+Output
+
+0
+
+
+Input
+
+5 33
+2 1 3 3 10
+1 11 3
+2 5 3 3 6
+2 3 1 10 3
+2 6 3 3 5
+
+
+Output
+
+2
+"""
+
+def count_leads_during_race(n, s, segments):
+    data = [dict() for _ in range(n)]
+    
+    for i in range(n):
+        cur = 0
+        for speed, time in segments[i]:
+            data[i][cur] = speed
+            cur += time
+        data[i][cur] = 0
+    
+    ans = 0
+    
+    for i in range(n):
+        for j in range(i + 1, n):
+            state1 = 0
+            (dist_i, dist_j) = (0, 0)
+            (speed_i, speed_j) = (0, 0)
+            time = sorted(set(data[i].keys()) | set(data[j].keys()))
+            
+            for (t1, t2) in zip(time, time[1:]):
+                if t1 in data[i]:
+                    speed_i = data[i][t1]
+                if t1 in data[j]:
+                    speed_j = data[j][t1]
+                
+                dist_i += (t2 - t1) * speed_i
+                dist_j += (t2 - t1) * speed_j
+                
+                state2 = 0 if dist_i == dist_j else 1 if dist_i > dist_j else 2
+                
+                if state2 != 0:
+                    if state1 | state2 == 3:
+                        ans += 1
+                    state1 = state2
+                
+                if dist_i == s or dist_j == s:
+                    break
+    
+    return ans

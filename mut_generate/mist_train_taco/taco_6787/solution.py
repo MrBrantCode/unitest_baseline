@@ -1,0 +1,121 @@
+"""
+QUESTION:
+You are given a grid with n rows and m columns, where each cell has a non-negative integer written on it. We say the grid is good if for each cell the following condition holds: if it has a number k > 0 written on it, then exactly k of its neighboring cells have a number greater than 0 written on them. Note that if the number in the cell is 0, there is no such restriction on neighboring cells.
+
+You are allowed to take any number in the grid and increase it by 1. You may apply this operation as many times as you want, to any numbers you want. Perform some operations (possibly zero) to make the grid good, or say that it is impossible. If there are multiple possible answers, you may find any of them.
+
+Two cells are considered to be neighboring if they have a common edge.
+
+Input
+
+The input consists of multiple test cases. The first line contains an integer t (1 ≤ t ≤ 5000) — the number of test cases. The description of the test cases follows.
+
+The first line of each test case contains two integers n and m (2 ≤ n, m ≤ 300) — the number of rows and columns, respectively.
+
+The following n lines contain m integers each, the j-th element in the i-th line a_{i, j} is the number written in the j-th cell of the i-th row (0 ≤ a_{i, j} ≤ 10^9).
+
+It is guaranteed that the sum of n ⋅ m over all test cases does not exceed 10^5.
+
+Output
+
+If it is impossible to obtain a good grid, print a single line containing "NO".
+
+Otherwise, print a single line containing "YES", followed by n lines each containing m integers, which describe the final state of the grid. This final grid should be obtainable from the initial one by applying some operations (possibly zero).
+
+If there are multiple possible answers, you may print any of them.
+
+Example
+
+Input
+
+
+5
+3 4
+0 0 0 0
+0 1 0 0
+0 0 0 0
+2 2
+3 0
+0 0
+2 2
+0 0
+0 0
+2 3
+0 0 0
+0 4 0
+4 4
+0 0 0 0
+0 2 0 1
+0 0 0 0
+0 0 0 0
+
+
+Output
+
+
+YES
+0 0 0 0
+0 1 1 0
+0 0 0 0
+NO
+YES
+0 0
+0 0
+NO
+YES
+0 1 0 0
+1 4 2 1
+0 2 0 0
+1 3 1 0
+
+Note
+
+In the first test case, we can obtain the resulting grid by increasing the number in row 2, column 3 once. Both of the cells that contain 1 have exactly one neighbor that is greater than zero, so the grid is good. Many other solutions exist, such as the grid
+
+$$$0\;1\;0\;0 0\;2\;1\;0 0\;0\;0\;0$$$ 
+
+All of them are accepted as valid answers.
+
+In the second test case, it is impossible to make the grid good.
+
+In the third test case, notice that no cell has a number greater than zero on it, so the grid is automatically good.
+"""
+
+def make_grid_good(grid, n, m):
+    def is_possible():
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] > 0:
+                    neighbors = 0
+                    if i > 0 and grid[i-1][j] > 0:
+                        neighbors += 1
+                    if i < n-1 and grid[i+1][j] > 0:
+                        neighbors += 1
+                    if j > 0 and grid[i][j-1] > 0:
+                        neighbors += 1
+                    if j < m-1 and grid[i][j+1] > 0:
+                        neighbors += 1
+                    if neighbors != grid[i][j]:
+                        return False
+        return True
+
+    def generate_good_grid():
+        good_grid = [[0] * m for _ in range(n)]
+        for i in range(n):
+            for j in range(m):
+                if i == 0 or i == n - 1:
+                    if j == 0 or j == m - 1:
+                        good_grid[i][j] = 2
+                    else:
+                        good_grid[i][j] = 3
+                else:
+                    if j == 0 or j == m - 1:
+                        good_grid[i][j] = 3
+                    else:
+                        good_grid[i][j] = 4
+        return good_grid
+
+    if is_possible():
+        return (True, generate_good_grid())
+    else:
+        return (False, None)

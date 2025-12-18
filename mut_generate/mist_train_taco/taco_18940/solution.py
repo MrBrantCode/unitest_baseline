@@ -1,0 +1,77 @@
+"""
+QUESTION:
+itertools.combinations(iterable, r) 
+
+This tool returns the $\textbf{r}$ length subsequences of elements from the input iterable.
+
+Combinations are emitted in lexicographic sorted order. So, if the input iterable is sorted, the combination tuples will be produced in sorted order.
+
+ Sample Code 
+
+>>> from itertools import combinations
+>>> 
+>>> print list(combinations('12345',2))
+[('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('2', '3'), ('2', '4'), ('2', '5'), ('3', '4'), ('3', '5'), ('4', '5')]
+>>> 
+>>> A = [1,1,3,3,3]
+>>> print list(combinations(A,4))
+[(1, 1, 3, 3), (1, 1, 3, 3), (1, 1, 3, 3), (1, 3, 3, 3), (1, 3, 3, 3)]
+
+Task
+
+You are given a string $\mbox{S}$. 
+
+Your task is to print all possible combinations, up to size $\boldsymbol{\mbox{k}}$, of the string in lexicographic sorted order.
+
+Input Format
+
+A single line containing the string $\mbox{S}$ and integer value $\boldsymbol{\mbox{k}}$ separated by a space.
+
+Constraints
+
+$0<k\leq len(S)$ 
+
+The string contains only UPPERCASE characters.
+
+Output Format
+
+Print the different combinations of string $\mbox{S}$ on separate lines.
+
+Sample Input
+HACK 2
+
+Sample Output
+A
+C
+H
+K
+AC
+AH
+AK
+CH
+CK
+HK
+"""
+
+from itertools import combinations
+
+def generate_combinations(S: str, k: int) -> list:
+    """
+    Generates all possible combinations of the string S up to size k in lexicographic sorted order.
+
+    Parameters:
+    S (str): The input string containing only UPPERCASE characters.
+    k (int): The maximum size of combinations to generate.
+
+    Returns:
+    list: A list of strings where each string represents a combination of the input string S.
+    """
+    S = sorted(S)  # Ensure the string is sorted
+    result = []
+    
+    for i in range(k):
+        C = list(combinations(S, i + 1))
+        for c in C:
+            result.append(''.join(c))
+    
+    return result

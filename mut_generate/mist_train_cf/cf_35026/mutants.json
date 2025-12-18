@@ -1,0 +1,105 @@
+{
+  "task_id": "cf_35026",
+  "entry_point": "parse_html_form",
+  "mutant_count": 14,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "input_fields = re.findall(r'<input.*?>', html_form)",
+      "mutated_line": "input_fields = re.findall('', html_form)",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "attributes = re.findall(r'(\\w+)=\"([^\"]*)\"', field)",
+      "mutated_line": "attributes = re.findall('', field)",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "field_type = field_dict.get('type', '')",
+      "mutated_line": "field_type = field_dict.get('', '')",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "field_type = field_dict.get('type', '')",
+      "mutated_line": "field_type = field_dict.get('type', 'MUTATED')",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', 'MUTATED')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if 'name' in field_dict:",
+      "mutated_line": "if 'name' not in field_dict:",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' not in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[1]: attr[1] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[1]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[-1]: attr[1] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[-1]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[1]: attr[1] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[1]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[0]: attr[2] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[2] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[0]: attr[0] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[0] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[0]: attr[0] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[0] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "field_dict = {attr[0]: attr[1] for attr in attributes}",
+      "mutated_line": "field_dict = {attr[0]: attr[-1] for attr in attributes}",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[-1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if 'name' in field_dict:",
+      "mutated_line": "if '' in field_dict:",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if '' in field_dict:\n                field_name = field_dict['name']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "field_name = field_dict['name']",
+      "mutated_line": "field_name = field_dict['']",
+      "code": "import re\n\ndef parse_html_form(html_form: str) -> dict:\n    input_fields = re.findall('<input.*?>', html_form)\n    parsed_fields = {}\n    for field in input_fields:\n        attributes = re.findall('(\\\\w+)=\"([^\"]*)\"', field)\n        field_dict = {attr[0]: attr[1] for attr in attributes}\n        field_type = field_dict.get('type', '')\n        if field_type:\n            if 'name' in field_dict:\n                field_name = field_dict['']\n            else:\n                field_name = field_type.lower()\n            parsed_fields[field_name] = field_dict\n    return parsed_fields"
+    }
+  ]
+}

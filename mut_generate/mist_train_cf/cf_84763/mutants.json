@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_84763",
+  "entry_point": "is_sublist",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from collections.abc import Iterable\n\ndef is_sublist(main_list, potential_sublist):\n\n    def is_sublist_nested(main_list, potential_sublist):\n        for i in potential_sublist:\n            if isinstance(i, list):\n                if not is_sublist_nested(main_list, i):\n                    return False\n            elif i not in main_list:\n                return False\n        return False\n\n    def flatten(lis):\n        for item in lis:\n            if isinstance(item, Iterable) and (not isinstance(item, str)):\n                for x in flatten(item):\n                    yield x\n            else:\n                yield item\n    return is_sublist_nested(list(flatten(main_list)), potential_sublist)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "if isinstance(item, Iterable) and not isinstance(item, str):",
+      "mutated_line": "if isinstance(item, Iterable) or not isinstance(item, str):",
+      "code": "from collections.abc import Iterable\n\ndef is_sublist(main_list, potential_sublist):\n\n    def is_sublist_nested(main_list, potential_sublist):\n        for i in potential_sublist:\n            if isinstance(i, list):\n                if not is_sublist_nested(main_list, i):\n                    return False\n            elif i not in main_list:\n                return False\n        return True\n\n    def flatten(lis):\n        for item in lis:\n            if isinstance(item, Iterable) or not isinstance(item, str):\n                for x in flatten(item):\n                    yield x\n            else:\n                yield item\n    return is_sublist_nested(list(flatten(main_list)), potential_sublist)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "elif i not in main_list:",
+      "mutated_line": "elif i in main_list:",
+      "code": "from collections.abc import Iterable\n\ndef is_sublist(main_list, potential_sublist):\n\n    def is_sublist_nested(main_list, potential_sublist):\n        for i in potential_sublist:\n            if isinstance(i, list):\n                if not is_sublist_nested(main_list, i):\n                    return False\n            elif i in main_list:\n                return False\n        return True\n\n    def flatten(lis):\n        for item in lis:\n            if isinstance(item, Iterable) and (not isinstance(item, str)):\n                for x in flatten(item):\n                    yield x\n            else:\n                yield item\n    return is_sublist_nested(list(flatten(main_list)), potential_sublist)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from collections.abc import Iterable\n\ndef is_sublist(main_list, potential_sublist):\n\n    def is_sublist_nested(main_list, potential_sublist):\n        for i in potential_sublist:\n            if isinstance(i, list):\n                if not is_sublist_nested(main_list, i):\n                    return True\n            elif i not in main_list:\n                return False\n        return True\n\n    def flatten(lis):\n        for item in lis:\n            if isinstance(item, Iterable) and (not isinstance(item, str)):\n                for x in flatten(item):\n                    yield x\n            else:\n                yield item\n    return is_sublist_nested(list(flatten(main_list)), potential_sublist)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from collections.abc import Iterable\n\ndef is_sublist(main_list, potential_sublist):\n\n    def is_sublist_nested(main_list, potential_sublist):\n        for i in potential_sublist:\n            if isinstance(i, list):\n                if not is_sublist_nested(main_list, i):\n                    return False\n            elif i not in main_list:\n                return True\n        return True\n\n    def flatten(lis):\n        for item in lis:\n            if isinstance(item, Iterable) and (not isinstance(item, str)):\n                for x in flatten(item):\n                    yield x\n            else:\n                yield item\n    return is_sublist_nested(list(flatten(main_list)), potential_sublist)"
+    }
+  ]
+}

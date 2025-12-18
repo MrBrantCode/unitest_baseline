@@ -1,0 +1,58 @@
+"""
+QUESTION:
+Given an undirected graph with V vertices(numbered from 1 to V) and E edges. Find the number of good components in the graph.
+A component of the graph is good if and only if the component is a fully connected component.
+Note: A fully connected component is a subgraph of a given graph such that there's an edge between every pair of vertices in a component, the given graph can be a disconnected graph. Consider the adjacency list from vertices 1.
+Example 1:
+Input: 
+E=3 V=3
+adj:
+{{1, 2},
+ {1, 3},
+ {3, 2}}
+Output: 1
+Explanation: We can see that there is only one 
+component in the graph and in this component 
+there is a edge between any two vertces.
+Example 2:
+Input:
+E=5 V=7
+adj:
+{{1, 2},
+ {7, 2},
+ {3, 5},
+ {3, 4},
+ {4, 5}}
+Output: 2
+Explanation: We can see that there are 3 components
+in the graph. For 1-2-7 there is no edge between
+1 to 7, so it is not a fully connected component.
+Rest 2 are individually fully connected component.
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function
+findNumberOfGoodComponent() which takes an integer V and a list of edges adj as input parameters and returns an integer denoting the number of good components. 
+Expected Time Complexity: O(V+E)
+Expected Auxiliary Space: O(depth of the graph)
+Constraints:
+1 ≤ V, E ≤ 10^{4}
+"""
+
+def find_number_of_good_components(V, adj):
+    def dfs(node, visited, adj, count, su):
+        visited[node] = 1
+        for neigh in adj[node]:
+            if visited[neigh] == 0:
+                dfs(neigh, visited, adj, count, su)
+        su[0] += len(adj[node])
+        count[0] += 1
+
+    visited = [0 for _ in range(V + 1)]
+    ans = 0
+    for i in range(1, V + 1):
+        count = [0]
+        su = [0]
+        if visited[i] == 0:
+            dfs(i, visited, adj, count, su)
+            if su[0] // 2 == count[0] * (count[0] - 1) // 2 or su[0] == 0:
+                ans += 1
+    return ans

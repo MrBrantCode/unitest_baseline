@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_37934",
+  "entry_point": "parseHTML",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "tag_pattern = r'<(\\w+)(?:\\s+([^>]+))?>'",
+      "mutated_line": "tag_pattern = ''",
+      "code": "import re\n\ndef parseHTML(html_snippet):\n    tag_pattern = ''\n    tags = re.findall(tag_pattern, html_snippet)\n    tag_dict = {}\n    for (tag, attributes) in tags:\n        attribute_pairs = re.findall('(\\\\w+)=\"([^\"]+)\"', attributes or '')\n        tag_dict[tag] = attribute_pairs\n    return tag_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "attribute_pairs = re.findall(r'(\\w+)=\"([^\"]+)\"', attributes or '')",
+      "mutated_line": "attribute_pairs = re.findall('', attributes or '')",
+      "code": "import re\n\ndef parseHTML(html_snippet):\n    tag_pattern = '<(\\\\w+)(?:\\\\s+([^>]+))?>'\n    tags = re.findall(tag_pattern, html_snippet)\n    tag_dict = {}\n    for (tag, attributes) in tags:\n        attribute_pairs = re.findall('', attributes or '')\n        tag_dict[tag] = attribute_pairs\n    return tag_dict"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "attribute_pairs = re.findall(r'(\\w+)=\"([^\"]+)\"', attributes or '')",
+      "mutated_line": "attribute_pairs = re.findall('(\\\\w+)=\"([^\"]+)\"', attributes and '')",
+      "code": "import re\n\ndef parseHTML(html_snippet):\n    tag_pattern = '<(\\\\w+)(?:\\\\s+([^>]+))?>'\n    tags = re.findall(tag_pattern, html_snippet)\n    tag_dict = {}\n    for (tag, attributes) in tags:\n        attribute_pairs = re.findall('(\\\\w+)=\"([^\"]+)\"', attributes and '')\n        tag_dict[tag] = attribute_pairs\n    return tag_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "attribute_pairs = re.findall(r'(\\w+)=\"([^\"]+)\"', attributes or '')",
+      "mutated_line": "attribute_pairs = re.findall('(\\\\w+)=\"([^\"]+)\"', attributes or 'MUTATED')",
+      "code": "import re\n\ndef parseHTML(html_snippet):\n    tag_pattern = '<(\\\\w+)(?:\\\\s+([^>]+))?>'\n    tags = re.findall(tag_pattern, html_snippet)\n    tag_dict = {}\n    for (tag, attributes) in tags:\n        attribute_pairs = re.findall('(\\\\w+)=\"([^\"]+)\"', attributes or 'MUTATED')\n        tag_dict[tag] = attribute_pairs\n    return tag_dict"
+    }
+  ]
+}

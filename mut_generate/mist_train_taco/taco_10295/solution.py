@@ -1,0 +1,109 @@
+"""
+QUESTION:
+Gotham City is the home of Batman, and Batman likes to keep his people together. 
+
+There are N houses in the city. The resident of the i^{th} house is of type A_{i}. It is known that people of the same type are friends and people of different types are not friends. 
+
+To maintain peace, Batman can do the following type of operation:
+Choose indices i and j (1≤ i ≤ j ≤ N) and reverse the substring A[i,j]. 
+
+Determine the length of the longest range of friends after applying at most k operations on the string for all 0 ≤ k ≤ N.
+
+------ Input Format ------ 
+
+- First line will contain T, the number of test cases. Then the test cases follow.
+- The first line of each test case contains a single integer N, the number of houses in Gotham city.
+- The next line contains a string A with N characters. The i^{th} character denotes the type of the i^{th} person.
+
+------ Output Format ------ 
+
+For each test case, output a single line, (N+1) space-separated integers where the i^{th} integer signifies the length of the longest range of friends after applying  at most i operations.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1≤N ≤2\cdot 10^{5}$
+- Sum of $N$ over all test cases does not exceed $2\cdot 10^{5}$.
+- String $A$ contains lowercase English alphabets only.
+
+----- Sample Input 1 ------ 
+3
+4
+aaaa
+4
+abca
+7
+babbaab
+
+----- Sample Output 1 ------ 
+4 4 4 4 4
+1 2 2 2 2
+2 3 4 4 4 4 4 4
+
+----- explanation 1 ------ 
+Test case $1$: All $4$ people are friends. Thus, the answer is $4$ for all values of $k$.
+
+Test case $2$: 
+- For $k=0$, the length of the longest range of friends is $1$.
+- For $k=1$, we can choose $i=1$ and $j=3$. On reversing the substring $[1,3]$, we get cbaa. Thus, length of longest range of friends is $2$.
+- For $k=2,3,$ and $4$, the length of the longest range of friends is $2$ as no more people of the same type can be grouped together.
+"""
+
+def longest_range_of_friends(N, A):
+    dic = {}
+    for i in range(N):
+        if A[i] in dic:
+            dic[A[i]] += 1
+        else:
+            dic[A[i]] = 1
+    
+    ma = 0
+    tp = ''
+    for i in dic:
+        if dic[i] > ma:
+            ma = dic[i]
+            tp = i
+    
+    dic = {}
+    prev = -1
+    c = 0
+    for i in range(N):
+        if A[i] != prev:
+            if prev != -1:
+                if prev in dic:
+                    dic[prev].append(c)
+                else:
+                    dic[prev] = [c]
+            c = 1
+            prev = A[i]
+            if i == N - 1:
+                if prev in dic:
+                    dic[prev].append(c)
+                else:
+                    dic[prev] = [c]
+        else:
+            c += 1
+            if i == N - 1:
+                if prev in dic:
+                    dic[prev].append(c)
+                else:
+                    dic[prev] = [c]
+    
+    li = []
+    for i in dic:
+        nli = dic[i]
+        nli.sort(reverse=True)
+        li.append([i, nli, 1, nli[0]])
+    
+    ans = []
+    for i in range(N + 1):
+        tempmax = []
+        for j in range(len(li)):
+            nli = li[j][1]
+            tempmax.append(li[j][3])
+            if li[j][2] < len(nli):
+                li[j][3] += nli[li[j][2]]
+                li[j][2] += 1
+        ans.append(max(tempmax))
+    
+    return ans

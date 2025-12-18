@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_90746",
+  "entry_point": "group_and_sort",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def group_and_sort(lst, key1, key2):\n    \"\"\"\"\"\"\n    grouped_list = {}\n    for dictionary in lst:\n        value = dictionary[key1]\n        if value in grouped_list:\n            grouped_list[value].append(dictionary)\n        else:\n            grouped_list[value] = [dictionary]\n    sorted_groups = sorted(grouped_list.values(), key=lambda x: sum((dictionary[key1] for dictionary in x)), reverse=True)\n    sorted_groups = sorted(sorted_groups, key=lambda x: min((dictionary[key2] for dictionary in x)))\n    return sorted_groups"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if value in grouped_list:",
+      "mutated_line": "if value not in grouped_list:",
+      "code": "def group_and_sort(lst, key1, key2):\n    \"\"\"\n    This function groups a list of dictionaries by the first key and sorts the groups in descending order based on the sum of the values of the first key.\n    If two groups have the same sum, they are sorted based on the minimum value of the second key.\n\n    Args:\n        lst (list): A list of dictionaries.\n        key1 (str): The first key to group and sort by.\n        key2 (str): The second key to sort by in case of a tie.\n\n    Returns:\n        list: A list of the sorted groups.\n    \"\"\"\n    grouped_list = {}\n    for dictionary in lst:\n        value = dictionary[key1]\n        if value not in grouped_list:\n            grouped_list[value].append(dictionary)\n        else:\n            grouped_list[value] = [dictionary]\n    sorted_groups = sorted(grouped_list.values(), key=lambda x: sum((dictionary[key1] for dictionary in x)), reverse=True)\n    sorted_groups = sorted(sorted_groups, key=lambda x: min((dictionary[key2] for dictionary in x)))\n    return sorted_groups"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "sorted_groups = sorted(grouped_list.values(), key=lambda x: sum(dictionary[key1] for dictionary in x), reverse=True)",
+      "mutated_line": "sorted_groups = sorted(sorted_groups, key=lambda x: min((dictionary[key2] for dictionary in x)))",
+      "code": "def group_and_sort(lst, key1, key2):\n    \"\"\"\n    This function groups a list of dictionaries by the first key and sorts the groups in descending order based on the sum of the values of the first key.\n    If two groups have the same sum, they are sorted based on the minimum value of the second key.\n\n    Args:\n        lst (list): A list of dictionaries.\n        key1 (str): The first key to group and sort by.\n        key2 (str): The second key to sort by in case of a tie.\n\n    Returns:\n        list: A list of the sorted groups.\n    \"\"\"\n    grouped_list = {}\n    for dictionary in lst:\n        value = dictionary[key1]\n        if value in grouped_list:\n            grouped_list[value].append(dictionary)\n        else:\n            grouped_list[value] = [dictionary]\n    sorted_groups = sorted(grouped_list.values(), key=lambda x: sum((dictionary[key1] for dictionary in x)), reverse=False)\n    sorted_groups = sorted(sorted_groups, key=lambda x: min((dictionary[key2] for dictionary in x)))\n    return sorted_groups"
+    }
+  ]
+}

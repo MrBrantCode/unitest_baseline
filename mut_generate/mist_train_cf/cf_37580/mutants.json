@@ -1,0 +1,245 @@
+{
+  "task_id": "cf_37580",
+  "entry_point": "parse_cromwell_command",
+  "mutant_count": 34,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "pattern = r'(-Dconfig\\.file=|jar )([^ ]+)'",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = ''\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "pattern = r'run -i ([^ ]+) ([^ ]+)'",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = ''\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "pattern = r'tee ([^ ]+)'",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = ''\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if match[0] == '-Dconfig.file=':",
+      "mutated_line": "if match[0] != '-Dconfig.file=':",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] != '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if match[0] == '-Dconfig.file=':",
+      "mutated_line": "if match[0] == '':",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "file_paths[\"INPUTS\"] = matches.group(1)",
+      "mutated_line": "file_paths[''] = matches.group(1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths[''] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "file_paths[\"INPUTS\"] = matches.group(1)",
+      "mutated_line": "file_paths['INPUTS'] = matches.group(2)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(2)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "file_paths[\"INPUTS\"] = matches.group(1)",
+      "mutated_line": "file_paths['INPUTS'] = matches.group(0)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(0)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "file_paths[\"INPUTS\"] = matches.group(1)",
+      "mutated_line": "file_paths['INPUTS'] = matches.group(0)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(0)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "file_paths[\"INPUTS\"] = matches.group(1)",
+      "mutated_line": "file_paths['INPUTS'] = matches.group(-1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(-1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths[''] = matches.group(2)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths[''] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths['PIPELINE'] = matches.group(3)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(3)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths['PIPELINE'] = matches.group(1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(1)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths['PIPELINE'] = matches.group(0)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(0)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths['PIPELINE'] = matches.group(1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(1)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "file_paths[\"PIPELINE\"] = matches.group(2)",
+      "mutated_line": "file_paths['PIPELINE'] = matches.group(-2)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(-2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "file_paths[\"LOG\"] = matches.group(1)",
+      "mutated_line": "file_paths[''] = matches.group(1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths[''] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "file_paths[\"LOG\"] = matches.group(1)",
+      "mutated_line": "file_paths['LOG'] = matches.group(2)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(2)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "file_paths[\"LOG\"] = matches.group(1)",
+      "mutated_line": "file_paths['LOG'] = matches.group(0)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(0)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "file_paths[\"LOG\"] = matches.group(1)",
+      "mutated_line": "file_paths['LOG'] = matches.group(0)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(0)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "file_paths[\"LOG\"] = matches.group(1)",
+      "mutated_line": "file_paths['LOG'] = matches.group(-1)",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(-1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if match[0] == '-Dconfig.file=':",
+      "mutated_line": "if match[1] == '-Dconfig.file=':",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[1] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if match[0] == '-Dconfig.file=':",
+      "mutated_line": "if match[-1] == '-Dconfig.file=':",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[-1] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if match[0] == '-Dconfig.file=':",
+      "mutated_line": "if match[1] == '-Dconfig.file=':",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[1] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_paths[\"CONFIG\"] = match[1]",
+      "mutated_line": "file_paths[''] = match[1]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths[''] = match[1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_paths[\"CONFIG\"] = match[1]",
+      "mutated_line": "file_paths['CONFIG'] = match[2]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[2]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_paths[\"CONFIG\"] = match[1]",
+      "mutated_line": "file_paths['CONFIG'] = match[0]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[0]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_paths[\"CONFIG\"] = match[1]",
+      "mutated_line": "file_paths['CONFIG'] = match[0]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[0]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "file_paths[\"CONFIG\"] = match[1]",
+      "mutated_line": "file_paths['CONFIG'] = match[-1]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[-1]\n        else:\n            file_paths['JAR'] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_paths[\"JAR\"] = match[1]",
+      "mutated_line": "file_paths[''] = match[1]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths[''] = match[1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_paths[\"JAR\"] = match[1]",
+      "mutated_line": "file_paths['JAR'] = match[2]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[2]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_paths[\"JAR\"] = match[1]",
+      "mutated_line": "file_paths['JAR'] = match[0]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[0]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_paths[\"JAR\"] = match[1]",
+      "mutated_line": "file_paths['JAR'] = match[0]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[0]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "file_paths[\"JAR\"] = match[1]",
+      "mutated_line": "file_paths['JAR'] = match[-1]",
+      "code": "import re\n\ndef parse_cromwell_command(command):\n    file_paths = {}\n    pattern = '(-Dconfig\\\\.file=|jar )([^ ]+)'\n    matches = re.findall(pattern, command)\n    for match in matches:\n        if match[0] == '-Dconfig.file=':\n            file_paths['CONFIG'] = match[1]\n        else:\n            file_paths['JAR'] = match[-1]\n    pattern = 'run -i ([^ ]+) ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['INPUTS'] = matches.group(1)\n        file_paths['PIPELINE'] = matches.group(2)\n    pattern = 'tee ([^ ]+)'\n    matches = re.search(pattern, command)\n    if matches:\n        file_paths['LOG'] = matches.group(1)\n    return file_paths"
+    }
+  ]
+}

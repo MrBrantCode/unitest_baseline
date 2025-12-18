@@ -1,0 +1,30 @@
+"""
+QUESTION:
+You are given positive integers A and B.
+If A is a divisor of B, print A + B; otherwise, print B - A.
+
+-----Constraints-----
+ - All values in input are integers.
+ - 1 \leq A \leq B \leq 20
+
+-----Input-----
+Input is given from Standard Input in the following format:
+A B
+
+-----Output-----
+If A is a divisor of B, print A + B; otherwise, print B - A.
+
+-----Sample Input-----
+4 12
+
+-----Sample Output-----
+16
+
+As 4 is a divisor of 12, 4 + 12 = 16 should be printed.
+"""
+
+def calculate_divisor_operation(A: int, B: int) -> int:
+    if B % A == 0:
+        return A + B
+    else:
+        return B - A

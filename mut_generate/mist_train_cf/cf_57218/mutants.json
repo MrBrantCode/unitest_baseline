@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_57218",
+  "entry_point": "parse_XML",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_XML(xml_file, desired_tags, ignore_tags):\n    \"\"\"\"\"\"\n    tree = ET.parse(xml_file)\n    root = tree.getroot()\n    result = {}\n    for tag in desired_tags:\n        result[tag] = []\n\n    def traverse(node):\n        if node.tag in desired_tags and node.tag not in ignore_tags:\n            result[node.tag].append(node.text)\n        for child in node:\n            traverse(child)\n    traverse(root)\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 29,
+      "original_line": "if node.tag in desired_tags and node.tag not in ignore_tags:",
+      "mutated_line": "if node.tag in desired_tags or node.tag not in ignore_tags:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_XML(xml_file, desired_tags, ignore_tags):\n    \"\"\"\n    This function takes the name of an XML file, a list of desired tags, \n    and a list of tags to ignore as input, and returns a dictionary where \n    the keys are the desired tags and the values are lists of text content \n    found within those tags in the XML file, excluding any text content \n    within the ignored tags.\n    \n    Parameters:\n    xml_file (str): The name of the XML file.\n    desired_tags (list): A list of desired tags.\n    ignore_tags (list): A list of tags to ignore.\n    \n    Returns:\n    dict: A dictionary with desired tags as keys and lists of text content as values.\n    \"\"\"\n    tree = ET.parse(xml_file)\n    root = tree.getroot()\n    result = {}\n    for tag in desired_tags:\n        result[tag] = []\n\n    def traverse(node):\n        if node.tag in desired_tags or node.tag not in ignore_tags:\n            result[node.tag].append(node.text)\n        for child in node:\n            traverse(child)\n    traverse(root)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if node.tag in desired_tags and node.tag not in ignore_tags:",
+      "mutated_line": "if node.tag not in desired_tags and node.tag not in ignore_tags:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_XML(xml_file, desired_tags, ignore_tags):\n    \"\"\"\n    This function takes the name of an XML file, a list of desired tags, \n    and a list of tags to ignore as input, and returns a dictionary where \n    the keys are the desired tags and the values are lists of text content \n    found within those tags in the XML file, excluding any text content \n    within the ignored tags.\n    \n    Parameters:\n    xml_file (str): The name of the XML file.\n    desired_tags (list): A list of desired tags.\n    ignore_tags (list): A list of tags to ignore.\n    \n    Returns:\n    dict: A dictionary with desired tags as keys and lists of text content as values.\n    \"\"\"\n    tree = ET.parse(xml_file)\n    root = tree.getroot()\n    result = {}\n    for tag in desired_tags:\n        result[tag] = []\n\n    def traverse(node):\n        if node.tag not in desired_tags and node.tag not in ignore_tags:\n            result[node.tag].append(node.text)\n        for child in node:\n            traverse(child)\n    traverse(root)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if node.tag in desired_tags and node.tag not in ignore_tags:",
+      "mutated_line": "if node.tag in desired_tags and node.tag in ignore_tags:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_XML(xml_file, desired_tags, ignore_tags):\n    \"\"\"\n    This function takes the name of an XML file, a list of desired tags, \n    and a list of tags to ignore as input, and returns a dictionary where \n    the keys are the desired tags and the values are lists of text content \n    found within those tags in the XML file, excluding any text content \n    within the ignored tags.\n    \n    Parameters:\n    xml_file (str): The name of the XML file.\n    desired_tags (list): A list of desired tags.\n    ignore_tags (list): A list of tags to ignore.\n    \n    Returns:\n    dict: A dictionary with desired tags as keys and lists of text content as values.\n    \"\"\"\n    tree = ET.parse(xml_file)\n    root = tree.getroot()\n    result = {}\n    for tag in desired_tags:\n        result[tag] = []\n\n    def traverse(node):\n        if node.tag in desired_tags and node.tag in ignore_tags:\n            result[node.tag].append(node.text)\n        for child in node:\n            traverse(child)\n    traverse(root)\n    return result"
+    }
+  ]
+}

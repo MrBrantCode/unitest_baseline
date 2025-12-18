@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_6496",
+  "entry_point": "extract_text_from_html",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 12,
+      "original_line": "if not self.tags or tag in self.tags:",
+      "mutated_line": "if not self.tags and tag in self.tags:",
+      "code": "from html.parser import HTMLParser\n\ndef extract_text_from_html(html_string, tags):\n\n    class TextExtractor(HTMLParser):\n\n        def __init__(self, tags=None):\n            super().__init__()\n            self.tags = tags\n            self.result = []\n            self.current_tag = None\n\n        def handle_starttag(self, tag, attrs):\n            if not self.tags and tag in self.tags:\n                self.current_tag = tag\n\n        def handle_data(self, data):\n            if self.current_tag:\n                self.result.append(data.strip())\n\n        def handle_endtag(self, tag):\n            if self.current_tag == tag:\n                self.current_tag = None\n    parser = TextExtractor(tags)\n    parser.feed(html_string)\n    return parser.result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if self.current_tag == tag:",
+      "mutated_line": "if self.current_tag != tag:",
+      "code": "from html.parser import HTMLParser\n\ndef extract_text_from_html(html_string, tags):\n\n    class TextExtractor(HTMLParser):\n\n        def __init__(self, tags=None):\n            super().__init__()\n            self.tags = tags\n            self.result = []\n            self.current_tag = None\n\n        def handle_starttag(self, tag, attrs):\n            if not self.tags or tag in self.tags:\n                self.current_tag = tag\n\n        def handle_data(self, data):\n            if self.current_tag:\n                self.result.append(data.strip())\n\n        def handle_endtag(self, tag):\n            if self.current_tag != tag:\n                self.current_tag = None\n    parser = TextExtractor(tags)\n    parser.feed(html_string)\n    return parser.result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if not self.tags or tag in self.tags:",
+      "mutated_line": "if not self.tags or tag not in self.tags:",
+      "code": "from html.parser import HTMLParser\n\ndef extract_text_from_html(html_string, tags):\n\n    class TextExtractor(HTMLParser):\n\n        def __init__(self, tags=None):\n            super().__init__()\n            self.tags = tags\n            self.result = []\n            self.current_tag = None\n\n        def handle_starttag(self, tag, attrs):\n            if not self.tags or tag not in self.tags:\n                self.current_tag = tag\n\n        def handle_data(self, data):\n            if self.current_tag:\n                self.result.append(data.strip())\n\n        def handle_endtag(self, tag):\n            if self.current_tag == tag:\n                self.current_tag = None\n    parser = TextExtractor(tags)\n    parser.feed(html_string)\n    return parser.result"
+    }
+  ]
+}

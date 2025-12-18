@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_40274",
+  "entry_point": "check_exception_chain",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from typing import Type\n\ndef check_exception_chain(err: Exception, object_type: Type) -> bool:\n    if isinstance(err, object_type):\n        return False\n    elif err.__cause__ is not None:\n        return check_exception_chain(err.__cause__, object_type)\n    elif err.__context__ is not None:\n        return check_exception_chain(err.__context__, object_type)\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "elif err.__cause__ is not None:",
+      "mutated_line": "elif err.__cause__ is None:",
+      "code": "from typing import Type\n\ndef check_exception_chain(err: Exception, object_type: Type) -> bool:\n    if isinstance(err, object_type):\n        return True\n    elif err.__cause__ is None:\n        return check_exception_chain(err.__cause__, object_type)\n    elif err.__context__ is not None:\n        return check_exception_chain(err.__context__, object_type)\n    else:\n        return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "elif err.__context__ is not None:",
+      "mutated_line": "elif err.__context__ is None:",
+      "code": "from typing import Type\n\ndef check_exception_chain(err: Exception, object_type: Type) -> bool:\n    if isinstance(err, object_type):\n        return True\n    elif err.__cause__ is not None:\n        return check_exception_chain(err.__cause__, object_type)\n    elif err.__context__ is None:\n        return check_exception_chain(err.__context__, object_type)\n    else:\n        return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from typing import Type\n\ndef check_exception_chain(err: Exception, object_type: Type) -> bool:\n    if isinstance(err, object_type):\n        return True\n    elif err.__cause__ is not None:\n        return check_exception_chain(err.__cause__, object_type)\n    elif err.__context__ is not None:\n        return check_exception_chain(err.__context__, object_type)\n    else:\n        return True"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "task_id": "cf_30077",
+  "entry_point": "handle_with_retry",
+  "mutant_count": 10,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries - 1):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries - 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries * 1):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries * 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries + 2):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 2):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries + 0):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 0):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries + 0):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 0):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "for _ in range(max_retries + 1):",
+      "mutated_line": "for _ in range(max_retries + -1):",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + -1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if _ == max_retries:",
+      "mutated_line": "if _ != max_retries:",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ != max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "raise MaxRetryException(\"Max retries exceeded\") from e",
+      "mutated_line": "raise MaxRetryException('') from e",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)",
+      "mutated_line": "consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=True)",
+      "mutated_line": "consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)",
+      "code": "class MaxRetryException(Exception):\n    pass\n\ndef handle_with_retry(consumer, message, max_retries):\n    for _ in range(max_retries + 1):\n        try:\n            consumer.pre_handle()\n            result = consumer.handle(message)\n            consumer.post_handle()\n            consumer.channel.basic_ack(delivery_tag=message.delivery_tag)\n            return result\n        except Exception as e:\n            if _ == max_retries:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)\n                raise MaxRetryException('Max retries exceeded') from e\n            else:\n                consumer.channel.basic_nack(delivery_tag=message.delivery_tag, requeue=False)"
+    }
+  ]
+}

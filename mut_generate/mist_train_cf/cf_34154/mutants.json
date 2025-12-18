@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_34154",
+  "entry_point": "entrance",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return tagged_sentence, \"POS tagging workflow completed successfully.\"",
+      "mutated_line": "return (tagged_sentence, '')",
+      "code": "def entrance(tagger, save_dir, sample_sentence, test_dataset_path):\n    try:\n        tagger.load(save_dir)\n        tagged_sentence = tagger(sample_sentence)\n        tagger.evaluate(test_dataset_path, save_dir=save_dir)\n        tagger.save(save_dir)\n        return (tagged_sentence, '')\n    except FileNotFoundError:\n        return (None, 'Error: The specified model directory does not exist.')\n    except Exception as e:\n        return (None, f'Error: An unexpected error occurred - {str(e)}')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return None, \"Error: The specified model directory does not exist.\"",
+      "mutated_line": "return (None, '')",
+      "code": "def entrance(tagger, save_dir, sample_sentence, test_dataset_path):\n    try:\n        tagger.load(save_dir)\n        tagged_sentence = tagger(sample_sentence)\n        tagger.evaluate(test_dataset_path, save_dir=save_dir)\n        tagger.save(save_dir)\n        return (tagged_sentence, 'POS tagging workflow completed successfully.')\n    except FileNotFoundError:\n        return (None, '')\n    except Exception as e:\n        return (None, f'Error: An unexpected error occurred - {str(e)}')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return None, f\"Error: An unexpected error occurred - {str(e)}\"",
+      "mutated_line": "return (None, f'{str(e)}')",
+      "code": "def entrance(tagger, save_dir, sample_sentence, test_dataset_path):\n    try:\n        tagger.load(save_dir)\n        tagged_sentence = tagger(sample_sentence)\n        tagger.evaluate(test_dataset_path, save_dir=save_dir)\n        tagger.save(save_dir)\n        return (tagged_sentence, 'POS tagging workflow completed successfully.')\n    except FileNotFoundError:\n        return (None, 'Error: The specified model directory does not exist.')\n    except Exception as e:\n        return (None, f'{str(e)}')"
+    }
+  ]
+}

@@ -1,0 +1,525 @@
+{
+  "task_id": "cf_35681",
+  "entry_point": "analyze_log",
+  "mutant_count": 74,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "for line in log_content.split('\\n'):",
+      "mutated_line": "for line in log_content.split(''):",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split(''):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if host not in host_data:",
+      "mutated_line": "if host in host_data:",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if status_type == 'PASS':",
+      "mutated_line": "if status_type != 'PASS':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type != 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host]['PASS'] -= 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] -= 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "host, status = line.split(': [', 1)",
+      "mutated_line": "(host, status) = line.split('', 1)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split('', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "host, status = line.split(': [', 1)",
+      "mutated_line": "(host, status) = line.split(': [', 2)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 2)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "host, status = line.split(': [', 1)",
+      "mutated_line": "(host, status) = line.split(': [', 0)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 0)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "host, status = line.split(': [', 1)",
+      "mutated_line": "(host, status) = line.split(': [', 0)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 0)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "host, status = line.split(': [', 1)",
+      "mutated_line": "(host, status) = line.split(': [', -1)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', -1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "status_type, _ = status.split(']', 1)",
+      "mutated_line": "(status_type, _) = status.split('', 1)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split('', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "status_type, _ = status.split(']', 1)",
+      "mutated_line": "(status_type, _) = status.split(']', 2)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 2)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "status_type, _ = status.split(']', 1)",
+      "mutated_line": "(status_type, _) = status.split(']', 0)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 0)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "status_type, _ = status.split(']', 1)",
+      "mutated_line": "(status_type, _) = status.split(']', 0)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 0)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "status_type, _ = status.split(']', 1)",
+      "mutated_line": "(status_type, _) = status.split(']', -1)",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', -1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if status_type == 'PASS':",
+      "mutated_line": "if status_type == '':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == '':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host]['PASS'] += 2",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 2\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host]['PASS'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 0\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host]['PASS'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 0\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host]['PASS'] += -1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += -1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "elif status_type == 'FAIL':",
+      "mutated_line": "elif status_type != 'FAIL':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type != 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host]['FAIL'] -= 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] -= 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, '': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, '': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, '': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, '': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, '': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, '': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, '': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, '': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, '': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, '': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': -1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': -1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 1, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': -1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': -1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 1, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 1, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 1, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': -1, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': -1, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 1, 'INFO': 0, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 1, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 1, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 1, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': -1, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': -1, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 1, 'fatal_errors': 0}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 1, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 1}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 1}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': -1}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': -1}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}",
+      "mutated_line": "host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 1}",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 1}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "host_data[host]['PASS'] += 1",
+      "mutated_line": "host_data[host][''] += 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host][''] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif status_type == 'FAIL':",
+      "mutated_line": "elif status_type == '':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == '':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host]['FAIL'] += 2",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 2\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host]['FAIL'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 0\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host]['FAIL'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 0\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host]['FAIL'] += -1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += -1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "elif status_type == 'WARN':",
+      "mutated_line": "elif status_type != 'WARN':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type != 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host]['WARN'] -= 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] -= 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return sorted(result, key=lambda x: x['hostname'])",
+      "mutated_line": "return sorted(result, key=lambda x: x[''])",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x[''])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "host_data[host]['FAIL'] += 1",
+      "mutated_line": "host_data[host][''] += 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host][''] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "elif status_type == 'WARN':",
+      "mutated_line": "elif status_type == '':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == '':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host]['WARN'] += 2",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 2\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host]['WARN'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 0\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host]['WARN'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 0\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host]['WARN'] += -1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += -1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "elif status_type == 'INFO':",
+      "mutated_line": "elif status_type != 'INFO':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type != 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host]['INFO'] -= 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] -= 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "host_data[host]['WARN'] += 1",
+      "mutated_line": "host_data[host][''] += 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host][''] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif status_type == 'INFO':",
+      "mutated_line": "elif status_type == '':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == '':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host]['INFO'] += 2",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 2\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host]['INFO'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 0\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host]['INFO'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 0\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host]['INFO'] += -1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += -1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "elif status_type == 'FATAL ERROR':",
+      "mutated_line": "elif status_type != 'FATAL ERROR':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type != 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host]['fatal_errors'] -= 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] -= 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "host_data[host]['INFO'] += 1",
+      "mutated_line": "host_data[host][''] += 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host][''] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif status_type == 'FATAL ERROR':",
+      "mutated_line": "elif status_type == '':",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == '':\n                host_data[host]['fatal_errors'] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host]['fatal_errors'] += 2",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 2\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host]['fatal_errors'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 0\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host]['fatal_errors'] += 0",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += 0\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host]['fatal_errors'] += -1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host]['fatal_errors'] += -1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "host_data[host]['fatal_errors'] += 1",
+      "mutated_line": "host_data[host][''] += 1",
+      "code": "from typing import List, Dict, Union\n\ndef analyze_log(log_content: str) -> List[Dict[str, Union[str, int]]]:\n    host_data = {}\n    for line in log_content.split('\\n'):\n        if line:\n            (host, status) = line.split(': [', 1)\n            (status_type, _) = status.split(']', 1)\n            if host not in host_data:\n                host_data[host] = {'hostname': host, 'PASS': 0, 'FAIL': 0, 'WARN': 0, 'INFO': 0, 'fatal_errors': 0}\n            if status_type == 'PASS':\n                host_data[host]['PASS'] += 1\n            elif status_type == 'FAIL':\n                host_data[host]['FAIL'] += 1\n            elif status_type == 'WARN':\n                host_data[host]['WARN'] += 1\n            elif status_type == 'INFO':\n                host_data[host]['INFO'] += 1\n            elif status_type == 'FATAL ERROR':\n                host_data[host][''] += 1\n    result = [data for (_, data) in host_data.items()]\n    return sorted(result, key=lambda x: x['hostname'])"
+    }
+  ]
+}

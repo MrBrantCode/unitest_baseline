@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_57763",
+  "entry_point": "count_occurrences_and_find_specific_endings",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern='123'):",
+      "mutated_line": "def count_occurrences_and_find_specific_endings(data, start_pattern='', end_pattern='123'):",
+      "code": "import re\nfrom collections import Counter\n\ndef count_occurrences_and_find_specific_endings(data, start_pattern='', end_pattern='123'):\n    pattern = re.compile('\\\\b{}[a-zA-Z0-9]*?\\\\b'.format(start_pattern))\n    specific_endings = re.compile('\\\\b{}[a-zA-Z0-9]*?{}\\\\b'.format(start_pattern, end_pattern))\n    all_matches = Counter()\n    specific_end = []\n    for line in data:\n        line_matches = pattern.findall(line)\n        all_matches.update(line_matches)\n        for word in line_matches:\n            if specific_endings.fullmatch(word):\n                specific_end.append(word)\n    return (all_matches, specific_end)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern='123'):",
+      "mutated_line": "def count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern=''):",
+      "code": "import re\nfrom collections import Counter\n\ndef count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern=''):\n    pattern = re.compile('\\\\b{}[a-zA-Z0-9]*?\\\\b'.format(start_pattern))\n    specific_endings = re.compile('\\\\b{}[a-zA-Z0-9]*?{}\\\\b'.format(start_pattern, end_pattern))\n    all_matches = Counter()\n    specific_end = []\n    for line in data:\n        line_matches = pattern.findall(line)\n        all_matches.update(line_matches)\n        for word in line_matches:\n            if specific_endings.fullmatch(word):\n                specific_end.append(word)\n    return (all_matches, specific_end)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "pattern = re.compile(r'\\b{}[a-zA-Z0-9]*?\\b'.format(start_pattern))",
+      "mutated_line": "pattern = re.compile(''.format(start_pattern))",
+      "code": "import re\nfrom collections import Counter\n\ndef count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern='123'):\n    pattern = re.compile(''.format(start_pattern))\n    specific_endings = re.compile('\\\\b{}[a-zA-Z0-9]*?{}\\\\b'.format(start_pattern, end_pattern))\n    all_matches = Counter()\n    specific_end = []\n    for line in data:\n        line_matches = pattern.findall(line)\n        all_matches.update(line_matches)\n        for word in line_matches:\n            if specific_endings.fullmatch(word):\n                specific_end.append(word)\n    return (all_matches, specific_end)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "specific_endings = re.compile(r'\\b{}[a-zA-Z0-9]*?{}\\b'.format(start_pattern, end_pattern))",
+      "mutated_line": "specific_endings = re.compile(''.format(start_pattern, end_pattern))",
+      "code": "import re\nfrom collections import Counter\n\ndef count_occurrences_and_find_specific_endings(data, start_pattern='Foo', end_pattern='123'):\n    pattern = re.compile('\\\\b{}[a-zA-Z0-9]*?\\\\b'.format(start_pattern))\n    specific_endings = re.compile(''.format(start_pattern, end_pattern))\n    all_matches = Counter()\n    specific_end = []\n    for line in data:\n        line_matches = pattern.findall(line)\n        all_matches.update(line_matches)\n        for word in line_matches:\n            if specific_endings.fullmatch(word):\n                specific_end.append(word)\n    return (all_matches, specific_end)"
+    }
+  ]
+}

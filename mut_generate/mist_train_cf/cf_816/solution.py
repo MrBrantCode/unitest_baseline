@@ -1,0 +1,31 @@
+"""
+QUESTION:
+Write a function named `find_odd_or_smallest_prime` that takes a list of integers as input, including possible negative numbers, and returns the first number that appears an odd number of times. If no number appears an odd number of times, return the smallest prime number in the list.
+"""
+
+def find_odd_or_smallest_prime(arr):
+    def is_prime(num):
+        if num < 2:
+            return False
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                return False
+        return True
+
+    frequency = {}
+    for num in arr:
+        if num in frequency:
+            frequency[num] += 1
+        else:
+            frequency[num] = 1
+
+    for num in arr:
+        if frequency[num] % 2 != 0:
+            return num
+
+    smallest_prime = None
+    for num in arr:
+        if is_prime(num):
+            if smallest_prime is None or num < smallest_prime:
+                smallest_prime = num
+    return smallest_prime

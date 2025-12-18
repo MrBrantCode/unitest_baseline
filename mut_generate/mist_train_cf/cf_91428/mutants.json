@@ -1,0 +1,161 @@
+{
+  "task_id": "cf_91428",
+  "entry_point": "insert_new_row",
+  "mutant_count": 22,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "if not isinstance(itemname, str) or not itemname:",
+      "mutated_line": "print('Invalid itemname')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) and (not itemname):\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) and quantity <= 0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) and quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) and price <= 0.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) and price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "conn = sqlite3.connect('inventory.db')",
+      "mutated_line": "conn = sqlite3.connect('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")",
+      "mutated_line": "cursor.execute('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute('')\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity < 0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity < 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity > 0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity > 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity == 0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity == 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price < 0.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price < 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price > 0.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price > 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price == 0.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price == 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "cursor.execute(\"INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)\", (itemname, quantity, price))",
+      "mutated_line": "cursor.execute('', (itemname, quantity, price))",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "cursor.execute(\"CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)\")",
+      "mutated_line": "cursor.execute('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "print(\"Invalid itemname\")",
+      "mutated_line": "print('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity <= 1:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 1:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity <= -1:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= -1:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if not isinstance(quantity, int) or quantity <= 0:",
+      "mutated_line": "if not isinstance(quantity, int) or quantity <= 1:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 1:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "print(\"Invalid quantity\")",
+      "mutated_line": "print('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price <= 1.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 1.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price <= -1.0:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= -1.0:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if not isinstance(price, (int, float)) or price <= 0.0:",
+      "mutated_line": "if not isinstance(price, (int, float)) or price <= 1:",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 1:\n        print('Invalid price')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "print(\"Invalid price\")",
+      "mutated_line": "print('')",
+      "code": "import sqlite3\n\ndef insert_new_row(itemname, quantity, price):\n    conn = sqlite3.connect('inventory.db')\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='Inventory'\")\n    table_exists = cursor.fetchone()\n    if not table_exists:\n        cursor.execute('CREATE TABLE Inventory (id INTEGER PRIMARY KEY AUTOINCREMENT, itemname TEXT, quantity INTEGER, price REAL)')\n    if not isinstance(itemname, str) or not itemname:\n        print('Invalid itemname')\n        conn.close()\n        return\n    if not isinstance(quantity, int) or quantity <= 0:\n        print('Invalid quantity')\n        conn.close()\n        return\n    if not isinstance(price, (int, float)) or price <= 0.0:\n        print('')\n        conn.close()\n        return\n    cursor.execute('INSERT INTO Inventory (itemname, quantity, price) VALUES (?, ?, ?)', (itemname, quantity, price))\n    conn.commit()\n    conn.close()"
+    }
+  ]
+}

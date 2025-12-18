@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_66073",
+  "entry_point": "extract_values",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 2,
+      "original_line": "if visited is None:",
+      "mutated_line": "if visited is not None:",
+      "code": "def extract_values(json_obj, target_key, visited=None):\n    if visited is not None:\n        visited = set()\n    if id(json_obj) in visited:\n        return []\n    visited.add(id(json_obj))\n    result = []\n    for (key, value) in json_obj.items():\n        if key == target_key:\n            result.append(value)\n        if isinstance(value, dict):\n            result.extend(extract_values(value, target_key, visited))\n        elif isinstance(value, list):\n            for item in value:\n                if isinstance(item, dict):\n                    result.extend(extract_values(item, target_key, visited))\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if id(json_obj) in visited:",
+      "mutated_line": "if id(json_obj) not in visited:",
+      "code": "def extract_values(json_obj, target_key, visited=None):\n    if visited is None:\n        visited = set()\n    if id(json_obj) not in visited:\n        return []\n    visited.add(id(json_obj))\n    result = []\n    for (key, value) in json_obj.items():\n        if key == target_key:\n            result.append(value)\n        if isinstance(value, dict):\n            result.extend(extract_values(value, target_key, visited))\n        elif isinstance(value, list):\n            for item in value:\n                if isinstance(item, dict):\n                    result.extend(extract_values(item, target_key, visited))\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if key == target_key:",
+      "mutated_line": "if key != target_key:",
+      "code": "def extract_values(json_obj, target_key, visited=None):\n    if visited is None:\n        visited = set()\n    if id(json_obj) in visited:\n        return []\n    visited.add(id(json_obj))\n    result = []\n    for (key, value) in json_obj.items():\n        if key != target_key:\n            result.append(value)\n        if isinstance(value, dict):\n            result.extend(extract_values(value, target_key, visited))\n        elif isinstance(value, list):\n            for item in value:\n                if isinstance(item, dict):\n                    result.extend(extract_values(item, target_key, visited))\n    return result"
+    }
+  ]
+}

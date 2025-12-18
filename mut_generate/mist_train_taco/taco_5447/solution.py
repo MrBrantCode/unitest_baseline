@@ -1,0 +1,42 @@
+"""
+QUESTION:
+Given an array of size N. The task is to rotate array by D elements where D ≤ N.
+Example 1:
+Input:
+N = 7
+Arr[] = {1, 2, 3, 4, 5, 6, 7}
+D = 2
+Output: 3 4 5 6 7 1 2
+Explanation: 
+Rotate by 1: [2, 3, 4, 5, 6, 7, 1]
+Rotate by 2: [3, 4, 5, 6, 7, 1, 2]
+Example 2:
+Input:
+N = 4
+Arr[] = {1, 3, 4, 2}
+D = 3
+Output: 2 1 3 4
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function leftRotate() which takes the array of integers arr[], its size n and d as input parameters and rotates arr[] in-place without using any extra memory.
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(1)
+Constraints:
+1 ≤ N ≤ 10^{5}
+1 ≤ Arr[i] ≤ 1000
+0 ≤ D ≤ N
+"""
+
+def rotate_array(arr, n, d):
+    """
+    Rotates the array `arr` of size `n` by `d` elements to the left.
+
+    Parameters:
+    - arr (list of int): The array to be rotated.
+    - n (int): The size of the array.
+    - d (int): The number of elements to rotate the array by.
+
+    Returns:
+    - list of int: The rotated array.
+    """
+    arr[:] = arr[d:] + arr[:d]
+    return arr

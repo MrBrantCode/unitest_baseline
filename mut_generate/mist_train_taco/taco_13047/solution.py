@@ -1,0 +1,38 @@
+"""
+QUESTION:
+The chef was busy in solving algebra, he found some interesting results, that there are many numbers which can be formed by the sum of the factorial of the digits, he wrote all those interesting numbers in the diary(in increasing order) and went to sleep. Cheffina came and stole his diary, in morning chef found that his diary is missing. Now the chef wants your help to find those numbers, Chef asks you whether N is that interesting number or not. If N is an interesting number then print 1. Else print 0. 
+
+-----Input:-----
+- First-line will contain $T$, the number of test cases. Then the test cases follow. 
+- Each test case contains a single line of input, $N$. 
+
+-----Output:-----
+For each test case, output in a single line answer 1 or 0.
+
+-----Constraints-----
+- $1 \leq T \leq 10^6$
+- $0 \leq N \leq 10^9$
+
+-----Sample Input:-----
+2
+2
+10
+
+-----Sample Output:-----
+1
+0
+
+-----EXPLANATION:-----
+For 1) Factorial of 2 is 2, hence it is an interesting number.
+For 2) conversion for 10 is 1! + 0! = 2, which is not equal to 10, hence not an interesting number.
+"""
+
+def is_interesting_number(n: int) -> int:
+    # List of known interesting numbers
+    interesting_numbers = {1, 2, 145, 40585}
+    
+    # Check if the number is in the set of interesting numbers
+    if n in interesting_numbers:
+        return 1
+    else:
+        return 0

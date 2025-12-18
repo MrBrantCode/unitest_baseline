@@ -1,0 +1,69 @@
+"""
+QUESTION:
+Here your task is to Create a (nice) Christmas Tree.
+You don't have to check errors or incorrect input values, every thing is ok without bad tricks, only one int parameter as input and a string to return;-)...
+So what to do?First three easy examples:
+
+````
+Input: 3 and Output:
+  *
+ ***
+*****
+ ###
+ 
+ Input 9 and Output:
+    *
+   ***
+  *****
+   ***
+  *****
+ *******
+  *****
+ *******
+*********
+   ###
+   
+ Input 17 and Output:
+      *
+     ***
+    *****
+     ***
+    *****
+   *******
+    *****
+   *******
+  *********
+   *******
+  *********
+ ***********
+  *********
+ ***********
+*************
+     ###
+     
+Really nice trees, or what???! So merry Christmas;-)
+````
+
+You can see, always a root, always steps of hight 3, tree never smaller than 3 (return "") and no difference for input values like 15 or 17 (because (int) 15/3 = (int) 17/3). That's valid for every input and every tree.
+I think there's nothing more to say - perhaps look at the testcases too;-)!
+
+There are some static tests at the beginning and many random tests if you submit your solution. 
+Hope you have fun:-)!
+"""
+
+def generate_christmas_tree(height: int) -> str:
+    if height < 3:
+        return ""
+    
+    tree_sections = []
+    for i in range(height // 3):
+        section = [
+            ' ' * ((5 - y) // 2 + height // 3 - i - 1) + '*' * (y + i * 2)
+            for y in [1, 3, 5]
+        ]
+        tree_sections.append('\n'.join(section))
+    
+    tree = '\n'.join(tree_sections)
+    base = ' ' * (height // 3) + '###'
+    
+    return tree + '\n' + base

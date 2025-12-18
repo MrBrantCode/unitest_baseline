@@ -1,0 +1,245 @@
+{
+  "task_id": "cf_26635",
+  "entry_point": "update_q_values_batch",
+  "mutant_count": 34,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] -= 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] -= 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if s_next is not None:",
+      "mutated_line": "if s_next is None:",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 / (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 / (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 + (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 + (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 ** (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 ** (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i <= len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i <= len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i >= len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i >= len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i != len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i != len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "max_q_next = 0  # Q-value for terminal state is 0",
+      "mutated_line": "max_q_next = 1",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 1\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "max_q_next = 0  # Q-value for terminal state is 0",
+      "mutated_line": "max_q_next = -1",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = -1\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "max_q_next = 0  # Q-value for terminal state is 0",
+      "mutated_line": "max_q_next = 1",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 1\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 2 * (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 2 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 0 * (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 0 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 0 * (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 0 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += -1 * (r + gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += -1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r + gamma * max_q_next + q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next + q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * ((r + gamma * max_q_next) * q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * ((r + gamma * max_q_next) * q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) + 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) + 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) * 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) * 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i - 1] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i - 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i * 1] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i * 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r - gamma * max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r - gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r * (gamma * max_q_next) - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r * (gamma * max_q_next) - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) - 2 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 2 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) - 0 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 0 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) - 0 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 0 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 1] if i < len(obs) - -1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - -1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 2] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 2] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 0] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 0] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + 0] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 0] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "s_next = obs[i + 1] if i < len(obs) - 1 else None",
+      "mutated_line": "s_next = obs[i + -1] if i < len(obs) - 1 else None",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + -1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r + gamma / max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma / max_q_next - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r + (gamma + max_q_next) - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + (gamma + max_q_next) - q_values[s, a])\n    return q_values"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "q_values[s, a] += 1 * (r + gamma * max_q_next - q_values[s, a])",
+      "mutated_line": "q_values[s, a] += 1 * (r + gamma ** max_q_next - q_values[s, a])",
+      "code": "import numpy as np\n\ndef update_q_values_batch(q_values, obs, actions, rewards, gamma):\n    for i in range(len(obs)):\n        s = obs[i]\n        a = actions[i]\n        r = rewards[i]\n        s_next = obs[i + 1] if i < len(obs) - 1 else None\n        if s_next is not None:\n            max_q_next = np.max(q_values[s_next])\n        else:\n            max_q_next = 0\n        q_values[s, a] += 1 * (r + gamma ** max_q_next - q_values[s, a])\n    return q_values"
+    }
+  ]
+}

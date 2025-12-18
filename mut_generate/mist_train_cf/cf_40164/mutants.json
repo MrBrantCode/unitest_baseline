@@ -1,0 +1,217 @@
+{
+  "task_id": "cf_40164",
+  "entry_point": "generate_minikube_start_command",
+  "mutant_count": 30,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-cert-file=\\\"{cert_file}\\\" \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command -= f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 15,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-key-file=\\\"{key_file}\\\"\"",
+      "mutated_line": "command -= f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command -= f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) and memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) and cpus <= 0:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) and cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 9,
+      "original_line": "if not cert_file or not key_file:",
+      "mutated_line": "if not cert_file and (not key_file):",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file and (not key_file):\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory < 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory > 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory == 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "return \"Memory should be a positive integer.\"",
+      "mutated_line": "return ''",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return ''\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus < 0:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus < 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus > 0:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus > 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus == 0:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus == 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return \"CPUs should be a positive integer.\"",
+      "mutated_line": "return ''",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return ''\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return \"Kubernetes version should start with 'v'.\"",
+      "mutated_line": "return ''",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return ''\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"Certificate file paths are required.\"",
+      "mutated_line": "return ''",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return ''\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "command = f\"minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'{memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "command = f\"minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory}{cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "command = f\"minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus}{kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "command = f\"minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version}'\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-cert-file=\\\"{cert_file}\\\" \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-cert-file=\\\"{cert_file}\\\" \"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}'\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-key-file=\\\"{key_file}\\\"\"",
+      "mutated_line": "command += f'{key_file}\"'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "command += f\"--extra-config=controller-manager.cluster-signing-key-file=\\\"{key_file}\\\"\"",
+      "mutated_line": "command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 1:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= -1:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if not isinstance(memory, int) or memory <= 0:",
+      "mutated_line": "return 'Memory should be a positive integer.'",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 1:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus <= 1:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 1:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus <= -1:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= -1:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if not isinstance(cpus, int) or cpus <= 0:",
+      "mutated_line": "if not isinstance(cpus, int) or cpus <= 1:",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 1:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith('v'):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if not kubernetes_version.startswith('v'):",
+      "mutated_line": "if not kubernetes_version.startswith(''):",
+      "code": "def generate_minikube_start_command(memory, cpus, kubernetes_version, cert_file, key_file):\n    if not isinstance(memory, int) or memory <= 0:\n        return 'Memory should be a positive integer.'\n    if not isinstance(cpus, int) or cpus <= 0:\n        return 'CPUs should be a positive integer.'\n    if not kubernetes_version.startswith(''):\n        return \"Kubernetes version should start with 'v'.\"\n    if not cert_file or not key_file:\n        return 'Certificate file paths are required.'\n    command = f'minikube start --memory={memory} --cpus={cpus} --kubernetes-version={kubernetes_version} '\n    command += f'--extra-config=controller-manager.cluster-signing-cert-file=\"{cert_file}\" '\n    command += f'--extra-config=controller-manager.cluster-signing-key-file=\"{key_file}\"'\n    return command"
+    }
+  ]
+}

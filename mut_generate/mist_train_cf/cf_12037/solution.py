@@ -1,0 +1,29 @@
+"""
+QUESTION:
+Write a function named `find_font_styles` that takes a string representing an HTML document as input and returns a set of unique font style names. The function should consider the following font style tags: <b>, <i>, <u>, <s>, <strong>, <em>, <ins>, <del>. It should ignore font style tags within comments, script, or style blocks, and handle nested tags, uppercase or mixed case tags, and CSS styles defined in the <style> block.
+"""
+
+import re
+
+def find_font_styles(html):
+    """
+    Extracts unique font style names from an HTML document.
+
+    Args:
+    html (str): A string representing an HTML document.
+
+    Returns:
+    set: A set of unique font style names.
+    """
+    # Remove comments and script/style blocks
+    html = re.sub(r"<!--.*?-->", "", html, flags=re.DOTALL)
+    html = re.sub(r"<script.*?</script>", "", html, flags=re.DOTALL)
+    html = re.sub(r"<style.*?</style>", "", html, flags=re.DOTALL)
+
+    # Find all font style tags
+    font_style_tags = re.findall(r"<(b|i|u|s|strong|em|ins|del)>", html, flags=re.IGNORECASE)
+
+    # Remove duplicates and convert to lowercase
+    font_styles = set(map(str.lower, font_style_tags))
+
+    return font_styles

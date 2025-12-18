@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_54912",
+  "entry_point": "get_foreign_keys",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def get_foreign_keys(model):\n    \"\"\"\"\"\"\n    foreign_keys = []\n    for field in model._meta.get_fields(include_parents=False):\n        if field.is_relation and field.many_to_one:\n            foreign_keys.append((field, field.related_model))\n    return foreign_keys"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "if field.is_relation and field.many_to_one:",
+      "mutated_line": "if field.is_relation or field.many_to_one:",
+      "code": "def get_foreign_keys(model):\n    \"\"\"\n    Returns a list of tuples, where each tuple contains a foreign key field and its corresponding related model.\n\n    Args:\n        model (Django model): The model to extract foreign keys from.\n\n    Returns:\n        list[tuple]: A list of tuples containing foreign key fields and their related models.\n    \"\"\"\n    foreign_keys = []\n    for field in model._meta.get_fields(include_parents=False):\n        if field.is_relation or field.many_to_one:\n            foreign_keys.append((field, field.related_model))\n    return foreign_keys"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "for field in model._meta.get_fields(include_parents=False):",
+      "mutated_line": "for field in model._meta.get_fields(include_parents=True):",
+      "code": "def get_foreign_keys(model):\n    \"\"\"\n    Returns a list of tuples, where each tuple contains a foreign key field and its corresponding related model.\n\n    Args:\n        model (Django model): The model to extract foreign keys from.\n\n    Returns:\n        list[tuple]: A list of tuples containing foreign key fields and their related models.\n    \"\"\"\n    foreign_keys = []\n    for field in model._meta.get_fields(include_parents=True):\n        if field.is_relation and field.many_to_one:\n            foreign_keys.append((field, field.related_model))\n    return foreign_keys"
+    }
+  ]
+}

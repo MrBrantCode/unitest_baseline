@@ -1,0 +1,56 @@
+"""
+QUESTION:
+It is vacation time and Panda is in his hometown Pandaland. Panda is very bored so he started studying some interesting properties of natural numbers. Some days later he meet his friend Agham, who is pretty good in mathematics and tells him about interesting properties of natural numbers & ask him to test his skills.So, Agham gives Panda a problem, he first defines a function fx(n) on set of natural numbers as - 
+
+fx(n)= sum of divisors of n.
+
+He calls any number as 'lazy number' if the number of divisors(y) of that number follows the following property:
+
+fx(2y)=3fx(y)
+
+Then he asks Panda how many such numbers exist between any two numbers. Please help Panda to find the count of such numbers between any two numbers L and R (both inclusive).
+
+INPUT:
+
+First line contains an integer T denoting the number of test case(s).
+Next T line contains two space separared integers L and R.
+
+OUTPUT:
+
+For each test case output the answer in separate line.
+
+Constraints:
+
+1 ≤ T ≤ 10^5
+
+1 ≤ L ≤ R ≤ 10^18
+
+Problem Author - Agham Chawla
+
+SAMPLE INPUT
+2
+1 3
+6 10
+
+SAMPLE OUTPUT
+1
+1
+"""
+
+def count_lazy_numbers(L: int, R: int) -> int:
+    """
+    Counts the number of 'lazy numbers' between L and R (both inclusive).
+
+    A number is considered 'lazy' if the number of divisors (y) of that number
+    satisfies the property: fx(2y) = 3fx(y), where fx(n) is the sum of divisors of n.
+
+    Parameters:
+    L (int): The lower bound of the range (inclusive).
+    R (int): The upper bound of the range (inclusive).
+
+    Returns:
+    int: The count of 'lazy numbers' in the range [L, R].
+    """
+    x = int(ceil(sqrt(L)))
+    y = int(floor(sqrt(R)))
+    return y - x + 1

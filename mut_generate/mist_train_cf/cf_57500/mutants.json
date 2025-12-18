@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_57500",
+  "entry_point": "calculate_synonyms",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if current_word not in visited:",
+      "mutated_line": "if current_word in visited:",
+      "code": "from collections import defaultdict\n\ndef calculate_synonyms(lexicon, synonym_pairs):\n    graph = defaultdict(set)\n    for (word, synonyms) in lexicon.items():\n        for synonym in synonyms:\n            graph[word].add(synonym)\n            graph[synonym].add(word)\n    for (word1, word2) in synonym_pairs:\n        graph[word1].add(word2)\n        graph[word2].add(word1)\n    result = {}\n    for word in graph:\n        visited = set()\n        synonyms = set()\n        stack = [word]\n        while stack:\n            current_word = stack.pop()\n            if current_word in visited:\n                visited.add(current_word)\n                synonyms.add(current_word)\n                stack.extend((synonym for synonym in graph[current_word] if synonym not in visited))\n        synonyms.remove(word)\n        result[word] = len(synonyms)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "stack.extend(synonym for synonym in graph[current_word] if synonym not in visited)",
+      "mutated_line": "stack.extend((synonym for synonym in graph[current_word] if synonym in visited))",
+      "code": "from collections import defaultdict\n\ndef calculate_synonyms(lexicon, synonym_pairs):\n    graph = defaultdict(set)\n    for (word, synonyms) in lexicon.items():\n        for synonym in synonyms:\n            graph[word].add(synonym)\n            graph[synonym].add(word)\n    for (word1, word2) in synonym_pairs:\n        graph[word1].add(word2)\n        graph[word2].add(word1)\n    result = {}\n    for word in graph:\n        visited = set()\n        synonyms = set()\n        stack = [word]\n        while stack:\n            current_word = stack.pop()\n            if current_word not in visited:\n                visited.add(current_word)\n                synonyms.add(current_word)\n                stack.extend((synonym for synonym in graph[current_word] if synonym in visited))\n        synonyms.remove(word)\n        result[word] = len(synonyms)\n    return result"
+    }
+  ]
+}

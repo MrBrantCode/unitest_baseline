@@ -1,0 +1,63 @@
+"""
+QUESTION:
+During the winter holidays, the demand for Christmas balls is exceptionally high. Since it's already 2018, the advances in alchemy allow easy and efficient ball creation by utilizing magic crystals.
+
+Grisha needs to obtain some yellow, green and blue balls. It's known that to produce a yellow ball one needs two yellow crystals, green — one yellow and one blue, and for a blue ball, three blue crystals are enough.
+
+Right now there are A yellow and B blue crystals in Grisha's disposal. Find out how many additional crystals he should acquire in order to produce the required number of balls.
+
+
+-----Input-----
+
+The first line features two integers A and B (0 ≤ A, B ≤ 10^9), denoting the number of yellow and blue crystals respectively at Grisha's disposal.
+
+The next line contains three integers x, y and z (0 ≤ x, y, z ≤ 10^9) — the respective amounts of yellow, green and blue balls to be obtained.
+
+
+-----Output-----
+
+Print a single integer — the minimum number of crystals that Grisha should acquire in addition.
+
+
+-----Examples-----
+Input
+4 3
+2 1 1
+
+Output
+2
+
+Input
+3 9
+1 1 3
+
+Output
+1
+
+Input
+12345678 87654321
+43043751 1000000000 53798715
+
+Output
+2147483648
+
+
+
+-----Note-----
+
+In the first sample case, Grisha needs five yellow and four blue crystals to create two yellow balls, one green ball, and one blue ball. To do that, Grisha needs to obtain two additional crystals: one yellow and one blue.
+"""
+
+def calculate_additional_crystals(A, B, x, y, z):
+    # Calculate the total number of yellow and blue crystals needed
+    required_yellow_crystals = 2 * x + y
+    required_blue_crystals = y + 3 * z
+    
+    # Calculate the additional crystals needed
+    additional_yellow_crystals = max(0, required_yellow_crystals - A)
+    additional_blue_crystals = max(0, required_blue_crystals - B)
+    
+    # Total additional crystals needed
+    total_additional_crystals = additional_yellow_crystals + additional_blue_crystals
+    
+    return total_additional_crystals

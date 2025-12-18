@@ -1,0 +1,71 @@
+"""
+QUESTION:
+Shefin gives you a string S and you have to find a non-empty string P such that:  
+P is a substring of S.
+No non-empty substring of P is a prefix of S.
+No non-empty substring of P is a suffix of S.
+
+For all such possible strings, find the length of the longest string satisfying all the conditions. If no such string is possible, print -1. 
+
+A string A is a substring of a string B if A can be obtained from B by deleting several (possibly zero) characters from the beginning and several (possibly zero) characters from the end.  
+A prefix of a string A, is a substring of A that occurs at the beginning of A. For example, "code" is a prefix of "codechef", but "ode" is not.  
+A suffix of a string A, is a substring of A that occurs at the end of A. For example, "chef" is a suffix of "codechef", but "he" is not.
+
+------ Input Format ------ 
+
+- The first line of the input contains an integer T - denoting number of test cases.
+- Each test case contains a string S consisting of lowercase english alphabets only. 
+
+------ Output Format ------ 
+
+For each test case, print a single integer. If a string P exists based on the given conditions, print the maximum length of the possible string. Otherwise, print -1.
+
+------ Constraints ------ 
+
+${1 ≤T ≤10^{4}}$
+${1 ≤\lvert S \rvert ≤10^{6}}$
+- Sum of ${\lvert S \rvert}$ over all test cases does not exceed $10^{6}$.
+$S$ consists of lowercase english alphabets only.
+
+----- Sample Input 1 ------ 
+2
+abcdab
+aaa
+
+----- Sample Output 1 ------ 
+2
+-1
+
+----- explanation 1 ------ 
+Test Case $1$: The maximum length of the string satisfying all required conditions is $2$. The string $\texttt{cd}$ satisfies all the conditions. It can be proven that no string of length greater than $2$ exists which can satisfy all the conditions.  
+
+Test Case $2$: There is no string possible which satisfies all the required conditions. Thus, the answer is $-1$.
+"""
+
+def find_longest_valid_substring(S: str) -> int:
+    # Initialize an empty list to store segments of the string that do not contain the first or last character
+    segments = []
+    
+    # Iterate through the string and build segments
+    current_segment = []
+    for char in S:
+        if char in [S[0], S[-1]]:
+            if current_segment:
+                segments.append(''.join(current_segment))
+                current_segment = []
+        else:
+            current_segment.append(char)
+    
+    # If there's a segment left after the loop, add it to the list
+    if current_segment:
+        segments.append(''.join(current_segment))
+    
+    # Calculate the lengths of the segments
+    segment_lengths = [len(segment) for segment in segments]
+    
+    # If there are no valid segments, return -1
+    if not segment_lengths:
+        return -1
+    
+    # Return the maximum length of the valid segments
+    return max(segment_lengths)

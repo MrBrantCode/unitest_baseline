@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_13968",
+  "entry_point": "extract_value",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def extract_value(data, key):\n    \"\"\"\"\"\"\n    values = []\n    if isinstance(data, dict):\n        if key in data:\n            values.append(data[key])\n        for (k, v) in data.items():\n            if isinstance(v, (dict, list)):\n                values.extend(extract_value(v, key))\n    elif isinstance(data, list):\n        for item in data:\n            values.extend(extract_value(item, key))\n    return values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if key in data:",
+      "mutated_line": "if key not in data:",
+      "code": "def extract_value(data, key):\n    \"\"\"\n    Extracts a list of values associated with the given key from a JSON object.\n    \n    Args:\n    data (dict or list): The JSON object to extract values from.\n    key (str): The key to extract values for.\n    \n    Returns:\n    list: A list of values associated with the given key.\n    \"\"\"\n    values = []\n    if isinstance(data, dict):\n        if key not in data:\n            values.append(data[key])\n        for (k, v) in data.items():\n            if isinstance(v, (dict, list)):\n                values.extend(extract_value(v, key))\n    elif isinstance(data, list):\n        for item in data:\n            values.extend(extract_value(item, key))\n    return values"
+    }
+  ]
+}

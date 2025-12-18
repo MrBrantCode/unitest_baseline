@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_42853",
+  "entry_point": "add_query_param",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "encoded_query = urlencode(query_params, doseq=True, safe=':/')",
+      "mutated_line": "encoded_query = urlencode(query_params, doseq=False, safe=':/')",
+      "code": "from urllib.parse import urlencode, urlparse, parse_qs\n\ndef add_query_param(request, param_name, param_value):\n    original_url = request.build_absolute_uri()\n    parsed_url = urlparse(original_url)\n    query_params = parse_qs(parsed_url.query)\n    query_params[param_name] = param_value\n    encoded_query = urlencode(query_params, doseq=False, safe=':/')\n    modified_url = parsed_url._replace(query=encoded_query).geturl()\n    return modified_url"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "encoded_query = urlencode(query_params, doseq=True, safe=':/')",
+      "mutated_line": "encoded_query = urlencode(query_params, doseq=True, safe='')",
+      "code": "from urllib.parse import urlencode, urlparse, parse_qs\n\ndef add_query_param(request, param_name, param_value):\n    original_url = request.build_absolute_uri()\n    parsed_url = urlparse(original_url)\n    query_params = parse_qs(parsed_url.query)\n    query_params[param_name] = param_value\n    encoded_query = urlencode(query_params, doseq=True, safe='')\n    modified_url = parsed_url._replace(query=encoded_query).geturl()\n    return modified_url"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "task_id": "cf_98039",
+  "entry_point": "authenticate",
+  "mutant_count": 12,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "\"admin1\": \"password1\",",
+      "mutated_line": "authorized_users = {'': 'password1', 'admin2': 'password2', 'admin3': 'password3'}",
+      "code": "authorized_users = {'': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"admin2\": \"password2\",",
+      "mutated_line": "authorized_users = {'admin1': 'password1', '': 'password2', 'admin3': 'password3'}",
+      "code": "authorized_users = {'admin1': 'password1', '': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"admin3\": \"password3\"",
+      "mutated_line": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', '': 'password3'}",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', '': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "\"admin1\": \"password1\",",
+      "mutated_line": "authorized_users = {'admin1': '', 'admin2': 'password2', 'admin3': 'password3'}",
+      "code": "authorized_users = {'admin1': '', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"admin2\": \"password2\",",
+      "mutated_line": "authorized_users = {'admin1': 'password1', 'admin2': '', 'admin3': 'password3'}",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': '', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"admin3\": \"password3\"",
+      "mutated_line": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': ''}",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': ''}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "if username in authorized_users and authorized_users[username] == password:",
+      "mutated_line": "if username in authorized_users or authorized_users[username] == password:",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users or authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if username in authorized_users and authorized_users[username] == password:",
+      "mutated_line": "if username not in authorized_users and authorized_users[username] == password:",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username not in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if username in authorized_users and authorized_users[username] == password:",
+      "mutated_line": "if username in authorized_users and authorized_users[username] != password:",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] != password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return False\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return True\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('Authentication failed. Access denied.')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "raise Exception(\"Authentication failed. Access denied.\")",
+      "mutated_line": "raise Exception('')",
+      "code": "authorized_users = {'admin1': 'password1', 'admin2': 'password2', 'admin3': 'password3'}\n\ndef authenticate(username, password):\n    if username in authorized_users and authorized_users[username] == password:\n        return True\n    else:\n        return False\n\ndef send_email(subject, body, recipients, username, password):\n    if authenticate(username, password):\n        pass\n    else:\n        raise Exception('')"
+    }
+  ]
+}

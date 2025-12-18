@@ -1,0 +1,126 @@
+{
+  "task_id": "cf_100367",
+  "entry_point": "encode_non_ascii",
+  "mutant_count": 17,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "pattern = re.compile(\"[^\\x00-\\x7F]|[0-9]\")",
+      "mutated_line": "pattern = re.compile('')",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 127 or char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 or char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "new_string = \"\"",
+      "mutated_line": "new_string = 'MUTATED'",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = 'MUTATED'\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) >= 127 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) >= 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) <= 127 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) <= 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) != 127 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) != 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 127 and char in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if char in replacements:",
+      "mutated_line": "if char not in replacements:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char not in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 15,
+      "original_line": "new_string += replacements[char]",
+      "mutated_line": "new_string -= replacements[char]",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string -= replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 17,
+      "original_line": "new_string += char",
+      "mutated_line": "new_string -= char",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string -= char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for char in pattern.findall(\"\".join(strings)):",
+      "mutated_line": "for char in pattern.findall('MUTATED'.join(strings)):",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall('MUTATED'.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 128 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 128 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 126 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 126 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 0 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 0 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > 1 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 1 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if ord(char) > 127 and char not in keyword.kwlist:",
+      "mutated_line": "if ord(char) > -127 and char not in keyword.kwlist:",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > -127 and char not in keyword.kwlist:\n            replacements[char] = '&#x{:04x};'.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "replacements[char] = \"&#x{:04x};\".format(ord(char))",
+      "mutated_line": "replacements[char] = ''.format(ord(char))",
+      "code": "import keyword\nimport re\n\ndef encode_non_ascii(strings):\n    pattern = re.compile('[^\\x00-\\x7f]|[0-9]')\n    replacements = {}\n    for char in pattern.findall(''.join(strings)):\n        if ord(char) > 127 and char not in keyword.kwlist:\n            replacements[char] = ''.format(ord(char))\n    new_list = []\n    for string in strings:\n        new_string = ''\n        for (i, char) in enumerate(string):\n            if char in replacements:\n                new_string += replacements[char]\n            else:\n                new_string += char\n        new_list.append(new_string)\n    return new_list"
+    }
+  ]
+}

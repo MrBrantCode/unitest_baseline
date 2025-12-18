@@ -1,0 +1,616 @@
+{
+  "task_id": "taco_2619",
+  "entry_point": "calculate_chat_positions",
+  "mutant_count": 87,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 31,
+      "original_line": "q -= 1  # Convert to 0-based index",
+      "mutated_line": "q += 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q += 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "bit = BIT(n + m)",
+      "mutated_line": "bit = BIT(n - m)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n - m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "bit = BIT(n + m)",
+      "mutated_line": "bit = BIT(n * m)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n * m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "q -= 1  # Convert to 0-based index",
+      "mutated_line": "q -= 2",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 2\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "q -= 1  # Convert to 0-based index",
+      "mutated_line": "q -= 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 0\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "q -= 1  # Convert to 0-based index",
+      "mutated_line": "q -= 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 0\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "q -= 1  # Convert to 0-based index",
+      "mutated_line": "q -= -1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= -1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "mins[q] = 0",
+      "mutated_line": "mins[q] = 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 1\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "mins[q] = 0",
+      "mutated_line": "mins[q] = -1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = -1\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "mins[q] = 0",
+      "mutated_line": "mins[q] = 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 1\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 36,
+      "original_line": "p = n + i",
+      "mutated_line": "p = n - i",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n - i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 36,
+      "original_line": "p = n + i",
+      "mutated_line": "p = n * i",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n * i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [0] / n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] / n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [0] + n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] + n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [0] ** n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] ** n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "def add(self, i, value=1):",
+      "mutated_line": "def add(self, i, value=2):",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=2):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "def add(self, i, value=1):",
+      "mutated_line": "def add(self, i, value=0):",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=0):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "def add(self, i, value=1):",
+      "mutated_line": "def add(self, i, value=0):",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=0):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "def add(self, i, value=1):",
+      "mutated_line": "def add(self, i, value=-1):",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=-1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "while i < N:",
+      "mutated_line": "while i <= N:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i <= N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "while i < N:",
+      "mutated_line": "while i >= N:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i >= N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "while i < N:",
+      "mutated_line": "while i != N:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i != N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 10,
+      "original_line": "tree[i] += value",
+      "mutated_line": "tree[i] -= value",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] -= value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "result = 0",
+      "mutated_line": "result = 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 1\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "result = 0",
+      "mutated_line": "result = -1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = -1\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "result = 0",
+      "mutated_line": "result = 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 1\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r >= 0:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r >= 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r <= 0:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r <= 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r != 0:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r != 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result -= tree[r - 1]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result -= tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n - 1 + bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 + bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], (n - 1) * bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], (n - 1) * bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n - 1 + bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 + bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], (n - 1) * bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], (n - 1) * bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] - 1, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] - 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] * 1, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] * 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] - 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] - 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] * 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] * 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i - 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i - 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i * 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i * 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r > 1:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 1:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r > -1:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > -1:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "while r > 0:",
+      "mutated_line": "while r > 1:",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 1:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r + 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r + 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r * 1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r * 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 33,
+      "original_line": "bit.add(p, value=-1)",
+      "mutated_line": "bit.add(p, value=+1)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=+1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n + 1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n + 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n * 1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n * 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n + 1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n + 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n * 1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n * 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 2, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 2, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 0, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 0, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 0, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 0, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + -1, maxs[i] + 1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + -1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] + 2) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 2) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] + 0) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 0) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] + 0) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 0) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]",
+      "mutated_line": "result = [(mins[i] + 1, maxs[i] + -1) for i in range(n)]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + -1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [1] * n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [1] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [-1] * n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [-1] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.tree = [0] * n",
+      "mutated_line": "self.tree = [1] * n",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [1] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i + 2",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 2\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i + 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 0\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i + 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 0\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "i |= i + 1",
+      "mutated_line": "i |= i + -1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + -1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r + 1]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r + 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r * 1]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r * 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r - 2",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 2\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r - 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 0\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r - 0",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 0\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "r &= r - 1",
+      "mutated_line": "r &= r - -1",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - -1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "bit.add(p, value=-1)",
+      "mutated_line": "bit.add(p, value=-2)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-2)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "bit.add(p, value=-1)",
+      "mutated_line": "bit.add(p, value=-0)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-0)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "bit.add(p, value=-1)",
+      "mutated_line": "bit.add(p, value=-0)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-0)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "bit.add(p, value=-1)",
+      "mutated_line": "bit.add(p, value=--1)",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=--1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n - 2 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 2 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n - 0 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 0 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n - 0 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 0 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "maxs[q] = max(maxs[q], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[q] = max(maxs[q], n - -1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - -1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n - 2 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 2 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n - 0 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 0 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n - 0 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 0 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "maxs[i] = max(maxs[i], n - 1 - bit.sum(p))",
+      "mutated_line": "maxs[i] = max(maxs[i], n - -1 - bit.sum(p))",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - -1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r - 2]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 2]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r - 0]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 0]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r - 0]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - 0]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "result += tree[r - 1]",
+      "mutated_line": "result += tree[r - -1]",
+      "code": "def calculate_chat_positions(n, m, queries):\n\n    class BIT:\n\n        def __init__(self, n):\n            self.tree = [0] * n\n            self.N = n\n\n        def add(self, i, value=1):\n            (N, tree) = (self.N, self.tree)\n            while i < N:\n                tree[i] += value\n                i |= i + 1\n\n        def sum(self, r):\n            (N, tree) = (self.N, self.tree)\n            result = 0\n            while r > 0:\n                result += tree[r - -1]\n                r &= r - 1\n            return result\n    bit = BIT(n + m)\n    pos = list(reversed(range(n)))\n    for i in range(n):\n        bit.add(i)\n    mins = list(range(n))\n    maxs = list(range(n))\n    for (i, q) in enumerate(queries):\n        q -= 1\n        p = pos[q]\n        bit.add(p, value=-1)\n        mins[q] = 0\n        maxs[q] = max(maxs[q], n - 1 - bit.sum(p))\n        p = n + i\n        bit.add(p)\n        pos[q] = p\n    for (i, p) in enumerate(pos):\n        maxs[i] = max(maxs[i], n - 1 - bit.sum(p))\n    result = [(mins[i] + 1, maxs[i] + 1) for i in range(n)]\n    return result"
+    }
+  ]
+}

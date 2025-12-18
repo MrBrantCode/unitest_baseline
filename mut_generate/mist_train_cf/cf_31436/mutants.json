@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_31436",
+  "entry_point": "check",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "perms = set(role_perms.get('*', ''))  # Retrieve permissions for wildcard role if user's role is not found",
+      "mutated_line": "perms = set(role_perms.get('', ''))",
+      "code": "def check(field, role_perms, user):\n    perms = set(role_perms.get('', ''))\n    user_perms = role_perms.get(user.role, set())\n    if user_perms:\n        perms.update(user_perms)\n    required_perms = field.required_permissions\n    return required_perms.issubset(perms)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "perms = set(role_perms.get('*', ''))  # Retrieve permissions for wildcard role if user's role is not found",
+      "mutated_line": "perms = set(role_perms.get('*', 'MUTATED'))",
+      "code": "def check(field, role_perms, user):\n    perms = set(role_perms.get('*', 'MUTATED'))\n    user_perms = role_perms.get(user.role, set())\n    if user_perms:\n        perms.update(user_perms)\n    required_perms = field.required_permissions\n    return required_perms.issubset(perms)"
+    }
+  ]
+}

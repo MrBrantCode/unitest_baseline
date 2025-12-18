@@ -1,0 +1,546 @@
+{
+  "task_id": "cf_29621",
+  "entry_point": "generate_sql_statements",
+  "mutant_count": 77,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if migration[0] == 'CreateTable':",
+      "mutated_line": "if migration[0] != 'CreateTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] != 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if migration[0] == 'CreateTable':",
+      "mutated_line": "if migration[0] == '':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == '':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "elif migration[0] == 'AlterTable':",
+      "mutated_line": "elif migration[0] != 'AlterTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] != 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if migration[0] == 'CreateTable':",
+      "mutated_line": "if migration[1] == 'CreateTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[1] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if migration[0] == 'CreateTable':",
+      "mutated_line": "if migration[-1] == 'CreateTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[-1] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if migration[0] == 'CreateTable':",
+      "mutated_line": "if migration[1] == 'CreateTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[1] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif migration[0] == 'AlterTable':",
+      "mutated_line": "elif migration[0] == '':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == '':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "elif migration[0] == 'AlterUniqueTogether':",
+      "mutated_line": "elif migration[0] != 'AlterUniqueTogether':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] != 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[2], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[2], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[0], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[0], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[-1], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[-1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[1], migration[3])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[3])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[1])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[1], migration[0])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[0])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[1])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "table_name, columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, columns) = (migration[1], migration[-2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[-2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ''.join([f'{col[0]} {col[1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ''.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'{table_name} ({columns_str});')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'{table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'CREATE TABLE {table_name}{columns_str});')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name}{columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'CREATE TABLE {table_name} ({columns_str}')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str}')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif migration[0] == 'AlterTable':",
+      "mutated_line": "elif migration[1] == 'AlterTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[1] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif migration[0] == 'AlterTable':",
+      "mutated_line": "elif migration[-1] == 'AlterTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[-1] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif migration[0] == 'AlterTable':",
+      "mutated_line": "elif migration[1] == 'AlterTable':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[1] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if alteration[0] == 'ADD COLUMN':",
+      "mutated_line": "if alteration[0] != 'ADD COLUMN':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] != 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "elif migration[0] == 'AlterUniqueTogether':",
+      "mutated_line": "elif migration[0] == '':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == '':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[0]}{col[1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]}{col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[2], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[2], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[0], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[0], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[-1], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[-1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[1], migration[3])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[3])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[1])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[1], migration[0])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[0])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[1])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "table_name, alterations = migration[1], migration[2]",
+      "mutated_line": "(table_name, alterations) = (migration[1], migration[-2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[-2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if alteration[0] == 'ADD COLUMN':",
+      "mutated_line": "if alteration[0] == '':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == '':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "elif migration[0] == 'AlterUniqueTogether':",
+      "mutated_line": "elif migration[1] == 'AlterUniqueTogether':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[1] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "elif migration[0] == 'AlterUniqueTogether':",
+      "mutated_line": "elif migration[-1] == 'AlterUniqueTogether':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[-1] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "elif migration[0] == 'AlterUniqueTogether':",
+      "mutated_line": "elif migration[1] == 'AlterUniqueTogether':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[1] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if alteration[0] == 'ADD COLUMN':",
+      "mutated_line": "if alteration[1] == 'ADD COLUMN':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[1] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if alteration[0] == 'ADD COLUMN':",
+      "mutated_line": "if alteration[-1] == 'ADD COLUMN':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[-1] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if alteration[0] == 'ADD COLUMN':",
+      "mutated_line": "if alteration[1] == 'ADD COLUMN':",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[1] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[2], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[2], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[0], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[0], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[0], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[-1], migration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[-1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[1], migration[3])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[3])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[1])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[1], migration[0])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[0])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[1], migration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[1])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "table_name, unique_columns = migration[1], migration[2]",
+      "mutated_line": "(table_name, unique_columns) = (migration[1], migration[-2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[-2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "columns_str = ', '.join(unique_columns)",
+      "mutated_line": "columns_str = ''.join(unique_columns)",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ''.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'{table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'{table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name}{table_name} UNIQUE ({columns_str});')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name}{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name}{columns_str});')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name}{columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str}')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str}')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[1]} {col[1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[1]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[-1]} {col[1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[-1]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[1]} {col[1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[1]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[0]} {col[2]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[2]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[0]} {col[0]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[0]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[0]} {col[0]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[0]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])",
+      "mutated_line": "columns_str = ', '.join([f'{col[0]} {col[-1]}' for col in columns])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[-1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[2], alteration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[2], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[0], alteration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[0], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[0], alteration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[0], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[-1], alteration[2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[-1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[1], alteration[3])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[3])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[1], alteration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[1])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[1], alteration[0])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[0])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[1], alteration[1])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[1])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "column_name, column_type = alteration[1], alteration[2]",
+      "mutated_line": "(column_name, column_type) = (alteration[1], alteration[-2])",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[-2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')",
+      "mutated_line": "sql_statements.append(f'{table_name} ADD COLUMN {column_name} {column_type};')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'{table_name} ADD COLUMN {column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name}{column_name} {column_type};')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name}{column_name} {column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name}{column_type};')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name}{column_type};')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};')",
+      "mutated_line": "sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}')",
+      "code": "def generate_sql_statements(migrations):\n    sql_statements = []\n    for migration in migrations:\n        if migration[0] == 'CreateTable':\n            (table_name, columns) = (migration[1], migration[2])\n            columns_str = ', '.join([f'{col[0]} {col[1]}' for col in columns])\n            sql_statements.append(f'CREATE TABLE {table_name} ({columns_str});')\n        elif migration[0] == 'AlterTable':\n            (table_name, alterations) = (migration[1], migration[2])\n            for alteration in alterations:\n                if alteration[0] == 'ADD COLUMN':\n                    (column_name, column_type) = (alteration[1], alteration[2])\n                    sql_statements.append(f'ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}')\n        elif migration[0] == 'AlterUniqueTogether':\n            (table_name, unique_columns) = (migration[1], migration[2])\n            columns_str = ', '.join(unique_columns)\n            sql_statements.append(f'ALTER TABLE {table_name} ADD CONSTRAINT unique_{table_name} UNIQUE ({columns_str});')\n    return sql_statements"
+    }
+  ]
+}

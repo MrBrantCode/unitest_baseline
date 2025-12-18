@@ -1,0 +1,24 @@
+"""
+QUESTION:
+Mr. E Ven only likes even length words.
+Please create a translator so that he doesn't have to hear those pesky odd length words.
+For some reason he also hates punctuation, he likes his sentences to flow.
+
+Your translator should take in a string and output it with all odd length words having an extra letter (the last letter in the word). It should also remove all punctuation (.,?!) as well as any underscores (_).
+
+"How did we end up here? We go?"
+translated becomes-> 
+"Howw didd we endd up here We go"
+"""
+
+def translate_for_mr_e_ven(input_sentence: str) -> str:
+    def evenize_word(w: str) -> str:
+        return w + w[-1] if len(w) % 2 else w
+    
+    # Remove punctuation and underscores
+    cleaned_sentence = ''.join((c for c in input_sentence if c.isspace() or c.isalnum()))
+    
+    # Process each word to ensure even length
+    translated_sentence = ' '.join((evenize_word(w) for w in cleaned_sentence.split()))
+    
+    return translated_sentence

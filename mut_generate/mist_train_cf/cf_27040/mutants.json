@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_27040",
+  "entry_point": "process_location_data",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "UOI",
+      "lineno": 15,
+      "original_line": "X = X[:-(lead_days + days_window)]",
+      "mutated_line": "X = X[:+(lead_days + days_window)]",
+      "code": "import numpy as np\n\ndef process_location_data(location_features_dict: dict, labels: dict, lead_days: int, days_window: int) -> dict:\n    processed_data = {}\n    common_locations = sorted(list(location_features_dict.keys()))\n    for common_location in common_locations:\n        (X, y) = (location_features_dict[common_location], labels[common_location])\n        (X, y) = (np.array(X), np.array(y))\n        X = X[:+(lead_days + days_window)]\n        processed_data[common_location] = (X, y)\n    return processed_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "X = X[:-(lead_days + days_window)]",
+      "mutated_line": "X = X[:-(lead_days - days_window)]",
+      "code": "import numpy as np\n\ndef process_location_data(location_features_dict: dict, labels: dict, lead_days: int, days_window: int) -> dict:\n    processed_data = {}\n    common_locations = sorted(list(location_features_dict.keys()))\n    for common_location in common_locations:\n        (X, y) = (location_features_dict[common_location], labels[common_location])\n        (X, y) = (np.array(X), np.array(y))\n        X = X[:-(lead_days - days_window)]\n        processed_data[common_location] = (X, y)\n    return processed_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "X = X[:-(lead_days + days_window)]",
+      "mutated_line": "X = X[:-(lead_days * days_window)]",
+      "code": "import numpy as np\n\ndef process_location_data(location_features_dict: dict, labels: dict, lead_days: int, days_window: int) -> dict:\n    processed_data = {}\n    common_locations = sorted(list(location_features_dict.keys()))\n    for common_location in common_locations:\n        (X, y) = (location_features_dict[common_location], labels[common_location])\n        (X, y) = (np.array(X), np.array(y))\n        X = X[:-(lead_days * days_window)]\n        processed_data[common_location] = (X, y)\n    return processed_data"
+    }
+  ]
+}

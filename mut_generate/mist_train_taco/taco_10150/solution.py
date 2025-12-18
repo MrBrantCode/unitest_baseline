@@ -1,0 +1,55 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese  and Russian. 
+
+Mike is fond of collecting stamps. He has a lot of rare and unusual ones in his collection. Unfortunately, a few days ago he was fired from his well-paid job.
+
+But he doesn't complain about that, he acts! That's why Mike picked up N stamps from his collection and is going to sell them. He has already placed an announcement on the Internet and got M offers. Each offer can be described as a set of stamps, that the buyer wants to buy. Now Mike needs your help to choose a set of offers, that he should accept. 
+
+He can't accept offers partially. Also, as far as Mike has the only copy of each stamp, he can sell one stamp to at most one buyer.
+
+Of course, Mike wants to maximize the number of accepted offers. Help him!
+
+------ Input ------ 
+
+The first line contains two integer N and M, denoting the number of the stamps and the number of the offers.
+The next M lines contain the descriptions of the offers. The (i+1)'th line of the input contains the description of the i'th offer and corresponds to the following pattern: K_{i} A_{i,  1} A_{i,  2}, ..., Ai,     K_{i}. K_{i} - is the number of the stamps, which the i'th buyer wants to buy, A_{i} - is the list of the stamps sorted in the ascending order.
+ 
+------ Output ------ 
+
+Output should contain the only integer, denoting the maximal number of the offers, that Mike can accept.
+ 
+------ Constraints ------ 
+
+1 ≤ N ≤ 20,000
+1 ≤ M ≤ 20
+1 ≤ K_{i}
+
+----- Sample Input 1 ------ 
+4 3
+2 1 2
+2 2 3
+2 3 4
+
+----- Sample Output 1 ------ 
+2
+----- explanation 1 ------ 
+In the example test Mike should accept the first and the third offer.
+"""
+
+def maximize_accepted_offers(N, M, offers):
+    # Convert offers into bitmask representation
+    bitmask_offers = [0] * M
+    for i, offer in enumerate(offers):
+        for stamp in offer:
+            bitmask_offers[i] |= 1 << stamp
+
+    def re_curse(off, current, merges):
+        if len(off) == 0 or current == (1 << (N + 1)) - 2:
+            return merges
+        a = re_curse(off[1:], current, merges)
+        if off[0] & current == 0:
+            return max(a, re_curse(off[1:], current | off[0], merges + 1))
+        return a
+
+    return re_curse(bitmask_offers, 0, 0)

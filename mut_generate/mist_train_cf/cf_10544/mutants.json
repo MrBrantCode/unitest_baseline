@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_10544",
+  "entry_point": "bfs",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if vertex == end:",
+      "mutated_line": "if vertex != end:",
+      "code": "from collections import deque\n\ndef bfs(graph, start, end):\n    queue = deque([(start, [start])])\n    visited = set()\n    while queue:\n        (vertex, path) = queue.popleft()\n        visited.add(vertex)\n        if vertex != end:\n            return path\n        for neighbor in graph[vertex]:\n            if neighbor not in visited:\n                queue.append((neighbor, path + [neighbor]))\n                visited.add(neighbor)\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if neighbor not in visited:",
+      "mutated_line": "if neighbor in visited:",
+      "code": "from collections import deque\n\ndef bfs(graph, start, end):\n    queue = deque([(start, [start])])\n    visited = set()\n    while queue:\n        (vertex, path) = queue.popleft()\n        visited.add(vertex)\n        if vertex == end:\n            return path\n        for neighbor in graph[vertex]:\n            if neighbor in visited:\n                queue.append((neighbor, path + [neighbor]))\n                visited.add(neighbor)\n    return None"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "queue.append((neighbor, path + [neighbor]))",
+      "mutated_line": "queue.append((neighbor, path - [neighbor]))",
+      "code": "from collections import deque\n\ndef bfs(graph, start, end):\n    queue = deque([(start, [start])])\n    visited = set()\n    while queue:\n        (vertex, path) = queue.popleft()\n        visited.add(vertex)\n        if vertex == end:\n            return path\n        for neighbor in graph[vertex]:\n            if neighbor not in visited:\n                queue.append((neighbor, path - [neighbor]))\n                visited.add(neighbor)\n    return None"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "queue.append((neighbor, path + [neighbor]))",
+      "mutated_line": "queue.append((neighbor, path * [neighbor]))",
+      "code": "from collections import deque\n\ndef bfs(graph, start, end):\n    queue = deque([(start, [start])])\n    visited = set()\n    while queue:\n        (vertex, path) = queue.popleft()\n        visited.add(vertex)\n        if vertex == end:\n            return path\n        for neighbor in graph[vertex]:\n            if neighbor not in visited:\n                queue.append((neighbor, path * [neighbor]))\n                visited.add(neighbor)\n    return None"
+    }
+  ]
+}

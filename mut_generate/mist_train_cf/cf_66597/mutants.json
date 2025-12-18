@@ -1,0 +1,329 @@
+{
+  "task_id": "cf_66597",
+  "entry_point": "recover_corrupted_gzip",
+  "mutant_count": 46,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start != -1:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start != -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return header + recovered_data + trailer",
+      "mutated_line": "return header + recovered_data - trailer",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data - trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return header + recovered_data + trailer",
+      "mutated_line": "return (header + recovered_data) * trailer",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return (header + recovered_data) * trailer"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start == +1:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == +1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return header + recovered_data + trailer",
+      "mutated_line": "return header - recovered_data + trailer",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header - recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return header + recovered_data + trailer",
+      "mutated_line": "return header * recovered_data + trailer",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header * recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "header = corrupted_gzip_file[:10]",
+      "mutated_line": "header = corrupted_gzip_file[:11]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:11]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "header = corrupted_gzip_file[:10]",
+      "mutated_line": "header = corrupted_gzip_file[:9]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:9]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "header = corrupted_gzip_file[:10]",
+      "mutated_line": "header = corrupted_gzip_file[:0]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:0]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "header = corrupted_gzip_file[:10]",
+      "mutated_line": "header = corrupted_gzip_file[:1]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:1]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "header = corrupted_gzip_file[:10]",
+      "mutated_line": "header = corrupted_gzip_file[:-10]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:-10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data = corrupted_gzip_file[10:]",
+      "mutated_line": "data = corrupted_gzip_file[11:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[11:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data = corrupted_gzip_file[10:]",
+      "mutated_line": "data = corrupted_gzip_file[9:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[9:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data = corrupted_gzip_file[10:]",
+      "mutated_line": "data = corrupted_gzip_file[0:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[0:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data = corrupted_gzip_file[10:]",
+      "mutated_line": "data = corrupted_gzip_file[1:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[1:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data = corrupted_gzip_file[10:]",
+      "mutated_line": "data = corrupted_gzip_file[-10:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[-10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start == -2:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -2:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start == -0:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -0:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start == -0:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -0:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if deflate_stream_start == -1:",
+      "mutated_line": "if deflate_stream_start == --1:",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == --1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[+8:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[+8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:+8]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:+8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i - 1, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i - 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i * 1, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i * 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) - 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) - 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) * 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) * 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 38,
+      "original_line": "recovered_data += recovered_chunk",
+      "mutated_line": "recovered_data -= recovered_chunk",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data -= recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[-9:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-9:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[-7:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-7:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[-0:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-0:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[-1:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-1:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "trailer = deflate_stream[-8:]",
+      "mutated_line": "trailer = deflate_stream[--8:]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[--8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:-9]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-9]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:-7]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-7]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:-0]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-0]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:-1]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-1]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "deflate_stream = deflate_stream[:-8]",
+      "mutated_line": "deflate_stream = deflate_stream[:--8]",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:--8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 2, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 2, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 0, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 0, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 0, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 0, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + -1, len(deflate_stream) + 1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + -1, len(deflate_stream) + 1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) + 2):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 2):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) + 0):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 0):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) + 0):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + 0):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for j in range(i + 1, len(deflate_stream) + 1):",
+      "mutated_line": "for j in range(i + 1, len(deflate_stream) + -1):",
+      "code": "def recover_corrupted_gzip(corrupted_gzip_file):\n    \"\"\"\n    Attempts to recover the contents of a corrupted gzip file.\n    \n    Args:\n    corrupted_gzip_file (bytes): The corrupted gzip file contents.\n    \n    Returns:\n    bytes: The recovered gzip file contents or None if recovery fails.\n    \"\"\"\n    header = corrupted_gzip_file[:10]\n    data = corrupted_gzip_file[10:]\n    deflate_stream_start = data.find(b'x\\x01')\n    if deflate_stream_start == -1:\n        return None\n    deflate_stream = data[deflate_stream_start:]\n    trailer = deflate_stream[-8:]\n    deflate_stream = deflate_stream[:-8]\n    recovered_data = b''\n    for i in range(len(deflate_stream)):\n        for j in range(i + 1, len(deflate_stream) + -1):\n            chunk = deflate_stream[i:j]\n            try:\n                import zlib\n                recovered_chunk = zlib.decompress(chunk)\n                recovered_data += recovered_chunk\n            except zlib.error:\n                pass\n    return header + recovered_data + trailer"
+    }
+  ]
+}

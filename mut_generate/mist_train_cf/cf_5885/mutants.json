@@ -1,0 +1,203 @@
+{
+  "task_id": "cf_5885",
+  "entry_point": "parse_urls",
+  "mutant_count": 28,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if \"[\" in key:",
+      "mutated_line": "if '[' not in key:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' not in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if \"[\" in key:",
+      "mutated_line": "if '' in key:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if current_key in current_dict:",
+      "mutated_line": "if current_key not in current_dict:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key not in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "nested_keys = key.split(\"[\")",
+      "mutated_line": "nested_keys = key.split('')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if nested_key not in current_dict:",
+      "mutated_line": "if nested_key in current_dict:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[-1].rstrip('')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip('')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 26,
+      "original_line": "parsed_parameters[key] = value[-1]",
+      "mutated_line": "parsed_parameters[key] = value[+1]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[+1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 13,
+      "original_line": "for nested_key in nested_keys[:-1]:",
+      "mutated_line": "for nested_key in nested_keys[:+1]:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:+1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "nested_key = nested_key.rstrip(\"]\")",
+      "mutated_line": "nested_key = nested_key.rstrip('')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip('')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "current_dict[current_key] = value[0]",
+      "mutated_line": "current_dict[current_key] = value[1]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[1]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "current_dict[current_key] = value[0]",
+      "mutated_line": "current_dict[current_key] = value[-1]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[-1]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "current_dict[current_key] = value[0]",
+      "mutated_line": "current_dict[current_key] = value[1]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[1]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "parsed_parameters[key] = value[-1]",
+      "mutated_line": "parsed_parameters[key] = value[-2]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-2]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "parsed_parameters[key] = value[-1]",
+      "mutated_line": "parsed_parameters[key] = value[-0]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-0]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "parsed_parameters[key] = value[-1]",
+      "mutated_line": "parsed_parameters[key] = value[-0]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-0]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "parsed_parameters[key] = value[-1]",
+      "mutated_line": "parsed_parameters[key] = value[--1]",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[--1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for nested_key in nested_keys[:-1]:",
+      "mutated_line": "for nested_key in nested_keys[:-2]:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-2]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for nested_key in nested_keys[:-1]:",
+      "mutated_line": "for nested_key in nested_keys[:-0]:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-0]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for nested_key in nested_keys[:-1]:",
+      "mutated_line": "for nested_key in nested_keys[:-0]:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-0]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for nested_key in nested_keys[:-1]:",
+      "mutated_line": "for nested_key in nested_keys[:--1]:",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:--1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[+1].rstrip(']')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[+1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_dict[current_key].append(value[0])",
+      "mutated_line": "current_dict[current_key].append(value[1])",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[1])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_dict[current_key].append(value[0])",
+      "mutated_line": "current_dict[current_key].append(value[-1])",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[-1])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_dict[current_key].append(value[0])",
+      "mutated_line": "current_dict[current_key].append(value[1])",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[1])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[-2].rstrip(']')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-2].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[-0].rstrip(']')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-0].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[-0].rstrip(']')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[-0].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "current_key = nested_keys[-1].rstrip(\"]\")",
+      "mutated_line": "current_key = nested_keys[--1].rstrip(']')",
+      "code": "import urllib.parse\n\ndef parse_urls(url):\n    parsed_url = urllib.parse.urlparse(url)\n    query_string = parsed_url.query\n    query_parameters = urllib.parse.parse_qs(query_string)\n    parsed_parameters = {}\n    for (key, value) in query_parameters.items():\n        if '[' in key:\n            nested_keys = key.split('[')\n            current_dict = parsed_parameters\n            for nested_key in nested_keys[:-1]:\n                nested_key = nested_key.rstrip(']')\n                if nested_key not in current_dict:\n                    current_dict[nested_key] = {}\n                current_dict = current_dict[nested_key]\n            current_key = nested_keys[--1].rstrip(']')\n            if current_key in current_dict:\n                if not isinstance(current_dict[current_key], list):\n                    current_dict[current_key] = [current_dict[current_key]]\n                current_dict[current_key].append(value[0])\n            else:\n                current_dict[current_key] = value[0]\n        else:\n            parsed_parameters[key] = value[-1]\n    return parsed_parameters"
+    }
+  ]
+}

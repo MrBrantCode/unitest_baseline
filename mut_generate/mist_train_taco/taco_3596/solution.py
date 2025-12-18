@@ -1,0 +1,100 @@
+"""
+QUESTION:
+Knights' tournaments were quite popular in the Middle Ages. A lot of boys were dreaming of becoming a knight, while a lot of girls were dreaming of marrying a knight on a white horse.
+
+In this problem we consider one of these tournaments. 
+
+Let's us call a tournament binary, if it runs according to the scheme described below:
+
+- Exactly N knights take part in the tournament, N=2K for some integer K > 0.
+		
+- Each knight has a unique skill called strength, described as an integer from the interval [1, N].
+		
+- Initially, all the knights are standing in a line, waiting for a battle. Since all their strengths are unique, each initial configuration can be described as a permutation of numbers from 1 to N.
+		
+- There are exactly K rounds in the tournament, 2K - i + 1 knights take part in the i'th round. The K'th round is called the final.
+		
+- The i'th round runs in the following way: for each positive integer j ≤ 2K - i happens a battle between a knight on the 2∙j'th position and a knight on the 2∙j+1'th position. The strongest of two continues his tournament, taking the j'th position on the next round, while the weakest of two is forced to leave.
+		
+- The only knight, who has won K rounds, is the winner. The only knight, who has won K - 1 rounds, but lost the final, is the runner-up.   
+	
+
+As you can see from the scheme, the winner is always the same, an initial configuration doesn't change anything. So, your task is to determine chances of each knight to appear in the final.
+
+Formally, for each knight you need to count the number of initial configurations, which will lead him to the final. Since the number can be extremly huge, you are asked to do all the calculations under modulo 109 + 9.
+
+-----Input-----
+
+The first line contains the only integer K, denoting the number of rounds of the tournament.
+
+-----Output-----
+Output should consist of 2K lines. The i'th line should contain the number of initial configurations, which lead the participant with strength equals to i to the final.
+
+-----Constraints-----
+1 ≤ K < 20
+
+
+-----Examples-----
+Input:
+1
+
+Output:
+2
+2
+
+Input:
+2
+
+Output:
+0
+8
+16
+24
+
+-----Explanation-----
+
+In the first example we have N=2 knights. Let's consider each initial configuration that could appear and simulate the tournament.
+
+(1, 2) -> (2)
+
+(2, 1) -> (2)
+
+In the second example we have N=4 knights. Let's consider some initial configurations that could appear and simulate the tournament.
+
+(1, 2, 3, 4) -> (2, 4) -> (4)
+
+(3, 2, 4, 1) -> (3, 4) -> (4)
+
+(4, 1, 3, 2) -> (4, 3) -> (4)
+"""
+
+def calculate_final_chances(k: int) -> list[int]:
+    MOD = 10**9 + 9
+    n = 2**k
+    bucket_size = n // 2
+    
+    # Calculate factorial of bucket_size modulo MOD
+    fact = 1
+    for i in range(1, bucket_size + 1):
+        fact = fact * i % MOD
+    
+    # Calculate the constant C
+    C = 2 * fact ** 2 % MOD
+    
+    # Initialize the result list with zeros
+    result = [0] * n
+    
+    # Calculate the binomial term for each knight
+    binomial_term = 1
+    num_factor = bucket_size
+    den_factor = 1
+    
+    for i in range(bucket_size, n + 1):
+        result[i - 1] = binomial_term * C % MOD
+        binomial_term *= num_factor
+        binomial_term *= pow(den_factor, MOD - 2, MOD)
+        binomial_term %= MOD
+        num_factor += 1
+        den_factor += 1
+    
+    return result

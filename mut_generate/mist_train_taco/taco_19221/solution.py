@@ -1,0 +1,45 @@
+"""
+QUESTION:
+Captain Jack loves tables. He wants to know whether you love tables or not. So he asks you to solve the following problem:
+Given an array A and element m, you have to find the value up to which table of m is present in the array. (example - if the array is 3 4 5 2 4 7 10 6 and value of m is 2 then answer is 6 because we have 2 4 6 in the array. Though 10 is also divisible by 2 but it is not the answer because 8 is missing).    
+Note : If m is not present in the array then the answer is 0
+
+INPUT
+First line of the input contains N (the number of elements in array A) and m separated by a space. The next line contains N space separated integers representing elements of array.
+
+OUTPUT
+Print the answer
+
+CONSTRAINTS
+1 ≤ N ≤ 100000         
+0 ≤ A[ i ] ≤ 100000              
+1 ≤ m ≤ 1000
+
+SAMPLE INPUT
+8 2
+3 4 5 2 4 7 10 6
+
+SAMPLE OUTPUT
+6
+"""
+
+def find_max_table_value(A, m):
+    # Initialize the count to 0
+    c = 0
+    # Initialize the table value to m
+    t = m
+    
+    # Iterate over the array to check for the table values
+    for i in range(1, len(A) + 1):
+        # If the current table value is in the array
+        if t in A:
+            # Update the count to the current table value
+            c = t
+            # Calculate the next table value
+            t = i * m
+        else:
+            # Break the loop if the current table value is not in the array
+            break
+    
+    # Return the maximum table value found
+    return c

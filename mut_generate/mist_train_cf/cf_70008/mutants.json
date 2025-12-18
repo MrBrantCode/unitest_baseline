@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_70008",
+  "entry_point": "entrance",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"Checks if all items in potentially nested list B are in list A.\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def entrance(A, B):\n    \"\"\"\"\"\"\n\n    def flatten(lst):\n        flat_lst = []\n        for el in lst:\n            if isinstance(el, list):\n                flat_lst += flatten(el)\n            else:\n                flat_lst.append(el)\n        return flat_lst\n    flattened_B = flatten(B)\n    return all((item in A for item in flattened_B))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 7,
+      "original_line": "flat_lst += flatten(el)",
+      "mutated_line": "flat_lst -= flatten(el)",
+      "code": "def entrance(A, B):\n    \"\"\"Checks if all items in potentially nested list B are in list A.\"\"\"\n\n    def flatten(lst):\n        flat_lst = []\n        for el in lst:\n            if isinstance(el, list):\n                flat_lst -= flatten(el)\n            else:\n                flat_lst.append(el)\n        return flat_lst\n    flattened_B = flatten(B)\n    return all((item in A for item in flattened_B))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(item in A for item in flattened_B)",
+      "mutated_line": "return all((item not in A for item in flattened_B))",
+      "code": "def entrance(A, B):\n    \"\"\"Checks if all items in potentially nested list B are in list A.\"\"\"\n\n    def flatten(lst):\n        flat_lst = []\n        for el in lst:\n            if isinstance(el, list):\n                flat_lst += flatten(el)\n            else:\n                flat_lst.append(el)\n        return flat_lst\n    flattened_B = flatten(B)\n    return all((item not in A for item in flattened_B))"
+    }
+  ]
+}

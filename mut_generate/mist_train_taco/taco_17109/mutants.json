@@ -1,0 +1,588 @@
+{
+  "task_id": "taco_17109",
+  "entry_point": "calculate_minimum_travel_cost",
+  "mutant_count": 83,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if x > y:",
+      "mutated_line": "if x >= y:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x >= y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if x > y:",
+      "mutated_line": "if x <= y:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x <= y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if x > y:",
+      "mutated_line": "if x != y:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x != y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "ans = 0",
+      "mutated_line": "ans = 1",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 1\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "ans = 0",
+      "mutated_line": "ans = -1",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = -1\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "ans = 0",
+      "mutated_line": "ans = 1",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 1\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans -= max(0, len(E[v]) - 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans -= max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y - (n - 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y - (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y * ((n - 1 - ans) * x)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y * ((n - 1 - ans) * x)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) != n - 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) != n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "visited = {v: False for v in E}",
+      "mutated_line": "visited = {v: True for v in E}",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: True for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "stack = [1]",
+      "mutated_line": "stack = [2]",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [2]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "stack = [1]",
+      "mutated_line": "stack = [0]",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [0]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "stack = [1]",
+      "mutated_line": "stack = [0]",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [0]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "stack = [1]",
+      "mutated_line": "stack = [-1]",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [-1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "visited[v] = True",
+      "mutated_line": "visited[v] = False",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = False\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) >= 2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) >= 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) <= 2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) <= 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) != 2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) != 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans / y + (n - 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans / y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans + y + (n - 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans + y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans ** y + (n - 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans ** y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 1 - ans) / x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) / x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 1 - ans + x)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans + x)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 1 - ans) ** x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) ** x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n + 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n + 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n * 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n * 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 2) * y - x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y - x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 2) * y * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y * x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) >= 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) >= 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) <= 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) <= 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) != 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) != 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(1, len(E[v]) - 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(1, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(-1, len(E[v]) - 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(-1, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(1, len(E[v]) - 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(1, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) + 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) + 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) * 2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) * 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) > 3:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 3:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) > 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 1:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) > 0:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 0:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) > 1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 1:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if len(E[v]) > 2:",
+      "mutated_line": "if len(E[v]) > -2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > -2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 1 + ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 + ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 1) * ans * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1) * ans * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n - 2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 2:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n - 0:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 0:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n - 0:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 0:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if len(E[v]) == n - 1:",
+      "mutated_line": "if len(E[v]) == n - -1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - -1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 2) / y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) / y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return n - 2 + y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return n - 2 + y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 2) ** y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) ** y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) > 2:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 2:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) > 0:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 0:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) > 0:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 0:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif len(E[v]) > 1:",
+      "mutated_line": "elif len(E[v]) > -1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > -1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - 1) / y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) / y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return n - 1 + y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return n - 1 + y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - 1) ** y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) ** y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) - 3)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 3)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) - 1)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 1)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) - 0)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 0)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) - 1)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 1)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "ans += max(0, len(E[v]) - 2)",
+      "mutated_line": "ans += max(0, len(E[v]) - -2)",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - -2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 37,
+      "original_line": "if u not in S1:",
+      "mutated_line": "if u in S1:",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n + 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n + 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n * 1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n * 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n + 2) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n + 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return n * 2 * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return n * 2 * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n + 1) * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n + 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return n * 1 * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return n * 1 * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 2 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 2 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 0 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 0 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - 0 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 0 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ans * y + (n - 1 - ans) * x",
+      "mutated_line": "return ans * y + (n - -1 - ans) * x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - -1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 3) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 3) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 1) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 1) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 0) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 0) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - 1) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 1) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return (n - 2) * y + x",
+      "mutated_line": "return (n - -2) * y + x",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - -2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - 2) * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 2) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - 0) * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 0) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - 0) * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - 0) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return (n - 1) * y",
+      "mutated_line": "return (n - -1) * y",
+      "code": "from collections import defaultdict, deque\n\ndef calculate_minimum_travel_cost(n, x, y, roads):\n    E = defaultdict(set)\n    for (u, v) in roads:\n        E[u].add(v)\n        E[v].add(u)\n    if x > y:\n        for v in E:\n            if len(E[v]) == n - 1:\n                return (n - 2) * y + x\n            elif len(E[v]) > 1:\n                return (n - -1) * y\n    else:\n        visited = {v: False for v in E}\n        stack = [1]\n        topsorted = deque()\n        while stack:\n            v = stack.pop()\n            if visited[v]:\n                continue\n            visited[v] = True\n            topsorted.appendleft(v)\n            stack.extend(E[v])\n        chopped = set()\n        ans = 0\n        for v in topsorted:\n            ans += max(0, len(E[v]) - 2)\n            if len(E[v]) > 2:\n                S = E[v].intersection(chopped)\n                S1 = {S.pop(), S.pop()}\n                for u in E[v]:\n                    if u not in S1:\n                        E[u].remove(v)\n                E[v].clear()\n                E[v].update(S1)\n            chopped.add(v)\n        return ans * y + (n - 1 - ans) * x"
+    }
+  ]
+}

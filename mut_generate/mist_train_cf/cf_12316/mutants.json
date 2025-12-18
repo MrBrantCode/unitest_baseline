@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_12316",
+  "entry_point": "extract_urls",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "pattern = r\"(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\(\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)\"",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef extract_urls(strings):\n    urls = []\n    pattern = ''\n    for string in strings:\n        matches = re.findall(pattern, string)\n        for match in matches:\n            if '.' in match and (not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match)):\n                urls.append(match)\n    return urls"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "if '.' in match and not re.search(r'[^a-zA-Z0-9\\-._~:/?#@!$&\\'()*+,;=%]', match):",
+      "mutated_line": "if '.' in match or not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match):",
+      "code": "import re\n\ndef extract_urls(strings):\n    urls = []\n    pattern = '(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\\\\\(\\\\\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)'\n    for string in strings:\n        matches = re.findall(pattern, string)\n        for match in matches:\n            if '.' in match or not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match):\n                urls.append(match)\n    return urls"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if '.' in match and not re.search(r'[^a-zA-Z0-9\\-._~:/?#@!$&\\'()*+,;=%]', match):",
+      "mutated_line": "if '.' not in match and (not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match)):",
+      "code": "import re\n\ndef extract_urls(strings):\n    urls = []\n    pattern = '(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\\\\\(\\\\\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)'\n    for string in strings:\n        matches = re.findall(pattern, string)\n        for match in matches:\n            if '.' not in match and (not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match)):\n                urls.append(match)\n    return urls"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if '.' in match and not re.search(r'[^a-zA-Z0-9\\-._~:/?#@!$&\\'()*+,;=%]', match):",
+      "mutated_line": "if '' in match and (not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match)):",
+      "code": "import re\n\ndef extract_urls(strings):\n    urls = []\n    pattern = '(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\\\\\(\\\\\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)'\n    for string in strings:\n        matches = re.findall(pattern, string)\n        for match in matches:\n            if '' in match and (not re.search(\"[^a-zA-Z0-9\\\\-._~:/?#@!$&\\\\'()*+,;=%]\", match)):\n                urls.append(match)\n    return urls"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if '.' in match and not re.search(r'[^a-zA-Z0-9\\-._~:/?#@!$&\\'()*+,;=%]', match):",
+      "mutated_line": "if '.' in match and (not re.search('', match)):",
+      "code": "import re\n\ndef extract_urls(strings):\n    urls = []\n    pattern = '(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\\\\\\\(\\\\\\\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)'\n    for string in strings:\n        matches = re.findall(pattern, string)\n        for match in matches:\n            if '.' in match and (not re.search('', match)):\n                urls.append(match)\n    return urls"
+    }
+  ]
+}

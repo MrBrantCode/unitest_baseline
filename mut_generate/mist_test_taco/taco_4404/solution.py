@@ -1,0 +1,50 @@
+"""
+QUESTION:
+Like most of the girlfriends, Ashima when asks for something, won’t stop until she gets that.
+The way she gets that is by keep on repeating the same things again and again. Like if she wants chocolate, she will just keep on repeating “chocolate” again and again.
+
+I have decided to answer to her demands as “Yes” or “No” by not delaying a lot. Otherwise, there would be a lot of repercussions. So, randomly at certain intervals, I just answer with “Yes” or “No” using the following rule, I will just select two integers a and b, if the element at the position a is same as the element as position b in the non-ending chant by Ashima, I will speak “Yes”, otherwise say “No”. 
+
+Your job is to find my side of the conversation given the name of the demand Ashima has and the random integers I picked.
+
+Input:
+First line of the input contains a string S, the name of the item she is demanding.
+Next line contains an integer Q, the number of pairs of integers that used to say “Yes” or “No” to her. These pairs are given in order.
+Next Q line, each contains 2 integers, a and b. (1-based indexing) 
+
+Output:
+For each query, print “Yes” or “No” as described above.
+
+Constraints:
+1 ≤ |S| ≤ 10^5
+1 ≤ Q ≤ 10^5
+1 ≤ a, b ≤ 10^18
+
+SAMPLE INPUT
+vgxgp
+3
+2 4
+2 5
+7 14
+
+SAMPLE OUTPUT
+Yes
+No
+Yes
+"""
+
+def respond_to_demands(S: str, Q: int, queries: list) -> list:
+    length = len(S)
+    results = []
+    
+    for a, b in queries:
+        if a > length and b > length:
+            a = a % length
+            b = b % length
+        
+        if S[a-1] == S[b-1]:
+            results.append("Yes")
+        else:
+            results.append("No")
+    
+    return results

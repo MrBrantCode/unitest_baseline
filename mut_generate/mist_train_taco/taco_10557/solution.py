@@ -1,0 +1,38 @@
+"""
+QUESTION:
+Consider X as the  aleatory  variable that count the number of letters in a word. Write a function that, give in input an array of words (strings), calculate the  variance  of X.
+Max decimal of the variance : 4.
+
+Some wiki: Variance ,
+ Aleatory variable 
+
+Example:
+
+Consider "Hello" and "World":
+
+X is { 5 } with P(X = 5) = 1 beacuse the two words has the same length.  
+So E[X] = 5 x 1 = 5 and the standard formula for variance is E[(X - u)^2] so  1 x (5-5)^2 = 0
+or you can calculate with the other formula E[X^2] - E[X]^2 = 5^2 x 1 - 5^2 = 0
+
+Consider "Hi" and "World":
+
+X is { 2, 5 } with P(X = 5) = 1/2 and P(X = 2) = 1/2.  
+So E[X] = 5 x 1/2 + 2 x 1/2 = 3.5 and the standard formula for variance is E[(X - u)^2] so  1/2 x (2-3.5)^2 + 1/2 x (5 - 3.5)^2 = 2.25
+or you can calculate with the other formula E[X^2] - E[X]^2 = (5^2 x 1/2 + 2^2 x 1/2) - 3.5^2 = 2.25
+"""
+
+import statistics
+
+def calculate_word_length_variance(words):
+    """
+    Calculate the variance of the number of letters in an array of words.
+
+    Parameters:
+    words (list of str): The input array of words.
+
+    Returns:
+    float: The variance of the number of letters in the words, rounded to 4 decimal places.
+    """
+    word_lengths = list(map(len, words))
+    variance = statistics.pvariance(word_lengths)
+    return round(variance, 4)

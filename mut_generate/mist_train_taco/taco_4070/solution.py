@@ -1,0 +1,74 @@
+"""
+QUESTION:
+The link to the Russian translation.
+
+Stefan is stuck in Marty's body and in order to fix him, Valerie has encountered a problem with dead witches spirits. 
+
+In order to allow her to do such magic, the witches gave her a huge grid (10^18 by 10^18, rows numbered from 1 to 10^18, from top to bottom and columns from left to right), some cells containing a non-negative integer and others are empty. They want to know if they can fill the empty cells, each with a non-negative integer such that after that, each two neighboring cells (sharing a side) have values with different parities.
+
+Valerie is not a math pro (but very powerful witch), so she asked for your help.
+
+Input
+The first line of input, contains a single integer T, the number of scenarios (1 ≤ T ≤ 10). The next T blocks of lines, each contains one scenario.
+
+For each scenario:
+The first line contains integer n, the number of non-empty cells (1 ≤ n ≤ 10000). The next n lines contain their information. Each of them contains three integers r, c and x meaning the cell in c-th column of r-th row contains value x (1 ≤ r, c, x ≤ 10^18). It's guaranteed that all these cells are distinct.
+
+Output
+For each scenario, print "Yes" if it's possible to fill the empty cells and "No" otherwise, in one line (without quotes).
+
+SAMPLE INPUT
+3
+2
+5 4 2
+1 5 2
+5
+1 4 4
+3 1 2
+1 2 5
+3 3 3
+1 1 1
+5
+1 4 1
+4 1 1
+5 2 5
+2 5 3
+5 3 4
+
+SAMPLE OUTPUT
+No
+No
+Yes
+"""
+
+def can_fill_grid(T, scenarios):
+    results = []
+    
+    for case in range(T):
+        n = len(scenarios[case])
+        ans = 'Yes'
+        
+        for i in range(n):
+            r1, c1, x1 = scenarios[case][i]
+            num1parity = x1 % 2
+            count1parity = (r1 + c1) % 2
+            
+            if i > 0:
+                r2, c2, x2 = scenarios[case][i-1]
+                num2parity = x2 % 2
+                count2parity = (r2 + c2) % 2
+                
+                if num1parity == num2parity:
+                    if count1parity == count2parity:
+                        ans = 'Yes'
+                    else:
+                        ans = 'No'
+                else:
+                    if count1parity != count2parity:
+                        ans = 'Yes'
+                    else:
+                        ans = 'No'
+        
+        results.append(ans)
+    
+    return results

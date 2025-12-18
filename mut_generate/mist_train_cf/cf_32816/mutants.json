@@ -1,0 +1,112 @@
+{
+  "task_id": "cf_32816",
+  "entry_point": "eigen_decomposition",
+  "mutant_count": 15,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= 1e-08:\n            return False\n    return False"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]",
+      "mutated_line": "residue = np.dot(matrix, eigenvectors[:, i]) + value * eigenvectors[:, i]",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) + value * eigenvectors[:, i]\n        if norm(residue) >= 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]",
+      "mutated_line": "residue = np.dot(matrix, eigenvectors[:, i]) * (value * eigenvectors[:, i])",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) * (value * eigenvectors[:, i])\n        if norm(residue) >= 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) > 1e-08:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) > 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) < 1e-08:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) < 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) == 1e-08:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) == 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]",
+      "mutated_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value / eigenvectors[:, i]",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value / eigenvectors[:, i]\n        if norm(residue) >= 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]",
+      "mutated_line": "residue = np.dot(matrix, eigenvectors[:, i]) - (value + eigenvectors[:, i])",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - (value + eigenvectors[:, i])\n        if norm(residue) >= 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]",
+      "mutated_line": "residue = np.dot(matrix, eigenvectors[:, i]) - value ** eigenvectors[:, i]",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value ** eigenvectors[:, i]\n        if norm(residue) >= 1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) >= 1.00000001:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= 1.00000001:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) >= -0.99999999:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= -0.99999999:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) >= 0:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= 0:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) >= 1:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= 1:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if norm(residue) >= 1e-8:",
+      "mutated_line": "if norm(residue) >= -1e-08:",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= -1e-08:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import numpy as np\nfrom typing import Tuple\nfrom numpy.linalg import eigh, norm\n\ndef eigen_decomposition(matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:\n    (eigenvalues, eigenvectors) = eigh(matrix)\n    return (eigenvalues, eigenvectors)\n\ndef validate_eigenpairs(matrix: np.ndarray, eigenvalues: np.ndarray, eigenvectors: np.ndarray) -> bool:\n    for (i, value) in enumerate(eigenvalues):\n        residue = np.dot(matrix, eigenvectors[:, i]) - value * eigenvectors[:, i]\n        if norm(residue) >= 1e-08:\n            return True\n    return True"
+    }
+  ]
+}

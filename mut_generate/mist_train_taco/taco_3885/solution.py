@@ -1,0 +1,37 @@
+"""
+QUESTION:
+Zubin is the dark messiah. He roams the streets at night, helping the poor and the innocent from evil. He's Batman.
+Ghosh is Zubin's nemesis. He's the Riddler to Zubin's Batman. He delights in torturing people with his puzzles.
+Tonight, Ghosh has gotten hold of yet another innocent victim. When Zubin tries to save him, Ghosh sends him a message
+Whom you seek is not here. Find him at GothamFuljhore 1st Street. The house number can be any of the length of the factorials of the numbers I'll send you next.
+Now Zubin is a warrior, a hero. What he's not is too bright. Can you help him calculate the house number and help the poor victim?
+
+EDIT
+
+Maximum number of test cases - 500, 
+Number of addresses < 5*10^9
+
+SAMPLE INPUT
+5
+
+1
+5
+86
+23
+4
+
+SAMPLE OUTPUT
+1
+3
+131
+23
+2
+"""
+
+import math
+
+def calculate_house_number(n: int) -> int:
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return int(math.ceil((math.log(math.sqrt(2 * math.pi * n)) + n * math.log(n / math.e)) / math.log(10)))

@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_35741",
+  "entry_point": "sqlalchemy_cache",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if key in cache:",
+      "mutated_line": "if key not in cache:",
+      "code": "from collections import OrderedDict\n\ndef sqlalchemy_cache(max_size):\n    cache = OrderedDict()\n\n    def decorator(func):\n\n        def wrapper(*args, **kwargs):\n            key = (func.__name__, args, frozenset(kwargs.items()))\n            if key not in cache:\n                cache.move_to_end(key)\n                return cache[key]\n            else:\n                result = func(*args, **kwargs)\n                if len(cache) >= max_size:\n                    cache.popitem(last=False)\n                cache[key] = result\n                return result\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) > max_size:",
+      "code": "from collections import OrderedDict\n\ndef sqlalchemy_cache(max_size):\n    cache = OrderedDict()\n\n    def decorator(func):\n\n        def wrapper(*args, **kwargs):\n            key = (func.__name__, args, frozenset(kwargs.items()))\n            if key in cache:\n                cache.move_to_end(key)\n                return cache[key]\n            else:\n                result = func(*args, **kwargs)\n                if len(cache) > max_size:\n                    cache.popitem(last=False)\n                cache[key] = result\n                return result\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) < max_size:",
+      "code": "from collections import OrderedDict\n\ndef sqlalchemy_cache(max_size):\n    cache = OrderedDict()\n\n    def decorator(func):\n\n        def wrapper(*args, **kwargs):\n            key = (func.__name__, args, frozenset(kwargs.items()))\n            if key in cache:\n                cache.move_to_end(key)\n                return cache[key]\n            else:\n                result = func(*args, **kwargs)\n                if len(cache) < max_size:\n                    cache.popitem(last=False)\n                cache[key] = result\n                return result\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) == max_size:",
+      "code": "from collections import OrderedDict\n\ndef sqlalchemy_cache(max_size):\n    cache = OrderedDict()\n\n    def decorator(func):\n\n        def wrapper(*args, **kwargs):\n            key = (func.__name__, args, frozenset(kwargs.items()))\n            if key in cache:\n                cache.move_to_end(key)\n                return cache[key]\n            else:\n                result = func(*args, **kwargs)\n                if len(cache) == max_size:\n                    cache.popitem(last=False)\n                cache[key] = result\n                return result\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "cache.popitem(last=False)",
+      "mutated_line": "cache.popitem(last=True)",
+      "code": "from collections import OrderedDict\n\ndef sqlalchemy_cache(max_size):\n    cache = OrderedDict()\n\n    def decorator(func):\n\n        def wrapper(*args, **kwargs):\n            key = (func.__name__, args, frozenset(kwargs.items()))\n            if key in cache:\n                cache.move_to_end(key)\n                return cache[key]\n            else:\n                result = func(*args, **kwargs)\n                if len(cache) >= max_size:\n                    cache.popitem(last=True)\n                cache[key] = result\n                return result\n        return wrapper\n    return decorator"
+    }
+  ]
+}

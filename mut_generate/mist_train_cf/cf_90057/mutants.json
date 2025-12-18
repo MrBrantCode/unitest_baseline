@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_90057",
+  "entry_point": "remove_special_characters",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return re.sub(r'\\W+', '', string)",
+      "mutated_line": "return re.sub('', '', string)",
+      "code": "from collections import OrderedDict\nimport re\n\ndef remove_special_characters(string):\n    return re.sub('', '', string)\n\ndef check_for_anagrams(list1, list2):\n    list1_no_special_chars = [remove_special_characters(string) for string in list1]\n    list2_no_special_chars = [remove_special_characters(string) for string in list2]\n    for i in range(len(list1_no_special_chars)):\n        if sorted(list1_no_special_chars[i].lower()) == sorted(list2_no_special_chars[i].lower()):\n            del list1[i]\n            del list2[i]\n    return (list1, list2)\n\ndef combine_lists_to_dictionary(list1, list2):\n    (list1, list2) = check_for_anagrams(list1, list2)\n    dictionary = OrderedDict()\n    for (key, value) in zip(list1, list2):\n        key = remove_special_characters(key)\n        if key and key not in dictionary and (not key.isspace()):\n            dictionary[key] = value.upper()\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return re.sub(r'\\W+', '', string)",
+      "mutated_line": "return re.sub('\\\\W+', 'MUTATED', string)",
+      "code": "from collections import OrderedDict\nimport re\n\ndef remove_special_characters(string):\n    return re.sub('\\\\W+', 'MUTATED', string)\n\ndef check_for_anagrams(list1, list2):\n    list1_no_special_chars = [remove_special_characters(string) for string in list1]\n    list2_no_special_chars = [remove_special_characters(string) for string in list2]\n    for i in range(len(list1_no_special_chars)):\n        if sorted(list1_no_special_chars[i].lower()) == sorted(list2_no_special_chars[i].lower()):\n            del list1[i]\n            del list2[i]\n    return (list1, list2)\n\ndef combine_lists_to_dictionary(list1, list2):\n    (list1, list2) = check_for_anagrams(list1, list2)\n    dictionary = OrderedDict()\n    for (key, value) in zip(list1, list2):\n        key = remove_special_characters(key)\n        if key and key not in dictionary and (not key.isspace()):\n            dictionary[key] = value.upper()\n    return dictionary"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if sorted(list1_no_special_chars[i].lower()) == sorted(list2_no_special_chars[i].lower()):",
+      "mutated_line": "if sorted(list1_no_special_chars[i].lower()) != sorted(list2_no_special_chars[i].lower()):",
+      "code": "from collections import OrderedDict\nimport re\n\ndef remove_special_characters(string):\n    return re.sub('\\\\W+', '', string)\n\ndef check_for_anagrams(list1, list2):\n    list1_no_special_chars = [remove_special_characters(string) for string in list1]\n    list2_no_special_chars = [remove_special_characters(string) for string in list2]\n    for i in range(len(list1_no_special_chars)):\n        if sorted(list1_no_special_chars[i].lower()) != sorted(list2_no_special_chars[i].lower()):\n            del list1[i]\n            del list2[i]\n    return (list1, list2)\n\ndef combine_lists_to_dictionary(list1, list2):\n    (list1, list2) = check_for_anagrams(list1, list2)\n    dictionary = OrderedDict()\n    for (key, value) in zip(list1, list2):\n        key = remove_special_characters(key)\n        if key and key not in dictionary and (not key.isspace()):\n            dictionary[key] = value.upper()\n    return dictionary"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 24,
+      "original_line": "if key and key not in dictionary and not key.isspace():",
+      "mutated_line": "if key or key not in dictionary or (not key.isspace()):",
+      "code": "from collections import OrderedDict\nimport re\n\ndef remove_special_characters(string):\n    return re.sub('\\\\W+', '', string)\n\ndef check_for_anagrams(list1, list2):\n    list1_no_special_chars = [remove_special_characters(string) for string in list1]\n    list2_no_special_chars = [remove_special_characters(string) for string in list2]\n    for i in range(len(list1_no_special_chars)):\n        if sorted(list1_no_special_chars[i].lower()) == sorted(list2_no_special_chars[i].lower()):\n            del list1[i]\n            del list2[i]\n    return (list1, list2)\n\ndef combine_lists_to_dictionary(list1, list2):\n    (list1, list2) = check_for_anagrams(list1, list2)\n    dictionary = OrderedDict()\n    for (key, value) in zip(list1, list2):\n        key = remove_special_characters(key)\n        if key or key not in dictionary or (not key.isspace()):\n            dictionary[key] = value.upper()\n    return dictionary"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if key and key not in dictionary and not key.isspace():",
+      "mutated_line": "if key and key in dictionary and (not key.isspace()):",
+      "code": "from collections import OrderedDict\nimport re\n\ndef remove_special_characters(string):\n    return re.sub('\\\\W+', '', string)\n\ndef check_for_anagrams(list1, list2):\n    list1_no_special_chars = [remove_special_characters(string) for string in list1]\n    list2_no_special_chars = [remove_special_characters(string) for string in list2]\n    for i in range(len(list1_no_special_chars)):\n        if sorted(list1_no_special_chars[i].lower()) == sorted(list2_no_special_chars[i].lower()):\n            del list1[i]\n            del list2[i]\n    return (list1, list2)\n\ndef combine_lists_to_dictionary(list1, list2):\n    (list1, list2) = check_for_anagrams(list1, list2)\n    dictionary = OrderedDict()\n    for (key, value) in zip(list1, list2):\n        key = remove_special_characters(key)\n        if key and key in dictionary and (not key.isspace()):\n            dictionary[key] = value.upper()\n    return dictionary"
+    }
+  ]
+}

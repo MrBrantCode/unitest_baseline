@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_31560",
+  "entry_point": "cache_result",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if key in cache:",
+      "mutated_line": "if key not in cache:",
+      "code": "import functools\n\ndef cache_result(func):\n    cache = {}\n\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        key = (args, frozenset(kwargs.items()))\n        if key not in cache:\n            return cache[key]\n        try:\n            result = func(*args, **kwargs)\n            cache[key] = result\n            return result\n        except Exception as e:\n            if key in cache:\n                del cache[key]\n            raise e\n    return wrapper"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if key in cache:",
+      "mutated_line": "if key not in cache:",
+      "code": "import functools\n\ndef cache_result(func):\n    cache = {}\n\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        key = (args, frozenset(kwargs.items()))\n        if key in cache:\n            return cache[key]\n        try:\n            result = func(*args, **kwargs)\n            cache[key] = result\n            return result\n        except Exception as e:\n            if key not in cache:\n                del cache[key]\n            raise e\n    return wrapper"
+    }
+  ]
+}

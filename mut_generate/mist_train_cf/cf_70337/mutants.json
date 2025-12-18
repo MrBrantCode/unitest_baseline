@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_70337",
+  "entry_point": "get_open_files_and_sockets",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def get_open_files_and_sockets(pid):\n    \"\"\"\"\"\"\n    import os\n    proc_dir = f'/proc/{pid}/fd'\n    open_files_and_sockets = []\n    if os.path.exists(proc_dir):\n        for fd in os.listdir(proc_dir):\n            fd_path = os.path.join(proc_dir, fd)\n            try:\n                target = os.readlink(fd_path)\n                open_files_and_sockets.append(target)\n            except OSError:\n                continue\n    return open_files_and_sockets"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "proc_dir = f\"/proc/{pid}/fd\"",
+      "mutated_line": "proc_dir = f'{pid}/fd'",
+      "code": "def get_open_files_and_sockets(pid):\n    \"\"\"\n    Given a process ID, returns a list of files and sockets that the process had opened.\n    \n    This function relies on the /proc filesystem, typically found on Linux systems.\n    The /proc filesystem provides a way to access information about the running process.\n    \n    Parameters:\n    pid (int): The ID of the process.\n    \n    Returns:\n    list: A list of files and sockets that the process had opened.\n    \"\"\"\n    import os\n    proc_dir = f'{pid}/fd'\n    open_files_and_sockets = []\n    if os.path.exists(proc_dir):\n        for fd in os.listdir(proc_dir):\n            fd_path = os.path.join(proc_dir, fd)\n            try:\n                target = os.readlink(fd_path)\n                open_files_and_sockets.append(target)\n            except OSError:\n                continue\n    return open_files_and_sockets"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "proc_dir = f\"/proc/{pid}/fd\"",
+      "mutated_line": "proc_dir = f'/proc/{pid}'",
+      "code": "def get_open_files_and_sockets(pid):\n    \"\"\"\n    Given a process ID, returns a list of files and sockets that the process had opened.\n    \n    This function relies on the /proc filesystem, typically found on Linux systems.\n    The /proc filesystem provides a way to access information about the running process.\n    \n    Parameters:\n    pid (int): The ID of the process.\n    \n    Returns:\n    list: A list of files and sockets that the process had opened.\n    \"\"\"\n    import os\n    proc_dir = f'/proc/{pid}'\n    open_files_and_sockets = []\n    if os.path.exists(proc_dir):\n        for fd in os.listdir(proc_dir):\n            fd_path = os.path.join(proc_dir, fd)\n            try:\n                target = os.readlink(fd_path)\n                open_files_and_sockets.append(target)\n            except OSError:\n                continue\n    return open_files_and_sockets"
+    }
+  ]
+}

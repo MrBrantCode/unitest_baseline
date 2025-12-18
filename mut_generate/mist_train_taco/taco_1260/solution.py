@@ -1,0 +1,45 @@
+"""
+QUESTION:
+Kuldeep is tired from all the fun he's having with Christie, so now all he needs is a good night's sleep to get some rest. 
+
+Being a math nerd, he even dreams about maths. 
+
+But in this dreamland some mathematical entities have slightly different definition. For example factorial of a number n in dreamland is defined as (n!)! (double factorial )
+
+Since Kuldeep is facinated with factorials in real life, he takes upon himself to find out values of factorials in dreamland, and because the answers can be very large, he is only interested in calculating double factorial mod 10^M(^ is power operator not xor operator).
+
+Your task is to help him to find out the answer .
+
+Input : 
+
+First line of input file contain integer T (number of test cases) and next T lines contains two integers N and M.
+
+Output: 
+
+Output the value  (N!)! modulo 10^M  (here ^ is used for power operator not xor operator) .
+
+Constraints:
+
+1 ≤ T ≤ 100000
+0 ≤ N ≤ 10^6
+0 ≤ M ≤ 19
+
+SAMPLE INPUT
+2
+1 4
+1 2
+
+SAMPLE OUTPUT
+1
+1
+"""
+
+import math
+
+def calculate_double_factorial_modulo(n, m):
+    if m == 0:
+        return 0
+    elif n > 4:
+        return 0
+    else:
+        return (math.factorial(math.factorial(n))) % (10**m)

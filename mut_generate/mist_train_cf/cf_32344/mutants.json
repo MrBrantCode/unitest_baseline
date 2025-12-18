@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_32344",
+  "entry_point": "build_dependency_graph",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if module not in dependency_graph:",
+      "mutated_line": "if module in dependency_graph:",
+      "code": "def build_dependency_graph(dependencies):\n    dependency_graph = {}\n    for (module, version) in dependencies:\n        if module in dependency_graph:\n            dependency_graph[module] = []\n        for (key, value) in dependency_graph.items():\n            if key != module:\n                for (index, (ver, deps)) in enumerate(value):\n                    if ver == version:\n                        dependency_graph[key][index] = (ver, deps + [module])\n        dependency_graph[module].append((version, []))\n    return dependency_graph"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if key != module:",
+      "mutated_line": "for (index, (ver, deps)) in enumerate(value):",
+      "code": "def build_dependency_graph(dependencies):\n    dependency_graph = {}\n    for (module, version) in dependencies:\n        if module not in dependency_graph:\n            dependency_graph[module] = []\n        for (key, value) in dependency_graph.items():\n            if key == module:\n                for (index, (ver, deps)) in enumerate(value):\n                    if ver == version:\n                        dependency_graph[key][index] = (ver, deps + [module])\n        dependency_graph[module].append((version, []))\n    return dependency_graph"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if ver == version:",
+      "mutated_line": "if ver != version:",
+      "code": "def build_dependency_graph(dependencies):\n    dependency_graph = {}\n    for (module, version) in dependencies:\n        if module not in dependency_graph:\n            dependency_graph[module] = []\n        for (key, value) in dependency_graph.items():\n            if key != module:\n                for (index, (ver, deps)) in enumerate(value):\n                    if ver != version:\n                        dependency_graph[key][index] = (ver, deps + [module])\n        dependency_graph[module].append((version, []))\n    return dependency_graph"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dependency_graph[key][index] = (ver, deps + [module])",
+      "mutated_line": "dependency_graph[key][index] = (ver, deps - [module])",
+      "code": "def build_dependency_graph(dependencies):\n    dependency_graph = {}\n    for (module, version) in dependencies:\n        if module not in dependency_graph:\n            dependency_graph[module] = []\n        for (key, value) in dependency_graph.items():\n            if key != module:\n                for (index, (ver, deps)) in enumerate(value):\n                    if ver == version:\n                        dependency_graph[key][index] = (ver, deps - [module])\n        dependency_graph[module].append((version, []))\n    return dependency_graph"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dependency_graph[key][index] = (ver, deps + [module])",
+      "mutated_line": "dependency_graph[key][index] = (ver, deps * [module])",
+      "code": "def build_dependency_graph(dependencies):\n    dependency_graph = {}\n    for (module, version) in dependencies:\n        if module not in dependency_graph:\n            dependency_graph[module] = []\n        for (key, value) in dependency_graph.items():\n            if key != module:\n                for (index, (ver, deps)) in enumerate(value):\n                    if ver == version:\n                        dependency_graph[key][index] = (ver, deps * [module])\n        dependency_graph[module].append((version, []))\n    return dependency_graph"
+    }
+  ]
+}

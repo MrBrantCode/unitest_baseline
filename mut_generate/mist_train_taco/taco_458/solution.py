@@ -1,0 +1,64 @@
+"""
+QUESTION:
+Captain Jack Sparrow and Davy Jones are having a furious sword fight to gain the key to the chest containing Davy Jones' heart. Jack wants to kill Davy Jones and live forever as the captain of The Flying Dutchman. On the other hand, Davy Jones wants to save himself from death.
+
+A string is hanging between them. With each strike of a sword, they can strike down any one character from the string. If at any point of time before striking down a character, either of them is able to make a palindrome from the characters of the string  (any anagram of the string)  , he can strike down the entire string in one shot and defeat his opponent. It is known that Jack gets the first chance to strike and strikes are made alternatively by both of them.
+
+Given the string that is hanging between them, determine who wins the fight provided that both fight to achieve their target i.e. fight optimally.
+
+Input
+
+The first line of each file contains T, the number of test cases.
+
+Each of the next T line contains a string S consisting of only lower case characters (a-z).
+
+Output
+
+For each test case, print in a new line the winner of the sword fight - "JACK" or
+"DAVY JONES" (quotes for clarity only).
+
+Constraints
+
+1 ≤ T ≤ 100
+
+1 ≤ length of string S ≤ 100000
+
+NOTE
+
+There is partial marking for this question.
+
+SAMPLE INPUT
+2
+aba
+abca
+
+SAMPLE OUTPUT
+JACK
+DAVY JONES
+
+Explanation
+
+For 2nd test case if Jack wants to win then by playing optimally he removes 'a' from the string. Else 'aca' or 'aba' will be formed by removing 'b' or 'c' respectively, which can be cut in one go as they are palindromes by Davy Jones where he would win. So Davy Jones will be left with 'bca'. Now all are distinct characters, in which he removes any one of the three. In next turn Jack removes another character and finally Davy Jones gets only single character where he wins.
+"""
+
+def determine_winner(s: str) -> str:
+    freq = [0] * 26
+    slen = len(s)
+    
+    # Calculate frequency of each character
+    for i in range(slen):
+        freq[ord(s[i]) - 97] += 1
+    
+    # Count characters with odd frequencies
+    c = 0
+    for i in range(26):
+        if freq[i] % 2:
+            c += 1
+    
+    # Determine the winner based on the count of odd frequencies
+    if c == 0:
+        return 'JACK'
+    elif c % 2:
+        return 'JACK'
+    else:
+        return 'DAVY JONES'

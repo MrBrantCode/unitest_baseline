@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_29032",
+  "entry_point": "add_query_params",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "updated_query = urlencode(existing_params, doseq=True)",
+      "mutated_line": "updated_query = urlencode(existing_params, doseq=False)",
+      "code": "from urllib.parse import urlparse, urlencode, parse_qs, urlunparse\n\ndef add_query_params(url: str, new_params: dict) -> str:\n    parsed_url = urlparse(url)\n    existing_params = parse_qs(parsed_url.query)\n    existing_params.update(new_params)\n    updated_query = urlencode(existing_params, doseq=False)\n    updated_url = parsed_url._replace(query=updated_query).geturl()\n    return updated_url"
+    }
+  ]
+}

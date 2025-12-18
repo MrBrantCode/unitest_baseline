@@ -1,0 +1,90 @@
+"""
+QUESTION:
+Today is the day of the CCDSAP exam. Chef is responsible for monitoring the exam. The hall in which the exam will be held contains $N$ seats (numbered $1$ through $N$) arranged in a row. Initially, each seat is either empty or occupied by a participant in the exam. You are given a binary string $S$ with length $N$; for each valid $i$, the $i$-th character of $S$ is '1' if the $i$-th seat is occupied or '0' if this seat is empty.
+
+Chef wants to make sure that no two participants are sitting next to each other, in order to prevent cheating. To do this, Chef may perform a number of operations (possibly zero). In each operation, he can ask a participant to move from his seat to an adjacent seat, either to its left or right, if such a seat exists and is empty.
+
+Find the minimum number of operations required to make sure that no two participants are sitting next to each other (in adjacent seats), or determine that it is impossible.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first line of each test case contains a single integer $N$.
+The second line contains a single string $S$ with length $N$.
+
+------  Output ------
+For each test case, print a single line containing one integer ― the minimum number of operations, or the string "impossible" if Chef cannot achieve his goal.
+
+------  Constraints ------
+$1 ≤ T ≤ 10,000$
+$1 ≤ N ≤ 2 * 10^{5}$
+the sum of $N$ over all test cases does not exceed $ 2 * 10^{5}$
+the exam has at least one participant
+
+------  Subtasks ------
+Subtask #1 (50 points): the sum of $N$ over all test cases does not exceed $5,000$
+
+Subtask #2 (50 points): original constraints
+
+----- Sample Input 1 ------ 
+4
+
+3
+
+011
+
+5
+
+10111
+
+1
+
+1
+
+6
+
+000111
+----- Sample Output 1 ------ 
+1
+
+impossible
+
+0
+
+3
+"""
+
+def min_operations_to_prevent_cheating(N, S):
+    if N == 1:
+        return 0
+    
+    m = S.count('1')
+    if m == 0:
+        return 0
+    if m > (N + 1) // 2:
+        return 'impossible'
+    
+    pos = [-1] * m
+    j = 0
+    for i in range(N):
+        if S[i] == '1':
+            pos[j] = i
+            j += 1
+    
+    heap = [0] * (m + 4)
+    maxopt = N + 1 - 2 * m
+    curropt = -10
+    ans = 0
+    
+    for i in range(m):
+        if -heap[0] <= pos[i] - 2 * i:
+            curropt = min(maxopt, pos[i])
+            heapq.heappush(heap, -(curropt - 2 * i))
+        else:
+            heapq.heappush(heap, -(pos[i] - 2 * i))
+            curropt = -heap[0] + 2 * i
+            heapq.heappop(heap)
+            heapq.heappush(heap, -(pos[i] - 2 * i))
+        ans += abs(curropt - pos[i])
+        maxopt += 2
+    
+    return ans

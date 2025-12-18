@@ -1,0 +1,54 @@
+"""
+QUESTION:
+There are N gems. The value of the i-th gem is V_i.
+You will choose some of these gems, possibly all or none, and get them.
+However, you need to pay a cost of C_i to get the i-th gem.
+Let X be the sum of the values of the gems obtained, and Y be the sum of the costs paid.
+Find the maximum possible value of X-Y.
+
+-----Constraints-----
+ - All values in input are integers.
+ - 1 \leq N \leq 20
+ - 1 \leq C_i, V_i \leq 50
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+V_1 V_2 ... V_N
+C_1 C_2 ... C_N
+
+-----Output-----
+Print the maximum possible value of X-Y.
+
+-----Sample Input-----
+3
+10 2 5
+6 3 4
+
+-----Sample Output-----
+5
+
+If we choose the first and third gems, X = 10 + 5 = 15 and Y = 6 + 4 = 10.
+We have X-Y = 5 here, which is the maximum possible value.
+"""
+
+def max_value_after_cost(N, V, C):
+    """
+    Calculate the maximum possible value of X - Y, where X is the sum of the values of the chosen gems
+    and Y is the sum of the costs paid for those gems.
+
+    Parameters:
+    N (int): The number of gems.
+    V (list of int): The list of values of the gems.
+    C (list of int): The list of costs of the gems.
+
+    Returns:
+    int: The maximum possible value of X - Y.
+    """
+    # Calculate the difference between value and cost for each gem
+    differences = [v - c for v, c in zip(V, C)]
+    
+    # Filter out the positive differences and sum them up
+    max_value = sum(diff for diff in differences if diff > 0)
+    
+    return max_value

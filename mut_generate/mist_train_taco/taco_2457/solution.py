@@ -1,0 +1,109 @@
+"""
+QUESTION:
+Chef Shifu wanted to celebrate the success of his new restaurant with all his employees. He was willing to host a party and he had decided the location of the party as well. However, Chef Shifu was a shy person and wanted to communicate with the least possible employees to inform them about the party, and that these employees could inform their friends.
+
+Note that an employee could only inform his/her immediate friends about the party, not his/her friends’ friends.
+
+Chef Shifu has a list of all the friendships among his employees. Help him find the minimum number of employees he should inform, so that every employee knows about the celebration party.
+
+-----Input-----
+First line contains a single integer T - the total number of testcases.
+
+T testcases follow. For each testcase:
+
+The first line contains 2 space-separated integers N and M - the total number of employees working under Chef Shifu and the number of friendship relations.
+
+M lines follow - each line contains 2 space-separated integers u and v, indicating that employee u is a friend of employee v and vice-versa.
+
+The employees are numbered from 1 to N, and each employee is assigned a distinct integer.
+
+
+
+-----Output-----
+For each testcase, print the minimum number of employees to be informed on a new line.
+
+-----Constraints-----
+Subtask 1: 5 points
+
+1 ≤ T ≤ 5
+
+1 ≤ N ≤ 4
+
+0 ≤ M ≤ N*(N-1)/2
+
+
+
+Subtask 2: 35 points
+
+1 ≤ T ≤ 5
+
+1 ≤ N ≤ 15
+
+0 ≤ M ≤ N*(N-1)/2
+
+
+
+Subtask 3: 60 points
+
+1 ≤ T ≤ 5
+
+1 ≤ N ≤ 20
+
+0 ≤ M ≤ N*(N-1)/2
+
+
+-----Example-----
+Input
+2
+3 3
+1 2
+2 3
+1 3
+4 3
+1 2
+2 3
+3 4
+
+Output
+1
+2
+
+Explanation
+
+In testcase 1, since every employee is a friend of every other employee, we just need to select 1 employee.
+In testcase 2, selecting employees 2 and 4 would ensure that all 4 employees are represented.
+
+Similarly, selecting employees 1 and 3 would also ensure that all 4 employees are selected.
+
+In both cases, we must select 2 employees in the best case.
+"""
+
+def minimum_employees_to_inform(n, friendships):
+    # Create a matrix to represent friendships
+    mat = [0] * n
+    
+    # Populate the matrix with friendship relations
+    for u, v in friendships:
+        mat[u - 1] |= 1 << (v - 1)
+        mat[v - 1] |= 1 << (u - 1)
+    
+    # Ensure each employee is connected to themselves
+    for i in range(n):
+        mat[i] |= 1 << i
+    
+    # The goal is to cover all employees (2^n - 1 in binary)
+    goal = 2 ** n - 1
+    ans = n
+    
+    # Iterate over all possible subsets of employees
+    for i in range(1, goal + 1):
+        mvs = 0
+        loc = 0
+        for j in range(n):
+            if i & (1 << j):
+                loc |= mat[j]
+                mvs += 1
+        if loc == goal:
+            ans = min(mvs, ans)
+    
+    return ans

@@ -1,0 +1,623 @@
+{
+  "task_id": "cf_36747",
+  "entry_point": "layer_norm_grad_ref",
+  "mutant_count": 88,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) / np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) / np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) + np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) + np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = (-1.0 / np.power(stdev, 2.0)) ** np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = (-1.0 / np.power(stdev, 2.0)) ** np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev / np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev + np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = (-1.0 / stdev) ** np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end - dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end - dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = (1.0 / stdev * gout + (X - mean) * dstdev_end) * dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = (1.0 / stdev * gout + (X - mean) * dstdev_end) * dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:1], 2)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 2)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:1], 0)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 0)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:1], 0)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 0)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:1], -1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], -1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[1:], 2)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 2)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[1:], 0)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 0)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[1:], 0)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 0)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[1:], -1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], -1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 * np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 * np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 // np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 // np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 * stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 // stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout - (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout - (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout * ((X - mean) * dstdev_end) + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout * ((X - mean) * dstdev_end) + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "stdev = np.reshape(stdev_full, [left, 1])",
+      "mutated_line": "stdev = np.reshape(stdev_full, [left, 2])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 2])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "stdev = np.reshape(stdev_full, [left, 1])",
+      "mutated_line": "stdev = np.reshape(stdev_full, [left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 0])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "stdev = np.reshape(stdev_full, [left, 1])",
+      "mutated_line": "stdev = np.reshape(stdev_full, [left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 0])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "stdev = np.reshape(stdev_full, [left, 1])",
+      "mutated_line": "stdev = np.reshape(stdev_full, [left, -1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, -1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mean = np.reshape(mean_full, [left, 1])",
+      "mutated_line": "mean = np.reshape(mean_full, [left, 2])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 2])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mean = np.reshape(mean_full, [left, 1])",
+      "mutated_line": "mean = np.reshape(mean_full, [left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 0])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mean = np.reshape(mean_full, [left, 1])",
+      "mutated_line": "mean = np.reshape(mean_full, [left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 0])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mean = np.reshape(mean_full, [left, 1])",
+      "mutated_line": "mean = np.reshape(mean_full, [left, -1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, -1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = +1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = +1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = +1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev / gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev / gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev + gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev + gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = (1.0 / stdev) ** gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = (1.0 / stdev) ** gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) / dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) / dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean + dstdev_end) + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean + dstdev_end) + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) ** dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) ** dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:2], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:2], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:0], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:0], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:0], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:0], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "left = reduce(mul, X_full.shape[:1], 1)",
+      "mutated_line": "left = reduce(mul, X_full.shape[:-1], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:-1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[2:], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[2:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[0:], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[0:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[0:], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[0:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "right = reduce(mul, X_full.shape[1:], 1)",
+      "mutated_line": "right = reduce(mul, X_full.shape[-1:], 1)",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[-1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -2.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -2.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -0.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -0.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = --1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = --1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 3.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 3.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 1.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 1.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 1) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 1) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "dstdev_end = (-1.0) / np.power(stdev, 2.0) \\",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, -2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, -2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 2])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 2])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 0])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 0])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 0])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, -1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, -1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -2.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -0.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = --1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 2])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 0])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 0])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, -1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 * stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 * stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 // stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 // stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X + mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X + mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 1.0 / stdev * gout + X * mean * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + X * mean * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) / gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) / gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum(X - mean + gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum(X - mean + gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) ** gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) ** gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 2.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 2.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 0.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 0.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = 0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "dX = (1.0 / stdev) * gout + (X - mean) * dstdev_end + dmean_end",
+      "mutated_line": "dX = -1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = -1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X + mean) * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X + mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum(X * mean * gout, axis=1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum(X * mean * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=2).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=2).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=0).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=0).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=0).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=0).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "* np.sum((X - mean) * gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=-1).reshape([left, 1])",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=-1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=2).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=0).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=0).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dmean_end = -1.0 / stdev * np.sum(gout, axis=1).reshape([left, 1])",
+      "mutated_line": "dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end",
+      "code": "import numpy as np\nfrom functools import reduce\nfrom operator import mul\n\ndef layer_norm_grad_ref(gout_full, norm, mean_full, stdev_full, X_full):\n    left = reduce(mul, X_full.shape[:1], 1)\n    right = reduce(mul, X_full.shape[1:], 1)\n    X = np.reshape(X_full, [left, right])\n    stdev = np.reshape(stdev_full, [left, 1])\n    mean = np.reshape(mean_full, [left, 1])\n    gout = np.reshape(gout_full, [left, right])\n    dstdev_end = -1.0 / np.power(stdev, 2.0) * np.sum((X - mean) * gout, axis=1).reshape([left, 1])\n    dmean_end = -1.0 / stdev * np.sum(gout, axis=-1).reshape([left, 1])\n    dX = 1.0 / stdev * gout + (X - mean) * dstdev_end + dmean_end\n    dX_full = np.reshape(dX, X_full.shape)\n    return dX_full"
+    }
+  ]
+}

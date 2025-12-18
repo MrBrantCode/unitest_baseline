@@ -1,0 +1,113 @@
+"""
+QUESTION:
+Igor the analyst fell asleep on the work and had a strange dream. In the dream his desk was crowded with computer mice, so he bought a mousetrap to catch them.
+
+The desk can be considered as an infinite plane, then the mousetrap is a rectangle which sides are parallel to the axes, and which opposite sides are located in points (x1, y1) and (x2, y2).
+
+Igor wants to catch all mice. Igor has analysed their behavior and discovered that each mouse is moving along a straight line with constant speed, the speed of the i-th mouse is equal to (vix, viy), that means that the x coordinate of the mouse increases by vix units per second, while the y coordinates increases by viy units. The mousetrap is open initially so that the mice are able to move freely on the desk. Igor can close the mousetrap at any moment catching all the mice that are strictly inside the mousetrap.
+
+Igor works a lot, so he is busy in the dream as well, and he asks you to write a program that by given mousetrap's coordinates, the initial coordinates of the mice and their speeds determines the earliest time moment in which he is able to catch all the mice. Please note that Igor can close the mousetrap only once.
+
+Input
+
+The first line contains single integer n (1 ≤ n ≤ 100 000) — the number of computer mice on the desk.
+
+The second line contains four integers x1, y1, x2 and y2 (0 ≤ x1 ≤ x2 ≤ 100 000), (0 ≤ y1 ≤ y2 ≤ 100 000) — the coordinates of the opposite corners of the mousetrap.
+
+The next n lines contain the information about mice.
+
+The i-th of these lines contains four integers rix, riy, vix and viy, (0 ≤ rix, riy ≤ 100 000,  - 100 000 ≤ vix, viy ≤ 100 000), where (rix, riy) is the initial position of the mouse, and (vix, viy) is its speed.
+
+Output
+
+In the only line print minimum possible non-negative number t such that if Igor closes the mousetrap at t seconds from the beginning, then all the mice are strictly inside the mousetrap. If there is no such t, print -1.
+
+Your answer is considered correct if its absolute or relative error doesn't exceed 10 - 6. 
+
+Formally, let your answer be a, and the jury's answer be b. Your answer is considered correct if <image>.
+
+Examples
+
+Input
+
+4
+7 7 9 8
+3 5 7 5
+7 5 2 4
+3 3 7 8
+6 6 3 2
+
+
+Output
+
+0.57142857142857139685
+
+
+Input
+
+4
+7 7 9 8
+0 3 -5 4
+5 0 5 4
+9 9 -1 -6
+10 5 -7 -10
+
+
+Output
+
+-1
+
+Note
+
+Here is a picture of the first sample
+
+Points A, B, C, D - start mice positions, segments are their paths.
+
+<image>
+
+Then, at first time when all mice will be in rectangle it will be looks like this:
+
+<image>
+
+Here is a picture of the second sample
+
+<image>
+
+Points A, D, B will never enter rectangle.
+"""
+
+import math
+
+def find_earliest_catch_time(n, trap_coords, mice_info):
+    x1, y1, x2, y2 = trap_coords
+    t1 = 0
+    t2 = math.inf
+    yes = True
+    
+    for (x, y, vx, vy) in mice_info:
+        if vx == 0:
+            if x <= x1 or x >= x2:
+                yes = False
+                break
+        else:
+            tt1 = (x1 - x) / vx
+            tt2 = (x2 - x) / vx
+            tt1, tt2 = min(tt1, tt2), max(tt1, tt2)
+            t1 = max(t1, tt1)
+            t2 = min(t2, tt2)
+        
+        if vy == 0:
+            if y <= y1 or y >= y2:
+                yes = False
+                break
+        else:
+            tt1 = (y1 - y) / vy
+            tt2 = (y2 - y) / vy
+            tt1, tt2 = min(tt1, tt2), max(tt1, tt2)
+            t1 = max(t1, tt1)
+            t2 = min(t2, tt2)
+    
+    if yes and t1 < t2:
+        return t1
+    else:
+        return -1

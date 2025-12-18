@@ -1,0 +1,58 @@
+"""
+QUESTION:
+We have N points in the two-dimensional plane. The coordinates of the i-th point are (X_i,Y_i).
+Among them, we are looking for the points such that the distance from the origin is at most D. How many such points are there?
+We remind you that the distance between the origin and the point (p, q) can be represented as \sqrt{p^2+q^2}.
+
+-----Constraints-----
+ - 1 \leq N \leq 2\times 10^5
+ - 0 \leq D \leq 2\times 10^5
+ - |X_i|,|Y_i| \leq 2\times 10^5
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N D
+X_1 Y_1
+\vdots
+X_N Y_N
+
+-----Output-----
+Print an integer representing the number of points such that the distance from the origin is at most D.
+
+-----Sample Input-----
+4 5
+0 5
+-2 4
+3 4
+4 -4
+
+-----Sample Output-----
+3
+
+The distance between the origin and each of the given points is as follows:
+ - \sqrt{0^2+5^2}=5
+ - \sqrt{(-2)^2+4^2}=4.472\ldots
+ - \sqrt{3^2+4^2}=5
+ - \sqrt{4^2+(-4)^2}=5.656\ldots
+Thus, we have three points such that the distance from the origin is at most 5.
+"""
+
+def count_points_within_distance(N, D, points):
+    """
+    Counts the number of points within a given distance D from the origin.
+
+    Parameters:
+    - N (int): The number of points.
+    - D (int): The maximum distance from the origin.
+    - points (list of tuples): A list of tuples where each tuple represents the coordinates of a point (X_i, Y_i).
+
+    Returns:
+    - int: The number of points within the distance D from the origin.
+    """
+    cnt = 0
+    D_squared = D ** 2
+    for X, Y in points:
+        if X ** 2 + Y ** 2 <= D_squared:
+            cnt += 1
+    return cnt

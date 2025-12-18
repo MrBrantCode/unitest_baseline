@@ -1,0 +1,49 @@
+"""
+QUESTION:
+Navi is a CEO of a famous IT based software company. He is hiring some new developers to work in his company. He already know the number of new projects and number of hirings at particular timestamp. He will assign one project to one developer and that developer will work alone on that project . Your task is to help Navi in finding the number of projects that will still be unassigned. A project will go unassigned if there is no free developer at that time.
+. You will be given the chronological order of project requirements and recruit hirings, find the number of projects which will go unassigned.
+
+Input
+
+First line of the input will contain T (No. of test cases).
+For each test case, first line will contain a integer N.
+Next each N line will contain either an integer X (No. of hirings) or a string "New Project" .
+
+Output
+For every test case, print the answer in a new line.
+Constraints
+
+1 ≤ T ≤ 10
+1 ≤ N ≤ 10^5
+1 ≤ X ≤ 5
+
+SAMPLE INPUT
+1
+3
+1
+New Project
+New Project
+
+SAMPLE OUTPUT
+1
+
+Explanation
+
+Last New Project will go unassigned.
+"""
+
+def calculate_unassigned_projects(test_cases):
+    results = []
+    for case in test_cases:
+        dev = 0
+        unassigned = 0
+        for event in case:
+            if event.isdigit():
+                dev += int(event)
+            elif event == "New Project":
+                if dev > 0:
+                    dev -= 1
+                else:
+                    unassigned += 1
+        results.append(unassigned)
+    return results

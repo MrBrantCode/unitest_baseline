@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_57092",
+  "entry_point": "json_to_xml",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def json_to_xml(json_obj, line_padding=\"\"):",
+      "mutated_line": "def json_to_xml(json_obj, line_padding='MUTATED'):",
+      "code": "import json\nfrom xml.dom.minidom import Document\n\ndef json_to_xml(json_obj, line_padding='MUTATED'):\n    dom = Document()\n    json_obj_type = type(json_obj)\n    if json_obj_type is list:\n        for sub_elem in json_obj:\n            dom.appendChild(json_to_xml(sub_elem, line_padding))\n        return dom\n    if json_obj_type is dict:\n        xml = dom.createElement('root')\n        dom.appendChild(xml)\n        for tag_name in json_obj:\n            if isinstance(json_obj[tag_name], dict):\n                child_node = json_to_xml(json_obj[tag_name], line_padding)\n                child_node.tagName = tag_name\n                xml.appendChild(child_node)\n            elif isinstance(json_obj[tag_name], list):\n                for (i, item) in enumerate(json_obj[tag_name]):\n                    child_node = dom.createElement(tag_name)\n                    child_node.appendChild(dom.createTextNode(str(item)))\n                    xml.appendChild(child_node)\n            else:\n                child_node = dom.createElement(tag_name)\n                child_node.appendChild(dom.createTextNode(str(json_obj[tag_name])))\n                xml.appendChild(child_node)\n        return xml\n    return dom.createTextNode(str(json_obj))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if json_obj_type is list:",
+      "mutated_line": "if json_obj_type is not list:",
+      "code": "import json\nfrom xml.dom.minidom import Document\n\ndef json_to_xml(json_obj, line_padding=''):\n    dom = Document()\n    json_obj_type = type(json_obj)\n    if json_obj_type is not list:\n        for sub_elem in json_obj:\n            dom.appendChild(json_to_xml(sub_elem, line_padding))\n        return dom\n    if json_obj_type is dict:\n        xml = dom.createElement('root')\n        dom.appendChild(xml)\n        for tag_name in json_obj:\n            if isinstance(json_obj[tag_name], dict):\n                child_node = json_to_xml(json_obj[tag_name], line_padding)\n                child_node.tagName = tag_name\n                xml.appendChild(child_node)\n            elif isinstance(json_obj[tag_name], list):\n                for (i, item) in enumerate(json_obj[tag_name]):\n                    child_node = dom.createElement(tag_name)\n                    child_node.appendChild(dom.createTextNode(str(item)))\n                    xml.appendChild(child_node)\n            else:\n                child_node = dom.createElement(tag_name)\n                child_node.appendChild(dom.createTextNode(str(json_obj[tag_name])))\n                xml.appendChild(child_node)\n        return xml\n    return dom.createTextNode(str(json_obj))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if json_obj_type is dict:",
+      "mutated_line": "if json_obj_type is not dict:",
+      "code": "import json\nfrom xml.dom.minidom import Document\n\ndef json_to_xml(json_obj, line_padding=''):\n    dom = Document()\n    json_obj_type = type(json_obj)\n    if json_obj_type is list:\n        for sub_elem in json_obj:\n            dom.appendChild(json_to_xml(sub_elem, line_padding))\n        return dom\n    if json_obj_type is not dict:\n        xml = dom.createElement('root')\n        dom.appendChild(xml)\n        for tag_name in json_obj:\n            if isinstance(json_obj[tag_name], dict):\n                child_node = json_to_xml(json_obj[tag_name], line_padding)\n                child_node.tagName = tag_name\n                xml.appendChild(child_node)\n            elif isinstance(json_obj[tag_name], list):\n                for (i, item) in enumerate(json_obj[tag_name]):\n                    child_node = dom.createElement(tag_name)\n                    child_node.appendChild(dom.createTextNode(str(item)))\n                    xml.appendChild(child_node)\n            else:\n                child_node = dom.createElement(tag_name)\n                child_node.appendChild(dom.createTextNode(str(json_obj[tag_name])))\n                xml.appendChild(child_node)\n        return xml\n    return dom.createTextNode(str(json_obj))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "xml = dom.createElement('root')",
+      "mutated_line": "xml = dom.createElement('')",
+      "code": "import json\nfrom xml.dom.minidom import Document\n\ndef json_to_xml(json_obj, line_padding=''):\n    dom = Document()\n    json_obj_type = type(json_obj)\n    if json_obj_type is list:\n        for sub_elem in json_obj:\n            dom.appendChild(json_to_xml(sub_elem, line_padding))\n        return dom\n    if json_obj_type is dict:\n        xml = dom.createElement('')\n        dom.appendChild(xml)\n        for tag_name in json_obj:\n            if isinstance(json_obj[tag_name], dict):\n                child_node = json_to_xml(json_obj[tag_name], line_padding)\n                child_node.tagName = tag_name\n                xml.appendChild(child_node)\n            elif isinstance(json_obj[tag_name], list):\n                for (i, item) in enumerate(json_obj[tag_name]):\n                    child_node = dom.createElement(tag_name)\n                    child_node.appendChild(dom.createTextNode(str(item)))\n                    xml.appendChild(child_node)\n            else:\n                child_node = dom.createElement(tag_name)\n                child_node.appendChild(dom.createTextNode(str(json_obj[tag_name])))\n                xml.appendChild(child_node)\n        return xml\n    return dom.createTextNode(str(json_obj))"
+    }
+  ]
+}

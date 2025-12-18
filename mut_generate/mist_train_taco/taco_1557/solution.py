@@ -1,0 +1,22 @@
+"""
+QUESTION:
+## Task
+
+Generate a sorted list of all possible IP addresses in a network.
+
+For a subnet that is not a valid IPv4 network return `None`.
+
+## Examples
+```
+ipsubnet2list("192.168.1.0/31") == ["192.168.1.0", "192.168.1.1"]
+ipsubnet2list("213.256.46.160/28") == None
+```
+"""
+
+import ipaddress as ip
+
+def generate_sorted_ip_addresses(subnet: str) -> list[str] | None:
+    try:
+        return sorted(map(str, ip.ip_network(subnet).hosts()))
+    except ValueError:
+        return None

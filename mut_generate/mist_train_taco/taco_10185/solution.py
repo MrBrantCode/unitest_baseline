@@ -1,0 +1,41 @@
+"""
+QUESTION:
+Given a single sentence s, check if it is a palindrome or not. Ignore white spaces and any other character you may encounter. 
+Example 1:
+Input:
+s = race car.
+Output: 1 
+Explanation: processing str gives us
+"racecar" which is a palindrome.
+Example 2:
+Input:
+s = hello world.
+Output: 0
+Explanation: processing str gives us
+"helloworld" which is not a palindrome.
+Your Task:  
+You dont need to read input or print anything. Complete the function sentencePalindrome() which takes a string s as input parameter and returns a boolean value denoting if sentence is a palindrome or not.
+Note: The driver code prints 1 if the returned value is true, otherwise 0.
+Expected Time Complexity: O(N) where N is length of s.
+Expected Auxiliary Space: O(1)
+Constraints:
+1<= s.length() <= 10^{4}
+All the alphabets used in the sentence are in lower case.
+"""
+
+def is_sentence_palindrome(s: str) -> bool:
+    l = 0
+    h = len(s) - 1
+    
+    while l <= h:
+        if not s[l].isalpha():
+            l += 1
+        elif not s[h].isalpha():
+            h -= 1
+        elif s[l].lower() == s[h].lower():
+            l += 1
+            h -= 1
+        else:
+            return False
+    
+    return True

@@ -1,0 +1,777 @@
+{
+  "task_id": "cf_40043",
+  "entry_point": "location_signal_maker",
+  "mutant_count": 110,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size - mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size - mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size) * (mesh_x / mesh_size ** 2)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size) * (mesh_x / mesh_size ** 2)\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value - signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value - signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value * (signal_number * np.logical_and(mesh_y == 0, mesh_x < 0))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value * (signal_number * np.logical_and(mesh_y == 0, mesh_x < 0))\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 - mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 - mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) * (mesh_y / mesh_size) + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) * (mesh_y / mesh_size) + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x * mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x * mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x // mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x // mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number / np.logical_and(mesh_y == 0, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number / np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + (signal_number + np.logical_and(mesh_y == 0, mesh_x < 0))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + (signal_number + np.logical_and(mesh_y == 0, mesh_x < 0))\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number ** np.logical_and(mesh_y == 0, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number ** np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(2, signal_number + 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(2, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(0, signal_number + 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(0, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(0, signal_number + 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(0, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(-1, signal_number + 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(-1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number - 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number - 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number * 1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number * 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "location_signal = np.zeros((signal_number, 2))",
+      "mutated_line": "location_signal = np.zeros((signal_number, 3))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 3))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "location_signal = np.zeros((signal_number, 2))",
+      "mutated_line": "location_signal = np.zeros((signal_number, 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 1))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "location_signal = np.zeros((signal_number, 2))",
+      "mutated_line": "location_signal = np.zeros((signal_number, 0))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 0))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "location_signal = np.zeros((signal_number, 2))",
+      "mutated_line": "location_signal = np.zeros((signal_number, 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 1))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "location_signal = np.zeros((signal_number, 2))",
+      "mutated_line": "location_signal = np.zeros((signal_number, -2))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, -2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(2 / signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 / signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(2 + signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 + signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(2 ** signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 ** signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size - 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size - 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size * 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size * 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size + 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size + 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size * 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size * 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(1, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(1, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(-1, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(-1, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(1, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(1, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size + 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size + 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size * 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size * 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 - mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 - mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 * mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 * mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y * mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y * mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y // mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y // mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / (mesh_size * 2)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / (mesh_size * 2)\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / (mesh_size + 2)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / (mesh_size + 2)\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number + 2):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 2):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number + 0):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 0):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number + 0):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 0):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for index in np.arange(1, signal_number + 1):",
+      "mutated_line": "for index in np.arange(1, signal_number + -1):",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + -1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][1]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][1]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][-1]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][-1]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][1]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][1]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index + 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index + 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index * 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index * 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(3 * signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(3 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(1 * signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(1 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(0 * signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(0 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(1 * signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(1 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "mesh_size = np.ceil(np.sqrt(2 * signal_number))",
+      "mutated_line": "mesh_size = np.ceil(np.sqrt(-2 * signal_number))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(-2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(+mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(+mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 2, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 2, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 0, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 0, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 0, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 0, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + -1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + -1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 2), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 2), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 0), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 0), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 0), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 0), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - -1), np.arange(0, mesh_size - 1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - -1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 2))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 2))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 0))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 0))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 0))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 0))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "mesh_x, mesh_y = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))",
+      "mutated_line": "(mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - -1))",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - -1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x * 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x * 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x + 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x + 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y * 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y * 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + (mesh_y + 2) + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + (mesh_y + 2) + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 3",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 3\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 1",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 1\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 0",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 0\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 1",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 1\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** -2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** -2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y != 0, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y != 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x <= 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x <= 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x >= 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x >= 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x != 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x != 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[1][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[1][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[-1][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[-1][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[1][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[1][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index - 2] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 2] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index - 0] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 0] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index - 0] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 0] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "mutated_line": "location_signal[index - -1] = [mesh_x[min_index], mesh_y[min_index]]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - -1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 3 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 3 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 1 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 1 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 0 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 0 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 1 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 1 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** -2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** -2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 3 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 3 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 1 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 1 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 0 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 0 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** 1 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 1 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "mesh_dist_value = (mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)",
+      "mutated_line": "mesh_dist_value = mesh_x ** 2 + mesh_y ** -2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** -2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 1, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 1, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == -1, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == -1, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 1, mesh_x < 0)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 1, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 1)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 1)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < -1)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < -1)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and((mesh_y == 0), (mesh_x < 0))",
+      "mutated_line": "mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 1)",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 1)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value != mesh_dist_sort[index - 1])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value != mesh_dist_sort[index - 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index + 1])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index + 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index * 1])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index * 1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 2])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 2])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 0])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 0])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 0])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 0])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - 1])[0][0]",
+      "mutated_line": "min_index = np.where(mesh_dist_value == mesh_dist_sort[index - -1])[0][0]",
+      "code": "import numpy as np\n\ndef location_signal_maker(signal_number, *args, **kwargs):\n    location_signal = np.zeros((signal_number, 2))\n    mesh_size = np.ceil(np.sqrt(2 * signal_number))\n    (mesh_x, mesh_y) = np.meshgrid(np.arange(-mesh_size + 1, mesh_size - 1), np.arange(0, mesh_size - 1))\n    mesh_x = np.ravel(mesh_x)\n    mesh_y = np.ravel(mesh_y)\n    mesh_dist_value = mesh_x ** 2 + mesh_y ** 2 + mesh_y / mesh_size + mesh_x / mesh_size ** 2\n    mesh_dist_value = mesh_dist_value + signal_number * np.logical_and(mesh_y == 0, mesh_x < 0)\n    mesh_dist_sort = np.sort(mesh_dist_value)\n    for index in np.arange(1, signal_number + 1):\n        min_index = np.where(mesh_dist_value == mesh_dist_sort[index - -1])[0][0]\n        location_signal[index - 1] = [mesh_x[min_index], mesh_y[min_index]]\n    return location_signal"
+    }
+  ]
+}

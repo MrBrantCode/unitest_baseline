@@ -1,0 +1,147 @@
+{
+  "task_id": "cf_67635",
+  "entry_point": "pivot_json_data",
+  "mutant_count": 20,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith(\"{\") else i for i in x])",
+      "mutated_line": "df[''] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df[''] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "df = split_and_explode(df, 'message').reset_index(drop=True)",
+      "mutated_line": "df = split_and_explode(df, 'message').reset_index(drop=False)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=False)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "json_df = pd.json_normalize(json_rows['message'])",
+      "mutated_line": "json_df = pd.json_normalize(json_rows[''])",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows[''])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=2)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=2)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=0)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=0)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=0)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=0)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=-1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=-1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')",
+      "mutated_line": "pivot_df = pd.pivot_table(json_df, index='', aggfunc='first')",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')",
+      "mutated_line": "pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='')",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith(\"{\") else i for i in x])",
+      "mutated_line": "df['message'] = df[''].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df[''].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "df = split_and_explode(df, 'message').reset_index(drop=True)",
+      "mutated_line": "df = split_and_explode(df, '').reset_index(drop=True)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, '').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]",
+      "mutated_line": "json_rows = df[df[''].apply(lambda x: isinstance(x, dict))]",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df[''].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=False), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=False), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=False)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=False)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith(\"{\") else i for i in x])",
+      "mutated_line": "df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('') else i for i in x])",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=2).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=2).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=0).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=0).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=0).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=0).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "json_df = pd.concat([json_rows.drop('message', axis=1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "mutated_line": "json_df = pd.concat([json_rows.drop('message', axis=-1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)",
+      "code": "import pandas as pd\nimport numpy as np\nimport ast\n\ndef pivot_json_data(df):\n    df['message'] = df['message'].apply(lambda x: [ast.literal_eval(i) if i.startswith('{') else i for i in x])\n\n    def split_and_explode(df, col):\n        s = df[col]\n        i = np.arange(len(s)).repeat(s.str.len())\n        return df.iloc[i].assign(**{col: np.concatenate(s)})\n    df = split_and_explode(df, 'message').reset_index(drop=True)\n    json_rows = df[df['message'].apply(lambda x: isinstance(x, dict))]\n    json_df = pd.json_normalize(json_rows['message'])\n    json_df = pd.concat([json_rows.drop('message', axis=-1).reset_index(drop=True), json_df.reset_index(drop=True)], axis=1)\n    pivot_df = pd.pivot_table(json_df, index='Date', aggfunc='first')\n    return pivot_df"
+    }
+  ]
+}

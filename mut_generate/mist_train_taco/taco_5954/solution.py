@@ -1,0 +1,46 @@
+"""
+QUESTION:
+Darshak (Dark) was playing with numbers and started learning various concepts of prime numbers, composite numbers...
+
+One day he got bored solving problems of easy level so he started searching new concepts and end up reading about relative primes...
+
+So he want you to help me design a program which takes two numbers 'p' & 'q' and decides whether they are mutually primes or not.
+
+Mutually primes means nothing but "Co-Primes".
+
+Input:
+
+First line contains 't' number of test cases, each line contains two numbers 'p' and 'q'.
+
+Output:
+
+If they are mutually prime then print "Is a Co-Prime"  and if not found then print "Not a Co-Prime".
+
+Constraints:
+
+1 ≤ t ≤ 5*10^3
+
+1 ≤ p,q ≤ 10^18
+
+Author : Darshak Mehta
+
+SAMPLE INPUT
+2
+5 32
+6 12
+
+SAMPLE OUTPUT
+Is a Co-Prime
+Not a Co-Prime
+"""
+
+def are_co_primes(p: int, q: int) -> str:
+    def gcd(x: int, y: int) -> int:
+        while y:
+            x, y = y, x % y
+        return x
+    
+    if gcd(p, q) == 1:
+        return "Is a Co-Prime"
+    else:
+        return "Not a Co-Prime"

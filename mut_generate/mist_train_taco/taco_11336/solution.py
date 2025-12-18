@@ -1,0 +1,63 @@
+"""
+QUESTION:
+A student is assigned a problem, to get a alphanumeric string from the user and to calculate the sum of digits in the given string.after this he has to delete the digits(0-9) from the string and to display the each word of the string in dictionary order followed by the sum of digits continuously  decreasing by the size of each word(don't print the negative sign).
+Help him sought out the problem.
+
+Input:
+
+The first line represents the number of test cases N.
+Second line gets the string of length L.
+
+Output:
+
+Display out the string having each word in dictionary order ,each word followed by the sum of the digits continuously decreasing by the size of the word.
+if it goes less than 0 than don't print the negative sign only print the digit e.g. (is -4) display it as (is 4).
+
+Constraints:
+
+1 ≤ N<50
+
+0 ≤ L<200
+
+SAMPLE INPUT
+2
+thi6s is a85 t6es6t
+h8e is7 a b9oy5
+
+SAMPLE OUTPUT
+a 30 is 28 test 24 this 20
+a 28 boy 25 he 23 is 21
+
+Explanation
+
+First line of input represents the number of test cases .
+second and third line represents the alphanumeric strings.
+
+In output at first the sum of digits is calculated and then the words of the string are arranged in dictionary order followed by sum of digits subtracted by the size of the word .
+"""
+
+def process_alphanumeric_string(test_cases):
+    results = []
+    
+    for s in test_cases:
+        num = 0
+        for char in s:
+            if char.isdigit():
+                num += int(char)
+        
+        # Remove digits from the string
+        result = ''.join([char for char in s if not char.isdigit()])
+        words = result.split()
+        words.sort()
+        
+        output = []
+        for word in words:
+            if num - len(word) > 0:
+                output.append(f"{word} {num - len(word)}")
+            else:
+                output.append(f"{word} {-1 * (num - len(word))}")
+            num -= len(word)
+        
+        results.append(' '.join(output))
+    
+    return results

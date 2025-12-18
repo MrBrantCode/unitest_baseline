@@ -1,0 +1,43 @@
+"""
+QUESTION:
+Given a string s, remove all its adjacent duplicate characters recursively. 
+Note: For some test cases, the resultant string would be an empty string. In that case, the function should return the empty string only.
+Example 1:
+Input:
+S = "geeksforgeek"
+Output: "gksforgk"
+Explanation: 
+g(ee)ksforg(ee)k -> gksforgk
+Example 2:
+Input: 
+S = "abccbccba"
+Output: ""
+Explanation: 
+ab(cc)b(cc)ba->abbba->a(bbb)a->aa->(aa)->""(empty string)
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function rremove() which takes the string S as input parameter and returns the resultant string.
+Expected Time Complexity: O(|S|)
+Expected Auxiliary Space: O(|S|)
+Constraints:
+1<=|S|<=10^{5}
+"""
+
+def remove_adjacent_duplicates(s: str) -> str:
+    def rec(S: str) -> str:
+        ans = ''
+        n = len(S)
+        i = 0
+        while i < n:
+            if i < n - 1 and S[i] == S[i + 1]:
+                while i < n - 1 and S[i] == S[i + 1]:
+                    i += 1
+            else:
+                ans += S[i]
+            i += 1
+        return ans
+    
+    s1 = ''
+    while len(s) != len(s1):
+        s1 = s
+        s = rec(s)
+    return s

@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_41582",
+  "entry_point": "process_financial_data",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "list_res = data.to_dict(orient='records')",
+      "mutated_line": "list_res = data.to_dict(orient='')",
+      "code": "import pandas as pd\nfrom typing import List, Dict, Union\n\ndef process_financial_data(data: pd.DataFrame, ignore_columns: List[str]) -> List[Dict[str, Union[str, float]]]:\n    list_res = data.to_dict(orient='')\n    new_list_res = []\n    for rec in list_res:\n        all_keys = rec.keys()\n        dates = [{'date': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]\n        new_list_res.append(dates)\n    return new_list_res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "dates = [{'date': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]",
+      "mutated_line": "dates = [{'': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]",
+      "code": "import pandas as pd\nfrom typing import List, Dict, Union\n\ndef process_financial_data(data: pd.DataFrame, ignore_columns: List[str]) -> List[Dict[str, Union[str, float]]]:\n    list_res = data.to_dict(orient='records')\n    new_list_res = []\n    for rec in list_res:\n        all_keys = rec.keys()\n        dates = [{'': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]\n        new_list_res.append(dates)\n    return new_list_res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "dates = [{'date': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]",
+      "mutated_line": "dates = [{'date': key, '': rec[key]} for key in all_keys if key not in ignore_columns]",
+      "code": "import pandas as pd\nfrom typing import List, Dict, Union\n\ndef process_financial_data(data: pd.DataFrame, ignore_columns: List[str]) -> List[Dict[str, Union[str, float]]]:\n    list_res = data.to_dict(orient='records')\n    new_list_res = []\n    for rec in list_res:\n        all_keys = rec.keys()\n        dates = [{'date': key, '': rec[key]} for key in all_keys if key not in ignore_columns]\n        new_list_res.append(dates)\n    return new_list_res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "dates = [{'date': key, 'price': rec[key]} for key in all_keys if key not in ignore_columns]",
+      "mutated_line": "dates = [{'date': key, 'price': rec[key]} for key in all_keys if key in ignore_columns]",
+      "code": "import pandas as pd\nfrom typing import List, Dict, Union\n\ndef process_financial_data(data: pd.DataFrame, ignore_columns: List[str]) -> List[Dict[str, Union[str, float]]]:\n    list_res = data.to_dict(orient='records')\n    new_list_res = []\n    for rec in list_res:\n        all_keys = rec.keys()\n        dates = [{'date': key, 'price': rec[key]} for key in all_keys if key in ignore_columns]\n        new_list_res.append(dates)\n    return new_list_res"
+    }
+  ]
+}

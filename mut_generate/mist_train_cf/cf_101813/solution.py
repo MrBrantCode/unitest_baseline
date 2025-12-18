@@ -1,0 +1,18 @@
+"""
+QUESTION:
+Create a function `common_characters` that takes two strings as input and returns the number of common characters between them, excluding any whitespace, punctuation, and numbers. The function should be able to handle strings in multiple languages and character sets.
+"""
+
+import re
+
+def common_characters(str1, str2):
+    # Remove whitespace, punctuation, and numbers from the strings
+    str1 = re.sub(r'[^a-zA-Z\u4e00-\u9fa5]', '', str1)
+    str2 = re.sub(r'[^a-zA-Z\u4e00-\u9fa5]', '', str2)
+    # Convert the strings to sets of characters
+    set1 = set(str1)
+    set2 = set(str2)
+    # Find the intersection of the sets
+    common = set1.intersection(set2)
+    # Return the number of common characters
+    return len(common)

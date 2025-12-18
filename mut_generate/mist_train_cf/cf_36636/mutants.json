@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_36636",
+  "entry_point": "build_order",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if len(build_order) == len(project):",
+      "mutated_line": "if len(build_order) != len(project):",
+      "code": "from collections import defaultdict, deque\n\ndef build_order(project):\n    dependencies = defaultdict(list)\n    dependents = defaultdict(list)\n    for (source, deps) in project.items():\n        dependencies[source] = deps\n        for dep in deps:\n            dependents[dep].append(source)\n    build_order = []\n    ready_to_build = deque([source for (source, deps) in dependencies.items() if not deps])\n    while ready_to_build:\n        source = ready_to_build.popleft()\n        build_order.append(source)\n        for dependent in dependents[source]:\n            dependencies[dependent].remove(source)\n            if not dependencies[dependent]:\n                ready_to_build.append(dependent)\n    if len(build_order) != len(project):\n        return build_order\n    else:\n        return 'Circular dependency detected, unable to build.'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "return \"Circular dependency detected, unable to build.\"",
+      "mutated_line": "return ''",
+      "code": "from collections import defaultdict, deque\n\ndef build_order(project):\n    dependencies = defaultdict(list)\n    dependents = defaultdict(list)\n    for (source, deps) in project.items():\n        dependencies[source] = deps\n        for dep in deps:\n            dependents[dep].append(source)\n    build_order = []\n    ready_to_build = deque([source for (source, deps) in dependencies.items() if not deps])\n    while ready_to_build:\n        source = ready_to_build.popleft()\n        build_order.append(source)\n        for dependent in dependents[source]:\n            dependencies[dependent].remove(source)\n            if not dependencies[dependent]:\n                ready_to_build.append(dependent)\n    if len(build_order) == len(project):\n        return build_order\n    else:\n        return ''"
+    }
+  ]
+}

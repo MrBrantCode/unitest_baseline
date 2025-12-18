@@ -1,0 +1,81 @@
+"""
+QUESTION:
+Chef has a binary string S of length N. He wonders if it is possible to divide S into exactly K non-empty [substrings] such that each S_{i} belongs to exactly one substring and the \texttt{XOR} of each substring is the same. Can you help Chef to determine if it is possible to do so?
+
+Note: \texttt{XOR} of substring S_{L \cdots R} is defined as: \texttt{XOR} (S_{L \cdots R}) = S_{L} \oplus S_{L+1} \oplus \cdots \oplus S_{R}.
+
+Here, \oplus denotes the [bitwise XOR operation].
+
+------ Input Format ------ 
+
+- The first line contains a single integer T - the number of test cases. Then the test cases follow.
+- The first line of each test case contains two integers N and K - the length of the binary string S and the number of substrings in which S has to be divided.
+- The second line of each test case contains a binary string S of length N containing 0s and 1s only.
+
+------ Output Format ------ 
+
+For each test case, output YES if S can be divided into K substrings such that \texttt{XOR} of each substring is the same. Otherwise, output NO.
+
+You may print each character of YES and NO in uppercase or lowercase (for example, yes, yEs, Yes will be considered identical).
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$1 ≤ K ≤N ≤ 10^{5}$
+- Sum of $N$ over all test cases does not exceed $2 \cdot 10^{5}$
+
+----- Sample Input 1 ------ 
+4
+3 2
+111
+5 3
+01100
+8 3
+01001111
+6 2
+000100
+
+----- Sample Output 1 ------ 
+NO
+YES
+YES
+NO
+
+----- explanation 1 ------ 
+Test case 1: It can be proven that there is no way to divide $S = 111$ into $K = 2$ substrings such that $\texttt{XOR}$ of each substring is the same.
+
+Test case 2: One of the possible ways of dividing $S$ is: $\underline{0}$ $\underline{11}$ $\underline{00}$. Here $\texttt{XOR}$ of each substring is $0$.
+
+Test case 3: One of the possible ways of dividing $S$ is: $\underline{01}$ $\underline{001}$ $\underline{111}$. Here $\texttt{XOR}$ of each substring is $1$.
+
+Test case 4: It can be proven that there is no way to divide $S = 000100$ into $K = 2$ substrings such that $\texttt{XOR}$ of each substring is the same.
+"""
+
+def can_divide_binary_string(N, K, S):
+    c = 0
+    count1 = 0
+    f = 0
+    v = 0
+    
+    # Check for XOR of 0
+    for a in S:
+        v ^= ord(a) - 48
+        if v == 0:
+            c += 1
+    if c >= K and v != 1:
+        f = 1
+        return 'YES'
+    
+    # Reset v and check for XOR of 1
+    v = 0
+    for a in S:
+        v ^= ord(a) - 48
+        if v == 1:
+            count1 += 1
+            v = 0
+    if count1 >= K and (count1 - K) % 2 == 0:
+        if f != 1:
+            f = 1
+            return 'YES'
+    
+    return 'NO'

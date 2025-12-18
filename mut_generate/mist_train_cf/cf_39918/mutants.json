@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_39918",
+  "entry_point": "process_job_queue",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "def process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=False):",
+      "mutated_line": "def process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=True):",
+      "code": "import re\n\ndef process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=True):\n    filtered_jobs = job_queue\n    if job_name:\n        filtered_jobs = [job for job in filtered_jobs if job['job_name'] in job_name]\n    if regex:\n        filtered_jobs = [job for job in filtered_jobs if re.search(regex, job['job_name'])]\n    if columns:\n        filtered_jobs = [{col: job[col] for col in columns if col in job} for job in filtered_jobs]\n    return filtered_jobs"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "filtered_jobs = [job for job in filtered_jobs if job['job_name'] in job_name]",
+      "mutated_line": "filtered_jobs = [job for job in filtered_jobs if job['job_name'] not in job_name]",
+      "code": "import re\n\ndef process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=False):\n    filtered_jobs = job_queue\n    if job_name:\n        filtered_jobs = [job for job in filtered_jobs if job['job_name'] not in job_name]\n    if regex:\n        filtered_jobs = [job for job in filtered_jobs if re.search(regex, job['job_name'])]\n    if columns:\n        filtered_jobs = [{col: job[col] for col in columns if col in job} for job in filtered_jobs]\n    return filtered_jobs"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "filtered_jobs = [{col: job[col] for col in columns if col in job} for job in filtered_jobs]",
+      "mutated_line": "filtered_jobs = [{col: job[col] for col in columns if col not in job} for job in filtered_jobs]",
+      "code": "import re\n\ndef process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=False):\n    filtered_jobs = job_queue\n    if job_name:\n        filtered_jobs = [job for job in filtered_jobs if job['job_name'] in job_name]\n    if regex:\n        filtered_jobs = [job for job in filtered_jobs if re.search(regex, job['job_name'])]\n    if columns:\n        filtered_jobs = [{col: job[col] for col in columns if col not in job} for job in filtered_jobs]\n    return filtered_jobs"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "filtered_jobs = [job for job in filtered_jobs if job['job_name'] in job_name]",
+      "mutated_line": "filtered_jobs = [job for job in filtered_jobs if job[''] in job_name]",
+      "code": "import re\n\ndef process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=False):\n    filtered_jobs = job_queue\n    if job_name:\n        filtered_jobs = [job for job in filtered_jobs if job[''] in job_name]\n    if regex:\n        filtered_jobs = [job for job in filtered_jobs if re.search(regex, job['job_name'])]\n    if columns:\n        filtered_jobs = [{col: job[col] for col in columns if col in job} for job in filtered_jobs]\n    return filtered_jobs"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "filtered_jobs = [job for job in filtered_jobs if re.search(regex, job['job_name'])]",
+      "mutated_line": "filtered_jobs = [job for job in filtered_jobs if re.search(regex, job[''])]",
+      "code": "import re\n\ndef process_job_queue(job_queue, job_name=None, columns=None, regex=None, recurse=False):\n    filtered_jobs = job_queue\n    if job_name:\n        filtered_jobs = [job for job in filtered_jobs if job['job_name'] in job_name]\n    if regex:\n        filtered_jobs = [job for job in filtered_jobs if re.search(regex, job[''])]\n    if columns:\n        filtered_jobs = [{col: job[col] for col in columns if col in job} for job in filtered_jobs]\n    return filtered_jobs"
+    }
+  ]
+}

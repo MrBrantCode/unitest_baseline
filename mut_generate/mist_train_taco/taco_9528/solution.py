@@ -1,0 +1,30 @@
+"""
+QUESTION:
+Subodh's CS department has been continuously organizing mock placement drives for students. If a student under-performs negative point is rewarded otherwise positive points is rewarded. The HOD wants to find consistency of a student. So, he wants to find out maximum consistent sum of a student score only if his/her overall rating is positive.
+Help HOD in doing so. 
+
+Input
+
+The first line contain number of drives N over which the analysis is to be done. The second line contains score of student in those N drives.
+
+Output
+
+Print a single integer i.e. the maximum consistent score of the student if it is positive otherwise output 0 (zero).
+
+SAMPLE INPUT
+8
+-1 -4  4 -2 0 1 4 -5
+
+SAMPLE OUTPUT
+7
+"""
+
+def find_max_consistent_positive_sum(scores):
+    max_ending_here = 0
+    max_so_far = 0
+    
+    for score in scores:
+        max_ending_here = max(0, max_ending_here + score)
+        max_so_far = max(max_so_far, max_ending_here)
+    
+    return max_so_far

@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_45980",
+  "entry_point": "json_to_array",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if type(nested_item) is dict:",
+      "mutated_line": "if type(nested_item) is not dict:",
+      "code": "import json\n\ndef json_to_array(json_string):\n    json_object = json.loads(json_string)\n    result_list = []\n\n    def helper(nested_item):\n        if type(nested_item) is not dict:\n            for key in nested_item:\n                helper(nested_item[key])\n        elif type(nested_item) is list:\n            for element in nested_item:\n                helper(element)\n        else:\n            result_list.append(nested_item)\n    for key in json_object:\n        helper(json_object[key])\n    return result_list"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "elif type(nested_item) is list:",
+      "mutated_line": "elif type(nested_item) is not list:",
+      "code": "import json\n\ndef json_to_array(json_string):\n    json_object = json.loads(json_string)\n    result_list = []\n\n    def helper(nested_item):\n        if type(nested_item) is dict:\n            for key in nested_item:\n                helper(nested_item[key])\n        elif type(nested_item) is not list:\n            for element in nested_item:\n                helper(element)\n        else:\n            result_list.append(nested_item)\n    for key in json_object:\n        helper(json_object[key])\n    return result_list"
+    }
+  ]
+}

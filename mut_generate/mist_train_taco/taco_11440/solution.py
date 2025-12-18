@@ -1,0 +1,74 @@
+"""
+QUESTION:
+There is a kingdom, that has a long straight road of length L meters and width 0. Coordinate x on the road denotes point that is at x meters from the start of the road. That is coordinate 0 denotes beginning of the road and coordinate L denotes end of the road. The road has to be painted with color. There are K proposals, Each proposal is of the form a, b, c which means that the road can be painted from coordinate a to  coordinate b for the cost c.  Note that some part of road can be painted multiple times and it is still considered to be painted.  
+
+The king wants to know if the whole road can be painted and if possible, also wants to know the minimum cost that is required to paint the entire road.
+
+Input
+First line of the input is the number of test cases T. It is followed by T test cases.In  each test case first line has two space separated integers, the length of the road L and the number of proposals K. It is followed by K lines, which are  K proposals, each proposal is 3 space separated integers a b and c.  
+
+Output 
+For each test case output a single integer, that is minimum cost required to paint the enitre road. If it is impossible to paint the entire road, print -1.   
+
+Constraints 
+1 ≤ T ≤ 10
+1 ≤ L ≤ 256   
+1 ≤ K ≤ 512
+0 ≤ a < b ≤ L
+1 ≤ c ≤ 1000
+
+Read the editorial here.
+
+SAMPLE INPUT
+3
+9 6
+2 7 10
+7 8 3
+3 4 8
+0 8 2
+5 6 4
+3 7 1
+9 6
+7 8 6
+6 9 6
+2 5 8
+3 6 10
+0 7 6
+2 9 1
+3 4
+0 3 8
+0 2 4
+0 1 10
+2 3 8
+
+SAMPLE OUTPUT
+-1
+7
+8
+"""
+
+def calculate_minimum_painting_cost(L, K, proposals):
+    # Initialize the dp array
+    dp = [[0 for _ in range(L + 1)] for _ in range(K + 1)]
+    dp[0][0] = 0
+
+    # Convert proposals to a list of lists for easier indexing
+    ip = [""] + proposals
+
+    for j in range(1, L + 1):
+        for i in range(1, K + 1):
+            a, b, c = ip[i]
+            if a < j <= b:
+                dp[i][j] = min(dp[i - 1][j], dp[K][a] + c)
+            else:
+                dp[i][j] = dp[i - 1][j]
+
+        if not dp[K][j]:
+            break
+
+    return dp[K][L] if dp[K][L] else -1
+
+def min(a, b):
+    if a != 0 and a <= b:
+        return a
+    return b

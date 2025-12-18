@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_21638",
+  "entry_point": "parse_details",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if \"details\" not in data or data[\"details\"] is None:",
+      "mutated_line": "if 'details' not in data and data['details'] is None:",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data and data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if \"phone\" not in details:",
+      "mutated_line": "return 'Phone field missing'",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if not isinstance(phone, str) or not re.match(r'^\\d{3}-\\d{3}-\\d{4}$', phone):",
+      "mutated_line": "return 'Invalid phone format'",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) and (not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone)):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if \"details\" not in data or data[\"details\"] is None:",
+      "mutated_line": "if 'details' in data or data['details'] is None:",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if \"details\" not in data or data[\"details\"] is None:",
+      "mutated_line": "if 'details' not in data or data['details'] is not None:",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is not None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return \"Details field missing\"",
+      "mutated_line": "return ''",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return ''\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "details = data[\"details\"]",
+      "mutated_line": "details = data['']",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return \"Invalid details format\"",
+      "mutated_line": "return ''",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return ''\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if \"phone\" not in details:",
+      "mutated_line": "return 'Phone field missing'",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if '' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return \"Phone field missing\"",
+      "mutated_line": "phone = details['phone']",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return ''\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "phone = details[\"phone\"]",
+      "mutated_line": "return 'Invalid phone format'",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return \"Invalid phone format\"",
+      "mutated_line": "return ''",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return ''\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return \"Invalid JSON format\"",
+      "mutated_line": "return ''",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if \"details\" not in data or data[\"details\"] is None:",
+      "mutated_line": "if '' not in data or data['details'] is None:",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if '' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if \"details\" not in data or data[\"details\"] is None:",
+      "mutated_line": "if 'details' not in data or data[''] is None:",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data[''] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('^\\\\d{3}-\\\\d{3}-\\\\d{4}$', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if not isinstance(phone, str) or not re.match(r'^\\d{3}-\\d{3}-\\d{4}$', phone):",
+      "mutated_line": "return 'Invalid phone format'",
+      "code": "import json\nimport re\n\ndef parse_details(json_str):\n    try:\n        data = json.loads(json_str)\n        if 'details' not in data or data['details'] is None:\n            return 'Details field missing'\n        details = data['details']\n        if not isinstance(details, dict):\n            return 'Invalid details format'\n        if 'phone' not in details:\n            return 'Phone field missing'\n        phone = details['phone']\n        if not isinstance(phone, str) or not re.match('', phone):\n            return 'Invalid phone format'\n        return phone\n    except json.JSONDecodeError:\n        return 'Invalid JSON format'"
+    }
+  ]
+}

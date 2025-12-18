@@ -1,0 +1,224 @@
+{
+  "task_id": "cf_43000",
+  "entry_point": "extract_diagnostic_info",
+  "mutant_count": 31,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "pattern = r'// CHECK-(\\d+): (.+)'",
+      "mutated_line": "pattern = ''",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = ''\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"64-bit\": {},",
+      "mutated_line": "pattern = '// CHECK-(\\\\d+): (.+)'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "\"32-bit\": {}",
+      "mutated_line": "pattern = '// CHECK-(\\\\d+): (.+)'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if \"Instance pointer in child address space:\" in info:",
+      "mutated_line": "if 'Instance pointer in child address space:' not in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' not in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "arch = \"64-bit\" if arch == \"64\" else \"32-bit\"",
+      "mutated_line": "arch = '64-bit' if arch != '64' else '32-bit'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch != '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "arch = \"64-bit\" if arch == \"64\" else \"32-bit\"",
+      "mutated_line": "arch = '' if arch == '64' else '32-bit'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "arch = \"64-bit\" if arch == \"64\" else \"32-bit\"",
+      "mutated_line": "arch = '64-bit' if arch == '64' else ''",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else ''\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if \"Instance pointer in child address space:\" in info:",
+      "mutated_line": "if '' in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if '' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "elif \"(class\" in info:",
+      "mutated_line": "elif '(class' not in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' not in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "arch = \"64-bit\" if arch == \"64\" else \"32-bit\"",
+      "mutated_line": "arch = '64-bit' if arch == '' else '32-bit'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "diagnostic_info[arch][\"Instance pointer\"] = re.search(r'0x([0-9a-fA-F]+)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch][''] = re.search('0x([0-9a-fA-F]+)', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch][''] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "diagnostic_info[arch][\"Instance pointer\"] = re.search(r'0x([0-9a-fA-F]+)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(1)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "diagnostic_info[arch][\"Instance pointer\"] = re.search(r'0x([0-9a-fA-F]+)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(-1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(-1)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "diagnostic_info[arch][\"Instance pointer\"] = re.search(r'0x([0-9a-fA-F]+)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(1)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif \"(class\" in info:",
+      "mutated_line": "elif '' in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "elif \"(reference kind=\" in info:",
+      "mutated_line": "elif '(reference kind=' not in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' not in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch][''] = re.search('\\\\(class (.+)\\\\)', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch][''] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(2)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(2)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(0)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(0)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(-1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(-1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif \"(reference kind=\" in info:",
+      "mutated_line": "elif '' in info:",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = \"\"",
+      "mutated_line": "diagnostic_info[arch]['Type info'] = 'MUTATED'",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = 'MUTATED'\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "diagnostic_info[arch][\"Instance pointer\"] = re.search(r'0x([0-9a-fA-F]+)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Instance pointer'] = re.search('', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = re.search(r'\\(reference kind=(\\w+) refcounting=(\\w+)\\)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch][''] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch][''] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = re.search(r'\\(reference kind=(\\w+) refcounting=(\\w+)\\)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(1)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = re.search(r'\\(reference kind=(\\w+) refcounting=(\\w+)\\)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(-1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(-1)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = re.search(r'\\(reference kind=(\\w+) refcounting=(\\w+)\\)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(1)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = \"\"",
+      "mutated_line": "diagnostic_info[arch][''] = ''",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch][''] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "diagnostic_info[arch][\"Type reference\"] = re.search(r'\\(class (.+)\\)', info).group(1)",
+      "mutated_line": "diagnostic_info[arch]['Type reference'] = re.search('', info).group(1)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('\\\\(reference kind=(\\\\w+) refcounting=(\\\\w+)\\\\)', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "diagnostic_info[arch][\"Type info\"] = re.search(r'\\(reference kind=(\\w+) refcounting=(\\w+)\\)', info).group(0)",
+      "mutated_line": "diagnostic_info[arch]['Type info'] = re.search('', info).group(0)",
+      "code": "import re\n\ndef extract_diagnostic_info(code_snippet):\n    diagnostic_info = {'64-bit': {}, '32-bit': {}}\n    pattern = '// CHECK-(\\\\d+): (.+)'\n    matches = re.findall(pattern, code_snippet)\n    for match in matches:\n        (arch, info) = match\n        arch = '64-bit' if arch == '64' else '32-bit'\n        if 'Instance pointer in child address space:' in info:\n            diagnostic_info[arch]['Instance pointer'] = re.search('0x([0-9a-fA-F]+)', info).group(0)\n        elif '(class' in info:\n            diagnostic_info[arch]['Type reference'] = re.search('\\\\(class (.+)\\\\)', info).group(1)\n        elif '(reference kind=' in info:\n            diagnostic_info[arch]['Type info'] = re.search('', info).group(0)\n        else:\n            diagnostic_info[arch]['Type info'] = ''\n    return diagnostic_info"
+    }
+  ]
+}

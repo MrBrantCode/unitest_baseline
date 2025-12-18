@@ -1,0 +1,707 @@
+{
+  "task_id": "taco_14354",
+  "entry_point": "calculate_inconvenience",
+  "mutant_count": 100,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "self.num[ra] += self.num[rb]",
+      "mutated_line": "self.num[ra] -= self.num[rb]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] -= self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] / (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] / (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] + (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] + (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] ** (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] ** (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) / 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) / 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) * 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) * 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [1] / n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] / n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [1] + n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] + n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [1] ** n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] ** n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [1] / n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] / n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [1] + n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] + n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [1] ** n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] ** n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if self.par[a] == a:",
+      "mutated_line": "if self.par[a] != a:",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] != a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "out = self.num[ra] * self.num[rb]",
+      "mutated_line": "out = self.num[ra] / self.num[rb]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] / self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "out = self.num[ra] * self.num[rb]",
+      "mutated_line": "out = self.num[ra] + self.num[rb]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] + self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "out = self.num[ra] * self.num[rb]",
+      "mutated_line": "out = self.num[ra] ** self.num[rb]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] ** self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if self.rank[ra] < self.rank[rb]:",
+      "mutated_line": "if self.rank[ra] <= self.rank[rb]:",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] <= self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if self.rank[ra] < self.rank[rb]:",
+      "mutated_line": "if self.rank[ra] >= self.rank[rb]:",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] >= self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if self.rank[ra] < self.rank[rb]:",
+      "mutated_line": "if self.rank[ra] != self.rank[rb]:",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] != self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if self.rank[ra] == self.rank[rb]:",
+      "mutated_line": "if self.rank[ra] != self.rank[rb]:",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] != self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 22,
+      "original_line": "self.rank[ra] += 1",
+      "mutated_line": "self.rank[ra] -= 1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] -= 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "return self.root(a) == self.root(b)",
+      "mutated_line": "return self.root(a) != self.root(b)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) != self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m - 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m * 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m * 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n / (n - 1) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n / (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = (n + (n - 1)) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = (n + (n - 1)) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n ** (n - 1) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n ** (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) // 3",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 3\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) // 1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 1\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) // 0",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 0\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) // 1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 1\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 1) // -2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // -2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m + 1, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m + 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m * 1, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m * 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, +1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, +1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -1, +1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, +1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] + uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] + uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] * uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] * uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "self.rank[ra] += 1",
+      "mutated_line": "self.rank[ra] += 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 2\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "self.rank[ra] += 1",
+      "mutated_line": "self.rank[ra] += 0",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 0\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "self.rank[ra] += 1",
+      "mutated_line": "self.rank[ra] += 0",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 0\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "self.rank[ra] += 1",
+      "mutated_line": "self.rank[ra] += -1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += -1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 1\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return -1\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 1\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [1] * (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [1] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [-1] * (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [-1] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [1] * (m + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [1] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m + 2)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 2)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m + 0)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 0)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m + 0)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 0)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "incon = [0] * (m + 1)",
+      "mutated_line": "incon = [0] * (m + -1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + -1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n + 1) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n + 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n * 1) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n * 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 2, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 2, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 0, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 0, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 0, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 0, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - -1, -1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - -1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -2, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -2, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -0, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -0, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -0, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -0, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, --1, -1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, --1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -1, -2):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -2):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -1, -0):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -0):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -1, -0):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -0):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "for i in range(m - 1, -1, -1):",
+      "mutated_line": "for i in range(m - 1, -1, --1):",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, --1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 47,
+      "original_line": "return incon[1:]",
+      "mutated_line": "return incon[2:]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[2:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 47,
+      "original_line": "return incon[1:]",
+      "mutated_line": "return incon[0:]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[0:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 47,
+      "original_line": "return incon[1:]",
+      "mutated_line": "return incon[0:]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[0:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 47,
+      "original_line": "return incon[1:]",
+      "mutated_line": "return incon[-1:]",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[-1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [2] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [2] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [0] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [0] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [0] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [0] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "self.rank = [1] * n",
+      "mutated_line": "self.rank = [-1] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [-1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [2] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [2] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [0] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [0] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [0] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [0] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "self.num = [1] * n",
+      "mutated_line": "self.num = [-1] * n",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [-1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 2) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 2) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 0) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 0) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - 0) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 0) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "incon[m] = n * (n - 1) // 2",
+      "mutated_line": "incon[m] = n * (n - -1) // 2",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - -1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i - 1] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i - 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i * 1] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i * 1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a + 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a + 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a * 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a * 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b + 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b + 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b * 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b * 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 2] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 2] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 0] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 0] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 0] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 0] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + -1] - uf.com_num(a - 1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + -1] - uf.com_num(a - 1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 2, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 2, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 0, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 0, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 0, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 0, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - -1, b - 1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - -1, b - 1)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 2)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 2)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 0)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 0)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 0)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 0)\n    return incon[1:]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - 1)",
+      "mutated_line": "incon[i] = incon[i + 1] - uf.com_num(a - 1, b - -1)",
+      "code": "class UnionFind:\n\n    def __init__(self, n):\n        self.par = [x for x in range(n)]\n        self.rank = [1] * n\n        self.num = [1] * n\n\n    def root(self, a):\n        if self.par[a] == a:\n            return a\n        parent = self.root(self.par[a])\n        self.par[a] = parent\n        return parent\n\n    def unite(self, a, b):\n        (ra, rb) = (self.root(a), self.root(b))\n        out = self.num[ra] * self.num[rb]\n        if self.rank[ra] < self.rank[rb]:\n            (ra, rb) = (rb, ra)\n        self.par[rb] = ra\n        self.num[ra] += self.num[rb]\n        if self.rank[ra] == self.rank[rb]:\n            self.rank[ra] += 1\n        return out\n\n    def same(self, a, b):\n        return self.root(a) == self.root(b)\n\n    def com_num(self, a, b):\n        if self.same(a, b):\n            return 0\n        else:\n            return self.unite(a, b)\n\ndef calculate_inconvenience(n, m, bridges):\n    incon = [0] * (m + 1)\n    uf = UnionFind(n)\n    incon[m] = n * (n - 1) // 2\n    for i in range(m - 1, -1, -1):\n        (a, b) = bridges[i]\n        incon[i] = incon[i + 1] - uf.com_num(a - 1, b - -1)\n    return incon[1:]"
+    }
+  ]
+}

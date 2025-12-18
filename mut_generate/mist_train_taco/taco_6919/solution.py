@@ -1,0 +1,30 @@
+"""
+QUESTION:
+Given is a positive integer N.
+How many tuples (A,B,C) of positive integers satisfy A \times B + C = N?
+
+-----Constraints-----
+ -  2 \leq N \leq 10^6
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+
+-----Output-----
+Print the answer.
+
+-----Sample Input-----
+3
+
+-----Sample Output-----
+3
+
+There are 3 tuples of integers that satisfy A \times B + C = 3: (A, B, C) = (1, 1, 2), (1, 2, 1), (2, 1, 1).
+"""
+
+def count_tuples(N: int) -> int:
+    res = 0
+    for i in range(1, N):
+        res += (N - 1) // i
+    return res

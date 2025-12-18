@@ -1,0 +1,91 @@
+{
+  "task_id": "cf_60292",
+  "entry_point": "get_size_of_object",
+  "mutant_count": 12,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if seen is None:",
+      "mutated_line": "if seen is not None:",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is not None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if id(obj) in seen:",
+      "mutated_line": "if id(obj) not in seen:",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) not in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 11,
+      "original_line": "size += sum([get_size_of_object(v, seen) for v in obj.values()])",
+      "mutated_line": "size -= sum([get_size_of_object(v, seen) for v in obj.values()])",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size -= sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 12,
+      "original_line": "size += sum([get_size_of_object(k, seen) for k in obj.keys()])",
+      "mutated_line": "size -= sum([get_size_of_object(k, seen) for k in obj.keys()])",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size -= sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 1\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return -1\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 1\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "size += get_size_of_object(obj.__dict__, seen)",
+      "mutated_line": "size -= get_size_of_object(obj.__dict__, seen)",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size -= get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "elif hasattr(obj, '__dict__'):",
+      "mutated_line": "elif hasattr(obj, ''):",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, ''):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(obj, '__iter__') or not isinstance(obj, (str, bytes, bytearray)):",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') or not isinstance(obj, (str, bytes, bytearray)):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "size += sum([get_size_of_object(i, seen) for i in obj])",
+      "mutated_line": "size -= sum([get_size_of_object(i, seen) for i in obj])",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size -= sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(obj, '') and (not isinstance(obj, (str, bytes, bytearray))):",
+      "code": "import sys\n\ndef get_size_of_object(obj, seen=None):\n    if seen is None:\n        seen = set()\n    size = sys.getsizeof(obj)\n    if id(obj) in seen:\n        return 0\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        size += sum([get_size_of_object(v, seen) for v in obj.values()])\n        size += sum([get_size_of_object(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size_of_object(obj.__dict__, seen)\n    elif hasattr(obj, '') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size_of_object(i, seen) for i in obj])\n    return size"
+    }
+  ]
+}

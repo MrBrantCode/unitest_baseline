@@ -1,0 +1,48 @@
+"""
+QUESTION:
+We have N cards. A number a_i is written on the i-th card.
+
+Alice and Bob will play a game using these cards. In this game, Alice and Bob alternately take one card. Alice goes first.
+
+The game ends when all the cards are taken by the two players, and the score of each player is the sum of the numbers written on the cards he/she has taken. When both players take the optimal strategy to maximize their scores, find Alice's score minus Bob's score.
+
+-----Constraints-----
+ - N is an integer between 1 and 100 (inclusive).
+ - a_i \ (1 \leq i \leq N) is an integer between 1 and 100 (inclusive).
+
+-----Input-----
+Input is given from Standard Input in the following format:  
+N
+a_1 a_2 a_3 ... a_N
+
+-----Output-----
+Print Alice's score minus Bob's score when both players take the optimal strategy to maximize their scores.
+
+-----Sample Input-----
+2
+3 1
+
+-----Sample Output-----
+2
+
+First, Alice will take the card with 3. Then, Bob will take the card with 1.
+The difference of their scores will be 3 - 1 = 2.
+"""
+
+def calculate_score_difference(N: int, a: list) -> int:
+    # Sort the list of card values in descending order
+    a.sort(reverse=True)
+    
+    # Initialize scores for Alice and Bob
+    Alice_count = 0
+    Bob_count = 0
+    
+    # Distribute the cards alternately to Alice and Bob
+    for i in range(N):
+        if (i + 1) % 2 == 1:
+            Alice_count += a[i]
+        else:
+            Bob_count += a[i]
+    
+    # Return the difference between Alice's and Bob's scores
+    return Alice_count - Bob_count

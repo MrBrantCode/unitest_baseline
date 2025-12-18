@@ -1,0 +1,56 @@
+{
+  "task_id": "cf_42622",
+  "entry_point": "decorator_pause",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "execution_time = time.time() - start_time",
+      "mutated_line": "execution_time = time.time() + start_time",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() + start_time\n            if execution_time > threshold:\n                await asyncio.sleep(execution_time - threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "execution_time = time.time() - start_time",
+      "mutated_line": "execution_time = time.time() * start_time",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() * start_time\n            if execution_time > threshold:\n                await asyncio.sleep(execution_time - threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if execution_time > threshold:",
+      "mutated_line": "if execution_time >= threshold:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() - start_time\n            if execution_time >= threshold:\n                await asyncio.sleep(execution_time - threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if execution_time > threshold:",
+      "mutated_line": "if execution_time <= threshold:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() - start_time\n            if execution_time <= threshold:\n                await asyncio.sleep(execution_time - threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if execution_time > threshold:",
+      "mutated_line": "if execution_time != threshold:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() - start_time\n            if execution_time != threshold:\n                await asyncio.sleep(execution_time - threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "await asyncio.sleep(execution_time - threshold)",
+      "mutated_line": "await asyncio.sleep(execution_time + threshold)",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() - start_time\n            if execution_time > threshold:\n                await asyncio.sleep(execution_time + threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "await asyncio.sleep(execution_time - threshold)",
+      "mutated_line": "await asyncio.sleep(execution_time * threshold)",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef decorator_pause(threshold):\n\n    def decorator(func):\n\n        @wraps(func)\n        async def wrapper_pause(*args, **kwargs):\n            start_time = time.time()\n            result = func(*args, **kwargs)\n            if asyncio.iscoroutine(result):\n                result = await result\n            execution_time = time.time() - start_time\n            if execution_time > threshold:\n                await asyncio.sleep(execution_time * threshold)\n            return result\n        return wrapper_pause\n    return decorator"
+    }
+  ]
+}

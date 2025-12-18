@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_43153",
+  "entry_point": "extract_layer",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "layers = target_layer.split('.')",
+      "mutated_line": "layers = target_layer.split('')",
+      "code": "def extract_layer(model, target_layer):\n    layers = target_layer.split('')\n    current = model\n    for layer in layers:\n        if isinstance(current, dict) and layer in current:\n            current = current[layer]\n        else:\n            return None\n    return current"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "if isinstance(current, dict) and layer in current:",
+      "mutated_line": "if isinstance(current, dict) or layer in current:",
+      "code": "def extract_layer(model, target_layer):\n    layers = target_layer.split('.')\n    current = model\n    for layer in layers:\n        if isinstance(current, dict) or layer in current:\n            current = current[layer]\n        else:\n            return None\n    return current"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if isinstance(current, dict) and layer in current:",
+      "mutated_line": "if isinstance(current, dict) and layer not in current:",
+      "code": "def extract_layer(model, target_layer):\n    layers = target_layer.split('.')\n    current = model\n    for layer in layers:\n        if isinstance(current, dict) and layer not in current:\n            current = current[layer]\n        else:\n            return None\n    return current"
+    }
+  ]
+}

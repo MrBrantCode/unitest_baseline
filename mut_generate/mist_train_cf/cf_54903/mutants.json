@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_54903",
+  "entry_point": "flatten",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 4,
+      "original_line": "if not isinstance(val, (tuple, list)) or id(val) in seen:",
+      "mutated_line": "if not isinstance(val, (tuple, list)) and id(val) in seen:",
+      "code": "def flatten(nested_structure):\n    seen = set()\n\n    def visit(val):\n        if not isinstance(val, (tuple, list)) and id(val) in seen:\n            return [val]\n        seen.add(id(val))\n        result = []\n        for e in val:\n            result.extend(visit(e))\n        return result\n    return visit(nested_structure)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if not isinstance(val, (tuple, list)) or id(val) in seen:",
+      "mutated_line": "if not isinstance(val, (tuple, list)) or id(val) not in seen:",
+      "code": "def flatten(nested_structure):\n    seen = set()\n\n    def visit(val):\n        if not isinstance(val, (tuple, list)) or id(val) not in seen:\n            return [val]\n        seen.add(id(val))\n        result = []\n        for e in val:\n            result.extend(visit(e))\n        return result\n    return visit(nested_structure)"
+    }
+  ]
+}

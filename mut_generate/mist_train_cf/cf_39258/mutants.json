@@ -1,0 +1,294 @@
+{
+  "task_id": "cf_39258",
+  "entry_point": "update_arrays",
+  "mutant_count": 41,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) - updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) - updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = (updated_weights[action_index] - gamma * (updated_weights[action_index] - 1)) * (updated_glows[action_index] * reward)",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = (updated_weights[action_index] - gamma * (updated_weights[action_index] - 1)) * (updated_glows[action_index] * reward)\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if len(updated_flags) == 0:",
+      "mutated_line": "if len(updated_flags) != 0:",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) != 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] + gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] + gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] * (gamma * (updated_weights[action_index] - 1)) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] * (gamma * (updated_weights[action_index] - 1)) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] / reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] / reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + (updated_glows[action_index] + reward)",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + (updated_glows[action_index] + reward)\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] ** reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] ** reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward <= 0.0 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward <= 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward >= 0.0 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward >= 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward != 0.0 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward != 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if len(updated_flags) == 0:",
+      "mutated_line": "if len(updated_flags) == 1:",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 1:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if len(updated_flags) == 0:",
+      "mutated_line": "if len(updated_flags) == -1:",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == -1:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if len(updated_flags) == 0:",
+      "mutated_line": "if len(updated_flags) == 1:",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 1:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma / (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma / (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - (gamma + (updated_weights[action_index] - 1)) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - (gamma + (updated_weights[action_index] - 1)) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma ** (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma ** (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward < 1.0 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 1.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward < -1.0 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < -1.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags",
+      "mutated_line": "updated_flags = np.delete(flags, action_index) if reward < 1 else flags",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 1 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i != action_index else (1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i != action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([2.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([2.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([0.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([0.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([-1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([-1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) / g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) / g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else 1 - n + g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else 1 - n + g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) ** g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) ** g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] + 1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] + 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] * 1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] * 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (1 + n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 + n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else 1 * n * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else 1 * n * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 2) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 2) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 0) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 0) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 0) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 0) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward",
+      "mutated_line": "updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - -1) + updated_glows[action_index] * reward",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - -1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "updated_flags = np.array([i for i in range(len(weights)) if i != action_index])",
+      "mutated_line": "updated_flags = np.array([i for i in range(len(weights)) if i == action_index])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i == action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (2 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (2 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (0 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (0 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (0 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (0 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "updated_glows = np.array([1.0 if i == action_index else (1 - n) * g for i, g in enumerate(glows)])",
+      "mutated_line": "updated_glows = np.array([1.0 if i == action_index else (-1 - n) * g for (i, g) in enumerate(glows)])",
+      "code": "import numpy as np\n\ndef update_arrays(state, action_index, reward, weights, flags, glows, n, gamma, memory) -> dict:\n    updated_glows = np.array([1.0 if i == action_index else (-1 - n) * g for (i, g) in enumerate(glows)])\n    updated_weights = weights.copy()\n    updated_weights[action_index] = updated_weights[action_index] - gamma * (updated_weights[action_index] - 1) + updated_glows[action_index] * reward\n    updated_flags = np.delete(flags, action_index) if reward < 0.0 else flags\n    if len(updated_flags) == 0:\n        updated_flags = np.array([i for i in range(len(weights)) if i != action_index])\n    memory[state] = (updated_weights, updated_flags, updated_glows)\n    return memory"
+    }
+  ]
+}

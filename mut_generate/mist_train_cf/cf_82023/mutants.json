@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_82023",
+  "entry_point": "filter_strings",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "def filter_strings(lst, keyword=None, case_sensitive=False, pattern=None):",
+      "mutated_line": "def filter_strings(lst, keyword=None, case_sensitive=True, pattern=None):",
+      "code": "import re\n\ndef filter_strings(lst, keyword=None, case_sensitive=True, pattern=None):\n    filtered_lst = []\n    for string in lst:\n        if keyword:\n            if case_sensitive:\n                if keyword in string:\n                    filtered_lst.append(string)\n            elif keyword.lower() in string.lower():\n                filtered_lst.append(string)\n        elif pattern:\n            if re.search(pattern, string):\n                filtered_lst.append(string)\n    return filtered_lst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if keyword in string:",
+      "mutated_line": "if keyword not in string:",
+      "code": "import re\n\ndef filter_strings(lst, keyword=None, case_sensitive=False, pattern=None):\n    filtered_lst = []\n    for string in lst:\n        if keyword:\n            if case_sensitive:\n                if keyword not in string:\n                    filtered_lst.append(string)\n            elif keyword.lower() in string.lower():\n                filtered_lst.append(string)\n        elif pattern:\n            if re.search(pattern, string):\n                filtered_lst.append(string)\n    return filtered_lst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if keyword.lower() in string.lower():",
+      "mutated_line": "filtered_lst.append(string)",
+      "code": "import re\n\ndef filter_strings(lst, keyword=None, case_sensitive=False, pattern=None):\n    filtered_lst = []\n    for string in lst:\n        if keyword:\n            if case_sensitive:\n                if keyword in string:\n                    filtered_lst.append(string)\n            elif keyword.lower() not in string.lower():\n                filtered_lst.append(string)\n        elif pattern:\n            if re.search(pattern, string):\n                filtered_lst.append(string)\n    return filtered_lst"
+    }
+  ]
+}

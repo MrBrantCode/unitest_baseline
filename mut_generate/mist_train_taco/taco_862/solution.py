@@ -1,0 +1,80 @@
+"""
+QUESTION:
+Mashmokh's boss, Bimokh, didn't like Mashmokh. So he fired him. Mashmokh decided to go to university and participate in ACM instead of finding a new job. He wants to become a member of Bamokh's team. In order to join he was given some programming tasks and one week to solve them. Mashmokh is not a very experienced programmer. Actually he is not a programmer at all. So he wasn't able to solve them. That's why he asked you to help him with these tasks. One of these tasks is the following.
+
+A sequence of l integers b1, b2, ..., bl (1 ≤ b1 ≤ b2 ≤ ... ≤ bl ≤ n) is called good if each number divides (without a remainder) by the next number in the sequence. More formally <image> for all i (1 ≤ i ≤ l - 1).
+
+Given n and k find the number of good sequences of length k. As the answer can be rather large print it modulo 1000000007 (109 + 7).
+
+Input
+
+The first line of input contains two space-separated integers n, k (1 ≤ n, k ≤ 2000).
+
+Output
+
+Output a single integer — the number of good sequences of length k modulo 1000000007 (109 + 7).
+
+Examples
+
+Input
+
+3 2
+
+
+Output
+
+5
+
+
+Input
+
+6 4
+
+
+Output
+
+39
+
+
+Input
+
+2 1
+
+
+Output
+
+2
+
+Note
+
+In the first sample the good sequences are: [1, 1], [2, 2], [3, 3], [1, 2], [1, 3].
+"""
+
+def count_good_sequences(n, k):
+    MODULO = 1000000007
+    
+    def C(n, k):
+        w = 1
+        for i in range(n - k + 1, n + 1):
+            w *= i
+        for i in range(1, k + 1):
+            w //= i
+        return w
+
+    def multiples(limit):
+        tmp = 1
+        m = limit
+        for j in range(2, limit + 1):
+            no_multiples = 0
+            while m % j == 0:
+                no_multiples += 1
+                m //= j
+            if no_multiples:
+                tmp *= C(no_multiples + k - 1, no_multiples)
+        return tmp
+
+    total = 0
+    for i in range(1, n + 1):
+        total += multiples(i)
+    
+    return total % MODULO

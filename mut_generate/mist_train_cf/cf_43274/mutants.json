@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_43274",
+  "entry_point": "get_context_key_references",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "if isinstance(value, str) and value.startswith(\"${\") and value.endswith(\"}\"):",
+      "mutated_line": "if isinstance(value, str) or value.startswith('${') or value.endswith('}'):",
+      "code": "def get_context_key_references(pipeline_id, context_key_references):\n    pipeline_config = pipeline_configurations.get(pipeline_id, {})\n    pipeline_context_keys = set()\n    for (key, value) in pipeline_config.items():\n        if isinstance(value, str) or value.startswith('${') or value.endswith('}'):\n            pipeline_context_keys.add(value)\n    references_in_config = context_key_references.intersection(pipeline_context_keys)\n    return references_in_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "if isinstance(value, str) and value.startswith(\"${\") and value.endswith(\"}\"):",
+      "mutated_line": "if isinstance(value, str) and value.startswith('') and value.endswith('}'):",
+      "code": "def get_context_key_references(pipeline_id, context_key_references):\n    pipeline_config = pipeline_configurations.get(pipeline_id, {})\n    pipeline_context_keys = set()\n    for (key, value) in pipeline_config.items():\n        if isinstance(value, str) and value.startswith('') and value.endswith('}'):\n            pipeline_context_keys.add(value)\n    references_in_config = context_key_references.intersection(pipeline_context_keys)\n    return references_in_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "if isinstance(value, str) and value.startswith(\"${\") and value.endswith(\"}\"):",
+      "mutated_line": "if isinstance(value, str) and value.startswith('${') and value.endswith(''):",
+      "code": "def get_context_key_references(pipeline_id, context_key_references):\n    pipeline_config = pipeline_configurations.get(pipeline_id, {})\n    pipeline_context_keys = set()\n    for (key, value) in pipeline_config.items():\n        if isinstance(value, str) and value.startswith('${') and value.endswith(''):\n            pipeline_context_keys.add(value)\n    references_in_config = context_key_references.intersection(pipeline_context_keys)\n    return references_in_config"
+    }
+  ]
+}

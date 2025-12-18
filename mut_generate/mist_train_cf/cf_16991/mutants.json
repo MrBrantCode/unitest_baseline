@@ -1,0 +1,70 @@
+{
+  "task_id": "cf_16991",
+  "entry_point": "resolve_data_hazard",
+  "mutant_count": 9,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 25,
+      "original_line": "if src1 in last_write or src2 in last_write:",
+      "mutated_line": "resolved_instructions.append(('NOP',))",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write and src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if src1 in last_write or src2 in last_write:",
+      "mutated_line": "resolved_instructions.append(('NOP',))",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 not in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if src1 in last_write or src2 in last_write:",
+      "mutated_line": "resolved_instructions.append(('NOP',))",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 not in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if inst_type in [\"ADD\", \"SUB\", \"MUL\"]:",
+      "mutated_line": "if inst_type not in ['ADD', 'SUB', 'MUL']:",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type not in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "resolved_instructions.append((\"NOP\",))",
+      "mutated_line": "resolved_instructions.append(('',))",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if inst_type in [\"ADD\", \"SUB\", \"MUL\"]:",
+      "mutated_line": "if inst_type in ['', 'SUB', 'MUL']:",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['', 'SUB', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if inst_type in [\"ADD\", \"SUB\", \"MUL\"]:",
+      "mutated_line": "if inst_type in ['ADD', '', 'MUL']:",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', '', 'MUL']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "if inst_type in [\"ADD\", \"SUB\", \"MUL\"]:",
+      "mutated_line": "if inst_type in ['ADD', 'SUB', '']:",
+      "code": "def resolve_data_hazard(instructions):\n    \"\"\"\n    Resolves data hazards in a list of instructions due to read-after-write (RAW) dependencies.\n\n    Args:\n        instructions (list): A list of tuples, where each tuple contains the instruction type, \n            destination register, and source registers.\n\n    Returns:\n        list: The resolved list of instructions.\n    \"\"\"\n    last_write = {}\n    resolved_instructions = []\n    for instruction in instructions:\n        (inst_type, dest, src1, src2) = instruction\n        if src1 in last_write or src2 in last_write:\n            resolved_instructions.append(('NOP',))\n        else:\n            resolved_instructions.append(instruction)\n            if inst_type in ['ADD', 'SUB', '']:\n                last_write[dest] = instruction\n    return resolved_instructions"
+    }
+  ]
+}

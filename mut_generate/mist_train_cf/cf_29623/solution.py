@@ -1,0 +1,12 @@
+"""
+QUESTION:
+Create a function called `determine_winner` that takes two parameters: `user_choice` and `computer_choice`, which can be "rock", "paper", or "scissors". The function should return a string indicating whether it's a tie, the user wins, or the user loses based on the traditional rock-paper-scissors rules.
+"""
+
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
+        return "It's a tie!"
+    elif (user_choice == "rock" and computer_choice == "scissors") or (user_choice == "scissors" and computer_choice == "paper") or (user_choice == "paper" and computer_choice == "rock"):
+        return "You win!"
+    else:
+        return "You lose!"

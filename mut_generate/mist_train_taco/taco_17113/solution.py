@@ -1,0 +1,36 @@
+"""
+QUESTION:
+Arya is new to matrices. With lots of subtopics in the chapter, he finds it difficult in getting good in all of them. As of now, he is practising matrix multiplications. He takes two different matrices and checks in how many different ways could they be multiplied. If they are multiplicable, he multiplies in all the ways possible.
+
+Your job is, for a given order of two matrices, find how many unique matrix multiplications does Arya do with them.
+Input Format:
+First line contains T, number of test cases.
+T lines follows, denoting T test cases.
+Each test case has 4 integer numbers x1,y1,x2,y2. Where x1,y1 are number of rows and columns of matrix A and x2,y2 are number of rows and columns of matrix B.
+
+Output Format:
+Output single integer in answer for each test case in separate lines.
+
+Constraints:
+1 ≤ T ≤ 100
+1 ≤ x1,x2,y1,y2 ≤ 100  
+
+Problem Setter : Vinay Kumar
+
+SAMPLE INPUT
+2
+2 2 2 2
+4 3 2 1
+
+SAMPLE OUTPUT
+2
+0
+"""
+
+def count_unique_matrix_multiplications(x1: int, y1: int, x2: int, y2: int) -> int:
+    count = 0
+    if x1 == y2:
+        count += 1
+    if y1 == x2:
+        count += 1
+    return count

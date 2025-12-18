@@ -1,0 +1,273 @@
+{
+  "task_id": "taco_8547",
+  "entry_point": "clean_speech",
+  "mutant_count": 38,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "PATTERN = re.compile(r'(?P<first>(?:(?<=[.!?] )|^)\\w+)|(?P<other>\\w+)')",
+      "mutated_line": "PATTERN = re.compile('')",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words or len(word) > 2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words or len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word in allowed_words and len(word) > 2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) >= 2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) >= 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) <= 2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) <= 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) != 2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) != 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) - word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) - word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = (word[0] + '*' * (len(word) - 2)) * word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = (word[0] + '*' * (len(word) - 2)) * word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "if match.group('first'):",
+      "mutated_line": "if match.group(''):",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group(''):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "word = (match.group('first') or match.group('other')).lower()",
+      "mutated_line": "word = (match.group('first') and match.group('other')).lower()",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') and match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) > 3:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 3:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) > 1:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 1:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) > 0:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 0:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) > 1:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 1:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if word not in allowed_words and len(word) > 2:",
+      "mutated_line": "if word not in allowed_words and len(word) > -2:",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > -2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] - '*' * (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] - '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] * ('*' * (len(word) - 2)) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] * ('*' * (len(word) - 2)) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' / (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' / (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + ('*' + (len(word) - 2)) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + ('*' + (len(word) - 2)) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' ** (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' ** (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) + word[+1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[+1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "word = (match.group('first') or match.group('other')).lower()",
+      "mutated_line": "word = (match.group('') or match.group('other')).lower()",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "word = (match.group('first') or match.group('other')).lower()",
+      "mutated_line": "word = (match.group('first') or match.group('')).lower()",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[1] + '*' * (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[1] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[-1] + '*' * (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[-1] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[1] + '*' * (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[1] + '*' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '' * (len(word) - 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '' * (len(word) - 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) + 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) + 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) * 2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) * 2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) + word[-2]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-2]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) + word[-0]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-0]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) + word[-0]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[-0]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 2) + word[--1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 2) + word[--1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 3) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 3) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 1) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 1) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 0) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 0) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - 1) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - 1) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "word = word[0] + '*' * (len(word) - 2) + word[-1]",
+      "mutated_line": "word = word[0] + '*' * (len(word) - -2) + word[-1]",
+      "code": "import re\n\ndef clean_speech(speech, allowed_words=[]):\n    PATTERN = re.compile('(?P<first>(?:(?<=[.!?] )|^)\\\\w+)|(?P<other>\\\\w+)')\n\n    def transform_word(match):\n        word = (match.group('first') or match.group('other')).lower()\n        if word not in allowed_words and len(word) > 2:\n            word = word[0] + '*' * (len(word) - -2) + word[-1]\n        if match.group('first'):\n            word = word.capitalize()\n        return word\n    allowed_words = set(map(str.lower, allowed_words))\n    return PATTERN.sub(transform_word, speech)"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_18315",
+  "entry_point": "json_to_dict",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "print(\"Invalid JSON string.\")",
+      "mutated_line": "print('')",
+      "code": "import json\n\ndef json_to_dict(json_str):\n    result = {}\n\n    def parse_dict(data, obj):\n        for (key, value) in data.items():\n            if isinstance(value, dict):\n                obj[key] = {}\n                parse_dict(value, obj[key])\n            elif isinstance(value, list):\n                obj[key] = []\n                parse_list(value, obj[key])\n            else:\n                obj[key] = value\n\n    def parse_list(data, arr):\n        for item in data:\n            if isinstance(item, dict):\n                obj = {}\n                arr.append(obj)\n                parse_dict(item, obj)\n            elif isinstance(item, list):\n                sub_arr = []\n                arr.append(sub_arr)\n                parse_list(item, sub_arr)\n            else:\n                arr.append(item)\n    try:\n        parsed_data = json.loads(json_str)\n        if isinstance(parsed_data, dict):\n            parse_dict(parsed_data, result)\n        elif isinstance(parsed_data, list):\n            result = []\n            parse_list(parsed_data, result)\n    except json.JSONDecodeError:\n        print('')\n    return result"
+    }
+  ]
+}

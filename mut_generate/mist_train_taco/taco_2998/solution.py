@@ -1,0 +1,33 @@
+"""
+QUESTION:
+Consider the set of irreducible fractions A = {n/d | n≤d and d ≤ 10000 and gcd(n,d) = 1}.You are given a member of this set and your task is to find the largest fraction in this set less than the given fraction.
+Note: The fraction that is given to you may or may not be irreducible.
+Example 1:
+Input: n = 1, d = 4
+Output: {2499, 9997}  
+Explanation: 2499/9997 is the largest fraction.
+Example 2:
+Input: n = 2, d = 4
+Output: {4999, 9999}
+Explanation: 4999/9999 is the largest fraction. 
+Your Task:  
+You dont need to read input or print anything. Complete the function numAndDen() which takes n and d as input parameter and returns the numerator and the denominator of the required irreducible fraction.
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+Constraints:
+1 <= n <= d <=1000
+"""
+
+import math as mt
+
+def find_largest_fraction_less_than(n, d):
+    num = -1
+    den = 1
+    f = d + 1
+    for i in range(f, 10001):
+        x = n * i // d
+        if mt.gcd(x, i) == 1:
+            if 1.0 * x / i > 1.0 * num / den:
+                num = x
+                den = i
+    return (num, den)

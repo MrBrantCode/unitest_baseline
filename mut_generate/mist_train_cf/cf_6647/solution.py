@@ -1,0 +1,12 @@
+"""
+QUESTION:
+Create a function called `extract_strings` that takes a text block as input. The function should extract all the strings that match the pattern "name #number" where the name can be any alphanumeric characters and the number is a 4-digit integer. The extracted strings should be sorted in descending order based on the number and returned.
+"""
+
+import re
+
+def extract_strings(text):
+    pattern = r"([a-zA-Z0-9]+)\s#(\d{4})"
+    matches = re.findall(pattern, text)
+    sorted_matches = sorted(matches, key=lambda x: int(x[1]), reverse=True)
+    return sorted_matches

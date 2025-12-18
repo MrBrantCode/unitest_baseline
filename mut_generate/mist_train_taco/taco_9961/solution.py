@@ -1,0 +1,39 @@
+"""
+QUESTION:
+Given a Number N in String form, Print 1 If the digits of the number are in non-decreasing or non-increasing order, else print 0.
+ 
+Example 1:
+Input:
+N = "1233"
+Output:
+1
+Explanation:
+The digits of the number are in non-
+decreasing order. So, the Output is 1.
+Example 2:
+Input:
+N = "1263"
+Output:
+0
+Explanation:
+The digits of the number are neither in
+non-decreasing nor in non-increasing order.
+So, the Output is 0.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function difProblem() which takes a String N as input and returns 0 or 1.
+ 
+Expected Time Complexity: O(|N|)
+Expected Auxiliary Space: O(1)
+ 
+Constraints:
+1 <= |N| <= 10^{5}
+"""
+
+def is_sorted_digits(N: str) -> int:
+    sorted_asc = ''.join(sorted(N))
+    sorted_desc = sorted_asc[::-1]
+    
+    if N == sorted_asc or N == sorted_desc:
+        return 1
+    return 0

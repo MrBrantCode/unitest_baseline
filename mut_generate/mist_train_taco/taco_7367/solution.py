@@ -1,0 +1,68 @@
+"""
+QUESTION:
+Akshit and Rahul are playing a game. Initially, two positive integers A and B are written on a blackboard. The players take turns, starting with Akshit. On his or her turn, a player can replace A with A - kB for any positive integer k, or replace B with B - kA for any positive integer k. The first person to make one of the numbers drop to zero or below loses.
+
+For example, if the numbers are initially (12, 51), the game might progress as follows:
+
+Akshit replaces 51 with 51 - 3*12 = 15, leaving (12, 15) on the blackboard.
+Rahul replaces 15 with 15 - 1*12 = 3, leaving (12, 3) on the blackboard.
+Akshit replaces 12 with 12 - 3*3 = 3, leaving (3, 3) on the blackboard.
+Rahul replaces one 3 with 3 - 1*3 = 0, and loses.
+
+We will say (A, B) is a winning position if Akshit can always win a game that starts with (A, B) on the blackboard, no matter what Rahul does.
+
+Given four integers A1, A2, B1, B2, count how many winning positions (A, B) there are with A1 ≤ A ≤ A2 and B1 ≤ B ≤ B2.
+
+Input
+
+The first line of the input gives the number of test cases, T. T test cases follow, one per line. Each line contains the four integers A1, A2, B1, B2, separated by spaces.
+
+Output
+
+For each test case, output one line containing "Case #x: y", where x is the case number (starting from 1), and y is the number of winning positions (A, B) with A1 ≤ A ≤ A2 and B1 ≤ B ≤ B2. 
+
+CONSTRAINTS
+
+1 ≤ T ≤ 100.
+1 ≤ A1 ≤ A2 ≤ 1,000,000.
+1 ≤ B1 ≤ B2 ≤ 1,000,000. 
+
+SAMPLE INPUT
+2
+5 5 8 8
+11 11 2 2
+
+SAMPLE OUTPUT
+Case #1: 0
+Case #2: 1
+"""
+
+def gcd(x, y):
+    if x < y:
+        x, y = y, x
+    if x % y == 0:
+        return y
+    else:
+        return gcd(y, x % y)
+
+def is_prime(n):
+    if n < 2:
+        return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+def count_winning_positions(A1, A2, B1, B2):
+    count = 0
+    for i in range(A1, A2 + 1):
+        for j in range(B1, B2 + 1):
+            if i == j:
+                continue
+            elif gcd(i, j) != 1:
+                count += 1
+            elif is_prime(i) and is_prime(j):
+                count += 1
+    return count

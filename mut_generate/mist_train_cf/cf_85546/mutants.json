@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_85546",
+  "entry_point": "flatten",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 5,
+      "original_line": "flat_list += flatten(i)",
+      "mutated_line": "flat_list -= flatten(i)",
+      "code": "def flatten(nested_list):\n    flat_list = []\n    for i in nested_list:\n        if isinstance(i, list):\n            flat_list -= flatten(i)\n        else:\n            try:\n                flat_list += [i]\n            except TypeError:\n                print(f'Element {i} is not list or list item!')\n                continue\n    return flat_list"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "flat_list += [i]",
+      "mutated_line": "flat_list -= [i]",
+      "code": "def flatten(nested_list):\n    flat_list = []\n    for i in nested_list:\n        if isinstance(i, list):\n            flat_list += flatten(i)\n        else:\n            try:\n                flat_list -= [i]\n            except TypeError:\n                print(f'Element {i} is not list or list item!')\n                continue\n    return flat_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "print(f'Element {i} is not list or list item!')",
+      "mutated_line": "print(f'{i} is not list or list item!')",
+      "code": "def flatten(nested_list):\n    flat_list = []\n    for i in nested_list:\n        if isinstance(i, list):\n            flat_list += flatten(i)\n        else:\n            try:\n                flat_list += [i]\n            except TypeError:\n                print(f'{i} is not list or list item!')\n                continue\n    return flat_list"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "print(f'Element {i} is not list or list item!')",
+      "mutated_line": "print(f'Element {i}')",
+      "code": "def flatten(nested_list):\n    flat_list = []\n    for i in nested_list:\n        if isinstance(i, list):\n            flat_list += flatten(i)\n        else:\n            try:\n                flat_list += [i]\n            except TypeError:\n                print(f'Element {i}')\n                continue\n    return flat_list"
+    }
+  ]
+}

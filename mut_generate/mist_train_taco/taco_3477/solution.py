@@ -1,0 +1,50 @@
+"""
+QUESTION:
+Given two integers ‘a’ and ‘m’. The task is to find the smallest modular multiplicative inverse of ‘a’ under modulo ‘m’.
+ 
+Example 1:
+Input:
+a = 3
+m = 11
+Output: 4
+Explanation: Since (4*3) mod 11 = 1, 4 
+is modulo inverse of 3. One might think,
+15 also as a valid output as "(15*3)
+mod 11"  is also 1, but 15 is not in 
+ring {0, 1, 2, ... 10}, so not valid.
+ 
+Example 2:
+Input:
+a = 10
+m = 17
+Output: 12
+Explanation: Since (12*10) mod 17 = 1,
+12 is the modulo inverse of 10.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function  function modInverse() that takes a and m as input parameters and returns modular multiplicative inverse of ‘a’ under modulo ‘m’. If the modular multiplicative inverse doesn't exist return -1.
+ 
+Expected Time Complexity : O(m)
+Expected Auxilliary Space : O(1)
+ 
+Constraints:
+1 <= a <= 10^{4}
+1 <= m <= 10^{4}
+"""
+
+def find_modular_inverse(a: int, m: int) -> int:
+    """
+    Finds the smallest modular multiplicative inverse of 'a' under modulo 'm'.
+
+    Parameters:
+    a (int): The integer for which the inverse is to be found.
+    m (int): The modulo under which the inverse is to be found.
+
+    Returns:
+    int: The smallest modular multiplicative inverse of 'a' under modulo 'm'.
+         If no such inverse exists, returns -1.
+    """
+    for i in range(1, m):
+        if (a * i) % m == 1:
+            return i
+    return -1

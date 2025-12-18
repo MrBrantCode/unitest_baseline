@@ -1,0 +1,126 @@
+{
+  "task_id": "taco_4595",
+  "entry_point": "adfgx_encrypt",
+  "mutant_count": 17,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a - b for (a, b) in product('ADFGX', repeat=2)]",
+      "code": "from itertools import product\nimport re\nKEY = [a - b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a * b for (a, b) in product('ADFGX', repeat=2)]",
+      "code": "from itertools import product\nimport re\nKEY = [a * b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "oddity = d['i'] if 'i' in d else d['j']",
+      "mutated_line": "oddity = d['i'] if 'i' not in d else d['j']",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' not in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('', repeat=2)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "oddity = d['i'] if 'i' in d else d['j']",
+      "mutated_line": "oddity = d['i'] if '' in d else d['j']",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if '' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "oddity = d['i'] if 'i' in d else d['j']",
+      "mutated_line": "oddity = d[''] if 'i' in d else d['j']",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d[''] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "oddity = d['i'] if 'i' in d else d['j']",
+      "mutated_line": "oddity = d['i'] if 'i' in d else d['']",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return ''.join((d.get(c, oddity) for c in plaintext))",
+      "mutated_line": "return 'MUTATED'.join((d.get(c, oddity) for c in plaintext))",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return 'MUTATED'.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))",
+      "mutated_line": "return 'MUTATED'.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return 'MUTATED'.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=3)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=3)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=1)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=1)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=0)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=0)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=1)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=1)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=2)]",
+      "mutated_line": "KEY = [a + b for (a, b) in product('ADFGX', repeat=-2)]",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=-2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()",
+      "mutated_line": "IJkey = [k for (k, v) in d.items() if v not in 'ij'].pop()",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v not in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))",
+      "mutated_line": "return ''.join((d.get(c, d[IJkey]) for c in re.findall('', ciphertext)))",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('', ciphertext)))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "IJkey = [k for (k, v) in d.items() if v in 'ij'].pop()",
+      "mutated_line": "IJkey = [k for (k, v) in d.items() if v in ''].pop()",
+      "code": "from itertools import product\nimport re\nKEY = [a + b for (a, b) in product('ADFGX', repeat=2)]\n\ndef adfgx_encrypt(plaintext: str, square: str) -> str:\n    d = dict(zip(square, KEY))\n    oddity = d['i'] if 'i' in d else d['j']\n    return ''.join((d.get(c, oddity) for c in plaintext))\n\ndef adfgx_decrypt(ciphertext: str, square: str) -> str:\n    d = dict(zip(KEY, square))\n    IJkey = [k for (k, v) in d.items() if v in ''].pop()\n    return ''.join((d.get(c, d[IJkey]) for c in re.findall('.{2}', ciphertext)))"
+    }
+  ]
+}

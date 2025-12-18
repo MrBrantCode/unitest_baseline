@@ -1,0 +1,112 @@
+{
+  "task_id": "cf_31222",
+  "entry_point": "executeTasks",
+  "mutant_count": 15,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output -= f\"Output of {task['name']}: {task['command']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output -= f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "task_map = {task[\"name\"]: task for task in tasks}",
+      "mutated_line": "task_map = {task['']: task for task in tasks}",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if task[\"dependencies\"]:",
+      "mutated_line": "if task['']:",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "output = f\"Executing task: {task['name']}\\n\"",
+      "mutated_line": "output = f\"{task['name']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"{task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "output = f\"Executing task: {task['name']}\\n\"",
+      "mutated_line": "output = f\"Executing task: {task['name']}\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output += f\"{task['name']}: {task['command']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"{task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output += f\"Output of {task['name']}{task['command']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}{task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output += f\"Output of {task['name']}: {task['command']}\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "return [task_outputs[task[\"name\"]] for task in tasks]",
+      "mutated_line": "return [task_outputs[task['']] for task in tasks]",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "output = f\"Executing task: {task['name']}\\n\"",
+      "mutated_line": "output = f\"Executing task: {task['']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output += f\"Output of {task['']}: {task['command']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output += f\"Output of {task['name']}: {task['command']}\\n\"",
+      "mutated_line": "output += f\"Output of {task['name']}: {task['']}\\n\"",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "futures = [executor.submit(execute_task, task[\"name\"]) for task in tasks]",
+      "mutated_line": "futures = [executor.submit(execute_task, task['']) for task in tasks]",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "futures = [executor.submit(execute_task, dep) for dep in task[\"dependencies\"]]",
+      "mutated_line": "futures = [executor.submit(execute_task, dep) for dep in task['']]",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task['dependencies'])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "with concurrent.futures.ThreadPoolExecutor(max_workers=len(task[\"dependencies\"])) as executor:",
+      "mutated_line": "with concurrent.futures.ThreadPoolExecutor(max_workers=len(task[''])) as executor:",
+      "code": "import concurrent.futures\n\ndef executeTasks(tasks):\n    task_map = {task['name']: task for task in tasks}\n    task_outputs = {}\n\n    def execute_task(task_name):\n        task = task_map[task_name]\n        if task['dependencies']:\n            with concurrent.futures.ThreadPoolExecutor(max_workers=len(task[''])) as executor:\n                futures = [executor.submit(execute_task, dep) for dep in task['dependencies']]\n                concurrent.futures.wait(futures)\n        output = f\"Executing task: {task['name']}\\n\"\n        output += f\"Output of {task['name']}: {task['command']}\\n\"\n        task_outputs[task_name] = output\n    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks)) as executor:\n        futures = [executor.submit(execute_task, task['name']) for task in tasks]\n        concurrent.futures.wait(futures)\n    return [task_outputs[task['name']] for task in tasks]"
+    }
+  ]
+}

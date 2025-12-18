@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_31819",
+  "entry_point": "merge_config_defaults",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 4,
+      "original_line": "if isinstance(value, dict) and key in defaults and isinstance(defaults[key], dict):",
+      "mutated_line": "if isinstance(value, dict) or key in defaults or isinstance(defaults[key], dict):",
+      "code": "def merge_config_defaults(config: dict, defaults: dict) -> dict:\n    merged = defaults.copy()\n    for (key, value) in config.items():\n        if isinstance(value, dict) or key in defaults or isinstance(defaults[key], dict):\n            merged[key] = merge_config_defaults(value, defaults[key])\n        else:\n            merged[key] = value\n    return merged"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if isinstance(value, dict) and key in defaults and isinstance(defaults[key], dict):",
+      "mutated_line": "if isinstance(value, dict) and key not in defaults and isinstance(defaults[key], dict):",
+      "code": "def merge_config_defaults(config: dict, defaults: dict) -> dict:\n    merged = defaults.copy()\n    for (key, value) in config.items():\n        if isinstance(value, dict) and key not in defaults and isinstance(defaults[key], dict):\n            merged[key] = merge_config_defaults(value, defaults[key])\n        else:\n            merged[key] = value\n    return merged"
+    }
+  ]
+}

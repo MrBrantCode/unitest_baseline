@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_28702",
+  "entry_point": "has_circular_dependency",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from typing import Dict, List\n\ndef has_circular_dependency(dependencies: Dict[str, List[str]], set_name: str, visited: set, stack: set) -> bool:\n    visited.add(set_name)\n    stack.add(set_name)\n    for dependency in dependencies.get(set_name, []):\n        if dependency not in visited:\n            if has_circular_dependency(dependencies, dependency, visited, stack):\n                return True\n        elif dependency in stack:\n            return True\n    stack.remove(set_name)\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if dependency not in visited:",
+      "mutated_line": "if dependency in visited:",
+      "code": "from typing import Dict, List\n\ndef has_circular_dependency(dependencies: Dict[str, List[str]], set_name: str, visited: set, stack: set) -> bool:\n    visited.add(set_name)\n    stack.add(set_name)\n    for dependency in dependencies.get(set_name, []):\n        if dependency in visited:\n            if has_circular_dependency(dependencies, dependency, visited, stack):\n                return True\n        elif dependency in stack:\n            return True\n    stack.remove(set_name)\n    return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "elif dependency in stack:",
+      "mutated_line": "elif dependency not in stack:",
+      "code": "from typing import Dict, List\n\ndef has_circular_dependency(dependencies: Dict[str, List[str]], set_name: str, visited: set, stack: set) -> bool:\n    visited.add(set_name)\n    stack.add(set_name)\n    for dependency in dependencies.get(set_name, []):\n        if dependency not in visited:\n            if has_circular_dependency(dependencies, dependency, visited, stack):\n                return True\n        elif dependency not in stack:\n            return True\n    stack.remove(set_name)\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from typing import Dict, List\n\ndef has_circular_dependency(dependencies: Dict[str, List[str]], set_name: str, visited: set, stack: set) -> bool:\n    visited.add(set_name)\n    stack.add(set_name)\n    for dependency in dependencies.get(set_name, []):\n        if dependency not in visited:\n            if has_circular_dependency(dependencies, dependency, visited, stack):\n                return False\n        elif dependency in stack:\n            return True\n    stack.remove(set_name)\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from typing import Dict, List\n\ndef has_circular_dependency(dependencies: Dict[str, List[str]], set_name: str, visited: set, stack: set) -> bool:\n    visited.add(set_name)\n    stack.add(set_name)\n    for dependency in dependencies.get(set_name, []):\n        if dependency not in visited:\n            if has_circular_dependency(dependencies, dependency, visited, stack):\n                return True\n        elif dependency in stack:\n            return False\n    stack.remove(set_name)\n    return False"
+    }
+  ]
+}

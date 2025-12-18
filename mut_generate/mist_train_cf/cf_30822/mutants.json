@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_30822",
+  "entry_point": "extract_class_names",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "class_names = re.findall(r'class=\"([^\"]+)\"', html_code)  # Extracts the content within the class attribute",
+      "mutated_line": "class_names = re.findall('', html_code)",
+      "code": "from typing import List\nimport re\n\ndef extract_class_names(html_code: str) -> List[str]:\n    class_names = re.findall('', html_code)\n    unique_class_names = set()\n    ordered_class_names = []\n    for names in class_names:\n        for name in names.split():\n            if name not in unique_class_names:\n                unique_class_names.add(name)\n                ordered_class_names.append(name)\n    return ordered_class_names"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if name not in unique_class_names:  # Check if the class name has not been added yet",
+      "mutated_line": "if name in unique_class_names:",
+      "code": "from typing import List\nimport re\n\ndef extract_class_names(html_code: str) -> List[str]:\n    class_names = re.findall('class=\"([^\"]+)\"', html_code)\n    unique_class_names = set()\n    ordered_class_names = []\n    for names in class_names:\n        for name in names.split():\n            if name in unique_class_names:\n                unique_class_names.add(name)\n                ordered_class_names.append(name)\n    return ordered_class_names"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "task_id": "cf_100233",
+  "entry_point": "rate_limit",
+  "mutant_count": 23,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times or call_times[0] < now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times or call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if len(call_times) >= max_calls:",
+      "mutated_line": "if len(call_times) > max_calls:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) > max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if len(call_times) >= max_calls:",
+      "mutated_line": "if len(call_times) < max_calls:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) < max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if len(call_times) >= max_calls:",
+      "mutated_line": "if len(call_times) == max_calls:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) == max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[0] <= now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] <= now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[0] >= now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] >= now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[0] != now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] != now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period + (now - call_times[0])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period + (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period * (now - call_times[0])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period * (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[0] < now + period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now + period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[0] < now * period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now * period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "call_times.pop(0)",
+      "mutated_line": "call_times.pop(1)",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(1)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "call_times.pop(0)",
+      "mutated_line": "call_times.pop(-1)",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(-1)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "call_times.pop(0)",
+      "mutated_line": "call_times.pop(1)",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(1)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period - (now + call_times[0])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now + call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period - now * call_times[0]",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - now * call_times[0]\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[1] < now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[1] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[-1] < now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[-1] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "while call_times and call_times[0] < now - period:",
+      "mutated_line": "while call_times and call_times[1] < now - period:",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[1] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[0])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period - (now - call_times[1])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[1])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period - (now - call_times[-1])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[-1])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "sleep_time = period - (now - call_times[0])",
+      "mutated_line": "sleep_time = period - (now - call_times[1])",
+      "code": "import asyncio\nimport time\nfrom functools import wraps\n\ndef rate_limit(max_calls: int, period: int):\n    \"\"\"\n    A decorator that limits the rate at which a function can be called.\n    \"\"\"\n\n    def decorator(func):\n        call_times = []\n\n        @wraps(func)\n        async def wrapper(*args, **kwargs):\n            now = time.monotonic()\n            while call_times and call_times[0] < now - period:\n                call_times.pop(0)\n            if len(call_times) >= max_calls:\n                sleep_time = period - (now - call_times[1])\n                await asyncio.sleep(sleep_time)\n            call_times.append(now)\n            return await func(*args, **kwargs)\n        return wrapper\n    return decorator"
+    }
+  ]
+}

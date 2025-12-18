@@ -1,0 +1,665 @@
+{
+  "task_id": "cf_19621",
+  "entry_point": "navigate_maze",
+  "mutant_count": 94,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 26,
+      "original_line": "return dfs(start_row, start_col, path) or []  # Return path or empty list if no path found",
+      "mutated_line": "return dfs(start_row, start_col, path) and []",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) and []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) != (len(maze) - 1, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) != (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 and row >= len(maze) and (col < 0) and (col >= len(maze[0])) and (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 11,
+      "original_line": "maze[row][col] = -1  # Mark cell as visited",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = +1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "maze[row][col] = 0  # Reset cell value",
+      "mutated_line": "path.pop()",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 1\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "maze[row][col] = 0  # Reset cell value",
+      "mutated_line": "path.pop()",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = -1\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "maze[row][col] = 0  # Reset cell value",
+      "mutated_line": "path.pop()",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 1\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (1, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (-1, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (1, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 1)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, -1)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "start_row, start_col = 0, 0",
+      "mutated_line": "path = [(start_row, start_col)]",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 1)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row <= 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row >= 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row != 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row > len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row < len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row == len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col <= 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col >= 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col != 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col > len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col < len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col == len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] == 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "maze[row][col] = -1  # Mark cell as visited",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -2\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "maze[row][col] = -1  # Mark cell as visited",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -0\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "maze[row][col] = -1  # Mark cell as visited",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -0\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "maze[row][col] = -1  # Mark cell as visited",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = --1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if new_path is not None:",
+      "mutated_line": "if new_path is None:",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) + 1, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) + 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) * 1, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) * 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) + 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) + 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) * 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) * 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 1 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < -1 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 1 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 1 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < -1 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 1 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 1):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != -1):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 1):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(1, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(-1, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(1, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 2), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 0), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 0), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, -1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (1, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (-1, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (1, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, +1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (2, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (0, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (0, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (-1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 1), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, -1), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 1), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (+1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 1)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, -1)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 1)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "new_row, new_col = row + dx, col + dy",
+      "mutated_line": "(new_row, new_col) = (row - dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row - dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "new_row, new_col = row + dx, col + dy",
+      "mutated_line": "(new_row, new_col) = (row * dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row * dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "new_row, new_col = row + dx, col + dy",
+      "mutated_line": "(new_row, new_col) = (row + dx, col - dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col - dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "new_row, new_col = row + dx, col + dy",
+      "mutated_line": "(new_row, new_col) = (row + dx, col * dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col * dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "new_path = dfs(new_row, new_col, path + [(new_row, new_col)])",
+      "mutated_line": "new_path = dfs(new_row, new_col, path - [(new_row, new_col)])",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path - [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "new_path = dfs(new_row, new_col, path + [(new_row, new_col)])",
+      "mutated_line": "new_path = dfs(new_row, new_col, path * [(new_row, new_col)])",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path * [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 2, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 2, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 0, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 0, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 0, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 0, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - -1, len(maze[0]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - -1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) - 2):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 2):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) - 0):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 0):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) - 0):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 0):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[0]) - -1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - -1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -2), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -0), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -0), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, --1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-2, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-0, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-0, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:  # Explore all four directions",
+      "mutated_line": "(new_row, new_col) = (row + dx, col + dy)",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (--1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[1])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[-1])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if row < 0 or row >= len(maze) or col < 0 or col >= len(maze[0]) or maze[row][col] != 0:",
+      "mutated_line": "return None",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[0]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[1])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[1]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[1]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[-1]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[-1]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if (row, col) == (len(maze)-1, len(maze[0])-1):  # Destination cell reached",
+      "mutated_line": "if (row, col) == (len(maze) - 1, len(maze[1]) - 1):",
+      "code": "from typing import List, Tuple\n\ndef navigate_maze(maze: List[List[int]]) -> List[Tuple[int, int]]:\n\n    def dfs(row: int, col: int, path: List[Tuple[int, int]]) -> List[Tuple[int, int]]:\n        if (row, col) == (len(maze) - 1, len(maze[1]) - 1):\n            return path\n        if row < 0 or row >= len(maze) or col < 0 or (col >= len(maze[0])) or (maze[row][col] != 0):\n            return None\n        maze[row][col] = -1\n        for (dx, dy) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:\n            (new_row, new_col) = (row + dx, col + dy)\n            new_path = dfs(new_row, new_col, path + [(new_row, new_col)])\n            if new_path is not None:\n                return new_path\n        maze[row][col] = 0\n        path.pop()\n        return None\n    (start_row, start_col) = (0, 0)\n    path = [(start_row, start_col)]\n    return dfs(start_row, start_col, path) or []"
+    }
+  ]
+}

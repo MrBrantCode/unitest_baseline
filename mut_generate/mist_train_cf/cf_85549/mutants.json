@@ -1,0 +1,231 @@
+{
+  "task_id": "cf_85549",
+  "entry_point": "monotonic",
+  "mutant_count": 32,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 1,
+      "original_line": "def monotonic(l: list, strict: bool = False):",
+      "mutated_line": "def monotonic(l: list, strict: bool=True):",
+      "code": "def monotonic(l: list, strict: bool=True):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return True\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) and all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) and all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) and all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i >= j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i != j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i <= j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i != j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i < j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i > j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i > j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i == j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i == j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i < j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i < j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i == j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i == j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[2:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[0:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[0:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[-1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[2:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[0:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[0:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return all(i < j for i, j in zip(l, l[1:])) or all(i > j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[-1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[2:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[2:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[0:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[0:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[0:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[0:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[-1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[-1:]))) or all((i >= j for (i, j) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[2:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[2:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[0:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[0:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return all(i <= j for i, j in zip(l, l[1:])) or all(i >= j for i, j in zip(l, l[1:]))",
+      "mutated_line": "return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[-1:])))",
+      "code": "def monotonic(l: list, strict: bool=False):\n    try:\n        is_nested = any((isinstance(i, list) for i in l))\n    except TypeError:\n        return False\n    if is_nested:\n        return all((monotonic(sub_list, strict) for sub_list in l))\n    elif strict:\n        return all((i < j for (i, j) in zip(l, l[1:]))) or all((i > j for (i, j) in zip(l, l[1:])))\n    else:\n        return all((i <= j for (i, j) in zip(l, l[1:]))) or all((i >= j for (i, j) in zip(l, l[-1:])))"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+"""
+QUESTION:
+Read problem statements in [Bengali], [Mandarin Chinese], [Russian], and [Vietnamese] as well.
+
+Chef has $N$ [6-sided standard dice]. Each die has dimensions $1 \times 1 \times 1$. Since Chef is bored during the quarantine, he decides to stack dice for fun.
+
+First, Chef forms four vertical stacks of dice (not necessarily with the same height; empty stacks are allowed) on his table, which together make up a pile of dice with base area up to $2 \times 2$. Among all such structures, the total visible surface area of Chef's structure must be the smallest possible. 
+
+Then, Chef calculates the number of [pips]  on the visible faces of all dice in the structure. A face of a die is visible if it does not touch the table or another die.
+
+Now, he is wondering: among all possible arrangements of dice, what is the maximum possible total number of visible pips? Since he is busy cooking, he is asking you to solve this.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first and only line of each test case contains a single integer $N$.
+
+------  Output ------
+For each test case, print a single line containing one integer ― the maximum possible number of visible pips.
+
+------  Constraints ------
+$1 ≤ T ≤ 10^{5}$
+$1 ≤ N ≤ 10^{12}$
+
+------  Subtasks ------
+Subtask #1 (10 points):
+$T ≤ 100$
+$N ≤ 4$
+
+Subtask #2 (10 points):
+$T ≤ 100$
+$N ≤ 8$
+
+Subtask #3 (25 points):
+$T ≤ 100$
+$N ≤ 10^{4}$
+
+Subtask #4 (55 points): original constraints
+
+----- Sample Input 1 ------ 
+1
+
+1
+----- Sample Output 1 ------ 
+20
+----- explanation 1 ------ 
+Example case 1: There is only one die. If Chef places it on the table with 1 pip facing down, the visible pips are 2, 3, 4, 5 and 6, and their sum is $20$.
+"""
+
+def calculate_max_visible_pips(T, N):
+    L1 = [0, 20, 36, 51]
+    L2 = [16, 21, 22, 22]
+    
+    results = []
+    for n in N:
+        if n < 4:
+            results.append(L1[n])
+        else:
+            results.append(L2[n % 4] + 11 * n)
+    
+    return results

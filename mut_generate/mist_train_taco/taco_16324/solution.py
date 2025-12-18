@@ -1,0 +1,56 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese and Russian as well. 
+
+Given a sequence of n distinct numbers a[1..n], we want to sort them in an ascending order.
+
+An interesting property of some sequences is that all numbers are almost at their correct position! More formally, the distance between the current position of any value is at most 1 from its correct position in a sorted order.
+
+Now, you want to verify whether the input sequence has such a property.
+
+Note that the time limit for this problem is 0.2 seconds. Please try to write a very efficient algorithm and implementation.
+
+------ Input ------ 
+
+The first line contains an integer T denoting the total number of test cases.
+For each test case, the first line contains a single integer n, and the second line contains a[1..n] as a single space-separated list.
+
+------ Output ------ 
+
+For each test case, output "YES" or "NO" (without quotes) to indicate whether the input sequence has such a property.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10$
+$1 ≤ n ≤ 10^{6}$
+$1 ≤ a[i] ≤ 10^{9}$
+
+----- Sample Input 1 ------ 
+2
+3
+1 2 3
+5
+2 4 1 3 5
+----- Sample Output 1 ------ 
+YES
+NO
+"""
+
+def is_almost_sorted(arr):
+    """
+    Determines if the given sequence of numbers is "almost sorted".
+    
+    A sequence is considered "almost sorted" if the distance between the current position 
+    of any value is at most 1 from its correct position in a sorted order.
+    
+    Parameters:
+    arr (list of int): The sequence of numbers to be checked.
+    
+    Returns:
+    bool: True if the sequence is "almost sorted", False otherwise.
+    """
+    n = len(arr)
+    for i in range(n - 2):
+        if arr[i] > arr[i + 2]:
+            return False
+    return True

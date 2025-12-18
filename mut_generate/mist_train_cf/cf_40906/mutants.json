@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_40906",
+  "entry_point": "handle_async_futures",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if default is not _no_value:",
+      "mutated_line": "if default is _no_value:",
+      "code": "import asyncio\n_no_value = object()\n\ndef handle_async_futures(futures, default=_no_value):\n    first_future = None\n    for future in futures:\n        try:\n            result = future.result()\n            return result\n        except Exception as e:\n            if first_future is None:\n                first_future = future\n            pass\n    if default is _no_value:\n        return default\n    if first_future is not None:\n        return first_future.result()\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if first_future is not None:",
+      "mutated_line": "if first_future is None:",
+      "code": "import asyncio\n_no_value = object()\n\ndef handle_async_futures(futures, default=_no_value):\n    first_future = None\n    for future in futures:\n        try:\n            result = future.result()\n            return result\n        except Exception as e:\n            if first_future is None:\n                first_future = future\n            pass\n    if default is not _no_value:\n        return default\n    if first_future is None:\n        return first_future.result()\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if first_future is None:",
+      "mutated_line": "if first_future is not None:",
+      "code": "import asyncio\n_no_value = object()\n\ndef handle_async_futures(futures, default=_no_value):\n    first_future = None\n    for future in futures:\n        try:\n            result = future.result()\n            return result\n        except Exception as e:\n            if first_future is not None:\n                first_future = future\n            pass\n    if default is not _no_value:\n        return default\n    if first_future is not None:\n        return first_future.result()\n    return None"
+    }
+  ]
+}

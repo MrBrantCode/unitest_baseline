@@ -1,0 +1,51 @@
+"""
+QUESTION:
+Tom gives a number N to Roy and ask him to tell the total number of even divisors of the number N. Help Roy to answer the question of Tom.
+
+INPUT:
+
+First line contains the number of testcases T, followed by T lines each containing an integer N. 
+
+OUTPUT:
+
+For each testcase, print the required answer in a singlr line.
+
+Constraints:
+
+1 ≤ T ≤ 100
+
+1 ≤ N ≤ 1000000000
+
+SAMPLE INPUT
+2
+9
+8
+
+SAMPLE OUTPUT
+0
+3
+"""
+
+import math
+
+def count_even_divisors(N):
+    def findpower(num):
+        divisor = 2
+        prod = 1
+        while True:
+            div = 0
+            while num % divisor == 0:
+                div += 1
+                num //= divisor
+            if divisor == 2:
+                prod *= div
+            else:
+                prod *= (div + 1)
+            divisor += 1
+            if divisor * divisor > num:
+                if num > 1:
+                    prod *= 2
+                break
+        return prod
+    
+    return findpower(N)

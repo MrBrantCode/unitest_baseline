@@ -1,0 +1,48 @@
+"""
+QUESTION:
+Read problem statements in [Hindi], [Bengali], [Mandarin Chinese], [Russian], and [Vietnamese] as well.
+
+For positive integers $a$ and $b$, we say that a fraction $\frac{a}{b}$ is *good* if it is equal to $\frac{m}{m+1}$ for some positive integer $m$.
+
+You are given an integer $N$. Find the number of pairs of integers $i, j$ such that $1 ≤ i, j ≤ N$ and the fraction $\frac{i}{i+1} \cdot \frac{j+1}{j}$ is good.
+
+------  Input ------
+The first and only line of the input contains a single integer $N$.
+
+------  Output ------
+Print a single line containing one integer ― the number of pairs of integers $i, j$ ($1 ≤ i, j ≤ N$) such that $\frac{i}{i + 1} \cdot \frac{j+1}{j}$ is good.
+
+------  Constraints ------
+$1 ≤ N ≤ 1,000,000$
+
+------  Subtasks ------
+Subtask #1 (5 points): $1 ≤ N ≤ 2,000$
+
+Subtask #2 (10 points): $1 ≤ N ≤ 100,000$
+
+Subtask #3 (85 points): original constraints
+
+----- Sample Input 1 ------ 
+5
+----- Sample Output 1 ------ 
+8
+----- explanation 1 ------ 
+The following eight pairs $(i, j)$ give good fractions: $(1,2)$, $(1,3)$, $(2,3)$, $(2,4)$, $(2,5)$, $(3,4)$, $(3,5)$ and $(4,5)$.
+"""
+
+def count_good_fractions(N):
+    arr = [0] * (N + 2)
+    
+    # Populate the array with the number of divisors for each index
+    for i in range(1, N + 2):
+        j = i
+        while j < N + 2:
+            arr[j] += 1
+            j += i
+    
+    # Calculate the number of good fractions
+    ans = 0
+    for i in range(1, N + 1):
+        ans += arr[i] * arr[i + 1] // 2 - 1
+    
+    return ans

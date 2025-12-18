@@ -1,0 +1,69 @@
+"""
+QUESTION:
+You are given an array A of N integers, initially all zero.
+
+There are Q types of operations that you are allowed to perform. Each operation is described by two integers l_{i} and r_{i} (1 ≤ l_{i} ≤ r_{i} ≤ N) and is as follows: 
+Set A_{j} = A_{j} \oplus 1 for each j such that l_{i} ≤ j ≤ r_{i}.
+
+Here \oplus represents the [Bitwise XOR] operator.
+
+Your task is to find the number of distinct arrays which can be obtained by applying some subset of these operations (possibly none, possibly all). Since the answer may be huge, output it modulo 998244353.
+
+------ Input Format ------ 
+
+- The first line contains two integers N and Q — the size of the array A and the number of types of operations you can perform.
+- The i-th of the next Q lines contains two space-separated integers l_{i} and r_{i} — corresponding to the i-th query.
+
+------ Output Format ------ 
+
+Output in single line, the number of distinct arrays which can be obtained by applying some subset of these operations, modulo 998244353.
+
+------ Constraints ------ 
+
+$1 ≤ N ≤ 10^{6}$
+$1 ≤ Q ≤ 10^{6}$
+$1 ≤ l_{i} ≤ r_{i} ≤ N$
+
+----- Sample Input 1 ------ 
+2 2
+1 2
+1 1
+----- Sample Output 1 ------ 
+4
+----- explanation 1 ------ 
+The possible arrays are $[0, 0]$, $[0, 1]$, $[1, 1]$, $[1, 0]$.
+"""
+
+def count_distinct_arrays(N, Q, operations):
+    mod = 998244353
+    graph = [[] for _ in range(N + 1)]
+    
+    for (u, v) in operations:
+        u -= 1
+        v -= 1
+        if u > v:
+            u, v = v, u
+        v += 1
+        graph[u].append(v)
+        graph[v].append(u)
+    
+    ans = 1
+    vis = {}
+    
+    def dfs(curV, ans):
+        if curV in vis:
+            return 0
+        else:
+            vis[curV] = 1
+            ans[0] += 1
+            temp = 1
+            for neighbour in graph[curV]:
+                dfs(neighbour, ans)
+    
+    for i in range(1, N + 1):
+        if i not in vis:
+            temp = [0]
+            dfs(i, temp)
+            ans = ans * 2 ** (temp[0] - 1) % mod
+    
+    return ans

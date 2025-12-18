@@ -1,0 +1,80 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese, Russian and Vietnamese as well. 
+Leha is a bright mathematician. Today he is investigating whether an integer is divisible by some square number or not.
+He has a positive integer X represented as a product of N integers a_{1}, a_{2}, .... a_{N}. He has somehow figured out that there exists some integer P such that the number X is divisible by P^{2}, but he is not able to find such P himself. Can you find it for him? If there are more than one possible values of P possible, you can print any one of them.
+
+------ Input ------ 
+
+The first line of the input contains an integer T denoting the number of test cases. T test cases follow.
+The first line of each test case contains one integer N denoting the number of intgers in presentation of X.
+The second line contains N space-separated integers a_{1}, a_{2}, .... a_{N}.
+
+------ Output ------ 
+
+For each test case, output a single integer P deoting the answer for this test case. Note that P must be in range from 2 to 10^{18} inclusive. It's guaranteed that at least one answer exists. If there are more than one possible answers, print any.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 5$
+$1 ≤ N ≤ 100$
+$1 ≤ a_{i} ≤ 10^{18}$
+
+------ Subtasks ------ 
+
+$Subtask 1[19 points]: 1 ≤ a_{1}*a_{2}*...*a_{N} ≤ 10^{6}$
+$Subtask 2[22 points]: 1 ≤ a_{1}*a_{2}*...*a_{N} ≤ 10^{12}$
+$Subtask 3[23 points]: 1 ≤ a_{i} ≤ 10^{12}$
+$Subtask 4[36 points]: no additional constraints$
+
+----- Sample Input 1 ------ 
+1
+3
+21 11 6
+----- Sample Output 1 ------ 
+3
+----- explanation 1 ------ 
+Example case 1. X = 21 * 11 * 6 = 1386. It's divisible by 9 which is a square number, as 9 = 32. So P = 3.
+"""
+
+import math
+
+def computeGCD(x, y):
+    while y:
+        (x, y) = (y, x % y)
+    return x
+
+def find_divisible_square_factor(test_cases):
+    results = []
+    
+    for case in test_cases:
+        N = case['N']
+        ai = case['a']
+        
+        for i in range(N - 1):
+            for j in range(i + 1, N):
+                if computeGCD(ai[i], ai[j]) > 1:
+                    results.append(computeGCD(ai[i], ai[j]))
+                    break
+            else:
+                continue
+            break
+        else:
+            for i in range(N):
+                x = ai[i]
+                q = 1
+                while q * q * q <= x:
+                    if q > 1 and x % (q * q) == 0:
+                        results.append(q)
+                        break
+                    if x % q == 0:
+                        k = math.floor(math.sqrt(x // q))
+                        if k > 1 and k * k == x // q:
+                            results.append(k)
+                            break
+                    q += 1
+                else:
+                    continue
+                break
+    
+    return results

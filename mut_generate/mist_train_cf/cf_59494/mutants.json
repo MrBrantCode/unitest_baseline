@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_59494",
+  "entry_point": "word_ratio",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "return {word: count/total_words for word, count in word_count.items()}",
+      "mutated_line": "return {word: count * total_words for (word, count) in word_count.items()}",
+      "code": "import re\nfrom collections import Counter\n\ndef word_ratio(sentence):\n    sentence = re.sub('[^\\\\w\\\\s]', '', sentence).lower()\n    words = sentence.split()\n    word_count = Counter(words)\n    total_words = len(words)\n    return {word: count * total_words for (word, count) in word_count.items()}"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "return {word: count/total_words for word, count in word_count.items()}",
+      "mutated_line": "return {word: count // total_words for (word, count) in word_count.items()}",
+      "code": "import re\nfrom collections import Counter\n\ndef word_ratio(sentence):\n    sentence = re.sub('[^\\\\w\\\\s]', '', sentence).lower()\n    words = sentence.split()\n    word_count = Counter(words)\n    total_words = len(words)\n    return {word: count // total_words for (word, count) in word_count.items()}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "sentence = re.sub(r'[^\\w\\s]', '', sentence).lower()",
+      "mutated_line": "sentence = re.sub('', '', sentence).lower()",
+      "code": "import re\nfrom collections import Counter\n\ndef word_ratio(sentence):\n    sentence = re.sub('', '', sentence).lower()\n    words = sentence.split()\n    word_count = Counter(words)\n    total_words = len(words)\n    return {word: count / total_words for (word, count) in word_count.items()}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "sentence = re.sub(r'[^\\w\\s]', '', sentence).lower()",
+      "mutated_line": "sentence = re.sub('[^\\\\w\\\\s]', 'MUTATED', sentence).lower()",
+      "code": "import re\nfrom collections import Counter\n\ndef word_ratio(sentence):\n    sentence = re.sub('[^\\\\w\\\\s]', 'MUTATED', sentence).lower()\n    words = sentence.split()\n    word_count = Counter(words)\n    total_words = len(words)\n    return {word: count / total_words for (word, count) in word_count.items()}"
+    }
+  ]
+}

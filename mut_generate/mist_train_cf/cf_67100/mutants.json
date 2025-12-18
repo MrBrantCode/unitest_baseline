@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_67100",
+  "entry_point": "mediator_service",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "mediator.handle_event(\"Test Event\")",
+      "mutated_line": "mediator.handle_event('')",
+      "code": "class SubjectService:\n\n    def __init__(self):\n        self.observers = []\n\n    def attach(self, observer):\n        self.observers.append(observer)\n\n    def detach(self, observer):\n        self.observers.remove(observer)\n\n    def notify(self, message):\n        for observer in self.observers:\n            observer.update(message)\n\nclass MediatorService:\n\n    def __init__(self, subject_service):\n        self.subject_service = subject_service\n\n    def handle_event(self, event):\n        print(f'Handling event: {event}')\n        self.subject_service.notify(event)\n\nclass Component:\n\n    def update(self, message):\n        print(f'Received update: {message}')\n\ndef mediator_service(subject_service):\n    return MediatorService(subject_service)\nsubject_service = SubjectService()\nmediator = mediator_service(subject_service)\ncomponent = Component()\nsubject_service.attach(component)\nmediator.handle_event('')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "print(f\"Handling event: {event}\")",
+      "mutated_line": "print(f'{event}')",
+      "code": "class SubjectService:\n\n    def __init__(self):\n        self.observers = []\n\n    def attach(self, observer):\n        self.observers.append(observer)\n\n    def detach(self, observer):\n        self.observers.remove(observer)\n\n    def notify(self, message):\n        for observer in self.observers:\n            observer.update(message)\n\nclass MediatorService:\n\n    def __init__(self, subject_service):\n        self.subject_service = subject_service\n\n    def handle_event(self, event):\n        print(f'{event}')\n        self.subject_service.notify(event)\n\nclass Component:\n\n    def update(self, message):\n        print(f'Received update: {message}')\n\ndef mediator_service(subject_service):\n    return MediatorService(subject_service)\nsubject_service = SubjectService()\nmediator = mediator_service(subject_service)\ncomponent = Component()\nsubject_service.attach(component)\nmediator.handle_event('Test Event')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "print(f\"Received update: {message}\")",
+      "mutated_line": "print(f'{message}')",
+      "code": "class SubjectService:\n\n    def __init__(self):\n        self.observers = []\n\n    def attach(self, observer):\n        self.observers.append(observer)\n\n    def detach(self, observer):\n        self.observers.remove(observer)\n\n    def notify(self, message):\n        for observer in self.observers:\n            observer.update(message)\n\nclass MediatorService:\n\n    def __init__(self, subject_service):\n        self.subject_service = subject_service\n\n    def handle_event(self, event):\n        print(f'Handling event: {event}')\n        self.subject_service.notify(event)\n\nclass Component:\n\n    def update(self, message):\n        print(f'{message}')\n\ndef mediator_service(subject_service):\n    return MediatorService(subject_service)\nsubject_service = SubjectService()\nmediator = mediator_service(subject_service)\ncomponent = Component()\nsubject_service.attach(component)\nmediator.handle_event('Test Event')"
+    }
+  ]
+}

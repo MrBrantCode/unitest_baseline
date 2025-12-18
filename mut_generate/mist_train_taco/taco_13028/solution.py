@@ -1,0 +1,40 @@
+"""
+QUESTION:
+E869120 has A 1-yen coins and infinitely many 500-yen coins.
+
+Determine if he can pay exactly N yen using only these coins.
+
+-----Constraints-----
+ - N is an integer between 1 and 10000 (inclusive).
+ - A is an integer between 0 and 1000 (inclusive).
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+A
+
+-----Output-----
+If E869120 can pay exactly N yen using only his 1-yen and 500-yen coins, print Yes; otherwise, print No.
+
+-----Sample Input-----
+2018
+218
+
+-----Sample Output-----
+Yes
+
+We can pay 2018 yen with four 500-yen coins and 18 1-yen coins, so the answer is Yes.
+"""
+
+def can_pay_exactly(N: int, A: int) -> str:
+    """
+    Determines if E869120 can pay exactly N yen using only 1-yen and 500-yen coins.
+
+    Parameters:
+    - N (int): The amount of yen to be paid.
+    - A (int): The number of 1-yen coins available.
+
+    Returns:
+    - str: "Yes" if the payment is possible, otherwise "No".
+    """
+    return 'Yes' if N % 500 <= A else 'No'

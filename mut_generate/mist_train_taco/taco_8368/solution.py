@@ -1,0 +1,46 @@
+"""
+QUESTION:
+Takahashi made N problems for competitive programming.
+The problems are numbered 1 to N, and the difficulty of Problem i is represented as an integer d_i (the higher, the harder).
+He is dividing the problems into two categories by choosing an integer K, as follows:
+ - A problem with difficulty K or higher will be for ARCs.
+ - A problem with difficulty lower than K will be for ABCs.
+How many choices of the integer K make the number of problems for ARCs and the number of problems for ABCs the same?
+
+-----Problem Statement-----
+ - 2 \leq N \leq 10^5
+ - N is an even number.
+ - 1 \leq d_i \leq 10^5
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+d_1 d_2 ... d_N
+
+-----Output-----
+Print the number of choices of the integer K that make the number of problems for ARCs and the number of problems for ABCs the same.
+
+-----Sample Input-----
+6
+9 1 4 4 6 7
+
+-----Sample Output-----
+2
+
+If we choose K=5 or 6, Problem 1, 5, and 6 will be for ARCs, Problem 2, 3, and 4 will be for ABCs, and the objective is achieved.
+Thus, the answer is 2.
+"""
+
+def count_valid_k_values(N, difficulties):
+    # Sort the difficulties list
+    sorted_difficulties = sorted(difficulties)
+    
+    # Calculate the middle index
+    middle_index = N // 2
+    
+    # The valid K values are between sorted_difficulties[middle_index - 1] and sorted_difficulties[middle_index]
+    # The number of valid K values is the difference between these two values
+    valid_k_count = sorted_difficulties[middle_index] - sorted_difficulties[middle_index - 1]
+    
+    return valid_k_count

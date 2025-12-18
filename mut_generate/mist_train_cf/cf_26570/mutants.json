@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_26570",
+  "entry_point": "log_function",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "print(f\"Calling function: {func.__name__}\")",
+      "mutated_line": "for (name, value) in bound_args.arguments.items():",
+      "code": "import inspect\n\ndef log_function(func):\n\n    def wrapper(*args, **kwargs):\n        sig = inspect.signature(func)\n        bound_args = sig.bind(*args, **kwargs)\n        bound_args.apply_defaults()\n        print(f'{func.__name__}')\n        for (name, value) in bound_args.arguments.items():\n            print(f'  {name} = {value}')\n        result = func(*args, **kwargs)\n        print(f'Return value: {result}')\n        return result\n    return wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "print(f\"Return value: {result}\")",
+      "mutated_line": "print(f'{result}')",
+      "code": "import inspect\n\ndef log_function(func):\n\n    def wrapper(*args, **kwargs):\n        sig = inspect.signature(func)\n        bound_args = sig.bind(*args, **kwargs)\n        bound_args.apply_defaults()\n        print(f'Calling function: {func.__name__}')\n        for (name, value) in bound_args.arguments.items():\n            print(f'  {name} = {value}')\n        result = func(*args, **kwargs)\n        print(f'{result}')\n        return result\n    return wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f\"  {name} = {value}\")",
+      "mutated_line": "print(f'{name} = {value}')",
+      "code": "import inspect\n\ndef log_function(func):\n\n    def wrapper(*args, **kwargs):\n        sig = inspect.signature(func)\n        bound_args = sig.bind(*args, **kwargs)\n        bound_args.apply_defaults()\n        print(f'Calling function: {func.__name__}')\n        for (name, value) in bound_args.arguments.items():\n            print(f'{name} = {value}')\n        result = func(*args, **kwargs)\n        print(f'Return value: {result}')\n        return result\n    return wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f\"  {name} = {value}\")",
+      "mutated_line": "print(f'  {name}{value}')",
+      "code": "import inspect\n\ndef log_function(func):\n\n    def wrapper(*args, **kwargs):\n        sig = inspect.signature(func)\n        bound_args = sig.bind(*args, **kwargs)\n        bound_args.apply_defaults()\n        print(f'Calling function: {func.__name__}')\n        for (name, value) in bound_args.arguments.items():\n            print(f'  {name}{value}')\n        result = func(*args, **kwargs)\n        print(f'Return value: {result}')\n        return result\n    return wrapper"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+"""
+QUESTION:
+Bomboslav likes to look out of the window in his room and watch lads outside playing famous shell game. The game is played by two persons: operator and player. Operator takes three similar opaque shells and places a ball beneath one of them. Then he shuffles the shells by swapping some pairs and the player has to guess the current position of the ball.
+
+Bomboslav noticed that guys are not very inventive, so the operator always swaps the left shell with the middle one during odd moves (first, third, fifth, etc.) and always swaps the middle shell with the right one during even moves (second, fourth, etc.).
+
+Let's number shells from 0 to 2 from left to right. Thus the left shell is assigned number 0, the middle shell is 1 and the right shell is 2. Bomboslav has missed the moment when the ball was placed beneath the shell, but he knows that exactly n movements were made by the operator and the ball was under shell x at the end. Now he wonders, what was the initial position of the ball?
+
+
+-----Input-----
+
+The first line of the input contains an integer n (1 ≤ n ≤ 2·10^9) — the number of movements made by the operator.
+
+The second line contains a single integer x (0 ≤ x ≤ 2) — the index of the shell where the ball was found after n movements.
+
+
+-----Output-----
+
+Print one integer from 0 to 2 — the index of the shell where the ball was initially placed.
+
+
+-----Examples-----
+Input
+4
+2
+
+Output
+1
+
+Input
+1
+1
+
+Output
+0
+
+
+
+-----Note-----
+
+In the first sample, the ball was initially placed beneath the middle shell and the operator completed four movements.  During the first move operator swapped the left shell and the middle shell. The ball is now under the left shell.  During the second move operator swapped the middle shell and the right one. The ball is still under the left shell.  During the third move operator swapped the left shell and the middle shell again. The ball is again in the middle.  Finally, the operators swapped the middle shell and the right shell. The ball is now beneath the right shell.
+"""
+
+def find_initial_position(n: int, x: int) -> int:
+    # Calculate the remainder when n is divided by 6
+    remainder = n % 6
+    
+    # Determine the initial position based on the remainder and the final position x
+    if remainder == 0:
+        return x
+    elif remainder == 1:
+        return 1 if x == 2 else 2 if x == 1 else 0
+    elif remainder == 2:
+        return 1 if x == 0 else 0 if x == 1 else 2
+    elif remainder == 3:
+        return 2 if x == 0 else 0 if x == 2 else 1
+    elif remainder == 4:
+        return 2 if x == 1 else 1 if x == 2 else 0
+    elif remainder == 5:
+        return 0 if x == 1 else 1 if x == 0 else 2
+
+# Example usage:
+# result = find_initial_position(4, 2)
+# print(result)  # Output should be 1

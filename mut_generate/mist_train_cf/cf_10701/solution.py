@@ -1,0 +1,12 @@
+"""
+QUESTION:
+Implement a function `bubble_sort_by_abs(lst)` that sorts a list of integers in ascending order by their absolute values without using any built-in sorting functions or methods. The function should return the sorted list.
+"""
+
+def bubble_sort_by_abs(lst):
+    n = len(lst)
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
+            if abs(lst[j]) > abs(lst[j + 1]):
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+    return lst

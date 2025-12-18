@@ -1,0 +1,105 @@
+{
+  "task_id": "cf_33117",
+  "entry_point": "check_reservation",
+  "mutant_count": 14,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "query = \"SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?\"",
+      "mutated_line": "query = ''",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = ''\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "con = sqlite3.connect('reservation_database.db')",
+      "mutated_line": "con = sqlite3.connect('')",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "reservation_query = \"SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?\"",
+      "mutated_line": "reservation_query = ''",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = ''\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, ('%' + codice - '%', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice - '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, (('%' + codice) * '%', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, (('%' + codice) * '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return False\n    return False"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, ('%' - codice + '%', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' - codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, ('%' * codice + '%', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' * codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, ('%' + codice + '', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cur.execute(query, ('%' + codice + '%', start))",
+      "mutated_line": "cur.execute(query, ('' + codice + '%', start))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[0], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cur.execute(reservation_query, (row[0], username))",
+      "mutated_line": "cur.execute(reservation_query, (row[1], username))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[1], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cur.execute(reservation_query, (row[0], username))",
+      "mutated_line": "cur.execute(reservation_query, (row[-1], username))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[-1], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "cur.execute(reservation_query, (row[0], username))",
+      "mutated_line": "cur.execute(reservation_query, (row[1], username))",
+      "code": "def check_reservation(codice: str, start: str, username: str) -> bool:\n    con = sqlite3.connect('reservation_database.db')\n    cur = con.cursor()\n    query = 'SELECT * FROM `mrbs_entry` E JOIN `mrbs_room` R ON E.room_id = R.id WHERE E.id_corso LIKE ? AND E.start_time >= ?'\n    cur.execute(query, ('%' + codice + '%', start))\n    for row in cur.fetchall():\n        reservation_query = 'SELECT * FROM Reservations WHERE id_lezione = ? AND username = ?'\n        cur.execute(reservation_query, (row[1], username))\n        reservation = cur.fetchone()\n        if reservation:\n            return True\n    return False"
+    }
+  ]
+}

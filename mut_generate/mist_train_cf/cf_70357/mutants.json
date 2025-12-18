@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_70357",
+  "entry_point": "create_set",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if parent[node] == node:",
+      "mutated_line": "if parent[node] != node:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] != node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if rank[root1] < rank[root2]:",
+      "mutated_line": "if rank[root1] <= rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] <= rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if rank[root1] < rank[root2]:",
+      "mutated_line": "if rank[root1] >= rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] >= rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if rank[root1] < rank[root2]:",
+      "mutated_line": "if rank[root1] != rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] != rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "rank[vertex] = 0",
+      "mutated_line": "rank[vertex] = 1",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 1\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "rank[vertex] = 0",
+      "mutated_line": "rank[vertex] = -1",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = -1\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "rank[vertex] = 0",
+      "mutated_line": "rank[vertex] = 1",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 1\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "elif rank[root1] > rank[root2]:",
+      "mutated_line": "elif rank[root1] >= rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] >= rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "elif rank[root1] > rank[root2]:",
+      "mutated_line": "elif rank[root1] <= rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] <= rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "elif rank[root1] > rank[root2]:",
+      "mutated_line": "elif rank[root1] != rank[root2]:",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] != rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 29,
+      "original_line": "rank[root1] += 1",
+      "mutated_line": "rank[root1] -= 1",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] -= 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 37,
+      "original_line": "if find_node(node1, parent) != find_node(node2, parent):",
+      "mutated_line": "if find_node(node1, parent) == find_node(node2, parent):",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) == find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "rank[root1] += 1",
+      "mutated_line": "rank[root1] += 2",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 2\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "rank[root1] += 1",
+      "mutated_line": "rank[root1] += 0",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 0\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "rank[root1] += 1",
+      "mutated_line": "rank[root1] += 0",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += 0\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "rank[root1] += 1",
+      "mutated_line": "rank[root1] += -1",
+      "code": "def create_set(vertices):\n    parent = {}\n    rank = {}\n    for vertex in vertices:\n        rank[vertex] = 0\n        parent[vertex] = vertex\n    return (parent, rank)\n\ndef find_node(node, parent):\n    if parent[node] == node:\n        return node\n    else:\n        return find_node(parent[node], parent)\n\ndef union(node1, node2, parent, rank):\n    root1 = find_node(node1, parent)\n    root2 = find_node(node2, parent)\n    if rank[root1] < rank[root2]:\n        parent[root1] = root2\n    elif rank[root1] > rank[root2]:\n        parent[root2] = root1\n    else:\n        parent[root2] = root1\n        rank[root1] += -1\n\ndef kruskal_algorithm(vertices, edges):\n    mst = set()\n    (parent, rank) = create_set(vertices)\n    for edge in sorted(edges, key=lambda item: edges[item]):\n        (node1, node2) = edge\n        if find_node(node1, parent) != find_node(node2, parent):\n            union(node1, node2, parent, rank)\n            mst.add(edge)\n    return mst"
+    }
+  ]
+}

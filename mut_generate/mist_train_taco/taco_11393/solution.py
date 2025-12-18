@@ -1,0 +1,96 @@
+"""
+QUESTION:
+Difference of Big Integers
+
+Given two integers $A$ and $B$, compute the difference, $A - B$.
+
+Input
+
+Two integers $A$ and $B$ separated by a space character are given in a line.
+
+Output
+
+Print the difference in a line.
+
+Constraints
+
+* $-1 \times 10^{100000} \leq A, B \leq 10^{100000}$
+
+
+
+Sample Input 1
+
+
+5 8
+
+
+Sample Output 1
+
+
+-3
+
+
+Sample Input 2
+
+
+100 25
+
+
+Sample Output 2
+
+
+75
+
+
+Sample Input 3
+
+
+-1 -1
+
+
+Sample Output 3
+
+
+0
+
+
+Sample Input 4
+
+
+12 -3
+
+
+Sample Output 4
+
+
+15
+
+
+
+
+
+
+Example
+
+Input
+
+5 8
+
+
+Output
+
+-3
+"""
+
+def compute_difference(A: int, B: int) -> int:
+    """
+    Computes the difference between two large integers A and B.
+
+    Parameters:
+    A (int): The first integer.
+    B (int): The second integer.
+
+    Returns:
+    int: The difference A - B.
+    """
+    return A - B

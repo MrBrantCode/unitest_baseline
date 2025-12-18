@@ -1,0 +1,56 @@
+{
+  "task_id": "cf_36531",
+  "entry_point": "manage_static_routes",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if network_id not in current_static_routes:",
+      "mutated_line": "if network_id in current_static_routes:",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if source_network_id in current_static_routes:",
+      "mutated_line": "for (network_id, routes) in last_static_routes.items():",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id not in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if network_id in current_static_routes:",
+      "mutated_line": "for (cidr, dest_network_id) in routes:",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if (cidr, dest_network_id) not in current_static_routes[network_id]:",
+      "mutated_line": "if (cidr, dest_network_id) in current_static_routes[network_id]:",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if (cidr, dest_network_id) in current_static_routes[network_id]:",
+      "mutated_line": "if (cidr, dest_network_id) not in current_static_routes[network_id]:",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "current_static_routes[source_network_id] = [(c, d) for c, d in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]",
+      "mutated_line": "current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) == (cidr, dest_network_id)]",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) == (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "current_static_routes[network_id] = [(c, d) for c, d in current_static_routes[network_id] if (c, d) != (cidr, dest_network_id)]",
+      "mutated_line": "current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) == (cidr, dest_network_id)]",
+      "code": "def manage_static_routes(current_static_routes, last_static_routes, deleted_routes):\n    for (network_id, routes) in last_static_routes.items():\n        if network_id not in current_static_routes:\n            current_static_routes[network_id] = routes\n        else:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) not in current_static_routes[network_id]:\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    for (source_network_id, cidr, dest_network_id) in deleted_routes:\n        if source_network_id in current_static_routes:\n            current_static_routes[source_network_id] = [(c, d) for (c, d) in current_static_routes[source_network_id] if (c, d) != (cidr, dest_network_id)]\n    for (network_id, routes) in last_static_routes.items():\n        if network_id in current_static_routes:\n            for (cidr, dest_network_id) in routes:\n                if (cidr, dest_network_id) in current_static_routes[network_id]:\n                    current_static_routes[network_id] = [(c, d) for (c, d) in current_static_routes[network_id] if (c, d) == (cidr, dest_network_id)]\n                    current_static_routes[network_id].append((cidr, dest_network_id))\n    return current_static_routes"
+    }
+  ]
+}

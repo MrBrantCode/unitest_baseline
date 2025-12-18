@@ -1,0 +1,189 @@
+{
+  "task_id": "cf_83143",
+  "entry_point": "parse_xml",
+  "mutant_count": 26,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "def traverse_xml(root, path='', level=0):",
+      "mutated_line": "def traverse_xml(root, path='MUTATED', level=0):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='MUTATED', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "def traverse_xml(root, path='', level=0):",
+      "mutated_line": "def traverse_xml(root, path='', level=1):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=1):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "def traverse_xml(root, path='', level=0):",
+      "mutated_line": "def traverse_xml(root, path='', level=-1):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=-1):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "def traverse_xml(root, path='', level=0):",
+      "mutated_line": "def traverse_xml(root, path='', level=1):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=1):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if tag not in dictionary:",
+      "mutated_line": "if tag in dictionary:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('}')[+1]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[+1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "child_path = path + '/' + tag",
+      "mutated_line": "child_path = path + '/' - tag",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' - tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "child_path = path + '/' + tag",
+      "mutated_line": "child_path = (path + '/') * tag",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = (path + '/') * tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('')[-1]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('}')[-2]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-2]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('}')[-0]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-0]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('}')[-0]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-0]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "tag = root.tag.split('}')[-1]  # Get the tag without namespace",
+      "mutated_line": "tag = root.tag.split('}')[--1]",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[--1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "child_path = path + '/' + tag",
+      "mutated_line": "child_path = path - '/' + tag",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path - '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "child_path = path + '/' + tag",
+      "mutated_line": "child_path = path * '/' + tag",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path * '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level - 1)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level - 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level * 1)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level * 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "print(f\"XML file {xml_file} is malformed.\")",
+      "mutated_line": "print(f'{xml_file} is malformed.')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'{xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "print(f\"XML file {xml_file} is malformed.\")",
+      "mutated_line": "print(f'XML file {xml_file}')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file}')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f\"XML file {xml_file} does not exist.\")",
+      "mutated_line": "print(f'{xml_file} does not exist.')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'{xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f\"XML file {xml_file} does not exist.\")",
+      "mutated_line": "print(f'XML file {xml_file}')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file}')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "child_path = path + '/' + tag",
+      "mutated_line": "child_path = path + '' + tag",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '' + tag\n            traverse_xml(child, child_path, level + 1)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level + 2)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 2)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level + 0)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 0)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level + 0)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + 0)\n    traverse_xml(root)\n    return dictionary"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "traverse_xml(child, child_path, level+1)",
+      "mutated_line": "traverse_xml(child, child_path, level + -1)",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_file):\n    dictionary = {}\n    try:\n        tree = ET.parse(xml_file)\n        root = tree.getroot()\n    except ET.ParseError:\n        print(f'XML file {xml_file} is malformed.')\n        return dictionary\n    except FileNotFoundError:\n        print(f'XML file {xml_file} does not exist.')\n        return dictionary\n\n    def traverse_xml(root, path='', level=0):\n        tag = root.tag.split('}')[-1]\n        if tag not in dictionary:\n            dictionary[tag] = []\n        attributes = root.attrib\n        dictionary[tag].append((path, attributes, level))\n        for child in root:\n            child_path = path + '/' + tag\n            traverse_xml(child, child_path, level + -1)\n    traverse_xml(root)\n    return dictionary"
+    }
+  ]
+}

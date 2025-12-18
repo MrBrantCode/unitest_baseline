@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_36068",
+  "entry_point": "RemoveDuplicateChildren",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if child in child_to_parent:",
+      "mutated_line": "if child not in child_to_parent:",
+      "code": "def RemoveDuplicateChildren(graph):\n    child_to_parent = {}\n    duplicates = set()\n    for (parent, children) in graph.nodes.items():\n        for child in children:\n            if child not in child_to_parent:\n                duplicates.add(child)\n            else:\n                child_to_parent[child] = parent\n    for (parent, children) in graph.nodes.items():\n        graph.nodes[parent] = [child for child in children if child not in duplicates]\n    return graph"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "graph.nodes[parent] = [child for child in children if child not in duplicates]",
+      "mutated_line": "graph.nodes[parent] = [child for child in children if child in duplicates]",
+      "code": "def RemoveDuplicateChildren(graph):\n    child_to_parent = {}\n    duplicates = set()\n    for (parent, children) in graph.nodes.items():\n        for child in children:\n            if child in child_to_parent:\n                duplicates.add(child)\n            else:\n                child_to_parent[child] = parent\n    for (parent, children) in graph.nodes.items():\n        graph.nodes[parent] = [child for child in children if child in duplicates]\n    return graph"
+    }
+  ]
+}

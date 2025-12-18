@@ -1,0 +1,63 @@
+"""
+QUESTION:
+The Chef has been hunting for a machine developed to change numbers in a rather peculiar manner. This machine has a fixed number c associated with it and a changing number X. 
+
+In a single step, the Chef can do the following:
+First, choose any positive integer b that is a perfect c-th power of some number (that is, there is some positive integer n such that b = n^{c})
+Then, change X \to \dfrac{\text{lcm}(b, X)}{\gcd(b, X)}
+
+He wants to find the minimum number he can change X into by applying these operations alone any number of times (possibly none at all). However, he does not know the exact values of X, c for the machine, but he does have T guesses for what these values might be. For each of these guesses, compute the minimum number Chef can obtain.
+
+------ Input Format ------ 
+
+- The first line of input will contain an integer T, the number of guesses Chef has for the pair (X, c). Then the guesses follow.
+- Each guess consists of a single line of input containing two space-separated integers X, c.
+
+------ Output Format ------ 
+
+For each guess, print on a new line the minimum value that Chef can change X into by applying any number of operations (possibly none at all).
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 100$
+$1 ≤ X ≤ 10^{10}$
+$1 ≤ c ≤ 30$
+
+----- Sample Input 1 ------ 
+3
+1 5
+10 1
+20 4
+----- Sample Output 1 ------ 
+1
+1
+20
+----- explanation 1 ------ 
+Guess $1$: It can easily be checked that $X = 1$ cannot be changed.
+
+Guess $2$: Choose $b = 10^{1}$ and change $X : 10 \to \dfrac{\text{lcm}(10, 10)}{\gcd(10, 10)} = 1$. This is the minimum possible value of $X$.
+"""
+
+import math
+import sys
+
+def find_minimum_number(X, c):
+    """
+    Finds the minimum number that can be obtained from X by applying the operations described.
+
+    Parameters:
+    X (int): The initial number.
+    c (int): The fixed number associated with the machine.
+
+    Returns:
+    int: The minimum number that can be obtained.
+    """
+    if X == 1 or c == 1:
+        return 1
+    
+    res = sys.maxsize
+    for i in range(1, min(1000, X + 1)):
+        temp = i ** c
+        res = min(temp * X / math.gcd(temp, X) ** 2, res)
+    
+    return int(res)

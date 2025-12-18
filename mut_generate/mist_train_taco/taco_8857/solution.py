@@ -1,0 +1,51 @@
+"""
+QUESTION:
+Continuing the trend, this year too we present a 'Mystery' for you to solve! 
+You will be given two numbers: a and b; and you have to output a single integer. See the sample test cases for hints.
+
+Input:
+
+The first line of the input will contain an integer t : the number of test cases. Each of the next t lines contain 2 integer (a and b).
+
+Output:
+
+For each test case output a single integer that is answer for that test case. Don't forget to print each answer on separate lines!
+
+Constraints:
+
+1 ≤ t ≤ 100
+
+0 ≤ a ≤ 1000
+
+1 ≤ b ≤ 1000
+
+SAMPLE INPUT
+4
+5 5
+6 5
+138 9
+9 13
+
+SAMPLE OUTPUT
+0
+1
+3
+9
+
+Explanation
+
+No explanation! Otherwise it won't be a mystery anymore ;)
+"""
+
+def calculate_mystery_value(a: int, b: int) -> int:
+    """
+    Calculate the mystery value for the given pair of integers a and b.
+
+    Parameters:
+    a (int): The first integer.
+    b (int): The second integer.
+
+    Returns:
+    int: The result of the operation a % b.
+    """
+    return a % b

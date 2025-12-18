@@ -1,0 +1,70 @@
+"""
+QUESTION:
+Chef has two numbers X and Y. Chef wants to find three integers A, B, and C such that:
+-1000 ≤ A, B, C ≤ 1000
+mean([A, B, C]) = X
+median([A, B, C]) = Y
+
+Can you help Chef find such three integers?
+
+As a reminder, mean([P, Q, R]) = \frac{P + Q + R}{3} and median([P, Q, R]) is the element at the 2^{nd} (middle) position after we sort [P, Q, R] in non-decreasing order.
+
+------ Input Format ------ 
+
+- The first line contains a single integer T — the number of test cases. Then the test cases follow.
+- The first and only line of each test case contains two space-separated integers X and Y — the required mean and median of the three integers.
+
+------ Output Format ------ 
+
+For each test case, output three integers A, B, C which satisfy the given conditions.
+
+It is guaranteed that an answer always exists under the given constraints.
+ 
+If multiple answers exist, output any.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$-100 ≤X, Y ≤100$
+
+----- Sample Input 1 ------ 
+3
+5 5
+67 100
+4 5
+
+----- Sample Output 1 ------ 
+5 5 5
+0 100 101
+0 5 7
+----- explanation 1 ------ 
+Test Case 1: $mean([5, 5, 5]) = \frac{5 + 5 + 5}{3} = 5$, $median([5, 5, 5]) = 5$.
+
+Test Case 2: $mean([0, 100, 101]) = \frac{0 + 100 + 101}{3} = \frac{201}{3} = 67$, $median([0, 100, 101]) = 100$.
+
+Test Case 3: $mean([0, 5, 7]) = \frac{0 + 5 + 7}{3} = 4$, $median([0, 5, 7]) = 5$.
+"""
+
+def find_abc_for_mean_median(T, test_cases):
+    results = []
+    for i in range(T):
+        X, Y = test_cases[i]
+        B = Y
+        if X == Y:
+            results.append((X, X, X))
+        else:
+            if B > 0:
+                A = 0
+            elif B == 0:
+                A = -1
+            else:
+                A = 2 * B
+            C = 3 * X - A - B
+            while C < B:
+                if C <= A:
+                    A = A - (B - C)
+                else:
+                    A = A + (B - C)
+                C = 3 * X - A - B
+            results.append((A, B, C))
+    return results

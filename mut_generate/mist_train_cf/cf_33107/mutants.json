@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_33107",
+  "entry_point": "simulate_lazy_import",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if module is None:",
+      "mutated_line": "if module is not None:",
+      "code": "import importlib\nimport warnings\n\ndef simulate_lazy_import(module_name, symbol, deprecation=None):\n\n    def lazy_import_wrapper():\n        nonlocal module\n        if module is not None:\n            module = importlib.import_module(module_name)\n            globals()[symbol] = module\n            if deprecation:\n                warnings.warn(f'{module_name} is deprecated as of version {deprecation}', DeprecationWarning)\n    module = None\n    return lazy_import_wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "warnings.warn(f\"{module_name} is deprecated as of version {deprecation}\", DeprecationWarning)",
+      "mutated_line": "warnings.warn(f'{module_name}{deprecation}', DeprecationWarning)",
+      "code": "import importlib\nimport warnings\n\ndef simulate_lazy_import(module_name, symbol, deprecation=None):\n\n    def lazy_import_wrapper():\n        nonlocal module\n        if module is None:\n            module = importlib.import_module(module_name)\n            globals()[symbol] = module\n            if deprecation:\n                warnings.warn(f'{module_name}{deprecation}', DeprecationWarning)\n    module = None\n    return lazy_import_wrapper"
+    }
+  ]
+}

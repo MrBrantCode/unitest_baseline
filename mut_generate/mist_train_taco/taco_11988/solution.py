@@ -1,0 +1,63 @@
+"""
+QUESTION:
+You are given an array of integers [A1,A2,…,AN]$[A_1, A_2, \ldots, A_N]$. Let's call adding an element to this array at any position (including the beginning and the end) or removing an arbitrary element from it a modification. It is not allowed to remove an element from the array if it is empty.
+Find the minimum number of modifications which must be performed so that the resulting array can be partitioned into permutations. Formally, it must be possible to partition elements of the resulting array into zero or more groups (multisets; not necessarily identical) in such a way that each element belongs to exactly one group and for each group, if it contains L$L$ elements, then it must contain only integers 1$1$ through L$L$, each of them exactly once.
+
+-----Input-----
+- The first line of the input contains a single integer T$T$ denoting the number of test cases. The description of T$T$ test cases follows.
+- The first line of each test case contains a single integer N$N$.
+- The second line contains N$N$ space-separated integers A1,A2,…,AN$A_1, A_2, \ldots, A_N$.
+
+-----Output-----
+For each test case, print a single line containing one integer ― the minimum required number of modifications.
+
+-----Constraints-----
+- 1≤T≤1,000$1 \le T \le 1,000$
+- 1≤N≤106$1 \le N \le 10^6$
+- 1≤Ai≤109$1 \le A_i \le 10^9$ for each valid i$i$
+- the sum of N$N$ over all test cases does not exceed 106$10^6$
+
+-----Subtasks-----
+Subtask #1 (50 points):
+- 1≤N≤1,000$1 \le N \le 1,000$
+- the sum of N$N$ over all test cases does not exceed 10,000$10,000$
+Subtask #2 (50 points): original constraints
+
+-----Example Input-----
+2
+5
+1 4 1 2 2
+4
+2 3 2 3
+
+-----Example Output-----
+1
+2
+"""
+
+def min_modifications_for_permutations(test_cases):
+    results = []
+    
+    for case in test_cases:
+        N, A = case
+        cost = 0
+        dp = [[] for _ in range(2 * N + 1)]
+        cnt = [0] * (2 * N + 1)
+        dp[0].extend([0 for _ in range(2 * N + 1)])
+        
+        for val in A:
+            if val <= 2 * N:
+                cnt[val] += 1
+            else:
+                cost += 1
+        
+        for i in range(1, 2 * N + 1):
+            rn = (2 * N) // i
+            for j in range(0, rn + 1):
+                dp[i].extend([dp[i - 1][j] + abs(cnt[i] - j)])
+            for j in range(rn - 1, -1, -1):
+                dp[i][j] = min(dp[i][j], dp[i][j + 1])
+        
+        results.append(cost + min(dp[2 * N][0], dp[2 * N][1]))
+    
+    return results

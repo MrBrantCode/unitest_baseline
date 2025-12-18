@@ -1,0 +1,83 @@
+"""
+QUESTION:
+Fibonacci number f(i) appear in a variety of puzzles in nature and math, including packing problems, family trees or Pythagorean triangles. They obey the rule f(i) = f(i - 1) + f(i - 2), where we set f(0) = 1 = f(-1).
+
+Let V and d be two certain positive integers and be N ≡ 1001 a constant. Consider a set of V nodes, each node i having a Fibonacci label F[i] = (f(i) mod N) assigned for i = 1,..., V ≤ N. If |F(i) - F(j)| < d, then the nodes i and j are connected.
+
+Given V and d, how many connected subsets of nodes will you obtain?
+
+<image>
+
+Figure 1: There are 4 connected subsets for V = 20 and d = 100.
+
+Constraints
+
+* 1 ≤ V ≤ 1000
+* 1 ≤ d ≤ 150
+
+Input
+
+Each data set is defined as one line with two integers as follows:
+
+Line 1: Number of nodes V and the distance d.
+
+Input includes several data sets (i.e., several lines). The number of dat sets is less than or equal to 50.
+
+Output
+
+Output line contains one integer - the number of connected subsets - for each input line.
+
+Example
+
+Input
+
+5 5
+50 1
+13 13
+
+
+Output
+
+2
+50
+8
+"""
+
+from collections import deque
+
+def count_connected_subsets(V, d):
+    # Generate Fibonacci labels modulo 1001
+    F = [0] * V
+    a = b = 1
+    for v in range(V):
+        (a, b) = ((a + b) % 1001, a)
+        F[v] = a
+    
+    # Create adjacency list for the graph
+    G = [[] for _ in range(V)]
+    for i in range(V):
+        for j in range(i + 1, V):
+            if abs(F[i] - F[j]) < d:
+                G[i].append(j)
+                G[j].append(i)
+    
+    # Initialize visited list
+    L = [0] * V
+    ans = 0
+    
+    # Perform BFS to count connected components
+    for i in range(V):
+        if L[i]:
+            continue
+        ans += 1
+        que = deque([i])
+        L[i] = 1
+        while que:
+            v = que.popleft()
+            for w in G[v]:
+                if L[w]:
+                    continue
+                que.append(w)
+                L[w] = 1
+    
+    return ans

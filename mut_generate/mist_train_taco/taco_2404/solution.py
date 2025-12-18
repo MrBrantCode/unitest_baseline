@@ -1,0 +1,44 @@
+"""
+QUESTION:
+Tom is off to a school Annual Day and is searching for a matching pair of socks. His drawer is filled with socks, each pair of a different color. In its worst case scenario, how many socks (x) should Tom remove from his drawer until he finds a matching pair?
+
+Input Format 
+
+The first line contains the number of test cases T. 
+Next T lines contains an integer N which indicates the total pairs of socks present in the drawer.
+
+Output Format 
+
+Print the number of Draws (x) Tom makes in the worst case scenario.
+
+Constraints 
+
+1≤T≤1000 
+0<N<10^6
+
+SAMPLE INPUT
+2
+1
+2
+
+SAMPLE OUTPUT
+2
+3
+
+Explanation
+
+Case 1 : A pair of socks are present, hence exactly 2 draws for the socks to match. 
+Case 2 : 2 pair of socks are present in the drawer. The first and the second draw might result in 2 socks of different color. The 3rd sock picked will definitely match one of previously picked socks. Hence, 3.
+"""
+
+def calculate_worst_case_draws(total_pairs: int) -> int:
+    """
+    Calculate the number of draws Tom makes in the worst case scenario to find a matching pair of socks.
+
+    Parameters:
+    total_pairs (int): The total number of pairs of socks in the drawer.
+
+    Returns:
+    int: The number of draws Tom makes in the worst case scenario.
+    """
+    return total_pairs + 1

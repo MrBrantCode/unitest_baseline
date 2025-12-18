@@ -1,0 +1,392 @@
+{
+  "task_id": "cf_54770",
+  "entry_point": "convert_xml_to_dict",
+  "mutant_count": 55,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' + tag_name - '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name - '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = ('<' + tag_name) * '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = ('<' + tag_name) * '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' + tag_name - '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name - '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = ('</' + tag_name) * '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = ('</' + tag_name) * '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if open_tag_occurrences != close_tag_occurrences:",
+      "mutated_line": "if open_tag_occurrences == close_tag_occurrences:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences == close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if open_tag_occurrences == 0:",
+      "mutated_line": "if open_tag_occurrences != 0:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences != 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' + tag_name - '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name - '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = ('<' + tag_name) * '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = ('<' + tag_name) * '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' + tag_name - '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name - '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = ('</' + tag_name) * '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = ('</' + tag_name) * '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start == -1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start == -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 18,
+      "original_line": "start += len(open_tag)",
+      "mutated_line": "start -= len(open_tag)",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start -= len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "validate_tag('person')",
+      "mutated_line": "validate_tag('')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "validate_tag('name')",
+      "mutated_line": "validate_tag('')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "validate_tag('age')",
+      "mutated_line": "validate_tag('')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "names = get_values_for_tag('name')",
+      "mutated_line": "names = get_values_for_tag('')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "ages = get_values_for_tag('age')",
+      "mutated_line": "ages = get_values_for_tag('')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' - tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' - tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' * tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' * tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' + tag_name + ''",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + ''\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' - tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' - tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' * tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' * tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' + tag_name + ''",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + ''\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if open_tag_occurrences == 0:",
+      "mutated_line": "if open_tag_occurrences == 1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 1:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if open_tag_occurrences == 0:",
+      "mutated_line": "if open_tag_occurrences == -1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == -1:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if open_tag_occurrences == 0:",
+      "mutated_line": "if open_tag_occurrences == 1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 1:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' - tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' - tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' * tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' * tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '<' + tag_name + ''",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + ''\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' - tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' - tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' * tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' * tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '</' + tag_name + ''",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + ''\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start != +1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != +1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return [{'name': n, 'age': a} for n, a in zip(names, ages)]",
+      "mutated_line": "return [{'': n, 'age': a} for (n, a) in zip(names, ages)]",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return [{'name': n, 'age': a} for n, a in zip(names, ages)]",
+      "mutated_line": "return [{'name': n, '': a} for (n, a) in zip(names, ages)]",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, '': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '' + tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '' + tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Mismatched ' + tag_name - ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name - ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception(('Invalid XML: Mismatched ' + tag_name) * ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception(('Invalid XML: Mismatched ' + tag_name) * ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Missing ' + tag_name - ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name - ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception(('Invalid XML: Missing ' + tag_name) * ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception(('Invalid XML: Missing ' + tag_name) * ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "open_tag = '<' + tag_name + '>'",
+      "mutated_line": "open_tag = '' + tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "close_tag = '</' + tag_name + '>'",
+      "mutated_line": "close_tag = '' + tag_name + '>'",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start != -2:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -2:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start != -0:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -0:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start != -0:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -0:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while start != -1:",
+      "mutated_line": "while start != --1:",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != --1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Mismatched ' - tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' - tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Mismatched ' * tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' * tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + '')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + '')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Missing ' - tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' - tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Missing ' * tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' * tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('Invalid XML: Missing ' + tag_name + '')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + '')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('' + tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('Invalid XML: Missing ' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "raise Exception('Invalid XML: Missing ' + tag_name + ' tags')",
+      "mutated_line": "raise Exception('' + tag_name + ' tags')",
+      "code": "def convert_xml_to_dict(xml_string):\n\n    def validate_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        open_tag_occurrences = xml_string.count(open_tag)\n        close_tag_occurrences = xml_string.count(close_tag)\n        if open_tag_occurrences != close_tag_occurrences:\n            raise Exception('Invalid XML: Mismatched ' + tag_name + ' tags')\n        if open_tag_occurrences == 0:\n            raise Exception('' + tag_name + ' tags')\n\n    def get_values_for_tag(tag_name):\n        open_tag = '<' + tag_name + '>'\n        close_tag = '</' + tag_name + '>'\n        start = xml_string.find(open_tag)\n        values = []\n        while start != -1:\n            start += len(open_tag)\n            end = xml_string.find(close_tag, start)\n            values.append(xml_string[start:end].strip())\n            start = xml_string.find(open_tag, end)\n        return values\n    validate_tag('person')\n    validate_tag('name')\n    validate_tag('age')\n    names = get_values_for_tag('name')\n    ages = get_values_for_tag('age')\n    return [{'name': n, 'age': a} for (n, a) in zip(names, ages)]"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+"""
+QUESTION:
+Read problem statements in [Hindi], [Bengali], [Mandarin Chinese], [Russian], and [Vietnamese] as well.
+
+"Out of 6 billion humans, the troublemakers are just a handful." - Dalai Lama
+
+Nikitasha and Mansi are best friends. They have a binary sequence $A_{1}, A_{2}, \ldots, A_{N}$ (each element of this sequence is $0$ or $1$). Their friend Sakshi always finds ways to trouble them. This time, Sakshi altered their sequence by performing the following operation $Z$ times:
+Create a new sequence $B_{1}, B_{2}, \ldots, B_{N}$. Initially, $A_{i} = B_{i}$ for each valid $i$.
+For each valid $i$ such that $A_{i} = 0$ and $A_{i+1} = 1$, swap $B_{i}$ and $B_{i+1}$, i.e. set $B_{i} = 1$ and $B_{i+1} = 0$. Note that the order of swaps does not matter.
+Replace the sequence $A$ by the sequence $B$.
+
+Now, Sakshi challenges Nikitasha And Mansi to find the altered sequence (the resulting sequence $A$ after $Z$ steps). Help Nikitasha and Mansi find this sequence.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first line of each test case contains two space-separated integers $N$ and $Z$.
+The second line contains $N$ space-separated integers $A_{1}, A_{2}, \ldots, A_{N}$.
+
+------  Output ------
+For each test case, print a single line containing $N$ space-separated integers — the altered sequence.
+
+------  Constraints  ------
+$1 ≤ T ≤ 1,000$
+$1 ≤ N, Z ≤ 10^{6}$
+$0 ≤ A_{i} ≤ 1$ for each valid $i$
+the sum of $N$ over all test cases does not exceed $10^{6}$
+
+------  Subtasks ------
+Subtask #1 (10 points):
+$1 ≤ N, Z ≤ 3,000$
+the sum of $N$ over all test cases does not exceed $3,000$
+
+Subtask #2 (90 points): original constraints
+
+----- Sample Input 1 ------ 
+2
+
+6 2
+
+0 1 1 0 1 1
+
+4 4
+
+0 1 0 1
+----- Sample Output 1 ------ 
+1 1 0 1 1 0 	
+
+1 1 0 0
+----- explanation 1 ------ 
+Example case 1: After the first step, the sequence becomes $(1, 0, 1, 1, 0, 1)$. After the second step, it becomes $(1, 1, 0, 1, 1, 0)$.
+
+Example case 2: After the first step, the sequence becomes $(1, 0, 1, 0)$. After the second step, the sequence becomes $(1, 1, 0, 0)$. Applying more steps does not alter the sequence anymore, so after the third and fourth step, the sequence remains $(1, 1, 0, 0)$.
+"""
+
+def alter_sequence(N, Z, A):
+    dp = []
+    temp = []
+    record = []
+    total = 0
+    ones = 0
+    zeros = 0
+    
+    for i in range(N):
+        if A[i] == 1:
+            if len(temp) >= Z and temp[-Z] == 1:
+                total -= 1
+            total += 1
+            temp.append(1)
+            record.append(len(temp) - 1)
+            if zeros != 0:
+                total -= zeros
+                counter = min(len(temp), zeros)
+                for v in record[:-Z - 1:-1]:
+                    temp[v] = 0
+                    counter -= 1
+                    del record[-1]
+                    if counter == 0:
+                        break
+                zeros = 0
+            total = max(0, total)
+            dp.append(total)
+        else:
+            zeros += 1
+    
+    ans = [0] * N
+    ind = 0
+    for i in range(N):
+        if A[i] == 1:
+            shift = i - (Z - dp[ind])
+            ans[max(shift, ind)] = 1
+            ind += 1
+    
+    return ans

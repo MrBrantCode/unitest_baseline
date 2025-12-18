@@ -1,0 +1,31 @@
+"""
+QUESTION:
+Given a character C, print the ASCII value of that character. 
+
+Input:
+First and only line in input contains a character C.
+
+Output:
+Print the ASCII value of the character C.  
+
+Constraints:
+C ∈ ASCII characters
+
+SAMPLE INPUT
+b
+
+SAMPLE OUTPUT
+98
+"""
+
+def get_ascii_value(char: str) -> int:
+    """
+    Returns the ASCII value of the given character.
+
+    Parameters:
+    char (str): A single character.
+
+    Returns:
+    int: The ASCII value of the character.
+    """
+    return ord(char)

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_48520",
+  "entry_point": "pattern_match_order",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if len(s) != len(set(s)):",
+      "mutated_line": "if len(s) == len(set(s)):",
+      "code": "from typing import List, Tuple\n\ndef pattern_match_order(strings: List[str], pattern: Tuple[List[str], str, str]) -> List[str]:\n    (patterns, prefix, suffix) = pattern\n    filtered = []\n    for s in strings:\n        if not (s.startswith(prefix) and s.endswith(suffix)):\n            continue\n        if len(s) == len(set(s)):\n            continue\n        indices = []\n        for p in patterns:\n            try:\n                indices.append(s.index(p))\n            except ValueError:\n                break\n        else:\n            if indices == sorted(indices):\n                filtered.append(s)\n    return filtered"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if not (s.startswith(prefix) and s.endswith(suffix)):",
+      "mutated_line": "if not (s.startswith(prefix) or s.endswith(suffix)):",
+      "code": "from typing import List, Tuple\n\ndef pattern_match_order(strings: List[str], pattern: Tuple[List[str], str, str]) -> List[str]:\n    (patterns, prefix, suffix) = pattern\n    filtered = []\n    for s in strings:\n        if not (s.startswith(prefix) or s.endswith(suffix)):\n            continue\n        if len(s) != len(set(s)):\n            continue\n        indices = []\n        for p in patterns:\n            try:\n                indices.append(s.index(p))\n            except ValueError:\n                break\n        else:\n            if indices == sorted(indices):\n                filtered.append(s)\n    return filtered"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if indices == sorted(indices):",
+      "mutated_line": "if indices != sorted(indices):",
+      "code": "from typing import List, Tuple\n\ndef pattern_match_order(strings: List[str], pattern: Tuple[List[str], str, str]) -> List[str]:\n    (patterns, prefix, suffix) = pattern\n    filtered = []\n    for s in strings:\n        if not (s.startswith(prefix) and s.endswith(suffix)):\n            continue\n        if len(s) != len(set(s)):\n            continue\n        indices = []\n        for p in patterns:\n            try:\n                indices.append(s.index(p))\n            except ValueError:\n                break\n        else:\n            if indices != sorted(indices):\n                filtered.append(s)\n    return filtered"
+    }
+  ]
+}

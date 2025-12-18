@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_2826",
+  "entry_point": "combine_lists",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def combine_lists(list1, list2, common_attributes):\n    \"\"\"\"\"\"\n    combined_dict = {}\n    for item1 in list1:\n        for item2 in list2:\n            if all((item1[key] == item2[key] for key in common_attributes)):\n                key = tuple((item1[key] for key in common_attributes))\n                value = {k: v for (k, v) in item2.items() if k not in common_attributes}\n                combined_dict[key] = value\n    return combined_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if all(item1[key] == item2[key] for key in common_attributes):",
+      "mutated_line": "if all((item1[key] != item2[key] for key in common_attributes)):",
+      "code": "def combine_lists(list1, list2, common_attributes):\n    \"\"\"\n    Combines two lists of dictionaries into a dictionary where each key is a tuple \n    of the common attributes from list1 and each value is the corresponding \n    dictionary from list2 without the common attributes.\n\n    Args:\n    list1 (list): The first list of dictionaries.\n    list2 (list): The second list of dictionaries.\n    common_attributes (list): A list of common attributes between the two lists.\n\n    Returns:\n    dict: A dictionary where each key is a tuple of the common attributes from list1 \n    and each value is the corresponding dictionary from list2 without the common attributes.\n    \"\"\"\n    combined_dict = {}\n    for item1 in list1:\n        for item2 in list2:\n            if all((item1[key] != item2[key] for key in common_attributes)):\n                key = tuple((item1[key] for key in common_attributes))\n                value = {k: v for (k, v) in item2.items() if k not in common_attributes}\n                combined_dict[key] = value\n    return combined_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "value = {k: v for k, v in item2.items() if k not in common_attributes}",
+      "mutated_line": "value = {k: v for (k, v) in item2.items() if k in common_attributes}",
+      "code": "def combine_lists(list1, list2, common_attributes):\n    \"\"\"\n    Combines two lists of dictionaries into a dictionary where each key is a tuple \n    of the common attributes from list1 and each value is the corresponding \n    dictionary from list2 without the common attributes.\n\n    Args:\n    list1 (list): The first list of dictionaries.\n    list2 (list): The second list of dictionaries.\n    common_attributes (list): A list of common attributes between the two lists.\n\n    Returns:\n    dict: A dictionary where each key is a tuple of the common attributes from list1 \n    and each value is the corresponding dictionary from list2 without the common attributes.\n    \"\"\"\n    combined_dict = {}\n    for item1 in list1:\n        for item2 in list2:\n            if all((item1[key] == item2[key] for key in common_attributes)):\n                key = tuple((item1[key] for key in common_attributes))\n                value = {k: v for (k, v) in item2.items() if k in common_attributes}\n                combined_dict[key] = value\n    return combined_dict"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_100352",
+  "entry_point": "my_decorator",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "print(\"Before function call\")",
+      "mutated_line": "print('')",
+      "code": "import functools\nimport logging\nlogging.basicConfig(level=logging.DEBUG)\n\ndef my_decorator(func):\n\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        try:\n            print('')\n            result = func(*args, **kwargs)\n            print('After function call')\n            return result\n        except Exception as e:\n            logging.exception('Error in function %s: %s', func.__name__, str(e))\n    return wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(\"After function call\")",
+      "mutated_line": "print('')",
+      "code": "import functools\nimport logging\nlogging.basicConfig(level=logging.DEBUG)\n\ndef my_decorator(func):\n\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        try:\n            print('Before function call')\n            result = func(*args, **kwargs)\n            print('')\n            return result\n        except Exception as e:\n            logging.exception('Error in function %s: %s', func.__name__, str(e))\n    return wrapper"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "logging.exception(\"Error in function %s: %s\", func.__name__, str(e))",
+      "mutated_line": "logging.exception('', func.__name__, str(e))",
+      "code": "import functools\nimport logging\nlogging.basicConfig(level=logging.DEBUG)\n\ndef my_decorator(func):\n\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        try:\n            print('Before function call')\n            result = func(*args, **kwargs)\n            print('After function call')\n            return result\n        except Exception as e:\n            logging.exception('', func.__name__, str(e))\n    return wrapper"
+    }
+  ]
+}

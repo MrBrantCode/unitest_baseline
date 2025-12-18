@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_70540",
+  "entry_point": "evaluate_and_correct_paragraph",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "uncommon_characters = set(uncommon_punctuation_map.keys()) | set(common_punctuation)",
+      "mutated_line": "uncommon_characters = set(uncommon_punctuation_map.keys()) & set(common_punctuation)",
+      "code": "import string\nfrom collections import Counter\n\ndef evaluate_and_correct_paragraph(paragraph, uncommon_punctuation_map, common_punctuation):\n    uncommon_characters = set(uncommon_punctuation_map.keys()) & set(common_punctuation)\n    frequency_dict = Counter(paragraph)\n    uncommon_characters_dict = {ch: frequency_dict[ch] for ch in uncommon_characters if ch in frequency_dict}\n    for (uncommon, common) in uncommon_punctuation_map.items():\n        paragraph = paragraph.replace(uncommon, common)\n    return (uncommon_characters_dict, paragraph)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "uncommon_characters = set(uncommon_punctuation_map.keys()) | set(common_punctuation)",
+      "mutated_line": "uncommon_characters = set(uncommon_punctuation_map.keys()) ^ set(common_punctuation)",
+      "code": "import string\nfrom collections import Counter\n\ndef evaluate_and_correct_paragraph(paragraph, uncommon_punctuation_map, common_punctuation):\n    uncommon_characters = set(uncommon_punctuation_map.keys()) ^ set(common_punctuation)\n    frequency_dict = Counter(paragraph)\n    uncommon_characters_dict = {ch: frequency_dict[ch] for ch in uncommon_characters if ch in frequency_dict}\n    for (uncommon, common) in uncommon_punctuation_map.items():\n        paragraph = paragraph.replace(uncommon, common)\n    return (uncommon_characters_dict, paragraph)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "uncommon_characters_dict = {ch: frequency_dict[ch] for ch in uncommon_characters if ch in frequency_dict}",
+      "mutated_line": "for (uncommon, common) in uncommon_punctuation_map.items():",
+      "code": "import string\nfrom collections import Counter\n\ndef evaluate_and_correct_paragraph(paragraph, uncommon_punctuation_map, common_punctuation):\n    uncommon_characters = set(uncommon_punctuation_map.keys()) | set(common_punctuation)\n    frequency_dict = Counter(paragraph)\n    uncommon_characters_dict = {ch: frequency_dict[ch] for ch in uncommon_characters if ch not in frequency_dict}\n    for (uncommon, common) in uncommon_punctuation_map.items():\n        paragraph = paragraph.replace(uncommon, common)\n    return (uncommon_characters_dict, paragraph)"
+    }
+  ]
+}

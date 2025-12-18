@@ -1,0 +1,63 @@
+{
+  "task_id": "cf_26881",
+  "entry_point": "execute_tasks",
+  "mutant_count": 8,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if task_name not in completed_tasks:",
+      "mutated_line": "if task_name in completed_tasks:",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[0]: task[1] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[1]: task[1] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[1]: task[1] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[-1]: task[1] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[-1]: task[1] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[1]: task[1] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[1]: task[1] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[0]: task[2] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[0]: task[2] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[0]: task[0] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[0]: task[0] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[0]: task[0] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[0]: task[0] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "task_dependencies = {task[0]: task[1] for task in tasks}",
+      "mutated_line": "task_dependencies = {task[0]: task[-1] for task in tasks}",
+      "code": "from typing import List, Tuple\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef execute_tasks(tasks: List[Tuple[str, List[str]]], num_threads: int) -> List[str]:\n    task_dependencies = {task[0]: task[-1] for task in tasks}\n    completed_tasks = set()\n    execution_order = []\n\n    def execute_task(task_name):\n        if task_name not in completed_tasks:\n            dependencies = task_dependencies[task_name]\n            for dependency in dependencies:\n                execute_task(dependency)\n            completed_tasks.add(task_name)\n            execution_order.append(task_name)\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        for task_name in task_dependencies.keys():\n            executor.submit(execute_task, task_name)\n    return execution_order"
+    }
+  ]
+}

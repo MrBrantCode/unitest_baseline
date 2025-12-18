@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_69320",
+  "entry_point": "get_values",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"Recursive function to get values of keys in a nested JSON\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def get_values(json_obj, keys):\n    \"\"\"\"\"\"\n    result = {}\n\n    def helper(obj):\n        if isinstance(obj, dict):\n            for key in obj:\n                if key in keys:\n                    result[key] = obj[key]\n                helper(obj[key])\n        elif isinstance(obj, list):\n            for item in obj:\n                helper(item)\n    helper(json_obj)\n    missing_keys = set(keys) - set(result.keys())\n    for missing_key in missing_keys:\n        result[missing_key] = 'Key not present in JSON data'\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "missing_keys = set(keys) - set(result.keys())",
+      "mutated_line": "missing_keys = set(keys) + set(result.keys())",
+      "code": "def get_values(json_obj, keys):\n    \"\"\"Recursive function to get values of keys in a nested JSON\"\"\"\n    result = {}\n\n    def helper(obj):\n        if isinstance(obj, dict):\n            for key in obj:\n                if key in keys:\n                    result[key] = obj[key]\n                helper(obj[key])\n        elif isinstance(obj, list):\n            for item in obj:\n                helper(item)\n    helper(json_obj)\n    missing_keys = set(keys) + set(result.keys())\n    for missing_key in missing_keys:\n        result[missing_key] = 'Key not present in JSON data'\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "missing_keys = set(keys) - set(result.keys())",
+      "mutated_line": "missing_keys = set(keys) * set(result.keys())",
+      "code": "def get_values(json_obj, keys):\n    \"\"\"Recursive function to get values of keys in a nested JSON\"\"\"\n    result = {}\n\n    def helper(obj):\n        if isinstance(obj, dict):\n            for key in obj:\n                if key in keys:\n                    result[key] = obj[key]\n                helper(obj[key])\n        elif isinstance(obj, list):\n            for item in obj:\n                helper(item)\n    helper(json_obj)\n    missing_keys = set(keys) * set(result.keys())\n    for missing_key in missing_keys:\n        result[missing_key] = 'Key not present in JSON data'\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "result[missing_key] = 'Key not present in JSON data'",
+      "mutated_line": "result[missing_key] = ''",
+      "code": "def get_values(json_obj, keys):\n    \"\"\"Recursive function to get values of keys in a nested JSON\"\"\"\n    result = {}\n\n    def helper(obj):\n        if isinstance(obj, dict):\n            for key in obj:\n                if key in keys:\n                    result[key] = obj[key]\n                helper(obj[key])\n        elif isinstance(obj, list):\n            for item in obj:\n                helper(item)\n    helper(json_obj)\n    missing_keys = set(keys) - set(result.keys())\n    for missing_key in missing_keys:\n        result[missing_key] = ''\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if key in keys:",
+      "mutated_line": "if key not in keys:",
+      "code": "def get_values(json_obj, keys):\n    \"\"\"Recursive function to get values of keys in a nested JSON\"\"\"\n    result = {}\n\n    def helper(obj):\n        if isinstance(obj, dict):\n            for key in obj:\n                if key not in keys:\n                    result[key] = obj[key]\n                helper(obj[key])\n        elif isinstance(obj, list):\n            for item in obj:\n                helper(item)\n    helper(json_obj)\n    missing_keys = set(keys) - set(result.keys())\n    for missing_key in missing_keys:\n        result[missing_key] = 'Key not present in JSON data'\n    return result"
+    }
+  ]
+}

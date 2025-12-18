@@ -1,0 +1,26 @@
+"""
+QUESTION:
+Based on some criterion, Snuke divided the integers from 1 through 12 into three groups as shown in the figure below.
+Given two integers x and y (1 ≤ x < y ≤ 12), determine whether they belong to the same group.
+
+-----Constraints-----
+ - x and y are integers.
+ - 1 ≤ x < y ≤ 12
+
+-----Input-----
+Input is given from Standard Input in the following format:
+x y
+
+-----Output-----
+If x and y belong to the same group, print Yes; otherwise, print No.
+
+-----Sample Input-----
+1 3
+
+-----Sample Output-----
+Yes
+"""
+
+def belong_to_same_group(x: int, y: int) -> str:
+    g = [0, 2, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0]
+    return 'Yes' if g[x - 1] == g[y - 1] else 'No'

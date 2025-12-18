@@ -1,0 +1,77 @@
+"""
+QUESTION:
+Read problems statements in [Hindi], [Mandarin Chinese], [Russian], [Vietnamese] and [Bengali] as well.
+
+As everybody knows, Reza Shiri is the favourite Iranian artist. Since we love Reza Shiri and his songs, we never download them for free. Reza Shiri’s songs must be purchased from authorised stores. However, what if there is not enough money to buy all the songs?
+
+There are $N$ songs (numbered $1$ through $N$) and $M$ albums (numbered $1$ through $M$) available. For each valid $i$, the $i$-th song has *greatness* $v_{i}$, price $p_{i}$ and belongs to the album $a_{i}$. For each valid $i$, the $i$-th album has price $b_{i}$. If we buy an album, then all songs from this album count as bought. It is also possible to buy any songs individually.
+
+Your task is simple ― given the budget $P$ (the amount of money we have), calculate the maximum total greatness of songs we can buy. The total greatness is defined as the sum of greatness values of all distinct songs that are bought (either individually or as part of albums).
+
+------  Input ------
+The first line of the input contains three space-separated integers $N$, $M$ and $P$.
+$N$ lines follow. For each $i$ ($1 ≤ i ≤ N$), the $i$-th of these lines contains three space-separated integers $a_{i}$, $p_{i}$ and $v_{i}$.
+The last line contains $M$ space-separated integers $b_{1}, b_{2}, \ldots, b_{M}$.
+
+------  Output ------
+Print a single line containing one integer ― the maximum total greatness of songs we can afford to buy.
+
+------  Constraints ------
+$1 ≤ N, M, P ≤ 1,000$
+$1 ≤ b_{i}, p_{i} ≤ P$ for each valid $i$
+$1 ≤ v_{i} ≤ 10^{6}$ for each valid $i$
+$1 ≤ a_{i} ≤ M$ for each valid $i$
+
+----- Sample Input 1 ------ 
+5 2 24
+
+1 7 2
+
+1 5 2
+
+1 4 1
+
+2 9 1
+
+2 13 2
+
+10 15
+----- Sample Output 1 ------ 
+7
+"""
+
+from collections import defaultdict
+
+def max_total_greatness(N, M, P, songs, albums):
+    d = defaultdict(list)
+    for a, p, v in songs:
+        d[a].append((p, v))
+    
+    dp = [[0 for _ in range(P + 1)] for _ in range(N + 1)]
+    s = 1
+    i = 1
+    
+    while i <= M:
+        j = 0
+        sg = 0
+        while j < len(d[i]):
+            k = P
+            ps = d[i][j][0]
+            gs = d[i][j][1]
+            sg += gs
+            while k >= ps:
+                dp[s][k] = max(dp[s - 1][k], dp[s - 1][k - ps] + gs)
+                k -= 1
+            k = 0
+            while k < ps:
+                dp[s][k] = dp[s - 1][k]
+                k += 1
+            j += 1
+            s += 1
+        k = P
+        while k >= albums[i - 1]:
+            dp[s - 1][k] = max(dp[s - 1 - j][k - albums[i - 1]] + sg, dp[s - 1][k])
+            k -= 1
+        i += 1
+    
+    return dp[N][P]

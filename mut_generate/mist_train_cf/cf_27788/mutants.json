@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_27788",
+  "entry_point": "remove_none_values",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "return {key: remove_none_values(value) for key, value in json_data.items() if value is not None}",
+      "mutated_line": "return {key: remove_none_values(value) for (key, value) in json_data.items() if value is None}",
+      "code": "import json\n\ndef remove_none_values(json_data):\n    if isinstance(json_data, dict):\n        return {key: remove_none_values(value) for (key, value) in json_data.items() if value is None}\n    elif isinstance(json_data, list):\n        return [remove_none_values(item) for item in json_data if item is not None]\n    else:\n        return json_data"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return [remove_none_values(item) for item in json_data if item is not None]",
+      "mutated_line": "return [remove_none_values(item) for item in json_data if item is None]",
+      "code": "import json\n\ndef remove_none_values(json_data):\n    if isinstance(json_data, dict):\n        return {key: remove_none_values(value) for (key, value) in json_data.items() if value is not None}\n    elif isinstance(json_data, list):\n        return [remove_none_values(item) for item in json_data if item is None]\n    else:\n        return json_data"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+"""
+QUESTION:
+Vanya is doing his maths homework. He has an expression of form $x_{1} \diamond x_{2} \diamond x_{3} \diamond \ldots \diamond x_{n}$, where x_1, x_2, ..., x_{n} are digits from 1 to 9, and sign [Image] represents either a plus '+' or the multiplication sign '*'. Vanya needs to add one pair of brackets in this expression so that to maximize the value of the resulting expression.
+
+
+-----Input-----
+
+The first line contains expression s (1 ≤ |s| ≤ 5001, |s| is odd), its odd positions only contain digits from 1 to 9, and even positions only contain signs  +  and  * . 
+
+The number of signs  *  doesn't exceed 15.
+
+
+-----Output-----
+
+In the first line print the maximum possible value of an expression.
+
+
+-----Examples-----
+Input
+3+5*7+8*4
+
+Output
+303
+
+Input
+2+3*5
+
+Output
+25
+
+Input
+3*4*5
+
+Output
+60
+
+
+
+-----Note-----
+
+Note to the first sample test. 3 + 5 * (7 + 8) * 4 = 303.
+
+Note to the second sample test. (2 + 3) * 5 = 25.
+
+Note to the third sample test. (3 * 4) * 5 = 60 (also many other variants are valid, for instance, (3) * 4 * 5 = 60).
+"""
+
+def maximize_expression_value(expression: str) -> int:
+    d = list(expression.split('*'))
+    last = 0
+    po = []
+    ki = []
+    
+    for i in range(len(d)):
+        po.append(last)
+        ki.append(len(d[i]) + last)
+        last += len(d[i]) + 1
+    
+    ans = [eval(expression)]
+    
+    for a in po:
+        for b in ki:
+            if a > b - 2:
+                continue
+            x = expression[:a] + '(' + expression[a:b] + ')' + expression[b:]
+            ans.append(eval(x))
+    
+    return max(ans)

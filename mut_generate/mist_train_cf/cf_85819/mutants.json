@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_85819",
+  "entry_point": "filter_sort_prefix_suffix",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "filtered_strings = [string for string in strings if any(string.startswith(prefix) and string.endswith(suffix) for prefix, suffix in prefix_suffixes)]",
+      "mutated_line": "filtered_strings = [string for string in strings if any((string.startswith(prefix) or string.endswith(suffix) for (prefix, suffix) in prefix_suffixes))]",
+      "code": "from typing import List, Tuple, Callable\n\ndef filter_sort_prefix_suffix(strings: List[str], prefix_suffixes: List[Tuple[str, str]], sort_order: Callable[[List[str]], List[str]], case_sensitive: bool) -> List[str]:\n    if not case_sensitive:\n        strings = [string.lower() for string in strings]\n        prefix_suffixes = [(prefix.lower(), suffix.lower()) for (prefix, suffix) in prefix_suffixes]\n    filtered_strings = [string for string in strings if any((string.startswith(prefix) or string.endswith(suffix) for (prefix, suffix) in prefix_suffixes))]\n    return sort_order(filtered_strings)"
+    }
+  ]
+}

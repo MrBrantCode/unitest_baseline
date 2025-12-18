@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_97186",
+  "entry_point": "build_tree",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "root = build_tree('html', parent_map)",
+      "mutated_line": "root = build_tree('', parent_map)",
+      "code": "class TagNode:\n\n    def __init__(self, name):\n        self.name = name\n        self.children = []\n\ndef build_tree(tag, parent_map):\n    node = TagNode(tag)\n    children = [child for (child, parent) in parent_map.items() if parent == tag]\n    for child in children:\n        node.children.append(build_tree(child, parent_map))\n    return node\n\ndef traverse_tree(node, result):\n    result.append(node.name)\n    for child in node.children:\n        traverse_tree(child, result)\n\ndef generate_html_tags(parent_map):\n    root = build_tree('', parent_map)\n    result = []\n    traverse_tree(root, result)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "children = [child for child, parent in parent_map.items() if parent == tag]",
+      "mutated_line": "children = [child for (child, parent) in parent_map.items() if parent != tag]",
+      "code": "class TagNode:\n\n    def __init__(self, name):\n        self.name = name\n        self.children = []\n\ndef build_tree(tag, parent_map):\n    node = TagNode(tag)\n    children = [child for (child, parent) in parent_map.items() if parent != tag]\n    for child in children:\n        node.children.append(build_tree(child, parent_map))\n    return node\n\ndef traverse_tree(node, result):\n    result.append(node.name)\n    for child in node.children:\n        traverse_tree(child, result)\n\ndef generate_html_tags(parent_map):\n    root = build_tree('html', parent_map)\n    result = []\n    traverse_tree(root, result)\n    return result"
+    }
+  ]
+}

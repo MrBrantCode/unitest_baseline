@@ -1,0 +1,56 @@
+"""
+QUESTION:
+Chef has the string s of length n consisted of digits 4 and 7.
+The string s is called balanced
+if there exits such integer x (1 ≤ x ≤ n) that the number of digits 4 in substring s[1; x) is equal to the number of digits 7 in substring s(x; n],
+where s[1; x) is the substring from the 1st digit to (x-1)th digit of s, and s(x; n] is the substring from the (x+1)th digit to nth digit of s.
+For example, s = 747474 is a balanced string, because s[1; 4) = 747 has one 4 and s(4; 6] = 74 has one 7.
+Note that x can be 1 or n and s[1; 1) and s(n; n] denote an empty string.
+
+In one turn Chef can choose any pair of consecutive digits and swap them.
+Find for Chef the total number of different balanced string that can be obtained from string s using any (even 0) number of turns.
+Print the result modulo 1000000007.
+
+-----Input-----
+
+The first line of the input contains one integer T, the number of test cases.
+Then T lines follow, each of which contains string s for the corresponding test.
+
+-----Output-----
+T lines, each of which contains single integer - the answer for the corresponding test modulo 109+7.
+
+-----Constraints-----
+
+1 ≤ T ≤ 10
+
+1 ≤ n ≤ 5000
+
+-----Example-----
+Input:
+2
+47
+4477
+
+Output:
+1
+4
+"""
+
+from math import factorial
+
+def Ncr(n, r):
+    if r < 0:
+        return 0
+    return factorial(n) // (factorial(n - r) * factorial(r))
+
+def count_balanced_strings(s):
+    modulo = 10 ** 9 + 7
+    m = s.count('4')
+    n = s.count('7')
+    
+    if m == n:
+        return (Ncr(2 * n - 1, n - 1) + Ncr(2 * n - 2, n - 2)) % modulo
+    elif m > n:
+        return (Ncr(m + n, n) - Ncr(m + n - 2, n - 1)) % modulo
+    else:
+        return (Ncr(m + n, m) - Ncr(m + n - 2, m - 1)) % modulo

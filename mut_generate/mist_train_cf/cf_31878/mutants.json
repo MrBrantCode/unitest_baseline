@@ -1,0 +1,476 @@
+{
+  "task_id": "cf_31878",
+  "entry_point": "adaGradUpdate",
+  "mutant_count": 67,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem /= 1 - rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem /= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 24,
+      "original_line": "mem += 1",
+      "mutated_line": "mem -= 1",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem -= 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 - r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 - r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 * (r * grad ** 2)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 * (r * grad ** 2)\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g * (g2 + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g * (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g // (g2 + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g // (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= 1 + rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 + rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= 1 * rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 * rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate * max(bestIter, 7)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate * max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate // max(bestIter, 7)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate // max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "mem += 1",
+      "mutated_line": "mem += 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 2\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "mem += 1",
+      "mutated_line": "mem += 0",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 0\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "mem += 1",
+      "mutated_line": "mem += 0",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 0\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "mem += 1",
+      "mutated_line": "mem += -1",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += -1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) * (np.sqrt(g2) + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) * (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) // (np.sqrt(g2) + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) // (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return params - grad*alpha",
+      "mutated_line": "return params + grad * alpha",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params + grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return params - grad*alpha",
+      "mutated_line": "return params * (grad * alpha)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params * (grad * alpha)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) / g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) / g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = 1 - r + g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = 1 - r + g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) ** g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) ** g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r / grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r / grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + (r + grad ** 2)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + (r + grad ** 2)\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r ** grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r ** grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g / g / (g2 + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g / g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = (g + g) / (g2 + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = (g + g) / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g ** g / (g2 + 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g ** g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 - 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 - 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 * 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 * 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= 2 - rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 2 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= 0 - rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 0 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= 0 - rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 0 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "mem *= (1 - rate)",
+      "mutated_line": "mem *= -1 - rate",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= -1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) - 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) - 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) * 1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) * 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return params - grad*alpha",
+      "mutated_line": "return params - grad / alpha",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad / alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return params - grad*alpha",
+      "mutated_line": "return params - (grad + alpha)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - (grad + alpha)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return params - grad*alpha",
+      "mutated_line": "return params - grad ** alpha",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad ** alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 + r) * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 + r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = 1 * r * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = 1 * r * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * (grad * 2)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * (grad * 2)\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * (grad + 2)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * (grad + 2)\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 + 1.0)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1.0)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 + -0.9999999999999999)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + -0.9999999999999999)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 + 0)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 0)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 + 1)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "rate = g*g/(g2+1e-16)",
+      "mutated_line": "rate = g * g / (g2 + -1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + -1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate / max(bestIter, 8)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 8)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate / max(bestIter, 6)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 6)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate / max(bestIter, 0)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 0)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate / max(bestIter, 1)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 1)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "learningRate = fixedRate/(max(bestIter, 7))",
+      "mutated_line": "learningRate = fixedRate / max(bestIter, -7)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, -7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1.0)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1.0)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + -0.9999999999999999)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + -0.9999999999999999)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 0)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 0)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "alpha = np.minimum(learningRate, rate)/(np.sqrt(g2)+1e-16)",
+      "mutated_line": "alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + -1e-16)",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + -1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (2 - r) * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (2 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (0 - r) * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (0 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (0 - r) * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (0 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (-1 - r) * g2 + r * grad ** 2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (-1 - r) * g2 + r * grad ** 2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * grad ** 3",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 3\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * grad ** 1",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 1\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * grad ** 0",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 0\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * grad ** 1",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** 1\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "g2 = (1-r)*g2 + r*grad**2",
+      "mutated_line": "g2 = (1 - r) * g2 + r * grad ** -2",
+      "code": "import numpy as np\n\ndef adaGradUpdate(params, grad, g, g2, mem, fixedRate, bestIter, r) -> np.ndarray:\n    \"\"\"\n    This function applies the AdaGrad update rule to the given parameters.\n\n    Args:\n    params (np.ndarray): The current parameters.\n    grad (np.ndarray): The gradients.\n    g (float): A variable used in the calculation of the learning rate.\n    g2 (float): A variable used in the calculation of the learning rate.\n    mem (float): A memory variable.\n    fixedRate (float): A fixed learning rate.\n    bestIter (int): The best iteration.\n    r (float): A variable used in the calculation of g2.\n\n    Returns:\n    np.ndarray: The updated parameters.\n    \"\"\"\n    g2 = (1 - r) * g2 + r * grad ** -2\n    rate = g * g / (g2 + 1e-16)\n    mem *= 1 - rate\n    learningRate = fixedRate / max(bestIter, 7)\n    mem += 1\n    alpha = np.minimum(learningRate, rate) / (np.sqrt(g2) + 1e-16)\n    return params - grad * alpha"
+    }
+  ]
+}

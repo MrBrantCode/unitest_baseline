@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_31020",
+  "entry_point": "handle_directory",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if e.errno in (errno.ENOTDIR, errno.ENOENT):",
+      "mutated_line": "if e.errno not in (errno.ENOTDIR, errno.ENOENT):",
+      "code": "import os\nimport errno\n\nclass NoSuchDir(Exception):\n    pass\n\ndef handle_directory(base, is_dir):\n    if is_dir:\n        try:\n            files = os.listdir(base)\n        except OSError as e:\n            if e.errno not in (errno.ENOTDIR, errno.ENOENT):\n                raise NoSuchDir('The dir {0} does not exist'.format(base))\n            else:\n                raise\n    else:\n        return"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "raise NoSuchDir('The dir {0} does not exist'.format(base))",
+      "mutated_line": "raise NoSuchDir(''.format(base))",
+      "code": "import os\nimport errno\n\nclass NoSuchDir(Exception):\n    pass\n\ndef handle_directory(base, is_dir):\n    if is_dir:\n        try:\n            files = os.listdir(base)\n        except OSError as e:\n            if e.errno in (errno.ENOTDIR, errno.ENOENT):\n                raise NoSuchDir(''.format(base))\n            else:\n                raise\n    else:\n        return"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_38202",
+  "entry_point": "extract_django_settings",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "spec = importlib.util.spec_from_file_location(\"settings\", file_path)",
+      "mutated_line": "spec = importlib.util.spec_from_file_location('', file_path)",
+      "code": "from typing import List, Dict, Union\nimport importlib.util\n\ndef extract_django_settings(file_path: str, settings: List[str]) -> Dict[str, Union[str, None]]:\n    extracted_settings = {}\n    spec = importlib.util.spec_from_file_location('', file_path)\n    settings_module = importlib.util.module_from_spec(spec)\n    spec.loader.exec_module(settings_module)\n    for setting in settings:\n        setting_value = getattr(settings_module, setting, None)\n        extracted_settings[setting] = setting_value\n    return extracted_settings"
+    }
+  ]
+}

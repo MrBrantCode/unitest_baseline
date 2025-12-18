@@ -1,0 +1,126 @@
+{
+  "task_id": "cf_101264",
+  "entry_point": "combine_dates",
+  "mutant_count": 17,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if start_date is not None:",
+      "mutated_line": "if start_date is None:",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if end_date is None:",
+      "mutated_line": "if end_date is not None:",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is not None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date != end_date + timedelta(days=1):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date != end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return \", \".join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\"",
+      "mutated_line": "return ''.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ''.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "dates = sorted([datetime.strptime(d, \"%Y-%m-%d\") for d in date_str.split(\",\")])",
+      "mutated_line": "dates = sorted([datetime.strptime(d, '') for d in date_str.split(',')])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date - timedelta(days=1):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date - timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date * timedelta(days=1):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date * timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if start_date != end_date",
+      "mutated_line": "return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date == end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date == end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "dates = sorted([datetime.strptime(d, \"%Y-%m-%d\") for d in date_str.split(\",\")])",
+      "mutated_line": "dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split('')])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split('')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return \", \".join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\"",
+      "mutated_line": "return ', '.join([f\"{start_date.strftime('%Y-%m-%d')}{end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')}{end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "else start_date.strftime('%Y-%m-%d')",
+      "mutated_line": "return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date + timedelta(days=2):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=2):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date + timedelta(days=0):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=0):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date + timedelta(days=0):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=0):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif date == end_date + timedelta(days=1):",
+      "mutated_line": "elif date == end_date + timedelta(days=-1):",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=-1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return \", \".join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\"",
+      "mutated_line": "return ', '.join([f\"{start_date.strftime('')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('')} to {end_date.strftime('%Y-%m-%d')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return \", \".join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\"",
+      "mutated_line": "return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])",
+      "code": "from datetime import datetime, timedelta\n\ndef combine_dates(date_str):\n    dates = sorted([datetime.strptime(d, '%Y-%m-%d') for d in date_str.split(',')])\n    start_date = None\n    end_date = None\n    ranges = []\n    for date in dates:\n        if end_date is None:\n            start_date = date\n            end_date = date\n        elif date == end_date + timedelta(days=1):\n            end_date = date\n        else:\n            ranges.append((start_date, end_date))\n            start_date = date\n            end_date = date\n    if start_date is not None:\n        ranges.append((start_date, end_date))\n    return ', '.join([f\"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('')}\" if start_date != end_date else start_date.strftime('%Y-%m-%d') for (start_date, end_date) in ranges])"
+    }
+  ]
+}

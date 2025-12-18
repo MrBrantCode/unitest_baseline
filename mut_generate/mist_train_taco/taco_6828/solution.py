@@ -1,0 +1,78 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese , Russian and Vietnamese as well. 
+
+You are given a uniformly randomly generated string S, consisting of letters from the set {"A", "B"}. Your task is to find a string T that appears in S as a subsequence exactly twice. 
+
+In other words, you need to find such a string T, that there exist exactly two sets of indexes i_{1}, i_{2}, ..., i_{|T|} and j_{1}, j_{2}, ..., j_{|T|} such that there exists some k, where  i_{k} ≠ j_{k} and S{i_{1}...i_{|T|}} = S{j_{1}...j_{|T|}} = T.
+
+------ Input ------ 
+
+The first line of the input contains an integer T denoting the number of test cases. The description of T test cases follows.
+The first and only line of each test case contains a single string S.
+The string S was generated randomly. For a generating string S, we first choose an integer N denoting a length of S. After that every symbol of the string S is chosen randomly from the set {"A", "B"} and the both symbols have equal probability to be chosen. Note that N is not choosen randomly.
+
+------ Output ------ 
+
+For each test case, output a string that occurs exactly twice as a subsequence in S, or output -1 if there is no such string. If there are more than one possible subsequences occurring exactly two times, you can print any one of them.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10$
+
+------ Subtasks ------ 
+
+$Subtask #1 (10 points): 2 ≤ N ≤ 3$
+$Subtask #2 (26 points): 2 ≤ N ≤ 10$
+$Subtask #3 (64 points): 2 ≤ N ≤ 5000$
+
+----- Sample Input 1 ------ 
+2
+
+AAAA
+
+BAB
+----- Sample Output 1 ------ 
+-1
+
+B
+----- explanation 1 ------ 
+Test case #1: 
+
+The string "AAAA" appears once as a subsequence in itself.
+The string "AAA" appears four times as a subsequence in "AAAA"; possible positions: {2, 3, 4}, {1, 3, 4}, {1, 2, 4}, {1, 2, 3}. 
+The strings "AA" and "A" also appear in "AAAA" as a subsequence strictly more than twice.
+So, there is no string of "AAAA", which appears exactly twice. Hence answer is -1. 
+
+Test case #2: Two occurrences of "B" in "BAB" are {1} and {3} (1-based indexing).
+"""
+
+def find_subsequence_twice(S: str) -> str:
+    n = len(S)
+    a = S.count('A')
+    b = S.count('B')
+    c = 0
+    
+    if a > 2 and b == 0 or (b > 2 and a == 0):
+        return -1
+    elif a == 2:
+        return 'A'
+    elif b == 2:
+        return 'B'
+    elif n > 3:
+        for i in range(n - 3):
+            if i == 0 and (S[:3] == 'AAB' or S[:4] == 'BBA'):
+                return S[1:]
+                c = 1
+                break
+            else:
+                p = S[i:i + 4]
+                if p == 'ABBA' or p == 'BAAB':
+                    return S[:i + 1] + S[i + 2:]
+                    c = 1
+                    break
+        if c == 0 and (S[n - 3:] == 'ABB' or S[n - 3:] == 'BAA'):
+            return S[:n - 1]
+            c = 1
+    
+    return -1 if c == 0 else ''

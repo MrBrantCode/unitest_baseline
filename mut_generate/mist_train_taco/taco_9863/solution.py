@@ -1,0 +1,84 @@
+"""
+QUESTION:
+A bacteria lifespan is represented as follows:-
+
+0th year- born
+
+1st year- Does not reproduce only grows
+
+2nd year- Gives birth to another Bacteria
+
+3rd year- Gives birth to another Bacteria and then Dies
+
+Initially in 0th year there is only 1 bacteria
+
+Population in Nth year:-
+
+year-population
+
+0-1
+
+1st year- 1
+
+2nd year- 2
+
+3rd year- 2
+
+4th year- 3
+
+5th year- 4
+
+6th year- 5
+
+7th year- 7
+
+8th year-9
+
+and so on...
+
+What is the population after Nth year?
+
+Input Format-
+
+Input consist of a single line containing year N
+
+Output Format-
+
+Output consist of a single line containing total population 
+
+Sample Input 1-
+
+10
+
+Sample output 1-
+
+16
+
+Sample Input 2-
+
+35
+
+Sample Output 2-
+
+17991
+
+SAMPLE INPUT
+9
+
+SAMPLE OUTPUT
+12
+"""
+
+def calculate_bacteria_population(n: int) -> int:
+    if n == 0:
+        return 1
+    elif n == 1 or n == 2:
+        return 2
+    else:
+        r0, r1, r2 = 1, 2, 2
+        for _ in range(3, n + 1):
+            res = r0 + r1
+            r0 = r1
+            r1 = r2
+            r2 = res
+        return res

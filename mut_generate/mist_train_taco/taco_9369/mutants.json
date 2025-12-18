@@ -1,0 +1,1204 @@
+{
+  "task_id": "taco_9369",
+  "entry_point": "gcd",
+  "mutant_count": 171,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 60 * m - s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m - s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return (3600 * h + 60 * m) * s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return (3600 * h + 60 * m) * s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, 1, 0)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 1, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, -1, 0)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, -1, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, 1, 0)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 1, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, 0, 1)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 1)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, 0, -1)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, -1)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "M = f(H, 0, 0)",
+      "mutated_line": "M = f(H, 0, 1)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 1)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "_, ho, mo, n, d = res[0]",
+      "mutated_line": "(_, ho, mo, n, d) = res[1]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[1]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "_, ho, mo, n, d = res[0]",
+      "mutated_line": "(_, ho, mo, n, d) = res[-1]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[-1]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "_, ho, mo, n, d = res[0]",
+      "mutated_line": "(_, ho, mo, n, d) = res[1]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[1]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "(m, n) = (n, m % n)",
+      "mutated_line": "(m, n) = (n, m * n)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m * n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "(m, n) = (n, m % n)",
+      "mutated_line": "(m, n) = (n, m + n)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m + n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h - 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h - 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h * (60 * m) + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h * (60 * m) + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for m0 in range(60):",
+      "mutated_line": "for m0 in range(61):",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(61):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for m0 in range(60):",
+      "mutated_line": "for m0 in range(59):",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(59):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for m0 in range(60):",
+      "mutated_line": "for m0 in range(0):",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(0):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for m0 in range(60):",
+      "mutated_line": "for m0 in range(1):",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(1):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "for m0 in range(60):",
+      "mutated_line": "for m0 in range(-60):",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(-60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 - 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 - 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = (3600 * h0 + 60 * m0) * (60 * H * m0)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = (3600 * h0 + 60 * m0) * (60 * H * m0)\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H + 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H + 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H * 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H * 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 / h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 / h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 + h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 + h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 ** h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 ** h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 60 / m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 / m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + (60 + m) + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + (60 + m) + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 60 ** m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 ** m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 - 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 - 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 * (60 * m0) + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 * (60 * m0) + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 60 * H / m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H / m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + (60 * H + m0)",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + (60 * H + m0)\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + (60 * H) ** m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + (60 * H) ** m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 / H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 / H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 + H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 + H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 ** H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 ** H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H - 2",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 2\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H - 0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 0\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H - 0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 0\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 119 * H - -1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - -1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 / H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 / H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 + H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 + H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [(-3600) ** H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [(-3600) ** H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 1, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 1, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, -1, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, -1, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 1, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 1, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 3600 / H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 / H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 3600 + H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 + H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 3600 ** H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 ** H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "p1 = p + d",
+      "mutated_line": "p1 = p - d",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p - d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "p1 = p + d",
+      "mutated_line": "p1 = p * d",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p * d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 < p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 < p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 > p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 > p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 == p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 == p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) * M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: x[0] - d0 + M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3601 * h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3601 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3599 * h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3599 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 0 * h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 0 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 1 * h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 1 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return -3600 * h + 60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return -3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 61 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 61 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 59 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 59 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 0 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 0 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + 1 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 1 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return 3600 * h + 60 * m + s",
+      "mutated_line": "return 3600 * h + -60 * m + s",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + -60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 / h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 / h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 + h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 + h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 ** h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 ** h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 / m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 / m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + (60 + m0) + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + (60 + m0) + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 ** m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 ** m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 60 / H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 / H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + (60 + H) * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + (60 + H) * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 60 ** H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 ** H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 120 * H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 120 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 118 * H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 118 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 0 * H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 0 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = 1 * H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 1 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "q = 119 * H - 1",
+      "mutated_line": "q = -119 * H - 1",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = -119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [+3600 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [+3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 3601 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3601 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 3599 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3599 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 0 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 0 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, 1 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 1 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3600 * H, 0, -3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, -3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 1 <= p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 1 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if -1 <= p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if -1 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 1 <= p1 < 60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 1 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 60 / q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 / q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 60 + q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 + q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 60 ** q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 ** q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) == q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) == q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] + d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: x[0] * d0 % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3601 * h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3601 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3599 * h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3599 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 0 * h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 0 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 1 * h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 1 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = -3600 * h0 + 60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = -3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 61 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 61 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 59 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 59 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 0 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 0 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 1 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 1 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + -60 * m0 + 60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + -60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 61 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 61 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 59 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 59 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 0 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 0 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + 1 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 1 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "p = 3600 * h0 + 60 * m0 + 60 * H * m0",
+      "mutated_line": "p = 3600 * h0 + 60 * m0 + -60 * H * m0",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + -60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3601 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3601 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-3599 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3599 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-0 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-0 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [-1 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-1 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "for d in [-3600 * H, 0, 3600 * H]:",
+      "mutated_line": "for d in [--3600 * H, 0, 3600 * H]:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [--3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 61 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 61 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 59 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 59 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 0 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 0 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < 1 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 1 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if 0 <= p1 < 60 * q1:",
+      "mutated_line": "if 0 <= p1 < -60 * q1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < -60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H / (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H / (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H + (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H + (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H ** (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H ** (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) - p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) - p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) * p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) * p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 - p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 - p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 * p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 * p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 / (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 / (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 + (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 + (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 ** (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 ** (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[1] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[-1] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "res.sort(key=lambda x: (x[0] - d0) % M)",
+      "mutated_line": "(_, ho, mo, n, d) = res[0]",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[1] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 / q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 / q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 + q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 + q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * ((60 * m0) ** q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * ((60 * m0) ** q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 - 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 - 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 * (60 * m0)) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 * (60 * m0)) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 0) - p1 / q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) - p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 0) * (p1 / q1), h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) * (p1 / q1), h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 / m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 / m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * ((60 + m0) * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * ((60 + m0) * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 ** m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 ** m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 / h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 / h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 + h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 + h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 ** h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 ** h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 / m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 / m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + (60 + m0)) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + (60 + m0)) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 ** m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 ** m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 0) + p1 * q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 * q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 0) + p1 // q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 // q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (61 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (61 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (59 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (59 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (0 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (0 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (1 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (1 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (-60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (-60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3601 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3601 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3599 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3599 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (0 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (0 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (1 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (1 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (-3600 * h0 + 60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (-3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 61 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 61 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 59 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 59 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 0 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 0 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 1 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 1 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:",
+      "mutated_line": "if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + -60 * m0) + p1:",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + -60 * m0) + p1:\n                        res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 1) + p1 / q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 1) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, -1) + p1 / q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, -1) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "res.append((f(h0, m0, 0) + p1 / q1, h0, m0, p1, q1))",
+      "mutated_line": "res.append((f(h0, m0, 1) + p1 / q1, h0, m0, p1, q1))",
+      "code": "def gcd(m, n):\n    while n:\n        (m, n) = (n, m % n)\n    return m\n\ndef find_non_overlapping_time(H, h, m, s):\n\n    def f(h, m, s):\n        return 3600 * h + 60 * m + s\n    d0 = f(h, m, s)\n    M = f(H, 0, 0)\n    res = []\n    for h0 in range(H):\n        for m0 in range(60):\n            p = 3600 * h0 + 60 * m0 + 60 * H * m0\n            q = 119 * H - 1\n            for d in [-3600 * H, 0, 3600 * H]:\n                p1 = p + d\n                q1 = q\n                g = gcd(p1, q)\n                p1 //= g\n                q1 //= g\n                if 0 <= p1 < 60 * q1:\n                    if H * (60 * m0 * q1 + p1) != q1 * (3600 * h0 + 60 * m0) + p1:\n                        res.append((f(h0, m0, 1) + p1 / q1, h0, m0, p1, q1))\n    res.sort(key=lambda x: (x[0] - d0) % M)\n    (_, ho, mo, n, d) = res[0]\n    return (ho, mo, n, d)"
+    }
+  ]
+}

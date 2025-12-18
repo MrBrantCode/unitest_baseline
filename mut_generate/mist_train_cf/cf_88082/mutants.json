@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_88082",
+  "entry_point": "create_nested_dictionary",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 23,
+      "original_line": "if not isinstance(key, str) or not isinstance(value, list):",
+      "mutated_line": "if not isinstance(key, str) and (not isinstance(value, list)):",
+      "code": "def create_nested_dictionary(l1, l2):\n    nested_dict = {}\n    min_length = min(len(l1), len(l2))\n\n    def flatten_list(lst):\n        flattened_list = []\n        for element in lst:\n            if isinstance(element, list):\n                flattened_list.extend(flatten_list(element))\n            else:\n                flattened_list.append(element)\n        return flattened_list\n    for i in range(min_length):\n        key = l1[i]\n        value = l2[i]\n        if not isinstance(key, str) and (not isinstance(value, list)):\n            continue\n        value = flatten_list(value)\n        if key not in nested_dict:\n            nested_dict[key] = {}\n        for (j, element) in enumerate(value):\n            if element in nested_dict[key]:\n                nested_dict[key][element].append(i)\n            else:\n                nested_dict[key][element] = [i]\n    return nested_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if key not in nested_dict:",
+      "mutated_line": "if key in nested_dict:",
+      "code": "def create_nested_dictionary(l1, l2):\n    nested_dict = {}\n    min_length = min(len(l1), len(l2))\n\n    def flatten_list(lst):\n        flattened_list = []\n        for element in lst:\n            if isinstance(element, list):\n                flattened_list.extend(flatten_list(element))\n            else:\n                flattened_list.append(element)\n        return flattened_list\n    for i in range(min_length):\n        key = l1[i]\n        value = l2[i]\n        if not isinstance(key, str) or not isinstance(value, list):\n            continue\n        value = flatten_list(value)\n        if key in nested_dict:\n            nested_dict[key] = {}\n        for (j, element) in enumerate(value):\n            if element in nested_dict[key]:\n                nested_dict[key][element].append(i)\n            else:\n                nested_dict[key][element] = [i]\n    return nested_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if element in nested_dict[key]:",
+      "mutated_line": "if element not in nested_dict[key]:",
+      "code": "def create_nested_dictionary(l1, l2):\n    nested_dict = {}\n    min_length = min(len(l1), len(l2))\n\n    def flatten_list(lst):\n        flattened_list = []\n        for element in lst:\n            if isinstance(element, list):\n                flattened_list.extend(flatten_list(element))\n            else:\n                flattened_list.append(element)\n        return flattened_list\n    for i in range(min_length):\n        key = l1[i]\n        value = l2[i]\n        if not isinstance(key, str) or not isinstance(value, list):\n            continue\n        value = flatten_list(value)\n        if key not in nested_dict:\n            nested_dict[key] = {}\n        for (j, element) in enumerate(value):\n            if element not in nested_dict[key]:\n                nested_dict[key][element].append(i)\n            else:\n                nested_dict[key][element] = [i]\n    return nested_dict"
+    }
+  ]
+}

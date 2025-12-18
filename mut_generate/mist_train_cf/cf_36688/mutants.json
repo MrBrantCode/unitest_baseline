@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_36688",
+  "entry_point": "sentry_monitor",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if error_type in error_stream:",
+      "mutated_line": "if error_type not in error_stream:",
+      "code": "import functools\n\ndef sentry_monitor(error_stream):\n\n    def decorator(func):\n\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                error_type = type(e).__name__\n                if error_type not in error_stream:\n                    error_stream[error_type].log_error(e)\n                else:\n                    pass\n                raise\n        return wrapper\n    return decorator"
+    }
+  ]
+}

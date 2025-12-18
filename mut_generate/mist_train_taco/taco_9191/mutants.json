@@ -1,0 +1,511 @@
+{
+  "task_id": "taco_9191",
+  "entry_point": "deref",
+  "mutant_count": 72,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) >= 1:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) >= 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) <= 1:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) <= 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) != 1:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) != 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 1"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return -1"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 1"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "expr = expr.replace(']', '')",
+      "mutated_line": "expr = expr.replace('', '')",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace('', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "expr = expr.replace(']', '')",
+      "mutated_line": "expr = expr.replace(']', 'MUTATED')",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', 'MUTATED')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "symb = expr.split('[')",
+      "mutated_line": "symb = expr.split('')",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[+1] = symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[+1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-1] = symb[+1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[+1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) > 2:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 2:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) > 0:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 0:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) > 0:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 0:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "while len(symb) > 1:",
+      "mutated_line": "while len(symb) > -1:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > -1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if index not in d[name]:",
+      "mutated_line": "if index in d[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return symb[0]",
+      "mutated_line": "return symb[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[1]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return symb[0]",
+      "mutated_line": "return symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[-1]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return symb[0]",
+      "mutated_line": "return symb[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[1]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for i, stmt in enumerate(program, 1):",
+      "mutated_line": "for (i, stmt) in enumerate(program, 2):",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 2):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for i, stmt in enumerate(program, 1):",
+      "mutated_line": "for (i, stmt) in enumerate(program, 0):",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 0):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for i, stmt in enumerate(program, 1):",
+      "mutated_line": "for (i, stmt) in enumerate(program, 0):",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 0):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "for i, stmt in enumerate(program, 1):",
+      "mutated_line": "for (i, stmt) in enumerate(program, -1):",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, -1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if '=' not in stmt:",
+      "mutated_line": "if '=' in stmt:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is None and value is None and (int(index) >= dd[name]):",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None and value is None and (int(index) >= dd[name]):\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-2] = symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-2] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-0] = symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-0] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-0] = symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-0] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[--1] = symb[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[--1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-1] = symb[-2]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-2]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-1] = symb[-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-0]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-1] = symb[-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-0]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "symb[-1] = symb[-1]",
+      "mutated_line": "symb[-1] = symb[--1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[--1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if '=' not in stmt:",
+      "mutated_line": "if '' not in stmt:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "(lhs, rhs) = stmt.split('=')",
+      "mutated_line": "(lhs, rhs) = stmt.split('')",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "name = lhs[0]",
+      "mutated_line": "name = lhs[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[1]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "name = lhs[0]",
+      "mutated_line": "name = lhs[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[-1]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "name = lhs[0]",
+      "mutated_line": "name = lhs[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[1]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is not None or value is None or int(index) >= dd[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is not None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is None or value is not None or int(index) >= dd[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is not None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is None or value is None or int(index) > dd[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) > dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is None or value is None or int(index) < dd[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) < dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 31,
+      "original_line": "if index is None or value is None or int(index) >= dd[name]:",
+      "mutated_line": "if index is None or value is None or int(index) == dd[name]:",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) == dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[+2:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[+2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "name = stmt[0]",
+      "mutated_line": "name = stmt[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[1]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "name = stmt[0]",
+      "mutated_line": "name = stmt[-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[-1]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "name = stmt[0]",
+      "mutated_line": "name = stmt[1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[1]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[3:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[3:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[1:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[1:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[0:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[0:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[1:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[1:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[-2:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[-2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[2:+1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:+1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[-3:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-3:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[-1:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-1:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[-0:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-0:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[-1:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-1:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "(name, index) = symb[-2:]",
+      "mutated_line": "(name, index) = symb[--2:]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[--2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[3:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[3:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[1:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[1:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[0:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[0:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[1:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[1:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[-2:-1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[-2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[2:+1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:+1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[2:-2]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-2]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[2:-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-0]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[2:-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-0]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "index = lhs[2:-1]",
+      "mutated_line": "index = lhs[2:--1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:--1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[2:-2]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-2]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[2:-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-0]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[2:-0]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:-0]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "index = stmt[2:-1]",
+      "mutated_line": "index = stmt[2:--1]",
+      "code": "import re\n\ndef deref(d, expr):\n    expr = expr.replace(']', '')\n    symb = expr.split('[')\n    symb[-1] = symb[-1]\n    while len(symb) > 1:\n        (name, index) = symb[-2:]\n        if index not in d[name]:\n            return None\n        symb.pop()\n        symb.pop()\n        symb.append(d[name][index])\n    return symb[0]\n\ndef find_first_bug_line(program):\n    d = {}\n    dd = {}\n    for (i, stmt) in enumerate(program, 1):\n        if '=' not in stmt:\n            name = stmt[0]\n            index = stmt[2:--1]\n            d[name] = {}\n            dd[name] = int(index)\n            continue\n        (lhs, rhs) = stmt.split('=')\n        name = lhs[0]\n        index = lhs[2:-1]\n        index = deref(d, index)\n        value = deref(d, rhs)\n        if index is None or value is None or int(index) >= dd[name]:\n            return i\n        d[name][index] = value\n    return 0"
+    }
+  ]
+}

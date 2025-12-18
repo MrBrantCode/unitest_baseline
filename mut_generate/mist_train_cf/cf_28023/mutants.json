@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_28023",
+  "entry_point": "route_join_with_or_without_slash",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if not route.endswith('/'):",
+      "mutated_line": "if not route.endswith(''):",
+      "code": "def route_join_with_or_without_slash(blueprint, route, *args, **kwargs):\n\n    def decorator(f):\n        blueprint.add_url_rule(route, *args, view_func=f, **kwargs)\n        if not route.endswith(''):\n            blueprint.add_url_rule(route + '/', *args, view_func=f, **kwargs)\n        return f\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "blueprint.add_url_rule(route + '/', view_func=f, *args, **kwargs)",
+      "mutated_line": "blueprint.add_url_rule(route - '/', *args, view_func=f, **kwargs)",
+      "code": "def route_join_with_or_without_slash(blueprint, route, *args, **kwargs):\n\n    def decorator(f):\n        blueprint.add_url_rule(route, *args, view_func=f, **kwargs)\n        if not route.endswith('/'):\n            blueprint.add_url_rule(route - '/', *args, view_func=f, **kwargs)\n        return f\n    return decorator"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "blueprint.add_url_rule(route + '/', view_func=f, *args, **kwargs)",
+      "mutated_line": "blueprint.add_url_rule(route * '/', *args, view_func=f, **kwargs)",
+      "code": "def route_join_with_or_without_slash(blueprint, route, *args, **kwargs):\n\n    def decorator(f):\n        blueprint.add_url_rule(route, *args, view_func=f, **kwargs)\n        if not route.endswith('/'):\n            blueprint.add_url_rule(route * '/', *args, view_func=f, **kwargs)\n        return f\n    return decorator"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "blueprint.add_url_rule(route + '/', view_func=f, *args, **kwargs)",
+      "mutated_line": "blueprint.add_url_rule(route + '', *args, view_func=f, **kwargs)",
+      "code": "def route_join_with_or_without_slash(blueprint, route, *args, **kwargs):\n\n    def decorator(f):\n        blueprint.add_url_rule(route, *args, view_func=f, **kwargs)\n        if not route.endswith('/'):\n            blueprint.add_url_rule(route + '', *args, view_func=f, **kwargs)\n        return f\n    return decorator"
+    }
+  ]
+}

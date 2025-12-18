@@ -1,0 +1,54 @@
+"""
+QUESTION:
+In a stock market, there is a product with its infinite stocks. The stock prices are given for N days, where price[i] denotes the price of the stock on the i^{th} day.
+There is a rule that a customer can buy at most i stock on the i^{th} day.
+If the customer has an amount of k amount of money initially. The task is to find out the maximum number of stocks a customer can buy. 
+Example 1:
+Input:
+price[] = { 10, 7, 19 }
+k = 45
+Output: 4
+Explanation: A customer purchases 1 stock on day 1, 
+2 stocks on day 2 and 1 stock on day 3 for 
+10, 7 * 2 = 14 and 19 respectively. Hence, 
+total amount is 10 + 14 + 19 = 43 and number 
+of stocks purchased is 4.
+Example 2:
+Input: 
+price[] = { 7, 10, 4 }
+k = 100
+Output: 6
+ 
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function buyMaximumProducts() which takes an array price and an integer k and returns an integer as output.
+Expected Time Complexity: O(NlogN)
+Expected Auxiliary Space: O(N)
+ 
+Constraints:
+1 <= N <= 10^{3}
+1 <= price[i] <= 10^{3}
+1 <= k <= 10^{3}
+"""
+
+from typing import List
+
+def buy_maximum_stocks(price: List[int], k: int) -> int:
+    # Create a list of tuples (price, day) where day is 1-indexed
+    prices = [(val, i) for (i, val) in enumerate(price, start=1)]
+    
+    # Sort the prices first by price, then by day in descending order
+    prices.sort(key=lambda x: (x[0], -x[1]))
+    
+    cnt = 0
+    for (val, i) in prices:
+        if i * val <= k:
+            cnt += i
+            k -= i * val
+        else:
+            temp = k // val
+            k -= temp * val
+            cnt += temp
+        if k == 0:
+            break
+    
+    return cnt

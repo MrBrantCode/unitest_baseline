@@ -1,0 +1,156 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese, Russian and Vietnamese as well. 
+
+Bearland can be represented as a square grid that consists of N rows and N columns.
+Two cells are called adjacent if they share a side.
+In the input, each cell is described by one character:
+
+'.' is an empty cell.
+'B', 'G' or 'P' is a cell inhabited by bears of one species — brown, grizzly or polar bears respectively.
+'?' is a cell inhabited by bears of one species but you don't know which one.
+Note that this cell can't be empty.
+
+Grizzly bears are the most aggressive species.
+If a cell is inhabited by grizzly bears, all adjacent cells should be empty, because otherwise there would be fights between bears.
+
+Brown and polar bears are a bit calmer.
+All brown bears are fine with other brown bears in adjacent cells, but they would fight with bears of any other species.
+Similarly, polar bears would fight with bears of any species other than polar bears.
+
+Let X denote the number of question marks.
+Since each question mark represents one of the three species, there are 3^{X} ways to replace them with characters 'B', 'G' and 'P' (denoting the species that live in that cell).
+Find the number of such ways that there are no fights between bears.
+Print the answer modulo (10^{9}+7).
+
+------ Input ------ 
+
+The first line of the input contains an integer T denoting the number of test cases. The description of T test cases follows.
+
+The first line of each test case contains an integer N denoting the size of the grid.
+
+The following N lines describe the grid.
+Each of those lines contains a string of length N.
+Each character is one of five: '.', '?', 'B', 'G', 'P'.
+
+------ Output ------ 
+
+For each test case, output a single line containing one integer — the number of ways to replace question marks to avoid fights in Bearland, modulo (10^{9}+7).
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 50$
+$2 ≤ N ≤ 50$
+
+------ Subtasks ------ 
+
+$Subtask #1 (30 points): 2 ≤ N ≤ 3$
+$Subtask #2 (30 points): Each character in the grid will be either '.' or '?'.$
+$Subtask #3 (40 points): Original constraints.$
+
+------ Example ------ 
+
+Input:
+6
+3
+..?
+.?B
+G..
+2
+GG
+..
+3
+?..
+.??
+??.
+3
+??P
+???
+??B
+7
+?.?.?.?
+.?.?.?.
+?.?.?.?
+.?.?.?.
+?.?.?.?
+.?.?.?.
+?.?.?.?
+2
+PP
+PP
+
+Output:
+1
+0
+6
+0
+288603514
+1
+
+------ Explanation ------ 
+
+Test case 1. We are given the grid of size 3 × 3. One of the already fixed cells is inhabited by brown bears. They would fight with bears of any species other than brown bears, so adjacent cells with question marks must by inhabited by brown bears as well.
+Hence, there is only 1 way to replace question marks (both of them must be replaced by 'B').
+
+Test case 2. In the given grid, there are two adjacent cells both inhabited by grizzly bears.
+They will fight with each other, so the answer is 0 — it's impossible to replace question marks so that there would be no fights (it doesn't matter that there are no question marks at all).
+
+Test case 3. There are 6 ways:
+
+B.. B.. G.. G.. P.. P..
+.BB .PP .BB .PP .BB .PP
+BB. PP. BB. PP. BB. PP.
+
+Test case 4. No matter how we replace question marks, bears in some two adjacent cells will start a fight.
+The answer is 0.
+"""
+
+def count_bear_configurations(N, land):
+    MOD = 10**9 + 7
+    
+    def find_connections(i, j, visited, connections):
+        if i > 0 and not visited[i - 1][j]:
+            connections[-1].append(land[i - 1][j])
+            visited[i - 1][j] = True
+            find_connections(i - 1, j, visited, connections)
+        if i < N - 1 and not visited[i + 1][j]:
+            connections[-1].append(land[i + 1][j])
+            visited[i + 1][j] = True
+            find_connections(i + 1, j, visited, connections)
+        if j > 0 and not visited[i][j - 1]:
+            connections[-1].append(land[i][j - 1])
+            visited[i][j - 1] = True
+            find_connections(i, j - 1, visited, connections)
+        if j < N - 1 and not visited[i][j + 1]:
+            connections[-1].append(land[i][j + 1])
+            visited[i][j + 1] = True
+            find_connections(i, j + 1, visited, connections)
+
+    def count_ans(connections):
+        ans = 1
+        for i in connections:
+            if len(i) == 1 and i == ['?']:
+                ans = ans % MOD * 3
+            elif len(i) > 1:
+                if 'G' in i:
+                    ans = 0
+                    break
+                elif 'B' in i and 'P' in i:
+                    ans = 0
+                    break
+                elif 'B' in i or 'P' in i:
+                    ans *= 1
+                else:
+                    ans = ans % MOD * 2
+        return ans % MOD
+
+    visited = [[True if land[i][j] == '.' else False for j in range(N)] for i in range(N)]
+    connections = []
+    for i in range(N):
+        for j in range(N):
+            if not visited[i][j]:
+                visited[i][j] = True
+                connections.append([land[i][j]])
+                find_connections(i, j, visited, connections)
+    
+    return count_ans(connections)

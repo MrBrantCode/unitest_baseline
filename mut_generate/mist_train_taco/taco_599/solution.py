@@ -1,0 +1,9 @@
+"""
+QUESTION:
+Switch/Case - Bug Fixing #6
+
+Oh no! Timmy's evalObject function doesn't work. He uses Switch/Cases to evaluate the given properties of an object, can you fix timmy's function?
+"""
+
+def evaluate_operation(a, b, operation):
+    return {'+': a + b, '-': a - b, '/': a / b, '*': a * b, '%': a % b, '**': a ** b}.get(operation)

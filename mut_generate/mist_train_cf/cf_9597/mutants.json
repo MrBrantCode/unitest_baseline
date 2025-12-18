@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_9597",
+  "entry_point": "parse_xml",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if child.tag in result:",
+      "mutated_line": "if child.tag not in result:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    root = ET.fromstring(xml_string)\n    return parse_element(root)\n\ndef parse_element(element):\n    result = {}\n    result.update(element.attrib)\n    for child in element:\n        child_data = parse_element(child)\n        if child.tag not in result:\n            if not isinstance(result[child.tag], list):\n                result[child.tag] = [result[child.tag]]\n            result[child.tag].append(child_data)\n        else:\n            result[child.tag] = child_data\n    if element.text:\n        result['text'] = element.text.strip()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "result['text'] = element.text.strip()",
+      "mutated_line": "result[''] = element.text.strip()",
+      "code": "import xml.etree.ElementTree as ET\n\ndef parse_xml(xml_string):\n    root = ET.fromstring(xml_string)\n    return parse_element(root)\n\ndef parse_element(element):\n    result = {}\n    result.update(element.attrib)\n    for child in element:\n        child_data = parse_element(child)\n        if child.tag in result:\n            if not isinstance(result[child.tag], list):\n                result[child.tag] = [result[child.tag]]\n            result[child.tag].append(child_data)\n        else:\n            result[child.tag] = child_data\n    if element.text:\n        result[''] = element.text.strip()\n    return result"
+    }
+  ]
+}

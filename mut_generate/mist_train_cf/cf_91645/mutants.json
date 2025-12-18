@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_91645",
+  "entry_point": "bfs_with_shortest_path",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if neighbor not in visited:",
+      "mutated_line": "if neighbor in visited:",
+      "code": "from collections import deque\n\ndef bfs_with_shortest_path(graph, start):\n    queue = deque()\n    visited = set()\n    queue.append(start)\n    shortest_paths = {start: [start]}\n    while queue:\n        node = queue.popleft()\n        visited.add(node)\n        for neighbor in graph[node]:\n            if neighbor in visited:\n                queue.append(neighbor)\n                shortest_paths[neighbor] = shortest_paths[node] + [neighbor]\n    return shortest_paths"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "shortest_paths[neighbor] = shortest_paths[node] + [neighbor]",
+      "mutated_line": "shortest_paths[neighbor] = shortest_paths[node] - [neighbor]",
+      "code": "from collections import deque\n\ndef bfs_with_shortest_path(graph, start):\n    queue = deque()\n    visited = set()\n    queue.append(start)\n    shortest_paths = {start: [start]}\n    while queue:\n        node = queue.popleft()\n        visited.add(node)\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                queue.append(neighbor)\n                shortest_paths[neighbor] = shortest_paths[node] - [neighbor]\n    return shortest_paths"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "shortest_paths[neighbor] = shortest_paths[node] + [neighbor]",
+      "mutated_line": "shortest_paths[neighbor] = shortest_paths[node] * [neighbor]",
+      "code": "from collections import deque\n\ndef bfs_with_shortest_path(graph, start):\n    queue = deque()\n    visited = set()\n    queue.append(start)\n    shortest_paths = {start: [start]}\n    while queue:\n        node = queue.popleft()\n        visited.add(node)\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                queue.append(neighbor)\n                shortest_paths[neighbor] = shortest_paths[node] * [neighbor]\n    return shortest_paths"
+    }
+  ]
+}

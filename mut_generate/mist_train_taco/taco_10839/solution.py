@@ -1,0 +1,116 @@
+"""
+QUESTION:
+As Sherlock Holmes was investigating a crime, he identified n suspects. He knows for sure that exactly one of them committed the crime. To find out which one did it, the detective lines up the suspects and numbered them from 1 to n. After that, he asked each one: "Which one committed the crime?". Suspect number i answered either "The crime was committed by suspect number ai", or "Suspect number ai didn't commit the crime". Also, the suspect could say so about himself (ai = i).
+
+Sherlock Holmes understood for sure that exactly m answers were the truth and all other answers were a lie. Now help him understand this: which suspect lied and which one told the truth?
+
+Input
+
+The first line contains two integers n and m (1 ≤ n ≤ 105, 0 ≤ m ≤ n) — the total number of suspects and the number of suspects who told the truth. Next n lines contain the suspects' answers. The i-th line contains either "+ai" (without the quotes), if the suspect number i says that the crime was committed by suspect number ai, or "-ai" (without the quotes), if the suspect number i says that the suspect number ai didn't commit the crime (ai is an integer, 1 ≤ ai ≤ n).
+
+It is guaranteed that at least one suspect exists, such that if he committed the crime, then exactly m people told the truth.
+
+Output
+
+Print n lines. Line number i should contain "Truth" if suspect number i has told the truth for sure. Print "Lie" if the suspect number i lied for sure and print "Not defined" if he could lie and could tell the truth, too, depending on who committed the crime.
+
+Examples
+
+Input
+
+1 1
++1
+
+
+Output
+
+Truth
+
+
+Input
+
+3 2
+-1
+-2
+-3
+
+
+Output
+
+Not defined
+Not defined
+Not defined
+
+
+Input
+
+4 1
++2
+-3
++4
+-1
+
+
+Output
+
+Lie
+Not defined
+Lie
+Not defined
+
+Note
+
+The first sample has the single person and he confesses to the crime, and Sherlock Holmes knows that one person is telling the truth. That means that this person is telling the truth.
+
+In the second sample there are three suspects and each one denies his guilt. Sherlock Holmes knows that only two of them are telling the truth. Any one of them can be the criminal, so we don't know for any of them, whether this person is telling the truth or not.
+
+In the third sample the second and the fourth suspect defend the first and the third one. But only one is telling the truth, thus, the first or the third one is the criminal. Both of them can be criminals, so the second and the fourth one can either be lying or telling the truth. The first and the third one are lying for sure as they are blaming the second and the fourth one.
+"""
+
+def determine_truth_or_lie(n, m, answers):
+    p = [0] * (n + 1)
+    
+    for answer in answers:
+        ai = int(answer[1:])
+        if answer[0] == '+':
+            p[ai] += 1
+        else:
+            m -= 1
+            p[ai] -= 1
+    
+    q = {i for i in range(1, n + 1) if p[i] == m}
+    
+    result = []
+    
+    if len(q) == 0:
+        result = ['Not defined'] * n
+    elif len(q) == 1:
+        j = q.pop()
+        for answer in answers:
+            ai = int(answer[1:])
+            if answer[0] == '+':
+                if ai == j:
+                    result.append('Truth')
+                else:
+                    result.append('Lie')
+            else:
+                if ai == j:
+                    result.append('Lie')
+                else:
+                    result.append('Truth')
+    else:
+        q.update({-i for i in q})
+        for answer in answers:
+            ai = int(answer[1:])
+            if answer[0] == '+':
+                if ai in q:
+                    result.append('Not defined')
+                else:
+                    result.append('Lie')
+            else:
+                if ai in q:
+                    result.append('Not defined')
+                else:
+                    result.append('Truth')
+    
+    return result

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_43798",
+  "entry_point": "convert_unix_to_iso",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def convert_unix_to_iso(timestamps, timezone='UTC'):",
+      "mutated_line": "def convert_unix_to_iso(timestamps, timezone=''):",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_unix_to_iso(timestamps, timezone=''):\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.exceptions.UnknownTimeZoneError:\n        return 'Unknown Timezone Error'\n    converted_times = []\n    for timestamp in timestamps:\n        try:\n            dt = datetime.fromtimestamp(int(timestamp), tz)\n            converted_times.append(dt.isoformat())\n        except ValueError:\n            converted_times.append('Invalid Timestamp Error')\n    return converted_times"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return \"Unknown Timezone Error\"",
+      "mutated_line": "return ''",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_unix_to_iso(timestamps, timezone='UTC'):\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.exceptions.UnknownTimeZoneError:\n        return ''\n    converted_times = []\n    for timestamp in timestamps:\n        try:\n            dt = datetime.fromtimestamp(int(timestamp), tz)\n            converted_times.append(dt.isoformat())\n        except ValueError:\n            converted_times.append('Invalid Timestamp Error')\n    return converted_times"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "converted_times.append('Invalid Timestamp Error')",
+      "mutated_line": "converted_times.append('')",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_unix_to_iso(timestamps, timezone='UTC'):\n    try:\n        tz = pytz.timezone(timezone)\n    except pytz.exceptions.UnknownTimeZoneError:\n        return 'Unknown Timezone Error'\n    converted_times = []\n    for timestamp in timestamps:\n        try:\n            dt = datetime.fromtimestamp(int(timestamp), tz)\n            converted_times.append(dt.isoformat())\n        except ValueError:\n            converted_times.append('')\n    return converted_times"
+    }
+  ]
+}

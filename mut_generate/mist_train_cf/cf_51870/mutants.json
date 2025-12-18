@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_51870",
+  "entry_point": "calculate_frequency_ratio",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "frequencies = {word: count/total_words for word, count in counter.items()}",
+      "mutated_line": "frequencies = {word: count * total_words for (word, count) in counter.items()}",
+      "code": "from collections import Counter\nimport re\n\ndef calculate_frequency_ratio(phrases):\n    counter = Counter()\n    for phrase in phrases:\n        words = re.findall('\\\\b\\\\w+\\\\b', phrase)\n        counter.update(words)\n    total_words = sum(counter.values())\n    frequencies = {word: count * total_words for (word, count) in counter.items()}\n    return frequencies"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "frequencies = {word: count/total_words for word, count in counter.items()}",
+      "mutated_line": "frequencies = {word: count // total_words for (word, count) in counter.items()}",
+      "code": "from collections import Counter\nimport re\n\ndef calculate_frequency_ratio(phrases):\n    counter = Counter()\n    for phrase in phrases:\n        words = re.findall('\\\\b\\\\w+\\\\b', phrase)\n        counter.update(words)\n    total_words = sum(counter.values())\n    frequencies = {word: count // total_words for (word, count) in counter.items()}\n    return frequencies"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "words = re.findall(r'\\b\\w+\\b', phrase)",
+      "mutated_line": "words = re.findall('', phrase)",
+      "code": "from collections import Counter\nimport re\n\ndef calculate_frequency_ratio(phrases):\n    counter = Counter()\n    for phrase in phrases:\n        words = re.findall('', phrase)\n        counter.update(words)\n    total_words = sum(counter.values())\n    frequencies = {word: count / total_words for (word, count) in counter.items()}\n    return frequencies"
+    }
+  ]
+}

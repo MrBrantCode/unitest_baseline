@@ -1,0 +1,77 @@
+"""
+QUESTION:
+A remote island chain contains n islands, labeled 1 through n. Bidirectional bridges connect the islands to form a simple cycle — a bridge connects islands 1 and 2, islands 2 and 3, and so on, and additionally a bridge connects islands n and 1. The center of each island contains an identical pedestal, and all but one of the islands has a fragile, uniquely colored statue currently held on the pedestal. The remaining island holds only an empty pedestal.
+
+The islanders want to rearrange the statues in a new order. To do this, they repeat the following process: First, they choose an island directly adjacent to the island containing an empty pedestal. Then, they painstakingly carry the statue on this island across the adjoining bridge and place it on the empty pedestal.
+
+Determine if it is possible for the islanders to arrange the statues in the desired order.
+
+
+-----Input-----
+
+The first line contains a single integer n (2 ≤ n ≤ 200 000) — the total number of islands.
+
+The second line contains n space-separated integers a_{i} (0 ≤ a_{i} ≤ n - 1) — the statue currently placed on the i-th island. If a_{i} = 0, then the island has no statue. It is guaranteed that the a_{i} are distinct.
+
+The third line contains n space-separated integers b_{i} (0 ≤ b_{i} ≤ n - 1) — the desired statues of the ith island. Once again, b_{i} = 0 indicates the island desires no statue. It is guaranteed that the b_{i} are distinct.
+
+
+-----Output-----
+
+Print "YES" (without quotes) if the rearrangement can be done in the existing network, and "NO" otherwise.
+
+
+-----Examples-----
+Input
+3
+1 0 2
+2 0 1
+
+Output
+YES
+
+Input
+2
+1 0
+0 1
+
+Output
+YES
+
+Input
+4
+1 2 3 0
+0 3 2 1
+
+Output
+NO
+
+
+
+-----Note-----
+
+In the first sample, the islanders can first move statue 1 from island 1 to island 2, then move statue 2 from island 3 to island 1, and finally move statue 1 from island 2 to island 3.
+
+In the second sample, the islanders can simply move statue 1 from island 1 to island 2.
+
+In the third sample, no sequence of movements results in the desired position.
+"""
+
+def can_rearrange_statues(n, current_statues, desired_statues):
+    # Remove the empty pedestal (0) from both lists
+    current_statues = [statue for statue in current_statues if statue != 0]
+    desired_statues = [statue for statue in desired_statues if statue != 0]
+    
+    # Find the index of the first desired statue in the current statues list
+    first_desired_statue = desired_statues[0]
+    if first_desired_statue not in current_statues:
+        return "NO"
+    
+    start_index = current_statues.index(first_desired_statue)
+    
+    # Check if the current statues can be rearranged to match the desired statues
+    for i in range(len(desired_statues)):
+        if desired_statues[i] != current_statues[(start_index + i) % len(current_statues)]:
+            return "NO"
+    
+    return "YES"

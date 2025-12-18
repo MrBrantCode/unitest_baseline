@@ -1,0 +1,931 @@
+{
+  "task_id": "taco_13",
+  "entry_point": "paintfuck_interpreter",
+  "mutant_count": 132,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step < len(code) or count < iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) or count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step -= 1 if not loop else loop // abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step -= 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count -= 1 if not loop else 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count -= 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] / width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] + width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] ** width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (1, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (-1, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (1, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 1)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, -1)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "row, col = 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 1)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (1, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (1, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (-1, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (-1, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (1, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (1, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 1, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 1, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, -1, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, -1, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 1, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 1, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 1)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 1)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, -1)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, -1)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "step, count, loop = 0, 0, 0",
+      "mutated_line": "(step, count, loop) = (0, 0, 1)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 1)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step <= len(code) and count < iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step <= len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step >= len(code) and count < iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step >= len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step != len(code) and count < iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step != len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step < len(code) and count <= iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count <= iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step < len(code) and count >= iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count >= iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "while step < len(code) and count < iterations:",
+      "mutated_line": "while step < len(code) and count != iterations:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count != iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "code = ''.join(c for c in code if c in '[news]*')",
+      "mutated_line": "code = 'MUTATED'.join((c for c in code if c in '[news]*'))",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = 'MUTATED'.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if command == '[':",
+      "mutated_line": "if command != '[':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command != '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 18,
+      "original_line": "loop += 1",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop -= 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if command == 'n':",
+      "mutated_line": "row = (row - 1) % height",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command != 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += 2 if not loop else loop // abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 2 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += 0 if not loop else loop // abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 0 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += 0 if not loop else loop // abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 0 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += -1 if not loop else loop // abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += -1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += 1 if not loop else loop / abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop / abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 38,
+      "original_line": "step += 1 if not loop else loop // abs(loop)",
+      "mutated_line": "step += 1 if not loop else loop * abs(loop)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop * abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 2 if not loop else 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 2 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 0 if not loop else 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 0 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 0 if not loop else 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 0 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += -1 if not loop else 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += -1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 1 if not loop else 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 1\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 1 if not loop else -1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else -1\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "count += 1 if not loop else 0",
+      "mutated_line": "count += 1 if not loop else 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 1\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "return '\\r\\n'.join(''.join(map(str, row)) for row in canvas)",
+      "mutated_line": "return ''.join((''.join(map(str, row)) for row in canvas))",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return ''.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "code = ''.join(c for c in code if c in '[news]*')",
+      "mutated_line": "code = ''.join((c for c in code if c not in '[news]*'))",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c not in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[1] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[-1] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "canvas = [[0] * width for _ in range(height)]",
+      "mutated_line": "(step, count, loop) = (0, 0, 0)",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[1] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if command == '[':",
+      "mutated_line": "if command == '':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "loop += 1",
+      "mutated_line": "loop += 2",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 2\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "loop += 1",
+      "mutated_line": "loop += 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 0\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "loop += 1",
+      "mutated_line": "loop += 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 0\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "loop += 1",
+      "mutated_line": "loop += -1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += -1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "elif command == ']':",
+      "mutated_line": "elif command != ']':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command != ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "loop -= 1",
+      "mutated_line": "",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop += 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if command == 'n':",
+      "mutated_line": "row = (row - 1) % height",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == '':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) * height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = row - 1 + height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "elif command == 's':",
+      "mutated_line": "row = (row + 1) % height",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command != 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "code = ''.join(c for c in code if c in '[news]*')",
+      "mutated_line": "code = ''.join((c for c in code if c in ''))",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in ''))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif command == ']':",
+      "mutated_line": "elif command == '':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == '':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 2",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 2\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 0\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 0\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= -1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= -1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row + 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = row * 1 % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "elif command == 's':",
+      "mutated_line": "row = (row + 1) % height",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == '':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) * height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = row + 1 + height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "elif command == 'w':",
+      "mutated_line": "col = (col - 1) % width",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command != 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 42,
+      "original_line": "return '\\r\\n'.join(''.join(map(str, row)) for row in canvas)",
+      "mutated_line": "return '\\r\\n'.join(('MUTATED'.join(map(str, row)) for row in canvas))",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join(('MUTATED'.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 2) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 0) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 0) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "row = (row - 1) % height",
+      "mutated_line": "elif command == 's':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - -1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row - 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = row * 1 % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "elif command == 'w':",
+      "mutated_line": "col = (col - 1) % width",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == '':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) * width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = col - 1 + width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "elif command == 'e':",
+      "mutated_line": "col = (col + 1) % width",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command != 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 2) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 0) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 0) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "row = (row + 1) % height",
+      "mutated_line": "elif command == 'w':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + -1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col + 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = col * 1 % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "elif command == 'e':",
+      "mutated_line": "col = (col + 1) % width",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == '':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) * width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = col + 1 + width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "elif command == '*':",
+      "mutated_line": "canvas[row][col] ^= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command != '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 2) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 0) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 0) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "col = (col - 1) % width",
+      "mutated_line": "elif command == 'e':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - -1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col - 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = col * 1 % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "elif command == '*':",
+      "mutated_line": "canvas[row][col] ^= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "canvas[row][col] ^= 1",
+      "mutated_line": "elif command == '[' and canvas[row][col] == 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 2\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "canvas[row][col] ^= 1",
+      "mutated_line": "elif command == '[' and canvas[row][col] == 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 0\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "canvas[row][col] ^= 1",
+      "mutated_line": "elif command == '[' and canvas[row][col] == 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 0\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "canvas[row][col] ^= 1",
+      "mutated_line": "elif command == '[' and canvas[row][col] == 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= -1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' or canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 33,
+      "original_line": "loop += 1",
+      "mutated_line": "elif command == ']' and canvas[row][col] != 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop -= 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 2) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 0) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 0) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "col = (col + 1) % width",
+      "mutated_line": "elif command == '*':",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + -1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command != '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] != 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "loop += 1",
+      "mutated_line": "elif command == ']' and canvas[row][col] != 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 2\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "loop += 1",
+      "mutated_line": "elif command == ']' and canvas[row][col] != 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 0\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "loop += 1",
+      "mutated_line": "elif command == ']' and canvas[row][col] != 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 0\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "loop += 1",
+      "mutated_line": "elif command == ']' and canvas[row][col] != 0:",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += -1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' or canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 35,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop += 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 1:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == -1:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "elif command == '[' and canvas[row][col] == 0:",
+      "mutated_line": "loop += 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 1:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command != ']' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] == 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 2",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 2\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 0\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= 0",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= 0\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "loop -= 1",
+      "mutated_line": "loop -= -1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 0:\n            loop -= -1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == '' and canvas[row][col] != 0:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 1:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != -1:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "elif command == ']' and canvas[row][col] != 0:",
+      "mutated_line": "loop -= 1",
+      "code": "def paintfuck_interpreter(code: str, iterations: int, width: int, height: int) -> str:\n    code = ''.join((c for c in code if c in '[news]*'))\n    canvas = [[0] * width for _ in range(height)]\n    (row, col) = (0, 0)\n    (step, count, loop) = (0, 0, 0)\n    while step < len(code) and count < iterations:\n        command = code[step]\n        if loop:\n            if command == '[':\n                loop += 1\n            elif command == ']':\n                loop -= 1\n        elif command == 'n':\n            row = (row - 1) % height\n        elif command == 's':\n            row = (row + 1) % height\n        elif command == 'w':\n            col = (col - 1) % width\n        elif command == 'e':\n            col = (col + 1) % width\n        elif command == '*':\n            canvas[row][col] ^= 1\n        elif command == '[' and canvas[row][col] == 0:\n            loop += 1\n        elif command == ']' and canvas[row][col] != 1:\n            loop -= 1\n        step += 1 if not loop else loop // abs(loop)\n        count += 1 if not loop else 0\n    return '\\r\\n'.join((''.join(map(str, row)) for row in canvas))"
+    }
+  ]
+}

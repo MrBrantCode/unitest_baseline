@@ -1,0 +1,420 @@
+{
+  "task_id": "cf_73066",
+  "entry_point": "maxCountNodes",
+  "mutant_count": 59,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] == -1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] == -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "withCamera += dfs(child, node)[1]",
+      "mutated_line": "withCamera -= dfs(child, node)[1]",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera -= dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "withoutCamera = 0",
+      "mutated_line": "withoutCamera = 1",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 1\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "withoutCamera = 0",
+      "mutated_line": "withoutCamera = -1",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = -1\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "withoutCamera = 0",
+      "mutated_line": "withoutCamera = 1",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 1\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 27,
+      "original_line": "withoutCamera += max(dfs(child, node))",
+      "mutated_line": "withoutCamera -= max(dfs(child, node))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera -= max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if withCamera <= budget:",
+      "mutated_line": "if withCamera < budget:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera < budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if withCamera <= budget:",
+      "mutated_line": "if withCamera > budget:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera > budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if withCamera <= budget:",
+      "mutated_line": "if withCamera == budget:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera == budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 7,
+      "original_line": "for u, v in tree[:-1]: # constructing the tree",
+      "mutated_line": "for (u, v) in tree[:+1]:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:+1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] != +1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != +1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if child == parent:",
+      "mutated_line": "if child != parent:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child != parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if child == parent:",
+      "mutated_line": "if child != parent:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child != parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "dp[node][1] = withoutCamera # maximum nodes without camera on node",
+      "mutated_line": "dp[node][2] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][2] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "dp[node][1] = withoutCamera # maximum nodes without camera on node",
+      "mutated_line": "dp[node][0] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][0] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "dp[node][1] = withoutCamera # maximum nodes without camera on node",
+      "mutated_line": "dp[node][0] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][0] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "dp[node][1] = withoutCamera # maximum nodes without camera on node",
+      "mutated_line": "dp[node][-1] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][-1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(1, -1))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(1, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(-1, -1))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(-1, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(1, -1))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(1, -1))\n    return maxCount"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(0, +1))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, +1))\n    return maxCount"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [+1, -1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [+1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-1, +1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, +1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for u, v in tree[:-1]: # constructing the tree",
+      "mutated_line": "for (u, v) in tree[:-2]:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-2]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for u, v in tree[:-1]: # constructing the tree",
+      "mutated_line": "for (u, v) in tree[:-0]:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-0]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for u, v in tree[:-1]: # constructing the tree",
+      "mutated_line": "for (u, v) in tree[:-0]:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-0]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for u, v in tree[:-1]: # constructing the tree",
+      "mutated_line": "for (u, v) in tree[:--1]:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:--1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][1] != -1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][1] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][-1] != -1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][-1] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][1] != -1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][1] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] != -2:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -2:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] != -0:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -0:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] != -0:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -0:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if dp[node][0] != -1: # if the result is already computed",
+      "mutated_line": "if dp[node][0] != --1:",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != --1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "withCamera += dfs(child, node)[1]",
+      "mutated_line": "withCamera += dfs(child, node)[2]",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[2]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "withCamera += dfs(child, node)[1]",
+      "mutated_line": "withCamera += dfs(child, node)[0]",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[0]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "withCamera += dfs(child, node)[1]",
+      "mutated_line": "withCamera += dfs(child, node)[0]",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[0]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "withCamera += dfs(child, node)[1]",
+      "mutated_line": "withCamera += dfs(child, node)[-1]",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[-1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][1] = max(dp[node][0], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][1] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][-1] = max(dp[node][0], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][-1] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][1] = max(dp[node][0], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][1] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "dp[node][0] = withoutCamera",
+      "mutated_line": "dp[node][1] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][1] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "dp[node][0] = withoutCamera",
+      "mutated_line": "dp[node][-1] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][-1] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "dp[node][0] = withoutCamera",
+      "mutated_line": "dp[node][1] = withoutCamera",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][1] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(0, -2))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -2))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(0, -0))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -0))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(0, -0))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -0))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 39,
+      "original_line": "maxCount = max(dfs(0, -1)) # start dfs traversal from root node",
+      "mutated_line": "maxCount = max(dfs(0, --1))",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, --1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-2, -1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-2, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-0, -1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-0, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-0, -1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-0, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [--1, -1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [--1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-1, -2])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -2])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-1, -0])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -0])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-1, -0])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -0])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "dp = defaultdict(lambda: [-1, -1]) # DP Table",
+      "mutated_line": "dp = defaultdict(lambda : [-1, --1])",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, --1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][0], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][0] = max(dp[node][1], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][1], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][0] = max(dp[node][-1], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][-1], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dp[node][0] = max(dp[node][0], withCamera, withoutCamera)",
+      "mutated_line": "dp[node][0] = max(dp[node][1], withCamera, withoutCamera)",
+      "code": "from collections import defaultdict\n\ndef maxCountNodes(tree, costs, budget):\n    dp = defaultdict(lambda : [-1, -1])\n    edges = defaultdict(list)\n    for (u, v) in tree[:-1]:\n        edges[u].append(v)\n        edges[v].append(u)\n\n    def dfs(node, parent):\n        if dp[node][0] != -1:\n            return dp[node]\n        withCamera = costs[node]\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withCamera += dfs(child, node)[1]\n        withoutCamera = 0\n        for child in edges[node]:\n            if child == parent:\n                continue\n            withoutCamera += max(dfs(child, node))\n        if withCamera <= budget:\n            dp[node][0] = max(dp[node][1], withCamera, withoutCamera)\n        else:\n            dp[node][0] = withoutCamera\n        dp[node][1] = withoutCamera\n        return dp[node]\n    maxCount = max(dfs(0, -1))\n    return maxCount"
+    }
+  ]
+}

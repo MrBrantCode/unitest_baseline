@@ -1,0 +1,62 @@
+"""
+QUESTION:
+Read problems statements in Mandarin Chinese  and Russian. 
+You are given an array that consists of n integer numbers. You have to change at most K elements of this array, so that the resulting array will be a arithmetic progression. From all the possible arithmetic progressions, you should choose most beautiful. 
+You can uniquely define the arithmetic progression by two numbers a_{0} and d - the first element of the given progression and the step that defines next element. (a_{i} = a_{0}+i * d). The progression A(a_{0} , d_{0}) is more beautiful than the progression B(b_{0}, d_{1}) iff (a_{0} < b_{0} or (a_{0} = b_{0} and d_{0} < d_{1}))  
+
+------ Input ------ 
+
+The first line contains two integers N and K denoting the number of elements in the given array and the number of elements that you can change
+The second line contains N space-separated integers A_{1}, A_{2}, ..., A_{N} denoting the given array.
+
+------ Output ------ 
+
+Output a single line containing the resulting array with at most K changes. Mind that among all the arithmetic sequences you have to choose the most beautiful.
+
+In the given test data, it is always possible to recover at least one arithmetic progression under the constraints of the problem.
+
+------ Constraints ------ 
+
+$2 ≤ N ≤ 100000$
+$0 ≤ K ≤ min(10, N-2)$
+$-10^{9} ≤ A_{i} ≤ 10^{9}$
+
+----- Sample Input 1 ------ 
+4 2
+1 2 1 4
+----- Sample Output 1 ------ 
+-5 -2 1 4
+"""
+
+from collections import defaultdict
+
+def eval(A, dictR, r):
+    l = dictR[r]
+    nbToChange = 0
+    newVal = A[l[-1]]
+    for iR in range(l[-1], len(A) - 1):
+        newVal += r
+        if newVal != A[iR + 1]:
+            nbToChange += 1
+    lastVal = newVal
+    newVal = A[l[0]]
+    for iR in range(l[0], 0, -1):
+        newVal -= r
+        if newVal != A[iR - 1]:
+            nbToChange += 1
+    return (newVal, r, lastVal, nbToChange)
+
+def find_most_beautiful_arithmetic_progression(A, K):
+    dictR = defaultdict(list)
+    for i in range(1, len(A)):
+        r = A[i] - A[i - 1]
+        dictR[r].append(i)
+    maxEff = max((len(v) for v in dictR.values()))
+    rMaxEff = [key for key in dictR if len(dictR[key]) == maxEff]
+    results = []
+    for r in dictR:
+        results.append(eval(A, dictR, r))
+    possibles = [t for t in results if t[3] <= K]
+    possibles.sort(key=lambda x: (x[0], x[1]), reverse=False)
+    (a0, r, an, _) = possibles[0]
+    return ' '.join(list(map(str, range(a0, an + 1, r))))

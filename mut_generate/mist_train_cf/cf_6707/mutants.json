@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_6707",
+  "entry_point": "json_to_dict",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if id(obj) in [id(ancestor) for ancestor in ancestors]:",
+      "mutated_line": "if id(obj) not in [id(ancestor) for ancestor in ancestors]:",
+      "code": "import json\n\nclass CircularReferenceException(Exception):\n    pass\n\nclass InvalidJSONFormatException(Exception):\n    pass\n\ndef json_to_dict(json_string):\n    try:\n        data = json.loads(json_string)\n    except json.JSONDecodeError:\n        raise InvalidJSONFormatException('Missing closing bracket in the JSON string.')\n\n    def check_circular_reference(obj, ancestors):\n        if id(obj) not in [id(ancestor) for ancestor in ancestors]:\n            raise CircularReferenceException('Circular reference detected in the JSON string.')\n        if isinstance(obj, dict):\n            ancestors.append(obj)\n            for value in obj.values():\n                check_circular_reference(value, ancestors)\n            ancestors.pop()\n        elif isinstance(obj, list):\n            for item in obj:\n                check_circular_reference(item, ancestors)\n        elif not isinstance(obj, (str, int, float, bool)):\n            raise InvalidJSONFormatException('Invalid value in the JSON string.')\n    check_circular_reference(data, [])\n    return data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "raise InvalidJSONFormatException(\"Missing closing bracket in the JSON string.\")",
+      "mutated_line": "raise InvalidJSONFormatException('')",
+      "code": "import json\n\nclass CircularReferenceException(Exception):\n    pass\n\nclass InvalidJSONFormatException(Exception):\n    pass\n\ndef json_to_dict(json_string):\n    try:\n        data = json.loads(json_string)\n    except json.JSONDecodeError:\n        raise InvalidJSONFormatException('')\n\n    def check_circular_reference(obj, ancestors):\n        if id(obj) in [id(ancestor) for ancestor in ancestors]:\n            raise CircularReferenceException('Circular reference detected in the JSON string.')\n        if isinstance(obj, dict):\n            ancestors.append(obj)\n            for value in obj.values():\n                check_circular_reference(value, ancestors)\n            ancestors.pop()\n        elif isinstance(obj, list):\n            for item in obj:\n                check_circular_reference(item, ancestors)\n        elif not isinstance(obj, (str, int, float, bool)):\n            raise InvalidJSONFormatException('Invalid value in the JSON string.')\n    check_circular_reference(data, [])\n    return data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "raise CircularReferenceException(\"Circular reference detected in the JSON string.\")",
+      "mutated_line": "raise CircularReferenceException('')",
+      "code": "import json\n\nclass CircularReferenceException(Exception):\n    pass\n\nclass InvalidJSONFormatException(Exception):\n    pass\n\ndef json_to_dict(json_string):\n    try:\n        data = json.loads(json_string)\n    except json.JSONDecodeError:\n        raise InvalidJSONFormatException('Missing closing bracket in the JSON string.')\n\n    def check_circular_reference(obj, ancestors):\n        if id(obj) in [id(ancestor) for ancestor in ancestors]:\n            raise CircularReferenceException('')\n        if isinstance(obj, dict):\n            ancestors.append(obj)\n            for value in obj.values():\n                check_circular_reference(value, ancestors)\n            ancestors.pop()\n        elif isinstance(obj, list):\n            for item in obj:\n                check_circular_reference(item, ancestors)\n        elif not isinstance(obj, (str, int, float, bool)):\n            raise InvalidJSONFormatException('Invalid value in the JSON string.')\n    check_circular_reference(data, [])\n    return data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "raise InvalidJSONFormatException(\"Invalid value in the JSON string.\")",
+      "mutated_line": "raise InvalidJSONFormatException('')",
+      "code": "import json\n\nclass CircularReferenceException(Exception):\n    pass\n\nclass InvalidJSONFormatException(Exception):\n    pass\n\ndef json_to_dict(json_string):\n    try:\n        data = json.loads(json_string)\n    except json.JSONDecodeError:\n        raise InvalidJSONFormatException('Missing closing bracket in the JSON string.')\n\n    def check_circular_reference(obj, ancestors):\n        if id(obj) in [id(ancestor) for ancestor in ancestors]:\n            raise CircularReferenceException('Circular reference detected in the JSON string.')\n        if isinstance(obj, dict):\n            ancestors.append(obj)\n            for value in obj.values():\n                check_circular_reference(value, ancestors)\n            ancestors.pop()\n        elif isinstance(obj, list):\n            for item in obj:\n                check_circular_reference(item, ancestors)\n        elif not isinstance(obj, (str, int, float, bool)):\n            raise InvalidJSONFormatException('')\n    check_circular_reference(data, [])\n    return data"
+    }
+  ]
+}

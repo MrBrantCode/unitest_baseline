@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_60981",
+  "entry_point": "remove_tuples",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "print(f\"An error occurred: {str(e)}\")",
+      "mutated_line": "print(f'{str(e)}')",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for item in t:\n        if isinstance(item, tuple):\n            try:\n                if not condition(item):\n                    result.append(remove_tuples(item, condition))\n            except Exception as e:\n                print(f'{str(e)}')\n        elif isinstance(item, list):\n            new_list = [i for i in item if not (isinstance(i, tuple) and condition(i))]\n            result.append(new_list)\n        elif isinstance(item, set):\n            new_set = {i for i in item if not (isinstance(i, tuple) and condition(i))}\n            result.append(new_set)\n        elif isinstance(item, dict):\n            new_dict = {k: v for (k, v) in item.items() if not (isinstance(v, tuple) and condition(v))}\n            result.append(new_dict)\n        else:\n            result.append(item)\n    return tuple(result)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 12,
+      "original_line": "new_list = [i for i in item if not (isinstance(i, tuple) and condition(i))]",
+      "mutated_line": "result.append(item)",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for item in t:\n        if isinstance(item, tuple):\n            try:\n                if not condition(item):\n                    result.append(remove_tuples(item, condition))\n            except Exception as e:\n                print(f'An error occurred: {str(e)}')\n        elif isinstance(item, list):\n            new_list = [i for i in item if not (isinstance(i, tuple) or condition(i))]\n            result.append(new_list)\n        elif isinstance(item, set):\n            new_set = {i for i in item if not (isinstance(i, tuple) and condition(i))}\n            result.append(new_set)\n        elif isinstance(item, dict):\n            new_dict = {k: v for (k, v) in item.items() if not (isinstance(v, tuple) and condition(v))}\n            result.append(new_dict)\n        else:\n            result.append(item)\n    return tuple(result)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "new_set = {i for i in item if not (isinstance(i, tuple) and condition(i))}",
+      "mutated_line": "result.append(item)",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for item in t:\n        if isinstance(item, tuple):\n            try:\n                if not condition(item):\n                    result.append(remove_tuples(item, condition))\n            except Exception as e:\n                print(f'An error occurred: {str(e)}')\n        elif isinstance(item, list):\n            new_list = [i for i in item if not (isinstance(i, tuple) and condition(i))]\n            result.append(new_list)\n        elif isinstance(item, set):\n            new_set = {i for i in item if not (isinstance(i, tuple) or condition(i))}\n            result.append(new_set)\n        elif isinstance(item, dict):\n            new_dict = {k: v for (k, v) in item.items() if not (isinstance(v, tuple) and condition(v))}\n            result.append(new_dict)\n        else:\n            result.append(item)\n    return tuple(result)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "new_dict = {k: v for k, v in item.items() if not (isinstance(v, tuple) and condition(v))}",
+      "mutated_line": "result.append(item)",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for item in t:\n        if isinstance(item, tuple):\n            try:\n                if not condition(item):\n                    result.append(remove_tuples(item, condition))\n            except Exception as e:\n                print(f'An error occurred: {str(e)}')\n        elif isinstance(item, list):\n            new_list = [i for i in item if not (isinstance(i, tuple) and condition(i))]\n            result.append(new_list)\n        elif isinstance(item, set):\n            new_set = {i for i in item if not (isinstance(i, tuple) and condition(i))}\n            result.append(new_set)\n        elif isinstance(item, dict):\n            new_dict = {k: v for (k, v) in item.items() if not (isinstance(v, tuple) or condition(v))}\n            result.append(new_dict)\n        else:\n            result.append(item)\n    return tuple(result)"
+    }
+  ]
+}

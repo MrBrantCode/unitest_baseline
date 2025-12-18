@@ -1,0 +1,141 @@
+"""
+QUESTION:
+Peter is a senior manager of Agile Change Management (ACM) Inc., where each employee is a member of one or more task groups. Since ACM is agile, task groups are often reorganized and their members frequently change, so membership management is his constant headache.
+
+Peter updates the membership information whenever any changes occur: for instance, the following line written by him means that Carol and Alice are the members of the Design Group.
+
+
+design:carol,alice.
+
+
+The name preceding the colon is the group name and the names following it specify its members.
+
+A smaller task group may be included in a larger one. So, a group name can appear as a member of another group, for instance, as follows.
+
+
+development:alice,bob,design,eve.
+
+
+Simply unfolding the design above gives the following membership specification, which is equivalent to the original.
+
+
+development:alice,bob,carol,alice,eve.
+
+
+In this case, however, alice occurs twice. After removing one of the duplicates, we have the following more concise specification.
+
+
+development:alice,bob,carol,eve.
+
+
+Your mission in this problem is to write a program that, given group specifications, identifies group members.
+
+Note that Peter's specifications can include deeply nested groups. In the following, for instance, the group one contains a single member dave.
+
+
+one:another.
+another:yetanother.
+yetanother:dave.
+
+
+
+
+Input
+
+The input is a sequence of datasets, each being in the following format.
+
+n
+group1:member1,1,...,member1,m1.
+.
+.
+.
+groupi:memberi,1,...,memberi,mi.
+.
+.
+.
+groupn:membern,1,...,membern,mn.
+
+
+The first line contains n, which represents the number of groups and is a positive integer no more than 100. Each of the following n lines contains the membership information of a group: groupi (1 ≤ i ≤ n) is the name of the i-th task group and is followed by a colon (:) and then the list of its mi member s that are delimited by a comma (,) and terminated by a period (.).
+
+Those group names are mutually different. Each mi (1 ≤ i ≤ n) is between 1 and 10, inclusive. A member is another group name if it is one of group1, group2,..., or groupn. Otherwise it is an employee name.
+
+There are no circular (or recursive) definitions of group(s). You may assume that mi member names of a group are mutually different.
+
+Each group or employee name is a non-empty character string of length between 1 and 15, inclusive, and consists of lowercase letters.
+
+The end of the input is indicated by a line containing a zero.
+
+Output
+
+For each dataset, output the number of employees included in the first group of the dataset, that is group1, in a line. No extra characters should occur in the output.
+
+Example
+
+Input
+
+2
+development:alice,bob,design,eve.
+design:carol,alice.
+3
+one:another.
+another:yetanother.
+yetanother:dave.
+3
+friends:alice,bob,bestfriends,carol,fran,badcompany.
+bestfriends:eve,alice.
+badcompany:dave,carol.
+5
+a:b,c,d,e.
+b:c,d,e,f.
+c:d,e,f,g.
+d:e,f,g,h.
+e:f,g,h,i.
+4
+aa:bb.
+cc:dd,ee.
+ff:gg.
+bb:cc.
+0
+
+
+Output
+
+4
+1
+6
+4
+2
+"""
+
+def calculate_group_members(group_definitions):
+    # Parse the input to create a dictionary of group memberships
+    group_members = {}
+    for definition in group_definitions:
+        group_name, members_str = definition.split(':')
+        members = members_str.split(',')
+        group_members[group_name] = members
+    
+    # Function to recursively resolve group members
+    def resolve_members(group_name):
+        if group_name in resolved_members:
+            return resolved_members[group_name]
+        
+        members = set()
+        for member in group_members[group_name]:
+            if member in group_members:
+                members.update(resolve_members(member))
+            else:
+                members.add(member)
+        
+        resolved_members[group_name] = members
+        return members
+    
+    # Dictionary to store resolved members of each group
+    resolved_members = {}
+    
+    # Resolve members of the first group
+    first_group_name = group_definitions[0].split(':')[0]
+    unique_members = resolve_members(first_group_name)
+    
+    return len(unique_members)

@@ -1,0 +1,31 @@
+"""
+QUESTION:
+An integer X is called a Harshad number if X is divisible by f(X), where f(X) is the sum of the digits in X when written in base 10.
+Given an integer N, determine whether it is a Harshad number.
+
+-----Constraints-----
+ - 1?N?10^8
+ - N is an integer.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+
+-----Output-----
+Print Yes if N is a Harshad number; print No otherwise.
+
+-----Sample Input-----
+12
+
+-----Sample Output-----
+Yes
+
+f(12)=1+2=3. Since 12 is divisible by 3, 12 is a Harshad number.
+"""
+
+def is_harshad_number(N: int) -> bool:
+    # Calculate the sum of the digits of N
+    digit_sum = sum(int(digit) for digit in str(N))
+    
+    # Check if N is divisible by the sum of its digits
+    return N % digit_sum == 0

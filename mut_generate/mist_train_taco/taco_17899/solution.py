@@ -1,0 +1,27 @@
+"""
+QUESTION:
+Simply find the closest value to zero from the list. Notice that there are negatives in the list.
+
+List is always not empty and contains only integers. Return ```None``` if it is not possible to define only one of such values. And of course, we are expecting 0 as closest value to zero.
+
+Examples:
+```code
+[2, 4, -1, -3]  => -1
+[5, 2, -2]      => None
+[5, 2, 2]       => 2
+[13, 0, -6]     => 0
+```
+"""
+
+def find_closest_to_zero(lst):
+    """
+    Find the closest value to zero from the list.
+
+    Parameters:
+    lst (list of int): A non-empty list of integers.
+
+    Returns:
+    int or None: The closest value to zero, or None if it is not possible to define only one such value.
+    """
+    m = min(lst, key=abs)
+    return m if m == 0 or -m not in lst else None

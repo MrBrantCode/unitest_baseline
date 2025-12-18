@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_31612",
+  "entry_point": "extract_imported_modules",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if module_name in imported_modules:",
+      "mutated_line": "if module_name not in imported_modules:",
+      "code": "import ast\n\ndef extract_imported_modules(code: str) -> dict:\n    imported_modules = {}\n    tree = ast.parse(code)\n    for node in ast.walk(tree):\n        if isinstance(node, ast.Import):\n            for alias in node.names:\n                imported_modules[alias.name] = []\n        elif isinstance(node, ast.ImportFrom):\n            module_name = node.module\n            imported_items = [alias.name for alias in node.names]\n            if module_name not in imported_modules:\n                imported_modules[module_name].extend(imported_items)\n            else:\n                imported_modules[module_name] = imported_items\n    return imported_modules"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "task_id": "cf_54287",
+  "entry_point": "kruskal",
+  "mutant_count": 22,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if self.parent[vertex] != vertex:",
+      "mutated_line": "if self.parent[vertex] == vertex:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] == vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if root1 != root2:  # if they are not in the same set",
+      "mutated_line": "if root1 == root2:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 == root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if union_set.find(vertex1) != union_set.find(vertex2):",
+      "mutated_line": "if union_set.find(vertex1) == union_set.find(vertex2):",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) == union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "self.rank = {v: 0 for v in vertices}",
+      "mutated_line": "self.rank = {v: 1 for v in vertices}",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 1 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "self.rank = {v: 0 for v in vertices}",
+      "mutated_line": "self.rank = {v: -1 for v in vertices}",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: -1 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "self.rank = {v: 0 for v in vertices}",
+      "mutated_line": "self.rank = {v: 1 for v in vertices}",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 1 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if self.rank[root1] > self.rank[root2]:  # union by rank",
+      "mutated_line": "if self.rank[root1] >= self.rank[root2]:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] >= self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if self.rank[root1] > self.rank[root2]:  # union by rank",
+      "mutated_line": "if self.rank[root1] <= self.rank[root2]:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] <= self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if self.rank[root1] > self.rank[root2]:  # union by rank",
+      "mutated_line": "if self.rank[root1] != self.rank[root2]:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] != self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "union_set = UnionSet(graph['vertices'])",
+      "mutated_line": "union_set = UnionSet(graph[''])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph[''])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph[''], key=lambda edge: edge[2])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph[''], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if self.rank[root1] == self.rank[root2]:",
+      "mutated_line": "if self.rank[root1] != self.rank[root2]:",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] != self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 20,
+      "original_line": "self.rank[root2] += 1",
+      "mutated_line": "self.rank[root2] -= 1",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] -= 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "self.rank[root2] += 1",
+      "mutated_line": "self.rank[root2] += 2",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 2\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "self.rank[root2] += 1",
+      "mutated_line": "self.rank[root2] += 0",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 0\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "self.rank[root2] += 1",
+      "mutated_line": "self.rank[root2] += 0",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 0\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "self.rank[root2] += 1",
+      "mutated_line": "self.rank[root2] += -1",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += -1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph['edges'], key=lambda edge: edge[3])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[3])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph['edges'], key=lambda edge: edge[1])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[1])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph['edges'], key=lambda edge: edge[0])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[0])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph['edges'], key=lambda edge: edge[1])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[1])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "edges = sorted(graph['edges'], key=lambda edge: edge[2])  # sort edges by weight",
+      "mutated_line": "edges = sorted(graph['edges'], key=lambda edge: edge[-2])",
+      "code": "class UnionSet:\n\n    def __init__(self, vertices):\n        self.rank = {v: 0 for v in vertices}\n        self.parent = {v: v for v in vertices}\n\n    def find(self, vertex):\n        if self.parent[vertex] != vertex:\n            self.parent[vertex] = self.find(self.parent[vertex])\n        return self.parent[vertex]\n\n    def union(self, vertex1, vertex2):\n        root1 = self.find(vertex1)\n        root2 = self.find(vertex2)\n        if root1 != root2:\n            if self.rank[root1] > self.rank[root2]:\n                self.parent[root2] = root1\n            else:\n                self.parent[root1] = root2\n                if self.rank[root1] == self.rank[root2]:\n                    self.rank[root2] += 1\n\ndef kruskal(graph):\n    union_set = UnionSet(graph['vertices'])\n    min_span_tree = []\n    edges = sorted(graph['edges'], key=lambda edge: edge[-2])\n    for edge in edges:\n        (vertex1, vertex2, weight) = edge\n        if union_set.find(vertex1) != union_set.find(vertex2):\n            union_set.union(vertex1, vertex2)\n            min_span_tree.append(edge)\n    return min_span_tree"
+    }
+  ]
+}

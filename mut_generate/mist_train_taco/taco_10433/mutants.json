@@ -1,0 +1,196 @@
+{
+  "task_id": "taco_10433",
+  "entry_point": "expand_string",
+  "mutant_count": 27,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "current_string = \"\"",
+      "mutated_line": "current_string = 'MUTATED'",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = 'MUTATED'\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "current_number = \"\"",
+      "mutated_line": "current_number = 'MUTATED'",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = 'MUTATED'\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 9,
+      "original_line": "current_number += char",
+      "mutated_line": "current_number -= char",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number -= char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "current_string = stack.pop() + current_string",
+      "mutated_line": "current_string = stack.pop() - current_string",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() - current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "current_string = stack.pop() + current_string",
+      "mutated_line": "current_string = stack.pop() * current_string",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() * current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "elif char == '(':",
+      "mutated_line": "elif char != '(':",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char != '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "elif char == '(':",
+      "mutated_line": "elif char == '':",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "current_string = \"\"",
+      "mutated_line": "current_string = 'MUTATED'",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = 'MUTATED'\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "elif char == ')':",
+      "mutated_line": "elif char != ')':",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char != ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 23,
+      "original_line": "current_string += char",
+      "mutated_line": "current_string -= char",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string -= char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "current_number = \"\"",
+      "mutated_line": "current_number = 'MUTATED'",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = 'MUTATED'\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "elif char == ')':",
+      "mutated_line": "elif char == '':",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == '':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack or not isinstance(stack[-1], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack or not isinstance(stack[-1], int):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack or isinstance(stack[-1], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack or isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 21,
+      "original_line": "current_string *= repeat_count",
+      "mutated_line": "current_string /= repeat_count",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string /= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "current_string = stack.pop() + current_string",
+      "mutated_line": "current_string = stack.pop() - current_string",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() - current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "current_string = stack.pop() + current_string",
+      "mutated_line": "current_string = stack.pop() * current_string",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() * current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack and isinstance(stack[+1], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[+1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack and (not isinstance(stack[+1], int)):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[+1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack and isinstance(stack[-2], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-2], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack and isinstance(stack[-0], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-0], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack and isinstance(stack[-0], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-0], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if stack and isinstance(stack[-1], int):",
+      "mutated_line": "if stack and isinstance(stack[--1], int):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[--1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack and (not isinstance(stack[-2], int)):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-2], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack and (not isinstance(stack[-0], int)):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-0], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack and (not isinstance(stack[-0], int)):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[-0], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "while stack and not isinstance(stack[-1], int):",
+      "mutated_line": "while stack and (not isinstance(stack[--1], int)):",
+      "code": "def expand_string(s: str) -> str:\n\n    def expand_helper(s: str) -> str:\n        stack = []\n        current_string = ''\n        current_number = ''\n        for char in s:\n            if char.isdigit():\n                current_number += char\n            elif char == '(':\n                if current_number:\n                    stack.append(int(current_number))\n                    current_number = ''\n                stack.append(current_string)\n                current_string = ''\n            elif char == ')':\n                while stack and (not isinstance(stack[--1], int)):\n                    current_string = stack.pop() + current_string\n                if stack and isinstance(stack[-1], int):\n                    repeat_count = stack.pop()\n                    current_string *= repeat_count\n            else:\n                current_string += char\n        while stack:\n            current_string = stack.pop() + current_string\n        return current_string\n    return expand_helper(s)"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "task_id": "cf_89552",
+  "entry_point": "json_encode",
+  "mutant_count": 22,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if seen is None:",
+      "mutated_line": "if seen is not None:",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is not None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if id(obj) in seen:",
+      "mutated_line": "if id(obj) not in seen:",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) not in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return \"null\"",
+      "mutated_line": "return ''",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return ''\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) - '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) - '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return ('{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items())))) * '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return ('{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items())))) * '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' - ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' - ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' * ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' * ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + ''",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + ''\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '[' + ', '.join((json_encode(x, seen) for x in obj)) - ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) - ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return ('[' + ', '.join((json_encode(x, seen) for x in obj))) * ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return ('[' + ', '.join((json_encode(x, seen) for x in obj))) * ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '[' - ', '.join((json_encode(x, seen) for x in obj)) + ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' - ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '[' * ', '.join((json_encode(x, seen) for x in obj)) + ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' * ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ''",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ''\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '' + ', '.join((json_encode(x, seen) for x in obj)) + ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "elif obj is None:",
+      "mutated_line": "elif obj is not None:",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is not None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' + ''.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ''.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "return \"null\"",
+      "mutated_line": "return ''",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return ''\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "return \"null\"",
+      "mutated_line": "return ''",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return ''\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' + ', '.join((f'{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return \"{\" + \", \".join(f'\"{k}\": {json_encode(v, seen)}' for k, v in sorted(obj.items())) + \"}\"",
+      "mutated_line": "return '{' + ', '.join((f'\"{k}{json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}{json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ', '.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return \"[\" + \", \".join(json_encode(x, seen) for x in obj) + \"]\"",
+      "mutated_line": "return '[' + ''.join((json_encode(x, seen) for x in obj)) + ']'",
+      "code": "import json\n\ndef json_encode(obj, seen=None):\n    if seen is None:\n        seen = set()\n    if id(obj) in seen:\n        return 'null'\n    seen.add(id(obj))\n    if isinstance(obj, dict):\n        return '{' + ', '.join((f'\"{k}\": {json_encode(v, seen)}' for (k, v) in sorted(obj.items()))) + '}'\n    elif isinstance(obj, (list, tuple)):\n        return '[' + ''.join((json_encode(x, seen) for x in obj)) + ']'\n    elif isinstance(obj, str):\n        return json.dumps(obj)\n    elif isinstance(obj, (int, float, bool)):\n        return str(obj).lower()\n    elif obj is None:\n        return 'null'\n    else:\n        return 'null'\n\ndef convert_to_json(hashmap):\n    return json_encode(hashmap)"
+    }
+  ]
+}

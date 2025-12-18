@@ -1,0 +1,33 @@
+"""
+QUESTION:
+Dhote and Shweta went on a tour by plane for the first time.Dhote was surprised by the conveyor belt  at the airport.As Shweta was getting bored Dhote had an idea of playing a game with her.He asked Shweta to count the number of bags whose individual weight is greater than or equal to the half of the total number of bags on the conveyor belt.Shweta got stuck in the puzzle! Help Shweta. 
+
+-----Input:-----
+- First line will contain T$T$, number of testcases. Then the testcases follow. 
+- Each testcase contains of a single line of input, one  integers N$N$.
+- next line conatins N$N$ integers that represents weight of bag 
+
+-----Output:-----
+For each testcase, print required answer in new line .
+
+-----Constraints-----
+- 1≤T≤1000$1 \leq T \leq 1000$
+- 1≤N≤105$1 \leq N \leq 10^5$
+- 1≤weightofbag≤105$ 1\leq  weight of bag   \leq 10^5$ 
+
+-----Sample Input:-----
+1
+4 
+1 2 3 4
+
+-----Sample Output:-----
+3
+"""
+
+def count_heavy_bags(test_cases):
+    results = []
+    for case in test_cases:
+        N, weights = case
+        count = sum(1 for weight in weights if weight >= N / 2)
+        results.append(count)
+    return results

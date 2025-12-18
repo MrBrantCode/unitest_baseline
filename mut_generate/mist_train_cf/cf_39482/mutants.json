@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_39482",
+  "entry_point": "detect_cycle",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "if command.startswith(\"cycletest\"):",
+      "mutated_line": "if command.startswith(''):",
+      "code": "from typing import List\n\ndef detect_cycle(commands: List[str]) -> List[str]:\n    graph = {}\n    for command in commands:\n        if command.startswith(''):\n            (_, source, destination) = command.split()\n            if source in graph:\n                if destination in graph[source]:\n                    return [f'cycletest {source}', f'cycletest {destination}']\n            else:\n                graph[source] = set()\n            graph[source].add(destination)\n    return []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if source in graph:",
+      "mutated_line": "if source not in graph:",
+      "code": "from typing import List\n\ndef detect_cycle(commands: List[str]) -> List[str]:\n    graph = {}\n    for command in commands:\n        if command.startswith('cycletest'):\n            (_, source, destination) = command.split()\n            if source not in graph:\n                if destination in graph[source]:\n                    return [f'cycletest {source}', f'cycletest {destination}']\n            else:\n                graph[source] = set()\n            graph[source].add(destination)\n    return []"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if destination in graph[source]:",
+      "mutated_line": "if destination not in graph[source]:",
+      "code": "from typing import List\n\ndef detect_cycle(commands: List[str]) -> List[str]:\n    graph = {}\n    for command in commands:\n        if command.startswith('cycletest'):\n            (_, source, destination) = command.split()\n            if source in graph:\n                if destination not in graph[source]:\n                    return [f'cycletest {source}', f'cycletest {destination}']\n            else:\n                graph[source] = set()\n            graph[source].add(destination)\n    return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return [f\"cycletest {source}\", f\"cycletest {destination}\"]",
+      "mutated_line": "return [f'{source}', f'cycletest {destination}']",
+      "code": "from typing import List\n\ndef detect_cycle(commands: List[str]) -> List[str]:\n    graph = {}\n    for command in commands:\n        if command.startswith('cycletest'):\n            (_, source, destination) = command.split()\n            if source in graph:\n                if destination in graph[source]:\n                    return [f'{source}', f'cycletest {destination}']\n            else:\n                graph[source] = set()\n            graph[source].add(destination)\n    return []"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return [f\"cycletest {source}\", f\"cycletest {destination}\"]",
+      "mutated_line": "return [f'cycletest {source}', f'{destination}']",
+      "code": "from typing import List\n\ndef detect_cycle(commands: List[str]) -> List[str]:\n    graph = {}\n    for command in commands:\n        if command.startswith('cycletest'):\n            (_, source, destination) = command.split()\n            if source in graph:\n                if destination in graph[source]:\n                    return [f'cycletest {source}', f'{destination}']\n            else:\n                graph[source] = set()\n            graph[source].add(destination)\n    return []"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_67776",
+  "entry_point": "entrance",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return True",
+      "mutated_line": "return True",
+      "code": "from abc import ABC, abstractmethod\nfrom typing import Dict\n\nclass PaymentGateway(ABC):\n\n    @abstractmethod\n    def process_payment(self, amount: float) -> bool:\n        pass\n\nclass StripePaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return False\n\nclass PayPalPaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return True\n\nclass OrderProcessor:\n\n    def __init__(self, payment_gateway: PaymentGateway):\n        self.payment_gateway = payment_gateway\n\n    def process_order(self, order: Dict) -> bool:\n        return self.payment_gateway.process_payment(order['amount'])\n\ndef entrance(order: Dict) -> bool:\n    payment_gateway = StripePaymentGateway()\n    order_processor = OrderProcessor(payment_gateway)\n    return order_processor.process_order(order)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from abc import ABC, abstractmethod\nfrom typing import Dict\n\nclass PaymentGateway(ABC):\n\n    @abstractmethod\n    def process_payment(self, amount: float) -> bool:\n        pass\n\nclass StripePaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return True\n\nclass PayPalPaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return False\n\nclass OrderProcessor:\n\n    def __init__(self, payment_gateway: PaymentGateway):\n        self.payment_gateway = payment_gateway\n\n    def process_order(self, order: Dict) -> bool:\n        return self.payment_gateway.process_payment(order['amount'])\n\ndef entrance(order: Dict) -> bool:\n    payment_gateway = StripePaymentGateway()\n    order_processor = OrderProcessor(payment_gateway)\n    return order_processor.process_order(order)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "return self.payment_gateway.process_payment(order['amount'])",
+      "mutated_line": "return self.payment_gateway.process_payment(order[''])",
+      "code": "from abc import ABC, abstractmethod\nfrom typing import Dict\n\nclass PaymentGateway(ABC):\n\n    @abstractmethod\n    def process_payment(self, amount: float) -> bool:\n        pass\n\nclass StripePaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return True\n\nclass PayPalPaymentGateway(PaymentGateway):\n\n    def process_payment(self, amount: float) -> bool:\n        return True\n\nclass OrderProcessor:\n\n    def __init__(self, payment_gateway: PaymentGateway):\n        self.payment_gateway = payment_gateway\n\n    def process_order(self, order: Dict) -> bool:\n        return self.payment_gateway.process_payment(order[''])\n\ndef entrance(order: Dict) -> bool:\n    payment_gateway = StripePaymentGateway()\n    order_processor = OrderProcessor(payment_gateway)\n    return order_processor.process_order(order)"
+    }
+  ]
+}

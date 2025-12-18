@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_49222",
+  "entry_point": "merge_dicts",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "from collections import OrderedDict\n\ndef merge_dicts(dictA, dictB):\n    \"\"\"\"\"\"\n    new_dict = OrderedDict()\n    for d in (dictA, dictB):\n        for (key, value) in d.items():\n            if key in new_dict and new_dict[key] != value:\n                if not isinstance(new_dict[key], list):\n                    new_dict[key] = [new_dict[key]]\n                new_dict[key].append(value)\n            else:\n                new_dict[key] = value\n    return new_dict"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 21,
+      "original_line": "if key in new_dict and new_dict[key] != value:",
+      "mutated_line": "if key in new_dict or new_dict[key] != value:",
+      "code": "from collections import OrderedDict\n\ndef merge_dicts(dictA, dictB):\n    \"\"\"\n    Merge two dictionaries into one while maintaining the order of insertion.\n    If there are key collisions, merge the values into a list.\n    \n    Args:\n    dictA (dict): The first dictionary to merge.\n    dictB (dict): The second dictionary to merge.\n    \n    Returns:\n    dict: The merged dictionary.\n    \"\"\"\n    new_dict = OrderedDict()\n    for d in (dictA, dictB):\n        for (key, value) in d.items():\n            if key in new_dict or new_dict[key] != value:\n                if not isinstance(new_dict[key], list):\n                    new_dict[key] = [new_dict[key]]\n                new_dict[key].append(value)\n            else:\n                new_dict[key] = value\n    return new_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if key in new_dict and new_dict[key] != value:",
+      "mutated_line": "if key not in new_dict and new_dict[key] != value:",
+      "code": "from collections import OrderedDict\n\ndef merge_dicts(dictA, dictB):\n    \"\"\"\n    Merge two dictionaries into one while maintaining the order of insertion.\n    If there are key collisions, merge the values into a list.\n    \n    Args:\n    dictA (dict): The first dictionary to merge.\n    dictB (dict): The second dictionary to merge.\n    \n    Returns:\n    dict: The merged dictionary.\n    \"\"\"\n    new_dict = OrderedDict()\n    for d in (dictA, dictB):\n        for (key, value) in d.items():\n            if key not in new_dict and new_dict[key] != value:\n                if not isinstance(new_dict[key], list):\n                    new_dict[key] = [new_dict[key]]\n                new_dict[key].append(value)\n            else:\n                new_dict[key] = value\n    return new_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if key in new_dict and new_dict[key] != value:",
+      "mutated_line": "if key in new_dict and new_dict[key] == value:",
+      "code": "from collections import OrderedDict\n\ndef merge_dicts(dictA, dictB):\n    \"\"\"\n    Merge two dictionaries into one while maintaining the order of insertion.\n    If there are key collisions, merge the values into a list.\n    \n    Args:\n    dictA (dict): The first dictionary to merge.\n    dictB (dict): The second dictionary to merge.\n    \n    Returns:\n    dict: The merged dictionary.\n    \"\"\"\n    new_dict = OrderedDict()\n    for d in (dictA, dictB):\n        for (key, value) in d.items():\n            if key in new_dict and new_dict[key] == value:\n                if not isinstance(new_dict[key], list):\n                    new_dict[key] = [new_dict[key]]\n                new_dict[key].append(value)\n            else:\n                new_dict[key] = value\n    return new_dict"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+"""
+QUESTION:
+There is a sheet of paper that can be represented with a grid of size $n \times m$: $n$ rows and $m$ columns of cells. All cells are colored in white initially.
+
+$q$ operations have been applied to the sheet. The $i$-th of them can be described as follows:
+
+$x_i$ $y_i$ — choose one of $k$ non-white colors and color the entire row $x_i$ and the entire column $y_i$ in it. The new color is applied to each cell, regardless of whether the cell was colored before the operation.
+
+The sheet after applying all $q$ operations is called a coloring. Two colorings are different if there exists at least one cell that is colored in different colors.
+
+How many different colorings are there? Print the number modulo $998\,244\,353$.
+
+
+-----Input-----
+
+The first line contains a single integer $t$ ($1 \le t \le 10^4$) — the number of testcases.
+
+The first line of the testcase contains four integers $n, m, k$ and $q$ ($1 \le n, m, k, q \le 2 \cdot 10^5$) — the size of the sheet, the number of non-white colors and the number of operations.
+
+The $i$-th of the following $q$ lines contains a description of the $i$-th operation — two integers $x_i$ and $y_i$ ($1 \le x_i \le n$; $1 \le y_i \le m$) — the row and the column the operation is applied to.
+
+The sum of $q$ over all testcases doesn't exceed $2 \cdot 10^5$.
+
+
+-----Output-----
+
+For each testcase, print a single integer — the number of different colorings modulo $998\,244\,353$.
+
+
+-----Examples-----
+
+Input
+2
+1 1 3 2
+1 1
+1 1
+2 2 2 3
+2 1
+1 1
+2 2
+Output
+3
+4
+
+
+-----Note-----
+
+None
+"""
+
+def count_different_colorings(n, m, k, q, operations):
+    MOD = 998244353
+    
+    last_in_row = {}
+    last_in_col = {}
+    
+    for i, (x, y) in enumerate(operations):
+        last_in_row[x - 1] = i
+        last_in_col[y - 1] = i
+    
+    lr = min(last_in_row.values()) if len(last_in_row) == n else 0
+    lc = min(last_in_col.values()) if len(last_in_col) == m else 0
+    
+    start = max(lr, lc)
+    
+    is_valuable = [False] * q
+    
+    for i in chain(last_in_row.values(), last_in_col.values()):
+        if i >= start:
+            is_valuable[i] = True
+    
+    cnt = sum(is_valuable)
+    
+    return pow(k, cnt, MOD)

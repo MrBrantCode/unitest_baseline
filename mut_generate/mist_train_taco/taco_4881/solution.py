@@ -1,0 +1,47 @@
+"""
+QUESTION:
+Dreamoon loves summing up something for no reason. One day he obtains two integers a and b occasionally. He wants to calculate the sum of all nice integers. Positive integer x is called nice if <image> and <image>, where k is some integer number in range [1, a].
+
+By <image> we denote the quotient of integer division of x and y. By <image> we denote the remainder of integer division of x and y. You can read more about these operations here: http://goo.gl/AcsXhT.
+
+The answer may be large, so please print its remainder modulo 1 000 000 007 (109 + 7). Can you compute it faster than Dreamoon?
+
+Input
+
+The single line of the input contains two integers a, b (1 ≤ a, b ≤ 107).
+
+Output
+
+Print a single integer representing the answer modulo 1 000 000 007 (109 + 7).
+
+Examples
+
+Input
+
+1 1
+
+
+Output
+
+0
+
+
+Input
+
+2 2
+
+
+Output
+
+8
+
+Note
+
+For the first sample, there are no nice integers because <image> is always zero.
+
+For the second sample, the set of nice integers is {3, 5}.
+"""
+
+def calculate_nice_integers_sum(a: int, b: int) -> int:
+    MODMAX = 1000000007
+    return a * (b - 1) * b * (b * (a + 1) + 2) // 4 % MODMAX

@@ -1,0 +1,56 @@
+{
+  "task_id": "cf_30484",
+  "entry_point": "cautious_eval",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if size_limit is not None:",
+      "mutated_line": "if size_limit is None:",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'Error: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return \"Memory Error: Expression size exceeds the specified limit\"",
+      "mutated_line": "return ''",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return ''\n    except Exception as e:\n        return f'Error: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "parsed_expr = ast.parse(definition, mode='eval')",
+      "mutated_line": "parsed_expr = ast.parse(definition, mode='')",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'Error: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return f\"Syntax Error: {e}\"",
+      "mutated_line": "return f'{e}'",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'{e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'Error: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return f\"Error: {e}\"",
+      "mutated_line": "return f'{e}'",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'{e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))",
+      "mutated_line": "evaluated_result = eval(compile(parsed_expr, filename='', mode='eval'))",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='', mode='eval'))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'Error: {e}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "evaluated_result = eval(compile(parsed_expr, filename='<string>', mode='eval'))",
+      "mutated_line": "evaluated_result = eval(compile(parsed_expr, filename='<string>', mode=''))",
+      "code": "import ast\nimport sys\nimport resource\nfrom typing import Optional, Any\n\ndef cautious_eval(definition: str, size_limit: Optional[int]=None) -> Any:\n    try:\n        parsed_expr = ast.parse(definition, mode='eval')\n        if size_limit is not None:\n            resource.setrlimit(resource.RLIMIT_AS, (size_limit, size_limit))\n        evaluated_result = eval(compile(parsed_expr, filename='<string>', mode=''))\n        return evaluated_result\n    except SyntaxError as e:\n        return f'Syntax Error: {e}'\n    except MemoryError:\n        return 'Memory Error: Expression size exceeds the specified limit'\n    except Exception as e:\n        return f'Error: {e}'"
+    }
+  ]
+}

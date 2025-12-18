@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_29817",
+  "entry_point": "build_order",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if target_name not in built:",
+      "mutated_line": "if target_name in built:",
+      "code": "def build_order(targets):\n    dependency_map = {target['target_name']: set(target['dependencies']) for target in targets}\n    built = set()\n    order = []\n\n    def build_target(target_name):\n        if target_name in built:\n            for dependency in dependency_map[target_name]:\n                build_target(dependency)\n            order.append(target_name)\n            built.add(target_name)\n    for target in targets:\n        build_target(target['target_name'])\n    return order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "dependency_map = {target[\"target_name\"]: set(target[\"dependencies\"]) for target in targets}",
+      "mutated_line": "dependency_map = {target['']: set(target['dependencies']) for target in targets}",
+      "code": "def build_order(targets):\n    dependency_map = {target['']: set(target['dependencies']) for target in targets}\n    built = set()\n    order = []\n\n    def build_target(target_name):\n        if target_name not in built:\n            for dependency in dependency_map[target_name]:\n                build_target(dependency)\n            order.append(target_name)\n            built.add(target_name)\n    for target in targets:\n        build_target(target['target_name'])\n    return order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "dependency_map = {target[\"target_name\"]: set(target[\"dependencies\"]) for target in targets}",
+      "mutated_line": "dependency_map = {target['target_name']: set(target['']) for target in targets}",
+      "code": "def build_order(targets):\n    dependency_map = {target['target_name']: set(target['']) for target in targets}\n    built = set()\n    order = []\n\n    def build_target(target_name):\n        if target_name not in built:\n            for dependency in dependency_map[target_name]:\n                build_target(dependency)\n            order.append(target_name)\n            built.add(target_name)\n    for target in targets:\n        build_target(target['target_name'])\n    return order"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "build_target(target[\"target_name\"])",
+      "mutated_line": "build_target(target[''])",
+      "code": "def build_order(targets):\n    dependency_map = {target['target_name']: set(target['dependencies']) for target in targets}\n    built = set()\n    order = []\n\n    def build_target(target_name):\n        if target_name not in built:\n            for dependency in dependency_map[target_name]:\n                build_target(dependency)\n            order.append(target_name)\n            built.add(target_name)\n    for target in targets:\n        build_target(target[''])\n    return order"
+    }
+  ]
+}

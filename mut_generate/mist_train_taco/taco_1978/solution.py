@@ -1,0 +1,43 @@
+"""
+QUESTION:
+It's the rainy season again, and the city experiences frequent showers throughout the day.
+
+The weather report says that there is a P probability of rainfalls today. Raj has to step out for a meeting at the office, and would like to know the probability that it rains during the time he is on the way.
+
+Input:
+
+The first line of input contains the number of test cases, T. Each of the following T lines contain two numbers, P and time. P denotes the probability that it will rain today and time is the time (in minutes), it will take for Raj to reach his office.
+
+Output:
+
+Output should have T lines each containing answer to corresponding test case. Please round the answer to 4 decimal places.
+
+Constraints:
+
+1 ≤ T ≤ 100
+0 ≤ P ≤ 0.5
+10 ≤ time ≤ 720
+time is a perfect divisor of 1440.
+
+SAMPLE INPUT
+2
+0 10
+.5 720
+
+SAMPLE OUTPUT
+0.0000
+0.2929
+"""
+
+def calculate_rain_probability(P: float, time: int) -> float:
+    """
+    Calculate the probability that it rains during the time Raj is on the way.
+
+    Parameters:
+    P (float): The probability that it will rain today.
+    time (int): The time (in minutes) it will take for Raj to reach his office.
+
+    Returns:
+    float: The probability that it rains during the time Raj is on the way, rounded to 4 decimal places.
+    """
+    return round(1 - pow(1 - P, time / 1440.0), 4)

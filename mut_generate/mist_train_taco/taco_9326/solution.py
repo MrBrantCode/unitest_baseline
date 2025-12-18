@@ -1,0 +1,43 @@
+"""
+QUESTION:
+Given a string, rearrange it in such a way that it has no subsequence as cba. If there are multiple answers return the lexicographically smallest one.
+Example 1:
+Input:
+N=6
+S="aaaaab"
+Output:
+aaaaab
+Explanation: "aaaaab" has no subsequence as cba and is 
+lexicographically the smallest one.
+Example 2:
+Input: 
+N=3 
+S="cba"
+Output: 
+abc.
+Explanation: "abc" has no subsequence as cba and is
+lexicographically the smallest one.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function cbaSubsequence() which takes the string S, its size N as input parameters and returns the rearranged string.
+ 
+Expected Time Complexity: O(NLogN)
+Expected Auxiliary Space: O(1)
+ 
+Constraints:
+1<=N<=10^{5}
+S contains only lowercase English alphabets.
+"""
+
+def rearrange_string_no_cba(s: str, n: int) -> str:
+    """
+    Rearranges the input string `s` of size `n` such that it has no subsequence as "cba" and is lexicographically the smallest.
+
+    Parameters:
+    - s (str): The input string to be rearranged.
+    - n (int): The size of the input string `s`.
+
+    Returns:
+    - str: The rearranged string.
+    """
+    return ''.join(sorted(s))

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_48364",
+  "entry_point": "find_key",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if key == target_key:",
+      "mutated_line": "if key != target_key:",
+      "code": "def find_key(nested_dict, target_key):\n    results = []\n    try:\n        for (key, value) in nested_dict.items():\n            if key != target_key:\n                results.append(value)\n            if isinstance(value, dict):\n                results += find_key(value, target_key)\n            elif isinstance(value, list):\n                for item in value:\n                    if isinstance(item, dict):\n                        results += find_key(item, target_key)\n        return results if results else None\n    except InterruptedError:\n        return None"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "results += find_key(value, target_key)",
+      "mutated_line": "results -= find_key(value, target_key)",
+      "code": "def find_key(nested_dict, target_key):\n    results = []\n    try:\n        for (key, value) in nested_dict.items():\n            if key == target_key:\n                results.append(value)\n            if isinstance(value, dict):\n                results -= find_key(value, target_key)\n            elif isinstance(value, list):\n                for item in value:\n                    if isinstance(item, dict):\n                        results += find_key(item, target_key)\n        return results if results else None\n    except InterruptedError:\n        return None"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 12,
+      "original_line": "results += find_key(item, target_key)",
+      "mutated_line": "results -= find_key(item, target_key)",
+      "code": "def find_key(nested_dict, target_key):\n    results = []\n    try:\n        for (key, value) in nested_dict.items():\n            if key == target_key:\n                results.append(value)\n            if isinstance(value, dict):\n                results += find_key(value, target_key)\n            elif isinstance(value, list):\n                for item in value:\n                    if isinstance(item, dict):\n                        results -= find_key(item, target_key)\n        return results if results else None\n    except InterruptedError:\n        return None"
+    }
+  ]
+}

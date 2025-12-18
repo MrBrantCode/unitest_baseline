@@ -1,0 +1,224 @@
+{
+  "task_id": "cf_26630",
+  "entry_point": "can_win",
+  "mutant_count": 31,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if (selected, current) in memo:",
+      "mutated_line": "if (selected, current) not in memo:",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) not in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "memo[(selected, current)] = False",
+      "mutated_line": "memo[selected, current] = True",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = True\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return True\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 22,
+      "original_line": "if t & selected:  # If the number has already been selected, skip it",
+      "mutated_line": "if t | selected:",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t | selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "choice = selected | t  # Mark the number as selected",
+      "mutated_line": "choice = selected & t",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected & t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "choice = selected | t  # Mark the number as selected",
+      "mutated_line": "choice = selected ^ t",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected ^ t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n >= target and (not can_win_helper(choice, current + n)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target and (not can_win_helper(choice, current + n)):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(2, maxChoosableInteger + 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(2, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(0, maxChoosableInteger + 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(0, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(0, maxChoosableInteger + 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(0, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(-1, maxChoosableInteger + 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(-1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger - 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger - 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger * 1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger * 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "t = 1 << n",
+      "mutated_line": "t = 2 << n",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 2 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "t = 1 << n",
+      "mutated_line": "t = 0 << n",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 0 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "t = 1 << n",
+      "mutated_line": "t = 0 << n",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 0 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "t = 1 << n",
+      "mutated_line": "t = -1 << n",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = -1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n > target or not can_win_helper(choice, current + n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n > target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n < target or not can_win_helper(choice, current + n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n < target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n == target or not can_win_helper(choice, current + n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n == target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "memo[(selected, current)] = True",
+      "mutated_line": "memo[selected, current] = False",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = False\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return False\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger + 2)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 2)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger + 0)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 0)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger + 0)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 0)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "for n in reversed(range(1, maxChoosableInteger + 1)):",
+      "mutated_line": "for n in reversed(range(1, maxChoosableInteger + -1)):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + -1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current - n >= target or not can_win_helper(choice, current + n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current - n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current * n >= target or not can_win_helper(choice, current + n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current * n >= target or not can_win_helper(choice, current + n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n >= target or not can_win_helper(choice, current - n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current - n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "if current + n >= target or not can_win_helper(choice, current + n):",
+      "mutated_line": "if current + n >= target or not can_win_helper(choice, current * n):",
+      "code": "def can_win(selected: int, current: int, maxChoosableInteger: int, target: int) -> bool:\n    \"\"\"\n    Determine if the current player can win the game given the selected numbers and current sum.\n\n    Args:\n    selected (int): An integer representing the selected numbers so far.\n    current (int): An integer representing the current sum.\n    maxChoosableInteger (int): The maximum number that can be chosen.\n    target (int): The target sum to win the game.\n\n    Returns:\n    bool: A boolean value indicating whether the current player can win.\n    \"\"\"\n    memo = {}\n\n    def can_win_helper(selected: int, current: int) -> bool:\n        if (selected, current) in memo:\n            return memo[selected, current]\n        for n in reversed(range(1, maxChoosableInteger + 1)):\n            t = 1 << n\n            if t & selected:\n                continue\n            choice = selected | t\n            if current + n >= target or not can_win_helper(choice, current * n):\n                memo[selected, current] = True\n                return True\n        memo[selected, current] = False\n        return False\n    return can_win_helper(selected, current)"
+    }
+  ]
+}

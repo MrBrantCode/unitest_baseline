@@ -1,0 +1,38 @@
+"""
+QUESTION:
+Given a string, find the minimum number of characters to be inserted to convert it to palindrome.
+For Example:
+ab: Number of insertions required is 1. bab or aba
+aa: Number of insertions required is 0. aa
+abcd: Number of insertions required is 3. dcbabcd
+Example 1:
+Input: str = "abcd"
+Output: 3
+Explanation: Inserted character marked
+with bold characters in dcbabcd
+Example 2:
+Input: str = "aa"
+Output: 0
+Explanation:"aa" is already a palindrome.
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function countMin() which takes the string str as inputs and returns the answer.
+Expected Time Complexity: O(N^{2}), N = |str|
+Expected Auxiliary Space: O(N^{2})
+Constraints:
+1 ≤ |str| ≤ 10^{3}
+str contains only lower case alphabets.
+"""
+
+def min_insertions_to_palindrome(s: str) -> int:
+    n = len(s)
+    rs = s[::-1]
+    dp = [[0 for j in range(n + 1)] for i in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if s[i - 1] == rs[j - 1]:
+                dp[i][j] = 1 + dp[i - 1][j - 1]
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    
+    return n - dp[n][n]

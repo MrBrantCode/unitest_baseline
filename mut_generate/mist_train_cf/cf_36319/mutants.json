@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_36319",
+  "entry_point": "parse_date_to_epoch",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "for format_string in [\"%a %b %d %H:%M:%S %Y\", \"%a %b %d %H:%M:%S %Z %Y\"]:",
+      "mutated_line": "for format_string in ['', '%a %b %d %H:%M:%S %Z %Y']:",
+      "code": "import time\nimport calendar\nfrom typing import Union\n\ndef parse_date_to_epoch(date_str: str) -> Union[int, None]:\n    for format_string in ['', '%a %b %d %H:%M:%S %Z %Y']:\n        try:\n            epoch = calendar.timegm(time.strptime(date_str, format_string))\n            return epoch\n        except ValueError:\n            pass\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "for format_string in [\"%a %b %d %H:%M:%S %Y\", \"%a %b %d %H:%M:%S %Z %Y\"]:",
+      "mutated_line": "for format_string in ['%a %b %d %H:%M:%S %Y', '']:",
+      "code": "import time\nimport calendar\nfrom typing import Union\n\ndef parse_date_to_epoch(date_str: str) -> Union[int, None]:\n    for format_string in ['%a %b %d %H:%M:%S %Y', '']:\n        try:\n            epoch = calendar.timegm(time.strptime(date_str, format_string))\n            return epoch\n        except ValueError:\n            pass\n    return None"
+    }
+  ]
+}

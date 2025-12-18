@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_38692",
+  "entry_point": "serialize",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "if isinstance(obj, Sequence) and not isinstance(obj, str):",
+      "mutated_line": "if isinstance(obj, Sequence) or not isinstance(obj, str):",
+      "code": "from collections.abc import Mapping, Sequence\nfrom typing import Any\n\ndef serialize(obj: Any) -> dict:\n    if isinstance(obj, Sequence) or not isinstance(obj, str):\n        return [serialize(item) for item in obj]\n    elif isinstance(obj, Mapping):\n        return {k: serialize(v) for (k, v) in obj.items()}\n    elif isinstance(obj, (int, float, str, bool, type(None))):\n        return obj\n    elif isinstance(obj, type):\n        return obj.__name__\n    else:\n        return str(obj)"
+    }
+  ]
+}

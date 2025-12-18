@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_41761",
+  "entry_point": "compose",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "while True:",
+      "mutated_line": "while False:",
+      "code": "from typing import Set, Tuple\n\ndef compose(p1: Tuple[int, ...], p2: Tuple[int, ...]) -> Tuple[int, ...]:\n    composed_permutation = tuple((p1[p2[i]] for i in range(len(p1))))\n    return composed_permutation\n\ndef germinate(subset: Set[Tuple[int, ...]]) -> Set[Tuple[int, ...]]:\n    while False:\n        n = len(subset)\n        subset = subset.union([tuple(reversed(p)) for p in subset])\n        new_permutations = set()\n        for p1 in subset:\n            for p2 in subset:\n                new_permutations.add(compose(p1, p2))\n        subset = subset.union(new_permutations)\n        if len(subset) == n:\n            break\n    return subset"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if len(subset) == n:",
+      "mutated_line": "if len(subset) != n:",
+      "code": "from typing import Set, Tuple\n\ndef compose(p1: Tuple[int, ...], p2: Tuple[int, ...]) -> Tuple[int, ...]:\n    composed_permutation = tuple((p1[p2[i]] for i in range(len(p1))))\n    return composed_permutation\n\ndef germinate(subset: Set[Tuple[int, ...]]) -> Set[Tuple[int, ...]]:\n    while True:\n        n = len(subset)\n        subset = subset.union([tuple(reversed(p)) for p in subset])\n        new_permutations = set()\n        for p1 in subset:\n            for p2 in subset:\n                new_permutations.add(compose(p1, p2))\n        subset = subset.union(new_permutations)\n        if len(subset) != n:\n            break\n    return subset"
+    }
+  ]
+}

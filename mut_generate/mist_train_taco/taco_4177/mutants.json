@@ -1,0 +1,98 @@
+{
+  "task_id": "taco_4177",
+  "entry_point": "stack_food_items",
+  "mutant_count": 13,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "items.sort(key=lambda x: x.w, reverse=True)",
+      "mutated_line": "items.sort(key=lambda x: x.w, reverse=False)",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=False)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "cap = [item.s - total_weight + item.w for item in items]",
+      "mutated_line": "cap = [item.s - total_weight - item.w for item in items]",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight - item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "cap = [item.s - total_weight + item.w for item in items]",
+      "mutated_line": "cap = [(item.s - total_weight) * item.w for item in items]",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [(item.s - total_weight) * item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] > 0:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] > 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] < 0:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] < 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] == 0:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] == 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 22,
+      "original_line": "total_weight -= items[i].w",
+      "mutated_line": "total_weight += items[i].w",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight += items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "cap = [item.s - total_weight + item.w for item in items]",
+      "mutated_line": "cap = [item.s + total_weight + item.w for item in items]",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s + total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "cap = [item.s - total_weight + item.w for item in items]",
+      "mutated_line": "cap = [item.s * total_weight + item.w for item in items]",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s * total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 0:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] >= 1:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 1:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] >= -1:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= -1:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if cap[i] >= 0:",
+      "mutated_line": "if cap[i] >= 1:",
+      "code": "from collections import namedtuple\n\ndef stack_food_items(items):\n    \"\"\"\n    Stacks food items in a way that minimizes the overall center of gravity and ensures no food is crushed.\n\n    Parameters:\n    items (list): A list of named tuples, where each named tuple has fields 'name', 'w' (weight), and 's' (strength).\n\n    Returns:\n    list: A list of food names in the order they should be stacked from the bottom to the top.\n    \"\"\"\n    items.sort(key=lambda x: x.w, reverse=True)\n    total_weight = sum((item.w for item in items))\n    ans = []\n    while items:\n        cap = [item.s - total_weight + item.w for item in items]\n        for i in range(len(items)):\n            if cap[i] >= 1:\n                ans.append(items[i].name)\n                total_weight -= items[i].w\n                items.pop(i)\n                break\n    return ans"
+    }
+  ]
+}

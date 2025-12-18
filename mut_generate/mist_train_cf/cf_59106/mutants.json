@@ -1,0 +1,385 @@
+{
+  "task_id": "cf_59106",
+  "entry_point": "handle_option_data",
+  "mutant_count": 54,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) | (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) < 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) < 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) > 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) > 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) == 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) == 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df[''] = pd.qcut(df['maturity'], 3, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df[''] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], 4, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 4, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], 2, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 2, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], 0, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 0, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], 1, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 1, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], -3, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], -3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')",
+      "mutated_line": "df[''] = df['strike'].interpolate(method='linear', limit_direction='both')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df[''] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] > 7]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] > 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] < 7]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] < 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] == 7]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] == 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] >= 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] <= 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] != 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] >= 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] <= 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] != 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 / df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 / df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 + df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 + df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 ** df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 ** df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df[''], 3, labels=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df[''], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)",
+      "mutated_line": "df['maturity'] = pd.qcut(df['maturity'], 3, labels=True)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=True)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')",
+      "mutated_line": "df['strike'] = df['strike'].interpolate(method='', limit_direction='both')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')",
+      "mutated_line": "df['strike'] = df['strike'].interpolate(method='linear', limit_direction='')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] >= 8]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 8]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] >= 6]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 6]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] >= 0]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 0]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] >= 1]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 1]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df['time_to_maturity'] >= -7]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= -7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 1) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > -1) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 1) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 1)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > -1)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 1)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] + df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] + df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] * df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] * df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 4 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 4 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 2 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 2 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 0 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 0 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 1 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 1 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= -3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= -3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "df = pd.get_dummies(df, columns=['ITM_OTM'])",
+      "mutated_line": "df = pd.get_dummies(df, columns=[''])",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=[''])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')",
+      "mutated_line": "df['strike'] = df[''].interpolate(method='linear', limit_direction='both')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df[''].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "df = df[df['time_to_maturity'] >= 7]",
+      "mutated_line": "df = df[df[''] >= 7]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df[''] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df[''] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df[''] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df[''] - df['strike'].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df[''] - df['strike'].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df[''].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df['strike'].mean()) <= 3 * df[''].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "df = df[(np.abs(df['strike'] - df['strike'].mean()) <= (3 * df['strike'].std()))]",
+      "mutated_line": "df = df[np.abs(df['strike'] - df[''].mean()) <= 3 * df['strike'].std()]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_option_data(df):\n    \"\"\"\n    Clean and handle option data for Heston model calibration.\n\n    Parameters:\n    df (pd.DataFrame): A pandas DataFrame containing option data.\n    The DataFrame should have columns 'strike', 'maturity', 'trade_volume', 'open_interest', 'ITM_OTM', and 'time_to_maturity'.\n\n    Returns:\n    pd.DataFrame: A cleaned DataFrame.\n    \"\"\"\n    df = df[(df['trade_volume'] > 0) & (df['open_interest'] > 0)]\n    df = df[np.abs(df['strike'] - df[''].mean()) <= 3 * df['strike'].std()]\n    df = pd.get_dummies(df, columns=['ITM_OTM'])\n    df['maturity'] = pd.qcut(df['maturity'], 3, labels=False)\n    df['strike'] = df['strike'].interpolate(method='linear', limit_direction='both')\n    df = df[df['time_to_maturity'] >= 7]\n    return df"
+    }
+  ]
+}

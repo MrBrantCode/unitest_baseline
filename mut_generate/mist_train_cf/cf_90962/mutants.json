@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_90962",
+  "entry_point": "dict_to_xml",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "def dict_to_xml(data, root_name=\"data\"):",
+      "mutated_line": "def dict_to_xml(data, root_name=''):",
+      "code": "import xml.etree.ElementTree as ET\n\ndef dict_to_xml(data, root_name=''):\n    root = ET.Element(root_name)\n    dict_to_xml_rec(data, root)\n    return ET.tostring(root).decode()\n\ndef dict_to_xml_rec(data, root):\n    for (key, value) in data.items():\n        if isinstance(value, dict):\n            sub_element = ET.SubElement(root, key)\n            dict_to_xml_rec(value, sub_element)\n        elif isinstance(value, list):\n            for item in value:\n                sub_element = ET.SubElement(root, key)\n                dict_to_xml_rec(item, sub_element)\n        else:\n            element = ET.SubElement(root, key)\n            element.text = str(value)"
+    }
+  ]
+}

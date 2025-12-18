@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_94458",
+  "entry_point": "extract_values",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if excluded_keys is None:",
+      "mutated_line": "if excluded_keys is not None:",
+      "code": "from collections import OrderedDict\n\ndef extract_values(dictionaries, excluded_keys=None, operation=None):\n    if excluded_keys is not None:\n        excluded_keys = []\n    if operation is None:\n        operation = lambda x: x\n    extracted_values = []\n    for dictionary in dictionaries:\n        extracted_values.extend(_extract_values_recursive(dictionary, excluded_keys, operation))\n    return extracted_values\n\ndef _extract_values_recursive(dictionary, excluded_keys, operation):\n    values = []\n    for (key, value) in dictionary.items():\n        if key not in excluded_keys:\n            if isinstance(value, dict):\n                values.extend(_extract_values_recursive(value, excluded_keys, operation))\n            else:\n                value = operation(value)\n                values.append(value)\n    return values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if operation is None:",
+      "mutated_line": "if operation is not None:",
+      "code": "from collections import OrderedDict\n\ndef extract_values(dictionaries, excluded_keys=None, operation=None):\n    if excluded_keys is None:\n        excluded_keys = []\n    if operation is not None:\n        operation = lambda x: x\n    extracted_values = []\n    for dictionary in dictionaries:\n        extracted_values.extend(_extract_values_recursive(dictionary, excluded_keys, operation))\n    return extracted_values\n\ndef _extract_values_recursive(dictionary, excluded_keys, operation):\n    values = []\n    for (key, value) in dictionary.items():\n        if key not in excluded_keys:\n            if isinstance(value, dict):\n                values.extend(_extract_values_recursive(value, excluded_keys, operation))\n            else:\n                value = operation(value)\n                values.append(value)\n    return values"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if key not in excluded_keys:",
+      "mutated_line": "if key in excluded_keys:",
+      "code": "from collections import OrderedDict\n\ndef extract_values(dictionaries, excluded_keys=None, operation=None):\n    if excluded_keys is None:\n        excluded_keys = []\n    if operation is None:\n        operation = lambda x: x\n    extracted_values = []\n    for dictionary in dictionaries:\n        extracted_values.extend(_extract_values_recursive(dictionary, excluded_keys, operation))\n    return extracted_values\n\ndef _extract_values_recursive(dictionary, excluded_keys, operation):\n    values = []\n    for (key, value) in dictionary.items():\n        if key in excluded_keys:\n            if isinstance(value, dict):\n                values.extend(_extract_values_recursive(value, excluded_keys, operation))\n            else:\n                value = operation(value)\n                values.append(value)\n    return values"
+    }
+  ]
+}

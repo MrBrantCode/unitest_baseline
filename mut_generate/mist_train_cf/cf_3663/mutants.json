@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_3663",
+  "entry_point": "job_titles",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "cur.execute(\"\"\"",
+      "mutated_line": "cur.execute('')",
+      "code": "def job_titles(conn):\n    cur = conn.cursor()\n    cur.execute('')\n    return [row[0] for row in cur.fetchall()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return [row[0] for row in cur.fetchall()]",
+      "mutated_line": "return [row[1] for row in cur.fetchall()]",
+      "code": "def job_titles(conn):\n    cur = conn.cursor()\n    cur.execute('\\n        SELECT job_title\\n        FROM employees\\n        GROUP BY job_title\\n        HAVING COUNT(*) >= 10 AND AVG(salary) >= 50000\\n        ORDER BY AVG(salary) DESC\\n    ')\n    return [row[1] for row in cur.fetchall()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return [row[0] for row in cur.fetchall()]",
+      "mutated_line": "return [row[-1] for row in cur.fetchall()]",
+      "code": "def job_titles(conn):\n    cur = conn.cursor()\n    cur.execute('\\n        SELECT job_title\\n        FROM employees\\n        GROUP BY job_title\\n        HAVING COUNT(*) >= 10 AND AVG(salary) >= 50000\\n        ORDER BY AVG(salary) DESC\\n    ')\n    return [row[-1] for row in cur.fetchall()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return [row[0] for row in cur.fetchall()]",
+      "mutated_line": "return [row[1] for row in cur.fetchall()]",
+      "code": "def job_titles(conn):\n    cur = conn.cursor()\n    cur.execute('\\n        SELECT job_title\\n        FROM employees\\n        GROUP BY job_title\\n        HAVING COUNT(*) >= 10 AND AVG(salary) >= 50000\\n        ORDER BY AVG(salary) DESC\\n    ')\n    return [row[1] for row in cur.fetchall()]"
+    }
+  ]
+}

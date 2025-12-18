@@ -1,0 +1,43 @@
+"""
+QUESTION:
+Takahashi is taking exams on N subjects. The score on each subject will be an integer between 0 and K (inclusive).
+He has already taken exams on N-1 subjects and scored A_i points on the i-th subject.
+His goal is to achieve the average score of M points or above on the N subjects.
+Print the minimum number of points Takahashi needs on the final subject to achieve his goal.
+If the goal is unachievable, print -1 instead.
+
+-----Constraints-----
+ - 2 \leq N \leq 100
+ - 1 \leq K \leq 100
+ - 1 \leq M \leq K
+ - 0 \leq A_i \leq K
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N K M
+A_1 A_2 ... A_{N-1}
+
+-----Output-----
+Print the minimum number of points required on the final subject, or -1.
+
+-----Sample Input-----
+5 10 7
+8 10 3 6
+
+-----Sample Output-----
+8
+
+If he scores 8 points on the final subject, his average score will be (8+10+3+6+8)/5 = 7 points, which meets the goal.
+"""
+
+def calculate_minimum_final_score(N, K, M, A):
+    max_aim = M * N
+    last_score = max_aim - sum(A)
+    
+    if last_score <= 0:
+        return 0
+    elif 0 < last_score <= K:
+        return last_score
+    elif K < last_score:
+        return -1

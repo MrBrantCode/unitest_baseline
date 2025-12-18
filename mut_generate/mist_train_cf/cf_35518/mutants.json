@@ -1,0 +1,203 @@
+{
+  "task_id": "cf_35518",
+  "entry_point": "get_mounts",
+  "mutant_count": 28,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "LOCAL_OUTPUT_DIR = '/local/output'",
+      "mutated_line": "LOCAL_OUTPUT_DIR = ''",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = ''\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "REMOTE_OUTPUT_DIR = '/remote/output'",
+      "mutated_line": "REMOTE_OUTPUT_DIR = ''",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = ''\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if mode == 'local':",
+      "mutated_line": "if mode != 'local':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode != 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "mounts = code_mounts + data_mounts + output_mounts",
+      "mutated_line": "mounts = code_mounts + data_mounts - output_mounts",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts - output_mounts\n    return mounts"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "mounts = code_mounts + data_mounts + output_mounts",
+      "mutated_line": "mounts = (code_mounts + data_mounts) * output_mounts",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = (code_mounts + data_mounts) * output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "if mode == 'local':",
+      "mutated_line": "if mode == '':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == '':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "elif mode == 'docker':",
+      "mutated_line": "elif mode != 'docker':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode != 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "mounts = code_mounts + data_mounts + output_mounts",
+      "mutated_line": "mounts = code_mounts - data_mounts + output_mounts",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts - data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 24,
+      "original_line": "mounts = code_mounts + data_mounts + output_mounts",
+      "mutated_line": "mounts = code_mounts * data_mounts + output_mounts",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts * data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "code_mounts = [Mount('code', '/local/code', '/remote/code', False)]",
+      "mutated_line": "code_mounts = [Mount('', '/local/code', '/remote/code', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "code_mounts = [Mount('code', '/local/code', '/remote/code', False)]",
+      "mutated_line": "code_mounts = [Mount('code', '', '/remote/code', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "code_mounts = [Mount('code', '/local/code', '/remote/code', False)]",
+      "mutated_line": "code_mounts = [Mount('code', '/local/code', '', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "code_mounts = [Mount('code', '/local/code', '/remote/code', False)]",
+      "mutated_line": "code_mounts = [Mount('code', '/local/code', '/remote/code', True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', True)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data_mounts = [Mount('data', '/local/data', '/remote/data', False)]",
+      "mutated_line": "data_mounts = [Mount('', '/local/data', '/remote/data', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data_mounts = [Mount('data', '/local/data', '/remote/data', False)]",
+      "mutated_line": "data_mounts = [Mount('data', '', '/remote/data', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data_mounts = [Mount('data', '/local/data', '/remote/data', False)]",
+      "mutated_line": "data_mounts = [Mount('data', '/local/data', '', False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "data_mounts = [Mount('data', '/local/data', '/remote/data', False)]",
+      "mutated_line": "data_mounts = [Mount('data', '/local/data', '/remote/data', True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', True)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif mode == 'docker':",
+      "mutated_line": "elif mode == '':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == '':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "output_dir = '/local/output/docker/'",
+      "mutated_line": "output_dir = ''",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = ''\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "elif mode == 'ec2':",
+      "mutated_line": "elif mode != 'ec2':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode != 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, False)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "elif mode == 'ec2':",
+      "mutated_line": "elif mode == '':",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == '':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('', output_dir, REMOTE_OUTPUT_DIR, True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, False)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('', 'data', REMOTE_OUTPUT_DIR, True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('', 'data', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('s3', '', REMOTE_OUTPUT_DIR, True)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', '', REMOTE_OUTPUT_DIR, True)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, True)]",
+      "mutated_line": "output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, False)]",
+      "code": "from typing import List\n\nclass Mount:\n\n    def __init__(self, mount_type: str, path: str, mount_point: str, output: bool):\n        self.mount_type = mount_type\n        self.path = path\n        self.mount_point = mount_point\n        self.output = output\n\ndef get_mounts(mode: str) -> List[Mount]:\n    LOCAL_OUTPUT_DIR = '/local/output'\n    REMOTE_OUTPUT_DIR = '/remote/output'\n    code_mounts = [Mount('code', '/local/code', '/remote/code', False)]\n    data_mounts = [Mount('data', '/local/data', '/remote/data', False)]\n    if mode == 'local':\n        output_mounts = [Mount('local', LOCAL_OUTPUT_DIR, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'docker':\n        output_dir = '/local/output/docker/'\n        output_mounts = [Mount('local', output_dir, REMOTE_OUTPUT_DIR, True)]\n    elif mode == 'ec2':\n        output_mounts = [Mount('s3', 'data', REMOTE_OUTPUT_DIR, False)]\n    mounts = code_mounts + data_mounts + output_mounts\n    return mounts"
+    }
+  ]
+}

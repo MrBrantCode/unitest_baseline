@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_20479",
+  "entry_point": "merge_objects",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "if isinstance(a[key], dict) and isinstance(b.get(key), dict):",
+      "mutated_line": "if isinstance(a[key], dict) or isinstance(b.get(key), dict):",
+      "code": "def merge_objects(a, b):\n    merged = {}\n    for key in a:\n        if key.isalpha():\n            merged[key] = a[key]\n    for key in b:\n        if key.isalpha():\n            merged[key] = b[key]\n    for key in a:\n        if isinstance(a[key], dict) or isinstance(b.get(key), dict):\n            merged[key] = merge_objects(a[key], b[key])\n    for key in b:\n        if key not in a and isinstance(b[key], dict):\n            merged[key] = merge_objects({}, b[key])\n    sorted_merged = {}\n    for key in sorted(merged):\n        sorted_merged[key] = merged[key]\n    return sorted_merged"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 20,
+      "original_line": "if key not in a and isinstance(b[key], dict):",
+      "mutated_line": "if key not in a or isinstance(b[key], dict):",
+      "code": "def merge_objects(a, b):\n    merged = {}\n    for key in a:\n        if key.isalpha():\n            merged[key] = a[key]\n    for key in b:\n        if key.isalpha():\n            merged[key] = b[key]\n    for key in a:\n        if isinstance(a[key], dict) and isinstance(b.get(key), dict):\n            merged[key] = merge_objects(a[key], b[key])\n    for key in b:\n        if key not in a or isinstance(b[key], dict):\n            merged[key] = merge_objects({}, b[key])\n    sorted_merged = {}\n    for key in sorted(merged):\n        sorted_merged[key] = merged[key]\n    return sorted_merged"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if key not in a and isinstance(b[key], dict):",
+      "mutated_line": "if key in a and isinstance(b[key], dict):",
+      "code": "def merge_objects(a, b):\n    merged = {}\n    for key in a:\n        if key.isalpha():\n            merged[key] = a[key]\n    for key in b:\n        if key.isalpha():\n            merged[key] = b[key]\n    for key in a:\n        if isinstance(a[key], dict) and isinstance(b.get(key), dict):\n            merged[key] = merge_objects(a[key], b[key])\n    for key in b:\n        if key in a and isinstance(b[key], dict):\n            merged[key] = merge_objects({}, b[key])\n    sorted_merged = {}\n    for key in sorted(merged):\n        sorted_merged[key] = merged[key]\n    return sorted_merged"
+    }
+  ]
+}

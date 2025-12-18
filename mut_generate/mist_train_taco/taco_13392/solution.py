@@ -1,0 +1,58 @@
+"""
+QUESTION:
+Snuke had N cards numbered 1 through N.
+Each card has an integer written on it; written on Card i is a_i.
+Snuke did the following procedure:
+ - Let X and x be the maximum and minimum values written on Snuke's cards, respectively.
+ - If X = x, terminate the procedure. Otherwise, replace each card on which X is written with a card on which X-x is written, then go back to step 1.
+Under the constraints in this problem, it can be proved that the procedure will eventually terminate. Find the number written on all of Snuke's cards after the procedure.
+
+-----Constraints-----
+ - All values in input are integers.
+ - 1 \leq N \leq 10^{5}
+ - 1 \leq a_i \leq 10^9
+
+-----Input-----
+Input is given from Standard Input in the following format:
+N
+a_1 a_2 \cdots a_N
+
+-----Output-----
+Print the number written on all of Snuke's cards after the procedure.
+
+-----Sample Input-----
+3
+2 6 6
+
+-----Sample Output-----
+2
+
+ - At the beginning of the procedure, the numbers written on Snuke's cards are (2,6,6).
+ - Since x=2 and X=6, he replaces each card on which 6 is written with a card on which 4 is written.
+ - Now, the numbers written on Snuke's cards are (2,4,4).
+ - Since x=2 and X=4, he replaces each card on which 4 is written with a card on which 2 is written.
+ - Now, the numbers written on Snuke's cards are (2,2,2).
+ - Since x=2 and X=2, he terminates the procedure.
+"""
+
+import math
+
+def find_final_card_number(N, A):
+    """
+    Finds the number written on all of Snuke's cards after the procedure terminates.
+
+    Parameters:
+    N (int): The number of cards.
+    A (list of int): The list of integers written on the cards.
+
+    Returns:
+    int: The number written on all cards after the procedure.
+    """
+    Amin = min(A)
+    ans = Amin
+    for i in A:
+        if Amin == i:
+            continue
+        Amin = min(Amin, math.gcd(Amin, i))
+    ans = min(ans, math.gcd(Amin, ans))
+    return ans

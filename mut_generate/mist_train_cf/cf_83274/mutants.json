@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_83274",
+  "entry_point": "remove_tuples",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 9,
+      "original_line": "if not temp or not condition(temp):",
+      "mutated_line": "if not temp and (not condition(temp)):",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for i in t:\n        if isinstance(i, tuple):\n            temp = remove_tuples(i, condition)\n            try:\n                if not temp and (not condition(temp)):\n                    result.append(temp)\n            except Exception as e:\n                print(f'An exception occurred while evaluating the condition: {e}')\n        else:\n            result.append(i)\n    return tuple(result)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f\"An exception occurred while evaluating the condition: {e}\")",
+      "mutated_line": "print(f'{e}')",
+      "code": "def remove_tuples(t, condition):\n    result = []\n    for i in t:\n        if isinstance(i, tuple):\n            temp = remove_tuples(i, condition)\n            try:\n                if not temp or not condition(temp):\n                    result.append(temp)\n            except Exception as e:\n                print(f'{e}')\n        else:\n            result.append(i)\n    return tuple(result)"
+    }
+  ]
+}

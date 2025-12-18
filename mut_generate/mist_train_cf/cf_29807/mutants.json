@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_29807",
+  "entry_point": "tokenize",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "combined_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)",
+      "mutated_line": "combined_regex = ''.join(('(?P<%s>%s)' % pair for pair in token_specification))",
+      "code": "import re\nfrom typing import List, Tuple\n\ndef tokenize(input_string: str, token_specification: List[Tuple[str, str]]) -> List[Tuple[str, str]]:\n    tokens = []\n    combined_regex = ''.join(('(?P<%s>%s)' % pair for pair in token_specification))\n    for match in re.finditer(combined_regex, input_string):\n        for (name, value) in match.groupdict().items():\n            if value is not None:\n                tokens.append((name, value))\n                break\n    return tokens"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "combined_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)",
+      "mutated_line": "combined_regex = '|'.join(('(?P<%s>%s)' * pair for pair in token_specification))",
+      "code": "import re\nfrom typing import List, Tuple\n\ndef tokenize(input_string: str, token_specification: List[Tuple[str, str]]) -> List[Tuple[str, str]]:\n    tokens = []\n    combined_regex = '|'.join(('(?P<%s>%s)' * pair for pair in token_specification))\n    for match in re.finditer(combined_regex, input_string):\n        for (name, value) in match.groupdict().items():\n            if value is not None:\n                tokens.append((name, value))\n                break\n    return tokens"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "combined_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)",
+      "mutated_line": "combined_regex = '|'.join(('(?P<%s>%s)' + pair for pair in token_specification))",
+      "code": "import re\nfrom typing import List, Tuple\n\ndef tokenize(input_string: str, token_specification: List[Tuple[str, str]]) -> List[Tuple[str, str]]:\n    tokens = []\n    combined_regex = '|'.join(('(?P<%s>%s)' + pair for pair in token_specification))\n    for match in re.finditer(combined_regex, input_string):\n        for (name, value) in match.groupdict().items():\n            if value is not None:\n                tokens.append((name, value))\n                break\n    return tokens"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if value is not None:",
+      "mutated_line": "if value is None:",
+      "code": "import re\nfrom typing import List, Tuple\n\ndef tokenize(input_string: str, token_specification: List[Tuple[str, str]]) -> List[Tuple[str, str]]:\n    tokens = []\n    combined_regex = '|'.join(('(?P<%s>%s)' % pair for pair in token_specification))\n    for match in re.finditer(combined_regex, input_string):\n        for (name, value) in match.groupdict().items():\n            if value is None:\n                tokens.append((name, value))\n                break\n    return tokens"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "combined_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)",
+      "mutated_line": "combined_regex = '|'.join(('' % pair for pair in token_specification))",
+      "code": "import re\nfrom typing import List, Tuple\n\ndef tokenize(input_string: str, token_specification: List[Tuple[str, str]]) -> List[Tuple[str, str]]:\n    tokens = []\n    combined_regex = '|'.join(('' % pair for pair in token_specification))\n    for match in re.finditer(combined_regex, input_string):\n        for (name, value) in match.groupdict().items():\n            if value is not None:\n                tokens.append((name, value))\n                break\n    return tokens"
+    }
+  ]
+}

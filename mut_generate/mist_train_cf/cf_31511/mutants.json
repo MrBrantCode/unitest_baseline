@@ -1,0 +1,154 @@
+{
+  "task_id": "cf_31511",
+  "entry_point": "get_suggested_books",
+  "mutant_count": 21,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "if user_wishlist is None or user_wishlist.empty:",
+      "mutated_line": "if user_wishlist is None and user_wishlist.empty:",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None and user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if user_wishlist is None or user_wishlist.empty:",
+      "mutated_line": "if user_wishlist is not None or user_wishlist.empty:",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is not None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "if other_user_id != user_id and not other_user_wishlist.empty:",
+      "mutated_line": "if other_user_id != user_id or not other_user_wishlist.empty:",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id or not other_user_wishlist.empty:\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if other_user_id != user_id and not other_user_wishlist.empty:",
+      "mutated_line": "if other_user_id == user_id and (not other_user_wishlist.empty):",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id == user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=False)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:6]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:6]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:4]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:4]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:0]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:0]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:1]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:1]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "suggested_books[user_id] = sorted_suggestions[:5]",
+      "mutated_line": "suggested_books[user_id] = sorted_suggestions[:-5]",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:-5]\n    return suggested_books"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) - 1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) - 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) * 1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) * 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 2",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 2\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 0",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 0\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 0",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 0\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + -1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + -1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))",
+      "mutated_line": "common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['']))",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 1) + 1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 1) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, -1) + 1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, -1) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1",
+      "mutated_line": "suggestion_scores[book_id] = suggestion_scores.get(book_id, 1) + 1",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 1) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "common_books = set(user_wishlist['book_id']).intersection(set(other_user_wishlist['book_id']))",
+      "mutated_line": "common_books = set(user_wishlist['']).intersection(set(other_user_wishlist['book_id']))",
+      "code": "import pandas as pd\n\ndef get_suggested_books(user_ids, wishlist_data, books):\n    suggested_books = {}\n    for user_id in user_ids:\n        user_wishlist = wishlist_data.get(user_id)\n        if user_wishlist is None or user_wishlist.empty:\n            suggested_books[user_id] = []\n        else:\n            suggestion_scores = {}\n            for (other_user_id, other_user_wishlist) in wishlist_data.items():\n                if other_user_id != user_id and (not other_user_wishlist.empty):\n                    common_books = set(user_wishlist['']).intersection(set(other_user_wishlist['book_id']))\n                    for book_id in common_books:\n                        suggestion_scores[book_id] = suggestion_scores.get(book_id, 0) + 1\n            sorted_suggestions = sorted(suggestion_scores, key=suggestion_scores.get, reverse=True)\n            suggested_books[user_id] = sorted_suggestions[:5]\n    return suggested_books"
+    }
+  ]
+}

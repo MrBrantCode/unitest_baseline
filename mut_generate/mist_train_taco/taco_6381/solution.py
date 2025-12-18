@@ -1,0 +1,57 @@
+"""
+QUESTION:
+Problem Statement:
+You are one of the organizers of Pragyan.Having worked so hard to ensure
+success of the event, you are able to spot the word "pragyan" in any text.
+You are given a stream of character strings and you need to output them 
+till you find the word "pragyan".Stop processing after 
+NOTE: The word "pragyan" can have 0,1..or all characters in uppercase.
+
+Input format:
+Input consists of a single word in each line.
+
+Output Format:
+For each word, print the input word till the word "pragyan" is found.Stop
+processing after this.
+
+Input Constraints:
+Length of each word ≤ 100.
+All words contain only alpabets.(No numbers and special characters included).
+
+SAMPLE INPUT
+The
+quick
+brown
+fox
+praGyan
+jumped
+over
+the
+laz
+dog
+
+SAMPLE OUTPUT
+The
+quick
+brown
+fox
+praGyan
+"""
+
+def find_pragyan_in_stream(input_stream):
+    """
+    Processes a stream of character strings and returns a list of words
+    until the word "pragyan" (case-insensitive) is found.
+
+    Parameters:
+    input_stream (iterable): An iterable that yields strings (each string represents a word).
+
+    Returns:
+    list: A list of strings containing all words until "pragyan" is found.
+    """
+    result = []
+    for word in input_stream:
+        result.append(word)
+        if word.lower() == "pragyan":
+            break
+    return result

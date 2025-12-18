@@ -1,0 +1,64 @@
+"""
+QUESTION:
+Akshit and Rahul are playing a game. Initially, two positive integers A and B are written on a blackboard. The players take turns, starting with Akshit. On his or her turn, a player can replace A with A - kB for any positive integer k, or replace B with B - kA for any positive integer k. The first person to make one of the numbers drop to zero or below loses.
+
+For example, if the numbers are initially (12, 51), the game might progress as follows:
+
+Akshit replaces 51 with 51 - 3*12 = 15, leaving (12, 15) on the blackboard.
+Rahul replaces 15 with 15 - 1*12 = 3, leaving (12, 3) on the blackboard.
+Akshit replaces 12 with 12 - 3*3 = 3, leaving (3, 3) on the blackboard.
+Rahul replaces one 3 with 3 - 1*3 = 0, and loses.
+
+We will say (A, B) is a winning position if Akshit can always win a game that starts with (A, B) on the blackboard, no matter what Rahul does.
+
+Given four integers A1, A2, B1, B2, count how many winning positions (A, B) there are with A1 ≤ A ≤ A2 and B1 ≤ B ≤ B2.
+
+Input
+
+The first line of the input gives the number of test cases, T. T test cases follow, one per line. Each line contains the four integers A1, A2, B1, B2, separated by spaces.
+
+Output
+
+For each test case, output one line containing "Case #x: y", where x is the case number (starting from 1), and y is the number of winning positions (A, B) with A1 ≤ A ≤ A2 and B1 ≤ B ≤ B2. 
+
+CONSTRAINTS
+
+1 ≤ T ≤ 100.
+1 ≤ A1 ≤ A2 ≤ 1,000,000.
+1 ≤ B1 ≤ B2 ≤ 1,000,000. 
+
+SAMPLE INPUT
+2
+5 5 8 8
+11 11 2 2
+
+SAMPLE OUTPUT
+Case #1: 0
+Case #2: 1
+"""
+
+from math import sqrt, ceil
+
+def count_winning_positions(T, test_cases):
+    results = []
+    r = (1 + sqrt(5)) / 2
+    
+    for t in range(T):
+        a1, a2, b1, b2 = test_cases[t]
+        ans = 0
+        
+        for i in range(a1, a2 + 1):
+            up = i * r
+            down = i / r
+            
+            if b1 >= up or b2 <= down:
+                ans += b2 - b1 + 1
+            else:
+                if b1 <= down:
+                    ans += max(0, int(down) - b1 + 1)
+                if b2 >= up:
+                    ans += max(0, b2 - int(ceil(up)) + 1)
+        
+        results.append(ans)
+    
+    return results

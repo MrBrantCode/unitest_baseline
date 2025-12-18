@@ -1,0 +1,50 @@
+"""
+QUESTION:
+Given an unsorted array of integers, find the number of continuous subarrays having sum exactly equal to a given number k.
+Example 1:
+Input:
+N = 5
+Arr = {10 , 2, -2, -20, 10}
+k = -10
+Output: 3
+Explaination: 
+Subarrays: arr[0...3], arr[1...4], arr[3..4]
+have sum exactly equal to -10.
+Example 2:
+Input:
+N = 6
+Arr = {9, 4, 20, 3, 10, 5}
+k = 33
+Output: 2
+Explaination: 
+Subarrays : arr[0...2], arr[2...4] have sum
+exactly equal to 33.
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function findSubArraySum() which takes the array Arr[] and its size N and k as input parameters and returns the count of subarrays.
+Expected Time Complexity: O(NlogN)
+Expected Auxiliary Space: O(N)
+Constraints:
+1 ≤ N ≤ 2*10^{4}
+-10^{3} ≤ Arr[i] ≤ 10^{3}
+-10^{7} ≤ k ≤ 10^{7}
+"""
+
+from collections import defaultdict
+
+def find_subarray_sum_count(arr, k):
+    default = defaultdict(int)
+    res = 0
+    cur_sum = 0
+    
+    for num in arr:
+        cur_sum += num
+        
+        if cur_sum == k:
+            res += 1
+        
+        if cur_sum - k in default:
+            res += default[cur_sum - k]
+        
+        default[cur_sum] += 1
+    
+    return res

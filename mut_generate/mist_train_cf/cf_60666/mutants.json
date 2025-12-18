@@ -1,0 +1,343 @@
+{
+  "task_id": "cf_60666",
+  "entry_point": "solve_sudoku",
+  "mutant_count": 48,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return False\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "empty = True",
+      "mutated_line": "empty = False",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = False\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return True\n    return solve()"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "if board[row][x] == num or board[x][col] == num:",
+      "mutated_line": "if board[row][x] == num and board[x][col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num and board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n * 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n + 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row + row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row + row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row * (row % subgrid_size), col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row * (row % subgrid_size), col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col + col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col + col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col * (col % subgrid_size))",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col * (col % subgrid_size))\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return False\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(2, n + 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(2, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(0, n + 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(0, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(0, n + 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(0, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(-1, n + 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(-1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n - 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n - 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n * 1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n * 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if board[row][x] == num or board[x][col] == num:",
+      "mutated_line": "if board[row][x] != num or board[x][col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] != num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if board[row][x] == num or board[x][col] == num:",
+      "mutated_line": "if board[row][x] == num or board[x][col] != num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] != num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return True\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 1.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** -0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 1)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "subgrid_size = int(n**0.5)",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** -0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - row * subgrid_size, col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row * subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - (row + subgrid_size), col - col % subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - (row + subgrid_size), col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - col * subgrid_size)",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col * subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "start_row, start_col = row - row%subgrid_size, col - col%subgrid_size",
+      "mutated_line": "(start_row, start_col) = (row - row % subgrid_size, col - (col + subgrid_size))",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - (col + subgrid_size))\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if board[i+start_row][j+start_col] == num:",
+      "mutated_line": "if board[i + start_row][j + start_col] != num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] != num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if board[i][j] == 0:",
+      "mutated_line": "if board[i][j] != 0:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] != 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n + 2):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 2):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n + 0):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 0):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n + 0):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 0):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "for num in range(1, n+1):",
+      "mutated_line": "for num in range(1, n + -1):",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + -1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "board[row][col] = 0",
+      "mutated_line": "board[row][col] = 1",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 1\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "board[row][col] = 0",
+      "mutated_line": "board[row][col] = -1",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = -1\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "board[row][col] = 0",
+      "mutated_line": "board[row][col] = 1",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 1\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return True\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if board[i][j] == 0:",
+      "mutated_line": "if board[i][j] == 1:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 1:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if board[i][j] == 0:",
+      "mutated_line": "if board[i][j] == -1:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == -1:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "if board[i][j] == 0:",
+      "mutated_line": "if board[i][j] == 1:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 1:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "empty = False",
+      "mutated_line": "empty = True",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = True\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return False\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if board[i+start_row][j+start_col] == num:",
+      "mutated_line": "if board[i + start_row][j - start_col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j - start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if board[i+start_row][j+start_col] == num:",
+      "mutated_line": "if board[i + start_row][j * start_col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i + start_row][j * start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if board[i+start_row][j+start_col] == num:",
+      "mutated_line": "if board[i - start_row][j + start_col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i - start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if board[i+start_row][j+start_col] == num:",
+      "mutated_line": "if board[i * start_row][j + start_col] == num:",
+      "code": "def solve_sudoku(board):\n    n = len(board)\n\n    def is_safe(row, col, num):\n        for x in range(n):\n            if board[row][x] == num or board[x][col] == num:\n                return False\n        subgrid_size = int(n ** 0.5)\n        (start_row, start_col) = (row - row % subgrid_size, col - col % subgrid_size)\n        for i in range(subgrid_size):\n            for j in range(subgrid_size):\n                if board[i * start_row][j + start_col] == num:\n                    return False\n        return True\n\n    def solve():\n        empty = True\n        for i in range(n):\n            for j in range(n):\n                if board[i][j] == 0:\n                    row = i\n                    col = j\n                    empty = False\n                    break\n            if not empty:\n                break\n        if empty:\n            return True\n        for num in range(1, n + 1):\n            if is_safe(row, col, num):\n                board[row][col] = num\n                if solve():\n                    return True\n                board[row][col] = 0\n        return False\n    return solve()"
+    }
+  ]
+}

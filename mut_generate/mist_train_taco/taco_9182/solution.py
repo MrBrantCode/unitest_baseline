@@ -1,0 +1,110 @@
+"""
+QUESTION:
+Alice and Bob play a game on an array of N integers. They alternate moves, with Alice making the first move.
+
+The rules are as follows:
+1. On their first move, a player can pick any element in the array, add its value to their score, and then remove it from the array.
+2. On a move that is not their first move, the player should pick an element with the opposite [parity] of the element chosen on their previous move, add its value to their score, and then remove it from the array.
+3. If a player cannot make a move, either because the array is empty or it doesn't contain an element of the parity they need, the player skips their turn.
+4. The game ends when both players are unable to move.
+
+Note that the parity of an element chosen by a player depends only on the parity of their own previously chosen element — it does not depend on what their opponent last chose.
+
+Determine the optimal score of Alice if both players play optimally, each attempting to maximize their own score. If there are multiple ways to obtain maximum score for themselves, the players will adopt a strategy that will maximize the score of their opponent whilst obtaining their maximum score themselves. 
+
+Note that it is not necessary to use all the elements in the array.
+
+Also note that when a player skips a turn, the parity that he needs in the next move remains same as that of the current move.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases. Then the test cases follow.
+- Each test case consists of two lines of input.
+- The first line of each test case contains one integer N — the size of the array A
+- The second line of each test case contains N space-separated integers, denoting the array elements.
+
+------ Output Format ------ 
+
+For each test case, output on a new line the optimal score achieved by Alice.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 2\cdot 10^{4}$
+$2 ≤ N ≤ 10^{5}$
+$1 ≤ Ai ≤ 10^{6}$
+- Sum of $N$ across all test cases won't exceed $2 \cdot 10^{5}$
+
+----- Sample Input 1 ------ 
+3
+4
+1 2 3 4
+3
+45 10 53
+6
+7 5 2 2 6 2
+----- Sample Output 1 ------ 
+5
+55
+15
+----- explanation 1 ------ 
+Test case $1$: Under optimal play, Alice's maximum score is $5$. One sequence of moves leading to this score is:
+- On her first move, Alice picks $4$.
+- On his first move, Bob picks $3$.
+- On her second move, Alice must choose an *odd* number, since she previously picked an even number. So, Alice's only choice is to pick $1$.
+- On his second move, Bob picks $2$, since he must choose an *even* number and it is the only one left.
+
+Alice's score is thus $4 + 1 = 5$. Note that this is not the only optimal strategy — however, any other strategy where both players play optimally will still lead to Alice having a score of $5$.
+
+Test case $2$: Alice's strategy is as follows:
+- On her first move, Alice picks $10$.
+- On his first move, Bob picks $53$.
+- Finally, Alice picks $45$, ending up with a score of $10 + 45 = 55$.
+
+Note that if Alice picks either $53$ or $45$ on her first move, Bob will pick $10$ on his move. This leaves Alice unable to make a move, so she skips her turn and Bob picks the remaining number, leaving Alice with a score strictly smaller than $55$.
+
+Test case $3$: Alice picks $6, 7,$ and $2$ for a score of $15$, while Bob picks $2, 5,$ and $2$ for a score of $9$. Note that Bob can also achieve a score of $9$ by picking $7$ and $2$ and then skipping his third move, but he won't do this because it would lead to Alice only reaching a score of $13$ — as mentioned earlier, a player attempts to maximize their own score, and then maximize their opponent's score.
+"""
+
+def calculate_optimal_alice_score(test_cases):
+    results = []
+    
+    for n, A in test_cases:
+        s = [[], []]
+        for si in A:
+            s[si % 2].append(si)
+        s[0].sort()
+        s[1].sort()
+        r = [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]
+        
+        for ia in range(2):
+            for ib in range(2):
+                (a, b, c) = ([], [], [s[0][:], s[1][:]])
+                (ap, bp) = (ia, ib)
+                if len(c[ap]) > 0:
+                    a.append(c[ap].pop())
+                    ap ^= 1
+                if len(c[bp]) > 0:
+                    b.append(c[bp].pop())
+                    bp ^= 1
+                if len(a) > 0 or len(b) > 0:
+                    while len(c[ap]) > 0 or len(c[bp]) > 0:
+                        if len(c[ap]) > 0:
+                            a.append(c[ap].pop())
+                            ap ^= 1
+                        if len(c[bp]) > 0:
+                            b.append(c[bp].pop())
+                            bp ^= 1
+                (r[ia][ib][0], r[ia][ib][1]) = (sum(a), sum(b))
+        
+        ascore = [0, 0]
+        for ap in range(2):
+            d = r[ap][0][1] - r[ap][1][1]
+            if d == 0:
+                d = r[ap][0][0] - r[ap][1][0]
+            bp = 0 if d > 0 else 1
+            ascore[ap] = r[ap][bp][0]
+        
+        ans = max(ascore)
+        results.append(ans)
+    
+    return results

@@ -1,0 +1,52 @@
+"""
+QUESTION:
+Kulyash is given an integer N. His task is to break N into some number of (integer) powers of 2. 
+
+TO achieve this, he can perform the following operation several times (possibly, zero):
+Choose an integer X which he already has, and break X into 2 integer parts (Y and Z) such that X = Y + Z.
+
+Find the minimum number of operations required by Kulyash to accomplish his task.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases.
+- Each test case consists of a single line of input.
+- The first and only line of each test case contains an integer N — the original integer with Kulyash.
+
+------ Output Format ------ 
+
+For each test case, output on a new line the minimum number of operations required by Kulyash to break N into powers of 2.  
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1 ≤ N ≤ 10^{9}$
+
+----- Sample Input 1 ------ 
+2
+3
+4
+
+----- Sample Output 1 ------ 
+1
+0
+
+----- explanation 1 ------ 
+Test case $1$: $3$ can be broken into $2$ and $1$ (both are powers of $2$) by using $1$ operation.
+
+Test case $2$: $4$ is already a power of $2$ so there is no need to perform any operations.
+"""
+
+BitsSetTable256 = [0] * 256
+
+def initialize():
+    BitsSetTable256[0] = 0
+    for i in range(256):
+        BitsSetTable256[i] = (i & 1) + BitsSetTable256[i // 2]
+
+def countSetBits(n):
+    return BitsSetTable256[n & 255] + BitsSetTable256[n >> 8 & 255] + BitsSetTable256[n >> 16 & 255] + BitsSetTable256[n >> 24]
+
+def min_operations_to_powers_of_2(N):
+    initialize()
+    return countSetBits(N) - 1

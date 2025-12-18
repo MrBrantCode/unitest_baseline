@@ -1,0 +1,28 @@
+{
+  "task_id": "taco_14530",
+  "entry_point": "crack_sha256_hash",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if sha256(current.encode('utf-8')).hexdigest() == hash_value:",
+      "mutated_line": "if sha256(current.encode('utf-8')).hexdigest() != hash_value:",
+      "code": "from hashlib import sha256\nfrom itertools import permutations\n\ndef crack_sha256_hash(hash_value, characters):\n    for p in permutations(characters, len(characters)):\n        current = ''.join(p)\n        if sha256(current.encode('utf-8')).hexdigest() != hash_value:\n            return current\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "current = ''.join(p)",
+      "mutated_line": "current = 'MUTATED'.join(p)",
+      "code": "from hashlib import sha256\nfrom itertools import permutations\n\ndef crack_sha256_hash(hash_value, characters):\n    for p in permutations(characters, len(characters)):\n        current = 'MUTATED'.join(p)\n        if sha256(current.encode('utf-8')).hexdigest() == hash_value:\n            return current\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if sha256(current.encode('utf-8')).hexdigest() == hash_value:",
+      "mutated_line": "if sha256(current.encode('')).hexdigest() == hash_value:",
+      "code": "from hashlib import sha256\nfrom itertools import permutations\n\ndef crack_sha256_hash(hash_value, characters):\n    for p in permutations(characters, len(characters)):\n        current = ''.join(p)\n        if sha256(current.encode('')).hexdigest() == hash_value:\n            return current\n    return None"
+    }
+  ]
+}

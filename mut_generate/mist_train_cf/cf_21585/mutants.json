@@ -1,0 +1,49 @@
+{
+  "task_id": "cf_21585",
+  "entry_point": "extract_contacts",
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "email_pattern = r'\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b'",
+      "mutated_line": "email_pattern = ''",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = ''\n    phone_pattern = '\\\\b\\\\d{3}-\\\\d{3}-\\\\d{4}\\\\b'\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = 'example.com'\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email in text and phone in text:\n                contacts[email] = phone\n    return contacts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "phone_pattern = r'\\b\\d{3}-\\d{3}-\\d{4}\\b'",
+      "mutated_line": "phone_pattern = ''",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = '\\\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\\\\b'\n    phone_pattern = ''\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = 'example.com'\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email in text and phone in text:\n                contacts[email] = phone\n    return contacts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "domain = 'example.com'",
+      "mutated_line": "domain = ''",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = '\\\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\\\\b'\n    phone_pattern = '\\\\b\\\\d{3}-\\\\d{3}-\\\\d{4}\\\\b'\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = ''\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email in text and phone in text:\n                contacts[email] = phone\n    return contacts"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 17,
+      "original_line": "if email in text and phone in text:",
+      "mutated_line": "if email in text or phone in text:",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = '\\\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\\\\b'\n    phone_pattern = '\\\\b\\\\d{3}-\\\\d{3}-\\\\d{4}\\\\b'\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = 'example.com'\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email in text or phone in text:\n                contacts[email] = phone\n    return contacts"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if email in text and phone in text:",
+      "mutated_line": "if email not in text and phone in text:",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = '\\\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\\\\b'\n    phone_pattern = '\\\\b\\\\d{3}-\\\\d{3}-\\\\d{4}\\\\b'\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = 'example.com'\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email not in text and phone in text:\n                contacts[email] = phone\n    return contacts"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if email in text and phone in text:",
+      "mutated_line": "if email in text and phone not in text:",
+      "code": "import re\n\ndef extract_contacts(text):\n    email_pattern = '\\\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\\\\b'\n    phone_pattern = '\\\\b\\\\d{3}-\\\\d{3}-\\\\d{4}\\\\b'\n    emails = re.findall(email_pattern, text)\n    phones = re.findall(phone_pattern, text)\n    emails = list(set(emails))\n    domain = 'example.com'\n    emails = [email for email in emails if email.endswith(domain)]\n    contacts = {}\n    for email in emails:\n        for phone in phones:\n            if email in text and phone not in text:\n                contacts[email] = phone\n    return contacts"
+    }
+  ]
+}

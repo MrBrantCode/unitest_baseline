@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_57541",
+  "entry_point": "xml_to_nested_list",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if child.tag in node_set:",
+      "mutated_line": "if child.tag not in node_set:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_nested_list(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n    except ET.ParseError:\n        print('Malformed XML detected. Aborting.')\n        return None\n\n    def parse_node(node):\n        nested_list = [node.tag]\n        node_set = set()\n        for child in node:\n            if child.tag not in node_set:\n                print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}'\")\n            node_set.add(child.tag)\n            nested_list.append(parse_node(child))\n        return nested_list\n    return parse_node(root)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "print(\"Malformed XML detected. Aborting.\")",
+      "mutated_line": "print('')",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_nested_list(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n    except ET.ParseError:\n        print('')\n        return None\n\n    def parse_node(node):\n        nested_list = [node.tag]\n        node_set = set()\n        for child in node:\n            if child.tag in node_set:\n                print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}'\")\n            node_set.add(child.tag)\n            nested_list.append(parse_node(child))\n        return nested_list\n    return parse_node(root)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}'\")",
+      "mutated_line": "print(f\"{child.tag}' in same parent node '{node.tag}'\")",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_nested_list(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n    except ET.ParseError:\n        print('Malformed XML detected. Aborting.')\n        return None\n\n    def parse_node(node):\n        nested_list = [node.tag]\n        node_set = set()\n        for child in node:\n            if child.tag in node_set:\n                print(f\"{child.tag}' in same parent node '{node.tag}'\")\n            node_set.add(child.tag)\n            nested_list.append(parse_node(child))\n        return nested_list\n    return parse_node(root)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}'\")",
+      "mutated_line": "print(f\"Warning: Duplicate moniker '{child.tag}{node.tag}'\")",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_nested_list(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n    except ET.ParseError:\n        print('Malformed XML detected. Aborting.')\n        return None\n\n    def parse_node(node):\n        nested_list = [node.tag]\n        node_set = set()\n        for child in node:\n            if child.tag in node_set:\n                print(f\"Warning: Duplicate moniker '{child.tag}{node.tag}'\")\n            node_set.add(child.tag)\n            nested_list.append(parse_node(child))\n        return nested_list\n    return parse_node(root)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}'\")",
+      "mutated_line": "print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}\")",
+      "code": "import xml.etree.ElementTree as ET\n\ndef xml_to_nested_list(xml_string):\n    try:\n        root = ET.fromstring(xml_string)\n    except ET.ParseError:\n        print('Malformed XML detected. Aborting.')\n        return None\n\n    def parse_node(node):\n        nested_list = [node.tag]\n        node_set = set()\n        for child in node:\n            if child.tag in node_set:\n                print(f\"Warning: Duplicate moniker '{child.tag}' in same parent node '{node.tag}\")\n            node_set.add(child.tag)\n            nested_list.append(parse_node(child))\n        return nested_list\n    return parse_node(root)"
+    }
+  ]
+}

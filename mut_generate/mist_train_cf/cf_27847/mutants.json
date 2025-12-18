@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_27847",
+  "entry_point": "get_module_version",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "version = getattr(module, 'version', 'unknown')",
+      "mutated_line": "version = getattr(module, '', 'unknown')",
+      "code": "import importlib\n\ndef get_module_version(module_name: str) -> str:\n    try:\n        module = importlib.import_module(module_name)\n        version = getattr(module, '', 'unknown')\n        if hasattr(module, '_key_bindings'):\n            del module._key_bindings\n        return version\n    except ImportError:\n        return 'unknown'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "version = getattr(module, 'version', 'unknown')",
+      "mutated_line": "version = getattr(module, 'version', '')",
+      "code": "import importlib\n\ndef get_module_version(module_name: str) -> str:\n    try:\n        module = importlib.import_module(module_name)\n        version = getattr(module, 'version', '')\n        if hasattr(module, '_key_bindings'):\n            del module._key_bindings\n        return version\n    except ImportError:\n        return 'unknown'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if hasattr(module, '_key_bindings'):",
+      "mutated_line": "if hasattr(module, ''):",
+      "code": "import importlib\n\ndef get_module_version(module_name: str) -> str:\n    try:\n        module = importlib.import_module(module_name)\n        version = getattr(module, 'version', 'unknown')\n        if hasattr(module, ''):\n            del module._key_bindings\n        return version\n    except ImportError:\n        return 'unknown'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return \"unknown\"",
+      "mutated_line": "return ''",
+      "code": "import importlib\n\ndef get_module_version(module_name: str) -> str:\n    try:\n        module = importlib.import_module(module_name)\n        version = getattr(module, 'version', 'unknown')\n        if hasattr(module, '_key_bindings'):\n            del module._key_bindings\n        return version\n    except ImportError:\n        return ''"
+    }
+  ]
+}

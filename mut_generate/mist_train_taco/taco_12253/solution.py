@@ -1,0 +1,46 @@
+"""
+QUESTION:
+Suresh is a fan of Mario. But being a programmer he decided to modify the game. In one module he needs your help. He modified the game as follows:
+There are N stones on the way indexed from 1 to N. Every stone having index i is associated with points equal to i^th fibonacci number. That is if there are 5 stones then the points associated with them are 1,1,2,3,5 resp.
+Mario gets the point when he steps on the stone. But during the gameplay he steps on M stones and skips some. So you have to find the sum of points Mario missed.
+
+Input fomat:
+First line contains 2 space separated integers containing N and M.
+Next line contains M space separated integers denoting the points that he obtained.
+
+Output format:
+Print the sum of points Mario missed.
+
+Constraints:
+3 ≤ N ≤ 80
+1 ≤ M ≤ N
+
+SAMPLE INPUT
+5 3
+1 1 5
+
+SAMPLE OUTPUT
+5
+
+Explanation
+
+He missed the stones having points 2 and 3.
+"""
+
+def calculate_missed_points(N, M, obtained_points):
+    # Generate the first N Fibonacci numbers
+    fibonacci_numbers = [1, 1]
+    for i in range(2, N):
+        fibonacci_numbers.append(fibonacci_numbers[-1] + fibonacci_numbers[-2])
+    
+    # Convert obtained points to a set for faster lookup
+    obtained_points_set = set(obtained_points)
+    
+    # Calculate the missed points
+    missed_points = []
+    for point in fibonacci_numbers:
+        if point not in obtained_points_set:
+            missed_points.append(point)
+    
+    # Return the sum of missed points
+    return sum(missed_points)

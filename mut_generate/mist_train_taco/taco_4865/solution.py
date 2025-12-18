@@ -1,0 +1,39 @@
+"""
+QUESTION:
+Given a string of integers, count how many times that integer repeats itself, then return a string showing the count and the integer.
+
+
+Example: `countMe('1123')` (`count_me` in Ruby)
+
+- Here 1 comes twice so `` will be `"21"`
+- then 2 comes once so `` will be `"12"`
+- then 3 comes once so `` will be `"13"`
+
+hence output string will be `"211213"`.
+
+
+Similarly `countMe('211213')` will return `'1221121113'`
+(1 time 2, 2 times 1, 1 time 2, 1 time 1, 1 time 3)
+
+
+Return `""` for empty, nil or non numeric strings
+"""
+
+def count_me(data: str) -> str:
+    if not data or not data.isdigit():
+        return ''
+    
+    result = []
+    count = 1
+    last = data[0]
+    
+    for char in data[1:]:
+        if char == last:
+            count += 1
+        else:
+            result.append(str(count) + last)
+            last = char
+            count = 1
+    
+    result.append(str(count) + last)
+    return ''.join(result)

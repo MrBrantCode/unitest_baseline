@@ -1,0 +1,147 @@
+{
+  "task_id": "cf_34102",
+  "entry_point": "generate_prediction_matrix",
+  "mutant_count": 20,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "n_seg = n_TR - win_size",
+      "mutated_line": "n_seg = n_TR + win_size",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR + win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "n_seg = n_TR - win_size",
+      "mutated_line": "n_seg = n_TR * win_size",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR * win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 10,
+      "original_line": "train_data[",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 1) * n_features, :] -= data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] -= data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "train_data = np.zeros((n_features * win_size, n_seg))",
+      "mutated_line": "train_data = np.zeros((n_features / win_size, n_seg))",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features / win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "train_data = np.zeros((n_features * win_size, n_seg))",
+      "mutated_line": "train_data = np.zeros((n_features + win_size, n_seg))",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features + win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "train_data = np.zeros((n_features * win_size, n_seg))",
+      "mutated_line": "train_data = np.zeros((n_features ** win_size, n_seg))",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features ** win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter / n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter / n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter + n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter + n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter ** n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter ** n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 1) / n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) / n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:window_counter + 1 + n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:window_counter + 1 + n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 1) ** n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) ** n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "] += data[ppt_counter][:, window_counter : window_counter + n_seg]",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter - n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter - n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "] += data[ppt_counter][:, window_counter : window_counter + n_seg]",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter * n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter * n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter - 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter - 1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:window_counter * 1 * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:window_counter * 1 * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 2) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 2) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 0) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 0) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + 0) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + 0) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "window_counter * n_features : (window_counter + 1) * n_features,",
+      "mutated_line": "train_data[window_counter * n_features:(window_counter + -1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]",
+      "code": "import numpy as np\n\ndef generate_prediction_matrix(data, win_size):\n    (n_subjs, n_features, n_TR) = data.shape\n    n_seg = n_TR - win_size\n    train_data = np.zeros((n_features * win_size, n_seg))\n    for ppt_counter in range(n_subjs):\n        for window_counter in range(win_size):\n            train_data[window_counter * n_features:(window_counter + -1) * n_features, :] += data[ppt_counter][:, window_counter:window_counter + n_seg]\n    return train_data"
+    }
+  ]
+}

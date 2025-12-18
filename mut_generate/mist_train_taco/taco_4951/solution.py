@@ -1,0 +1,32 @@
+"""
+QUESTION:
+Having learned the multiplication table, Takahashi can multiply two integers between 1 and 9 (inclusive) together. He cannot do any other calculation.
+Given are two integers A and B.
+If Takahashi can calculate A \times B, print the result; if he cannot, print -1 instead.
+
+-----Constraints-----
+ - 1 \leq A \leq 20
+ - 1 \leq B \leq 20
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+A B
+
+-----Output-----
+If Takahashi can calculate A \times B, print the result; if he cannot, print -1.
+
+-----Sample Input-----
+2 5
+
+-----Sample Output-----
+10
+
+2 \times 5 = 10.
+"""
+
+def calculate_takahashi_multiplication(A: int, B: int) -> int:
+    if 1 <= A <= 9 and 1 <= B <= 9:
+        return A * B
+    else:
+        return -1

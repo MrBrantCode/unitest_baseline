@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_34342",
+  "entry_point": "entrance",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if linked_tp not in relevant_linked_timepoints:",
+      "mutated_line": "if linked_tp in relevant_linked_timepoints:",
+      "code": "from typing import List, Tuple\n\ndef entrance(timepoints: List[str], linked_timepoints: List[Tuple[str, str]], target_timepoint: str) -> List[str]:\n    graph = {tp: [] for tp in timepoints}\n    for (tp1, tp2) in linked_timepoints:\n        graph[tp1].append(tp2)\n        graph[tp2].append(tp1)\n    relevant_linked_timepoints = set()\n\n    def dfs(current_tp):\n        relevant_linked_timepoints.add(current_tp)\n        for linked_tp in graph[current_tp]:\n            if linked_tp in relevant_linked_timepoints:\n                dfs(linked_tp)\n    dfs(target_timepoint)\n    return list(relevant_linked_timepoints)"
+    }
+  ]
+}

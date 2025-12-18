@@ -1,0 +1,103 @@
+"""
+QUESTION:
+Ivan wants to have a good dinner. A good dinner should consist of a first course, a second course, a drink, and a dessert.
+
+There are $n_1$ different types of first courses Ivan can buy (the $i$-th of them costs $a_i$ coins), $n_2$ different types of second courses (the $i$-th of them costs $b_i$ coins), $n_3$ different types of drinks (the $i$-th of them costs $c_i$ coins) and $n_4$ different types of desserts (the $i$-th of them costs $d_i$ coins).
+
+Some dishes don't go well with each other. There are $m_1$ pairs of first courses and second courses that don't go well with each other, $m_2$ pairs of second courses and drinks, and $m_3$ pairs of drinks and desserts that don't go well with each other.
+
+Ivan wants to buy exactly one first course, one second course, one drink, and one dessert so that they go well with each other, and the total cost of the dinner is the minimum possible. Help him to find the cheapest dinner option!
+
+
+-----Input-----
+
+The first line contains four integers $n_1$, $n_2$, $n_3$ and $n_4$ ($1 \le n_i \le 150000$) — the number of types of first courses, second courses, drinks and desserts, respectively.
+
+Then four lines follow. The first line contains $n_1$ integers $a_1, a_2, \dots, a_{n_1}$ ($1 \le a_i \le 10^8$), where $a_i$ is the cost of the $i$-th type of first course. Three next lines denote the costs of second courses, drinks, and desserts in the same way ($1 \le b_i, c_i, d_i \le 10^8$).
+
+The next line contains one integer $m_1$ ($0 \le m_1 \le 200000$) — the number of pairs of first and second courses that don't go well with each other. Each of the next $m_1$ lines contains two integers $x_i$ and $y_i$ ($1 \le x_i \le n_1$; $1 \le y_i \le n_2$) denoting that the first course number $x_i$ doesn't go well with the second course number $y_i$. All these pairs are different.
+
+The block of pairs of second dishes and drinks that don't go well with each other is given in the same format. The same for pairs of drinks and desserts that don't go well with each other ($0 \le m_2, m_3 \le 200000$).
+
+
+-----Output-----
+
+If it's impossible to choose a first course, a second course, a drink, and a dessert so that they go well with each other, print $-1$. Otherwise, print one integer — the minimum total cost of the dinner.
+
+
+-----Examples-----
+
+Input
+4 3 2 1
+1 2 3 4
+5 6 7
+8 9
+10
+2
+1 2
+1 1
+2
+3 1
+3 2
+1
+1 1
+Output
+26
+Input
+1 1 1 1
+1
+1
+1
+1
+1
+1 1
+0
+0
+Output
+-1
+
+
+-----Note-----
+
+The best option in the first example is to take the first course $2$, the second course $1$, the drink $2$ and the dessert $1$.
+
+In the second example, the only pair of the first course and the second course is bad, so it's impossible to have dinner.
+"""
+
+from collections import defaultdict
+
+def find_minimum_dinner_cost(n1, n2, n3, n4, A, B, C, D, m1, m1set, m2, m2set, m3, m3set):
+    a = sorted(enumerate(A), key=lambda x: x[1])
+    b = sorted(enumerate(B), key=lambda x: x[1])
+    c = sorted(enumerate(C), key=lambda x: x[1])
+    d = sorted(enumerate(D), key=lambda x: x[1])
+    
+    bDic = defaultdict(lambda: -1)
+    for i in range(n2):
+        for j in a:
+            if (j[0] + 1, i + 1) in m1set:
+                continue
+            bDic[i] = j[0]
+            break
+    
+    cDic = defaultdict(lambda: -1)
+    cc = []
+    for i in range(n3):
+        for j in d:
+            if (i + 1, j[0] + 1) in m3set:
+                continue
+            cDic[i] = j[0]
+            cc.append((i, C[i] + j[1]))
+            break
+    
+    out = 10 ** 9
+    cc.sort(key=lambda x: x[1])
+    for i in range(n2):
+        if bDic[i] != -1:
+            for j in cc:
+                if (i + 1, j[0] + 1) in m2set:
+                    continue
+                out = min(out, j[1] + B[i] + A[bDic[i]])
+                break
+    
+    return out if out < 10 ** 9 else -1

@@ -1,0 +1,41 @@
+"""
+QUESTION:
+In this Kata, two players, Alice and Bob, are playing a palindrome game. Alice starts with `string1`, Bob starts with `string2`, and the board starts out as an empty string. Alice and Bob take turns; during a turn, a player selects a letter from his or her string, removes it from the string, and appends it to the board; if the board becomes a palindrome (of length >= 2), the player wins. Alice makes the first move. Since Bob has the disadvantage of playing second, then he wins automatically if letters run out or the board is never a palindrome. Note also that each player can see the other player's letters.
+
+The problem will be presented as `solve(string1,string2)`. Return 1 if Alice wins and 2 it Bob wins.
+
+For example:
+```Haskell
+solve("abc","baxy") = 2 -- There is no way for Alice to win. If she starts with 'a', Bob wins by playing 'a'. The same case with 'b'. If Alice starts with 'c', Bob still wins because a palindrome is not possible. Return 2.
+solve("eyfjy","ooigvo") = 1 -- Alice plays 'y' and whatever Bob plays, Alice wins by playing another 'y'. Return 1.
+solve("abc","xyz") = 2 -- No palindrome is possible, so Bob wins; return 2
+solve("gzyqsczkctutjves","hpaqrfwkdntfwnvgs") = 1 -- If Alice plays 'g', Bob wins by playing 'g'. Alice must be clever. She starts with 'z'. She knows that since she has two 'z', the win is guaranteed. Note that she also has two 's'. But she cannot play that. Can you see why? 
+solve("rmevmtw","uavtyft") = 1 -- Alice wins by playing 'm'. Can you see why? 
+```
+Palindrome lengths should be at least `2` characters. More examples in the test cases. 
+
+Good luck!
+"""
+
+from collections import Counter
+
+def determine_palindrome_game_winner(string1: str, string2: str) -> int:
+    """
+    Determines the winner of the palindrome game between Alice and Bob.
+
+    Parameters:
+    - string1 (str): Alice's starting letters.
+    - string2 (str): Bob's starting letters.
+
+    Returns:
+    - int: 1 if Alice wins, 2 if Bob wins.
+    """
+    c1 = Counter(string1)
+    c2 = Counter(string2)
+    
+    # Check if Alice can force a win by playing a letter that appears at least twice in her string
+    # and does not appear in Bob's string.
+    alice_wins = any(c1[k] - c2[k] >= 2 and k not in c2 for k in c1)
+    
+    # If Alice can force a win, return 1 (Alice wins), otherwise return 2 (Bob wins).
+    return 2 - alice_wins

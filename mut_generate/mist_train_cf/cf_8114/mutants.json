@@ -1,0 +1,245 @@
+{
+  "task_id": "cf_8114",
+  "entry_point": "get_domain_name",
+  "mutant_count": 34,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) >= 2:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) >= 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) <= 2:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) <= 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) != 2:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) != 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 28,
+      "original_line": "if parsed_url.username and parsed_url.password:",
+      "mutated_line": "domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username or parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "url = re.sub(r'^\\w+://', '', url)",
+      "mutated_line": "url = re.sub('', '', url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "url = re.sub(r'^\\w+://', '', url)",
+      "mutated_line": "url = re.sub('^\\\\w+://', 'MUTATED', url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', 'MUTATED', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "url = url.split('#')[0]",
+      "mutated_line": "parsed_url = urlparse('//' + url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[1]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "url = url.split('#')[0]",
+      "mutated_line": "parsed_url = urlparse('//' + url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[-1]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "url = url.split('#')[0]",
+      "mutated_line": "parsed_url = urlparse('//' + url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[1]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "parsed_url = urlparse('//' + url) # add '//' to ensure urlparse works correctly",
+      "mutated_line": "parsed_url = urlparse('//' - url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' - url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "parsed_url = urlparse('//' + url) # add '//' to ensure urlparse works correctly",
+      "mutated_line": "parsed_url = urlparse('//' * url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' * url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "domain_parts = domain_name.split('.')",
+      "mutated_line": "domain_parts = domain_name.split('')",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) > 3:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 3:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) > 1:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 1:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) > 0:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 0:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) > 1:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 1:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if len(domain_parts) > 2:",
+      "mutated_line": "if len(domain_parts) > -2:",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > -2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "domain_name = re.sub(r':\\d+', '', domain_name)",
+      "mutated_line": "if not re.match('^[a-zA-Z0-9.-]+$', domain_name):",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub('', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "domain_name = re.sub(r':\\d+', '', domain_name)",
+      "mutated_line": "if not re.match('^[a-zA-Z0-9.-]+$', domain_name):",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', 'MUTATED', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "return 'Invalid URL'",
+      "mutated_line": "return ''",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return ''\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "url = url.split('#')[0]",
+      "mutated_line": "parsed_url = urlparse('//' + url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "parsed_url = urlparse('//' + url) # add '//' to ensure urlparse works correctly",
+      "mutated_line": "parsed_url = urlparse('' + url)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if not re.match(r'^[a-zA-Z0-9.-]+$', domain_name):",
+      "mutated_line": "if not re.match('', domain_name):",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "domain_name = re.sub(r'^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "mutated_line": "domain_name = re.sub('^%s:%s@' * (parsed_url.username, parsed_url.password), '', domain_name)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' * (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "domain_name = re.sub(r'^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "mutated_line": "domain_name = re.sub('^%s:%s@' + (parsed_url.username, parsed_url.password), '', domain_name)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' + (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "domain_name = re.sub(r'^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "mutated_line": "domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), 'MUTATED', domain_name)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), 'MUTATED', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = ''.join(domain_parts[-2:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = ''.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "domain_name = re.sub(r'^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "mutated_line": "domain_name = re.sub('' % (parsed_url.username, parsed_url.password), '', domain_name)",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[+2:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[+2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[-3:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-3:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[-1:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-1:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[-0:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-0:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[-1:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[-1:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "domain_name = '.'.join(domain_parts[-2:])",
+      "mutated_line": "domain_name = '.'.join(domain_parts[--2:])",
+      "code": "import re\nfrom urllib.parse import urlparse, parse_qs\n\ndef get_domain_name(url):\n    url = re.sub('^\\\\w+://', '', url)\n    url = url.split('#')[0]\n    parsed_url = urlparse('//' + url)\n    domain_name = parsed_url.netloc\n    domain_parts = domain_name.split('.')\n    if len(domain_parts) > 2:\n        domain_name = '.'.join(domain_parts[--2:])\n    domain_name = re.sub(':\\\\d+', '', domain_name)\n    if not re.match('^[a-zA-Z0-9.-]+$', domain_name):\n        return 'Invalid URL'\n    if parsed_url.username and parsed_url.password:\n        domain_name = re.sub('^%s:%s@' % (parsed_url.username, parsed_url.password), '', domain_name)\n    return domain_name"
+    }
+  ]
+}

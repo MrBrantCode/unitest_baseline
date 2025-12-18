@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_83696",
+  "entry_point": "zigzag_traversal",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "result, current_level, next_level, left_to_right = [], deque([root]), deque(), True",
+      "mutated_line": "(result, current_level, next_level, left_to_right) = ([], deque([root]), deque(), False)",
+      "code": "from collections import deque\n\nclass Node:\n\n    def __init__(self, val, children=None):\n        self.val = val\n        self.children = children if children is not None else []\n\ndef zigzag_traversal(root):\n    if not root:\n        return []\n    (result, current_level, next_level, left_to_right) = ([], deque([root]), deque(), False)\n    while current_level:\n        node = current_level.pop()\n        result.append(node.val)\n        if left_to_right:\n            next_level.extend(reversed(node.children))\n        else:\n            next_level.extend(node.children)\n        if not current_level:\n            (current_level, next_level) = (next_level, deque())\n            left_to_right = not left_to_right\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "self.children = children if children is not None else []",
+      "mutated_line": "self.children = children if children is None else []",
+      "code": "from collections import deque\n\nclass Node:\n\n    def __init__(self, val, children=None):\n        self.val = val\n        self.children = children if children is None else []\n\ndef zigzag_traversal(root):\n    if not root:\n        return []\n    (result, current_level, next_level, left_to_right) = ([], deque([root]), deque(), True)\n    while current_level:\n        node = current_level.pop()\n        result.append(node.val)\n        if left_to_right:\n            next_level.extend(reversed(node.children))\n        else:\n            next_level.extend(node.children)\n        if not current_level:\n            (current_level, next_level) = (next_level, deque())\n            left_to_right = not left_to_right\n    return result"
+    }
+  ]
+}

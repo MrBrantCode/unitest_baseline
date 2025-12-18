@@ -1,0 +1,182 @@
+{
+  "task_id": "cf_49577",
+  "entry_point": "optimize_data_locality",
+  "mutant_count": 25,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "spark_config['data_locality'] = 'PROCESS_LOCAL'",
+      "mutated_line": "spark_config['data_locality'] = ''",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = ''\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "spark_config['rdd_config']['partitioning'] = 'block'",
+      "mutated_line": "spark_config['rdd_config']['partitioning'] = ''",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = ''\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "spark_config['spark_config']['speculative_execution'] = True",
+      "mutated_line": "spark_config['spark_config']['speculative_execution'] = False",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = False\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if spark_config['spark_version'] >= '3.0':",
+      "mutated_line": "if spark_config['spark_version'] > '3.0':",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] > '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if spark_config['spark_version'] >= '3.0':",
+      "mutated_line": "if spark_config['spark_version'] < '3.0':",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] < '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "if spark_config['spark_version'] >= '3.0':",
+      "mutated_line": "if spark_config['spark_version'] == '3.0':",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] == '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "spark_config['data_locality'] = 'PROCESS_LOCAL'",
+      "mutated_line": "spark_config[''] = 'PROCESS_LOCAL'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config[''] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "spark_config['rdd_config']['partitioning'] = 'block'",
+      "mutated_line": "spark_config['rdd_config'][''] = 'block'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config'][''] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "spark_config['spark_config']['speculative_execution'] = True",
+      "mutated_line": "spark_config['spark_config'][''] = True",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config'][''] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "if spark_config['spark_version'] >= '3.0':",
+      "mutated_line": "if spark_config['spark_version'] >= '':",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "spark_config['spark_config']['shuffle_manager'] = 'sort'",
+      "mutated_line": "spark_config['spark_config']['shuffle_manager'] = ''",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = ''\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data['data_size'] >= spark_config['rdd_config']['partition_size']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] >= spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data['data_size'] <= spark_config['rdd_config']['partition_size']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] <= spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data['data_size'] != spark_config['rdd_config']['partition_size']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] != spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "spark_config['rdd_config']['partitioning'] = 'block'",
+      "mutated_line": "spark_config['']['partitioning'] = 'block'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "spark_config['spark_config']['speculative_execution'] = True",
+      "mutated_line": "spark_config['']['speculative_execution'] = True",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "if spark_config['spark_version'] >= '3.0':",
+      "mutated_line": "if spark_config[''] >= '3.0':",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config[''] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "spark_config['spark_config']['shuffle_manager'] = 'sort'",
+      "mutated_line": "spark_config['spark_config'][''] = 'sort'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config'][''] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "spark_config['data_locality'] = 'NODE_LOCAL'",
+      "mutated_line": "spark_config['data_locality'] = ''",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = ''\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "spark_config['spark_config']['shuffle_manager'] = 'sort'",
+      "mutated_line": "spark_config['']['shuffle_manager'] = 'sort'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data[''] > spark_config['rdd_config']['partition_size']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data[''] > spark_config['rdd_config']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data['data_size'] > spark_config['rdd_config']['']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "spark_config['data_locality'] = 'NODE_LOCAL'",
+      "mutated_line": "spark_config[''] = 'NODE_LOCAL'",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['rdd_config']['partition_size']:\n            spark_config[''] = 'NODE_LOCAL'\n    return spark_config"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "if data['data_size'] > spark_config['rdd_config']['partition_size']:",
+      "mutated_line": "if data['data_size'] > spark_config['']['partition_size']:",
+      "code": "def optimize_data_locality(spark_config, data_distribution):\n    \"\"\"\n    This function optimizes Spark configuration to minimize data shuffling and maximize data locality.\n\n    Args:\n    spark_config (dict): A dictionary containing Spark configuration, including data locality levels, RDD configuration, and Spark version.\n    data_distribution (dict): A dictionary containing data distribution across nodes.\n\n    Returns:\n    dict: An optimized Spark configuration.\n    \"\"\"\n    spark_config['data_locality'] = 'PROCESS_LOCAL'\n    spark_config['rdd_config']['partitioning'] = 'block'\n    spark_config['spark_config']['speculative_execution'] = True\n    if spark_config['spark_version'] >= '3.0':\n        spark_config['spark_config']['shuffle_manager'] = 'sort'\n    for (node, data) in data_distribution.items():\n        if data['data_size'] > spark_config['']['partition_size']:\n            spark_config['data_locality'] = 'NODE_LOCAL'\n    return spark_config"
+    }
+  ]
+}

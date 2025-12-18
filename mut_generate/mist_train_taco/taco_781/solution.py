@@ -1,0 +1,76 @@
+"""
+QUESTION:
+You are given two positive integers N and K. You have to perform the following operation exactly K times:
+- For the current value of N, choose any positive integer D such that D is a [divisor] of N and multiply D with N.  
+Formally, N := (N * D) such that D is a divisor of current value of N.
+
+Print the sum of all distinct values of the final N you can receive after performing the above operation exactly K times. Since the answer can be large, print it modulo 10^{9} + 7.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases.
+- Each test case contains two space-separated integers N and K respectively, the initial number and the number of operations.
+
+------ Output Format ------ 
+
+For each test case, output on a new line the sum of all distinct values of the final N you can receive after performing the given operation exactly K times. Since the answer can be large, print it modulo 10^{9} + 7.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1 ≤ N ≤ 10^{7}$
+$1 ≤ K ≤ 10^{5}$
+
+----- Sample Input 1 ------ 
+3
+1 5
+2 2
+10 1
+----- Sample Output 1 ------ 
+1
+30
+180
+----- explanation 1 ------ 
+Test case $1$: $1$ is the only divisor of $1$. So, the value remains unchanged after the operations. Thus, there is only one distinct value after $5$ operations, which is $1$.
+
+Test case $2$: 
+- Operation $1$: Initially, $N = 2$ has divisors $1$ and $2$. Thus, after $1$ operation, $N$ can be either $2\cdot 1 = 2$ or $2\cdot 2 = 4$.
+- Operation $2$: If $N=2$, the divisors are $1$ and $2$ which can lead to the final values as $2\cdot 1 = 2$ and $2\cdot 2 = 4$. If $N = 4$, the divisors are $1, 2, $ and $4$. Thus, the final values can be $4\cdot 1 = 4, 4\cdot 2 = 8, $ and $4\cdot 4 = 16$ .
+
+The distinct values that can be obtained after applying the operation $2$ times on $N = 2$ are $\{2, 4, 8, 16\}$, and $2 + 4 + 8 + 16 = 30$.
+
+Test case $3$: The numbers $10 = 10 \cdot 1$, $20 = 10 \cdot 2$, $50 = 10 \cdot 5$ and $100 = 10 \cdot 10$ can be obtained after applying the operation $1$ time on $N=10$, and $10 + 20 + 50 + 100 = 180$.
+"""
+
+def calculate_distinct_sum(N, K, mod=1000000007):
+    def p1(y, z, mod):
+        ans = 1
+        while z:
+            if z % 2 == 1:
+                ans = ans * y % mod
+            y = y * y % mod
+            z //= 2
+        return ans
+
+    def p2(x, y):
+        if y >= 30:
+            return p1(x, p1(2, y, mod - 1) + mod - 1, mod)
+        return p1(x, 1 << y, mod)
+
+    def calc(a, x, b):
+        return (p1(p2(a, b), x, mod) - p1(a, x - 1, mod) + mod) % mod * a % mod * p1(a - 1, mod - 2, mod) % mod
+
+    Sum = 1
+    for j in range(2, N + 1):
+        if j * j > N:
+            break
+        c = 0
+        while N % j == 0:
+            c += 1
+            N //= j
+        if c != 0:
+            Sum = Sum * calc(j, c, K) % mod
+    if N != 1:
+        Sum = Sum * calc(N, 1, K) % mod
+    
+    return Sum

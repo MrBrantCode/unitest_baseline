@@ -1,0 +1,427 @@
+{
+  "task_id": "cf_32614",
+  "entry_point": "parse_review_data",
+  "mutant_count": 60,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "total_stars = filled_stars + empty_stars",
+      "mutated_line": "total_stars = filled_stars - empty_stars",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars - empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "total_stars = filled_stars + empty_stars",
+      "mutated_line": "total_stars = filled_stars * empty_stars",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars * empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars >= 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars >= 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars <= 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars <= 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars != 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars != 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars / 5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars / 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars + 5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars + 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = (filled_stars / total_stars) ** 5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = (filled_stars / total_stars) ** 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 1",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 1\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else -1",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else -1\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 1",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 1\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "user_match = re.search(r'<strong>(.*?)</strong>', html_code)",
+      "mutated_line": "title_match = re.search('\"(.*?)\"', html_code)",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "company_match = re.search(r'<a href=\"(.*?)\">(.*?)</a>', html_code)",
+      "mutated_line": "description_match = re.search('<p>(.*?)</p>', html_code)",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "title_match = re.search(r'\"(.*?)\"', html_code)",
+      "mutated_line": "user_display_name = user_match.group(1) if user_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "description_match = re.search(r'<p>(.*?)</p>', html_code)",
+      "mutated_line": "company_name = company_match.group(2) if company_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "user_display_name = user_match.group(1) if user_match else \"\"",
+      "mutated_line": "review_description = description_match.group(1) if description_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else 'MUTATED'\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else 'MUTATED'\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "review_title = title_match.group(1) if title_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else 'MUTATED'\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "review_description = description_match.group(1) if description_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else 'MUTATED'\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "\"Average Rating\": f\"{average_rating:.2f}/5.00\",",
+      "mutated_line": "summary_report = {'': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "\"User\": user_display_name,",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', '': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', '': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "\"Company\": company_name,",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, '': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, '': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "\"Review Title\": review_title,",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, '': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, '': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, '': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, '': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "filled_stars = len(re.findall(r'<i class=\"icon_star\"></i>', html_code))",
+      "mutated_line": "empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "empty_stars = len(re.findall(r'<i class=\"icon_star empty\"></i>', html_code))",
+      "mutated_line": "empty_stars = len(re.findall('', html_code))",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 1 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 1 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > -1 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > -1 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 1 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 1 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars * total_stars * 5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars * total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars // total_stars * 5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars // total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 6 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 6 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 4 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 4 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 0 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 0 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * 1 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 1 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0",
+      "mutated_line": "average_rating = filled_stars / total_stars * -5 if total_stars > 0 else 0",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * -5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "user_display_name = user_match.group(1) if user_match else \"\"",
+      "mutated_line": "review_description = description_match.group(1) if description_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(2) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "user_display_name = user_match.group(1) if user_match else \"\"",
+      "mutated_line": "review_description = description_match.group(1) if description_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(0) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "user_display_name = user_match.group(1) if user_match else \"\"",
+      "mutated_line": "review_description = description_match.group(1) if description_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(0) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "user_display_name = user_match.group(1) if user_match else \"\"",
+      "mutated_line": "review_description = description_match.group(1) if description_match else ''",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(-1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(3) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(1) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(0) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(1) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "company_name = company_match.group(2) if company_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(-2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "review_title = title_match.group(1) if title_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(2) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "review_title = title_match.group(1) if title_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(0) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "review_title = title_match.group(1) if title_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(0) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "review_title = title_match.group(1) if title_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(-1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "review_description = description_match.group(1) if description_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(2) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "review_description = description_match.group(1) if description_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(0) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "review_description = description_match.group(1) if description_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(0) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "review_description = description_match.group(1) if description_match else \"\"",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(-1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "\"Average Rating\": f\"{average_rating:.2f}/5.00\",",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:201]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:201]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:199]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:199]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:0]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:0]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:1]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:1]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "\"Review Description\": review_description[:200]",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:-200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:.2f}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:-200]}\n    return summary_report"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "\"Average Rating\": f\"{average_rating:.2f}/5.00\",",
+      "mutated_line": "summary_report = {'Average Rating': f'{average_rating:}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}",
+      "code": "import re\n\ndef parse_review_data(html_code):\n    filled_stars = len(re.findall('<i class=\"icon_star\"></i>', html_code))\n    empty_stars = len(re.findall('<i class=\"icon_star empty\"></i>', html_code))\n    total_stars = filled_stars + empty_stars\n    average_rating = filled_stars / total_stars * 5 if total_stars > 0 else 0\n    user_match = re.search('<strong>(.*?)</strong>', html_code)\n    company_match = re.search('<a href=\"(.*?)\">(.*?)</a>', html_code)\n    title_match = re.search('\"(.*?)\"', html_code)\n    description_match = re.search('<p>(.*?)</p>', html_code)\n    user_display_name = user_match.group(1) if user_match else ''\n    company_name = company_match.group(2) if company_match else ''\n    review_title = title_match.group(1) if title_match else ''\n    review_description = description_match.group(1) if description_match else ''\n    summary_report = {'Average Rating': f'{average_rating:}/5.00', 'User': user_display_name, 'Company': company_name, 'Review Title': review_title, 'Review Description': review_description[:200]}\n    return summary_report"
+    }
+  ]
+}

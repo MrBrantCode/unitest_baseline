@@ -1,0 +1,280 @@
+{
+  "task_id": "cf_38969",
+  "entry_point": "parse_kubectl_script",
+  "mutant_count": 39,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "dashboard_url = \"\"",
+      "mutated_line": "dashboard_url = 'MUTATED'",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = 'MUTATED'\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "secret_name = \"\"",
+      "mutated_line": "secret_name = 'MUTATED'",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = 'MUTATED'\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for line in script.split('\\n'):",
+      "mutated_line": "for line in script.split(''):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split(''):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 11,
+      "original_line": "if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):",
+      "mutated_line": "if line.startswith('kubectl create -f') and line.startswith('kubectl apply -f'):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') and line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if line.startswith('#'):",
+      "mutated_line": "if line.startswith(''):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith(''):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):",
+      "mutated_line": "if line.startswith('') or line.startswith('kubectl apply -f'):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):",
+      "mutated_line": "if line.startswith('kubectl create -f') or line.startswith(''):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith(''):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "resource_type = \"create -f\" if \"create\" in line else \"apply -f\"",
+      "mutated_line": "resource_type = 'create -f' if 'create' not in line else 'apply -f'",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' not in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "resource_type = \"create -f\" if \"create\" in line else \"apply -f\"",
+      "mutated_line": "resource_type = '' if 'create' in line else 'apply -f'",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = '' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "resource_type = \"create -f\" if \"create\" in line else \"apply -f\"",
+      "mutated_line": "resource_type = 'create -f' if 'create' in line else ''",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else ''\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 13,
+      "original_line": "resource_name = line.split()[-1]",
+      "mutated_line": "resource_name = line.split()[+1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[+1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "elif line.startswith('kubectl -n kube-system describe secret'):",
+      "mutated_line": "elif line.startswith(''):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith(''):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "resource_type = \"create -f\" if \"create\" in line else \"apply -f\"",
+      "mutated_line": "resource_type = 'create -f' if '' in line else 'apply -f'",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if '' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "resource_name = line.split()[-1]",
+      "mutated_line": "resource_name = line.split()[-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-2]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "resource_name = line.split()[-1]",
+      "mutated_line": "resource_name = line.split()[-0]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-0]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "resource_name = line.split()[-1]",
+      "mutated_line": "resource_name = line.split()[-0]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-0]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "resource_name = line.split()[-1]",
+      "mutated_line": "resource_name = line.split()[--1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[--1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):",
+      "mutated_line": "elif line.startswith(''):",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith(''):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[+1][2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[+1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][3:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][3:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][1:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][1:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][0:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][0:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][1:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][1:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][-2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][-2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:+2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:+2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "dashboard_url = line.split('\"')[1]",
+      "mutated_line": "dashboard_url = line.split('\"')[2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[2]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "dashboard_url = line.split('\"')[1]",
+      "mutated_line": "dashboard_url = line.split('\"')[0]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[0]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "dashboard_url = line.split('\"')[1]",
+      "mutated_line": "dashboard_url = line.split('\"')[0]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[0]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "dashboard_url = line.split('\"')[1]",
+      "mutated_line": "dashboard_url = line.split('\"')[-1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[-1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-2][2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-2][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-0][2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-0][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-0][2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-0][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[--1][2:-2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[--1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:-3]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-3]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:-1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-1]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:-0]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-0]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:-1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-1]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "secret_name = line.split()[-1][2:-2]",
+      "mutated_line": "secret_name = line.split()[-1][2:--2]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:--2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('\"')[1]\n    return (resources, dashboard_url, secret_name)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "dashboard_url = line.split('\"')[1]",
+      "mutated_line": "dashboard_url = line.split('')[1]",
+      "code": "import re\n\ndef parse_kubectl_script(script):\n    resources = []\n    dashboard_url = ''\n    secret_name = ''\n    for line in script.split('\\n'):\n        if line.startswith('#'):\n            continue\n        if line.startswith('kubectl create -f') or line.startswith('kubectl apply -f'):\n            resource_type = 'create -f' if 'create' in line else 'apply -f'\n            resource_name = line.split()[-1]\n            resources.append((resource_type, resource_name))\n        elif line.startswith('kubectl -n kube-system describe secret'):\n            secret_name = line.split()[-1][2:-2]\n        elif line.startswith('echo \"http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/\"'):\n            dashboard_url = line.split('')[1]\n    return (resources, dashboard_url, secret_name)"
+    }
+  ]
+}

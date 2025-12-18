@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_58940",
+  "entry_point": "merge_dicts",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if key in dict1:",
+      "mutated_line": "if key not in dict1:",
+      "code": "def merge_dicts(dict1, dict2):\n    for key in dict2:\n        if key not in dict1:\n            if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):\n                merge_dicts(dict1[key], dict2[key])\n            elif dict1[key] == dict2[key]:\n                pass\n            elif isinstance(dict1[key], list):\n                if isinstance(dict2[key], list):\n                    dict1[key].extend(dict2[key])\n                else:\n                    dict1[key].append(dict2[key])\n            elif isinstance(dict2[key], list):\n                dict2[key].append(dict1[key])\n                dict1[key] = dict2[key]\n            else:\n                dict1[key] = [dict1[key], dict2[key]]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 4,
+      "original_line": "if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):",
+      "mutated_line": "if isinstance(dict1[key], dict) or isinstance(dict2[key], dict):",
+      "code": "def merge_dicts(dict1, dict2):\n    for key in dict2:\n        if key in dict1:\n            if isinstance(dict1[key], dict) or isinstance(dict2[key], dict):\n                merge_dicts(dict1[key], dict2[key])\n            elif dict1[key] == dict2[key]:\n                pass\n            elif isinstance(dict1[key], list):\n                if isinstance(dict2[key], list):\n                    dict1[key].extend(dict2[key])\n                else:\n                    dict1[key].append(dict2[key])\n            elif isinstance(dict2[key], list):\n                dict2[key].append(dict1[key])\n                dict1[key] = dict2[key]\n            else:\n                dict1[key] = [dict1[key], dict2[key]]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "elif dict1[key] == dict2[key]:",
+      "mutated_line": "elif dict1[key] != dict2[key]:",
+      "code": "def merge_dicts(dict1, dict2):\n    for key in dict2:\n        if key in dict1:\n            if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):\n                merge_dicts(dict1[key], dict2[key])\n            elif dict1[key] != dict2[key]:\n                pass\n            elif isinstance(dict1[key], list):\n                if isinstance(dict2[key], list):\n                    dict1[key].extend(dict2[key])\n                else:\n                    dict1[key].append(dict2[key])\n            elif isinstance(dict2[key], list):\n                dict2[key].append(dict1[key])\n                dict1[key] = dict2[key]\n            else:\n                dict1[key] = [dict1[key], dict2[key]]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    }
+  ]
+}

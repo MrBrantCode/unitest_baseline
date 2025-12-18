@@ -1,0 +1,54 @@
+"""
+QUESTION:
+The Chef likes to stay in touch with his staff. So, the Chef, the head server, and the sous-chef all carry two-way transceivers so they can stay in constant contact. Of course, these transceivers have a limited range so if two are too far apart, they cannot communicate directly.
+
+The Chef invested in top-of-the-line transceivers which have a few advanced features. One is that even if two people cannot talk directly because they are out of range, if there is another transceiver that is close enough to both, then the two transceivers can still communicate with each other using the third transceiver as an intermediate device.
+
+There has been a minor emergency in the Chef's restaurant
+and he needs to communicate with both the head server and the sous-chef right away. Help the Chef determine if it is possible for all three people to communicate with each other, even if two must communicate through the third because they are too far apart.
+
+------ Input ------ 
+
+The first line contains a single positive integer T ≤ 100 indicating the number of test cases to follow. The first line of each test case contains a positive integer R ≤ 1,000 indicating that two transceivers can communicate directly without an intermediate transceiver if they are at most R meters away from each other. The remaining three lines of the test case describe the current locations of the Chef, the head server, and the sous-chef, respectively. Each such line contains two integers X,Y (at most 10,000 in absolute value) indicating that the respective person is located at position X,Y.
+
+------ Output ------ 
+
+For each test case you are to output a single line containing a single string. If it is possible for all three to communicate then you should output "yes". Otherwise, you should output "no".
+
+To be clear, we say that two transceivers are close enough to communicate directly if the length of the straight line connecting their X,Y coordinates is at most R.
+
+----- Sample Input 1 ------ 
+3
+1
+0 1
+0 0
+1 0
+2
+0 1
+0 0
+1 0
+2
+0 0
+0 2
+2 1
+----- Sample Output 1 ------ 
+yes
+yes
+no
+"""
+
+def can_communicate(r, chef_pos, server_pos, sous_chef_pos):
+    (x1, y1) = chef_pos
+    (x2, y2) = server_pos
+    (x3, y3) = sous_chef_pos
+    
+    r1 = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+    r2 = ((x3 - x1) ** 2 + (y3 - y1) ** 2) ** 0.5
+    r3 = ((x2 - x3) ** 2 + (y2 - y3) ** 2) ** 0.5
+    
+    if r1 <= r and r2 <= r and r3 <= r:
+        return 'yes'
+    elif (r1 > r and r2 <= r and r3 <= r) or (r2 > r and r1 <= r and r3 <= r) or (r3 > r and r2 <= r and r1 <= r):
+        return 'yes'
+    else:
+        return 'no'

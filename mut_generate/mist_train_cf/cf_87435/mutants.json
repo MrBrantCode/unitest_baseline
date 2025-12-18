@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_87435",
+  "entry_point": "breadth_first_search",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if vertex == end:",
+      "mutated_line": "if vertex != end:",
+      "code": "from collections import deque\n\ndef breadth_first_search(graph, start, end):\n    visited = set()\n    queue = deque([(start, [start])])\n    while queue:\n        (vertex, path) = queue.popleft()\n        if vertex != end:\n            return path\n        if vertex not in visited:\n            visited.add(vertex)\n            for neighbor in graph[vertex]:\n                queue.append((neighbor, path + [neighbor]))\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if vertex not in visited:",
+      "mutated_line": "if vertex in visited:",
+      "code": "from collections import deque\n\ndef breadth_first_search(graph, start, end):\n    visited = set()\n    queue = deque([(start, [start])])\n    while queue:\n        (vertex, path) = queue.popleft()\n        if vertex == end:\n            return path\n        if vertex in visited:\n            visited.add(vertex)\n            for neighbor in graph[vertex]:\n                queue.append((neighbor, path + [neighbor]))\n    return None"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "queue.append((neighbor, path + [neighbor]))",
+      "mutated_line": "queue.append((neighbor, path - [neighbor]))",
+      "code": "from collections import deque\n\ndef breadth_first_search(graph, start, end):\n    visited = set()\n    queue = deque([(start, [start])])\n    while queue:\n        (vertex, path) = queue.popleft()\n        if vertex == end:\n            return path\n        if vertex not in visited:\n            visited.add(vertex)\n            for neighbor in graph[vertex]:\n                queue.append((neighbor, path - [neighbor]))\n    return None"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "queue.append((neighbor, path + [neighbor]))",
+      "mutated_line": "queue.append((neighbor, path * [neighbor]))",
+      "code": "from collections import deque\n\ndef breadth_first_search(graph, start, end):\n    visited = set()\n    queue = deque([(start, [start])])\n    while queue:\n        (vertex, path) = queue.popleft()\n        if vertex == end:\n            return path\n        if vertex not in visited:\n            visited.add(vertex)\n            for neighbor in graph[vertex]:\n                queue.append((neighbor, path * [neighbor]))\n    return None"
+    }
+  ]
+}

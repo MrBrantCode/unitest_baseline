@@ -1,0 +1,20 @@
+"""
+QUESTION:
+Write a function `get_string_length_and_frequency` that takes a string as input and returns the length of the string, the number of unique characters in the string, and a dictionary where the keys are the unique characters and the values are their respective frequencies. The function should not use any built-in string length function.
+"""
+
+def get_string_length_and_frequency(string):
+    length = 0
+    unique_chars = set()
+    frequency = {}
+
+    for char in string:
+        if char not in unique_chars:
+            unique_chars.add(char)
+            frequency[char] = 1
+        else:
+            frequency[char] += 1
+
+        length += 1
+
+    return length, len(unique_chars), frequency

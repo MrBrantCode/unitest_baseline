@@ -1,0 +1,56 @@
+"""
+QUESTION:
+You are given an two integers i and j such that i ≤ j.
+Task is to find the sum of all integers from i to j (both inclusive).  
+
+For example:
+i = 3
+j = 5
+then sum from i to j will be 3+4+5 = 12  
+
+Input:
+Single line containing two space separated integers i and j.  
+
+Output:
+Print out the sum of integers from i to j (both inclusive).  
+
+Constraints:
+0 ≤ i ≤ 1000000000000000000 (10^18)
+0 ≤ j ≤ 1000000000000000000 (10^18)
+i ≤ j
+Absolute difference between i and j can be upto 1000000000000000000 
+i.e. |j-i| ≤ 1000000000000000000 (10^18)
+
+Subtask 1: (50 points)
+0 ≤ i ≤ 1000000
+0 ≤ j ≤ 1000000
+i ≤ j
+Absolute difference between i and j can be upto 1000000 
+i.e. |j-i| ≤ 1000000
+
+Subtask 2: (50 points)
+Original Constraints  
+
+Hint:
+Use mathematics instead of loop to find sum.
+Use BigInteger class of Java for large number multiplication.
+
+SAMPLE INPUT
+99 1000000000000
+
+SAMPLE OUTPUT
+500000000000499999995149
+"""
+
+def calculate_sum_of_range(i: int, j: int) -> int:
+    """
+    Calculate the sum of all integers from i to j (both inclusive).
+
+    Parameters:
+    i (int): The starting point of the range (inclusive).
+    j (int): The ending point of the range (inclusive).
+
+    Returns:
+    int: The sum of all integers from i to j.
+    """
+    return ((j + i) * (j - i + 1)) // 2

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_18385",
+  "entry_point": "generate_timestamp",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "input_format = \"%m/%d/%Y %H:%M:%S\"",
+      "mutated_line": "output_format = '%Y-%m-%d %H:%M:%S'",
+      "code": "from datetime import datetime\nfrom pytz import timezone\n\ndef generate_timestamp(input_str):\n    input_format = ''\n    output_format = '%Y-%m-%d %H:%M:%S'\n    dt = datetime.strptime(input_str, input_format)\n    utc_dt = timezone('UTC').localize(dt)\n    output_str = utc_dt.strftime(output_format)\n    return output_str"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "output_format = \"%Y-%m-%d %H:%M:%S\"",
+      "mutated_line": "output_format = ''",
+      "code": "from datetime import datetime\nfrom pytz import timezone\n\ndef generate_timestamp(input_str):\n    input_format = '%m/%d/%Y %H:%M:%S'\n    output_format = ''\n    dt = datetime.strptime(input_str, input_format)\n    utc_dt = timezone('UTC').localize(dt)\n    output_str = utc_dt.strftime(output_format)\n    return output_str"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "utc_dt = timezone('UTC').localize(dt)",
+      "mutated_line": "utc_dt = timezone('').localize(dt)",
+      "code": "from datetime import datetime\nfrom pytz import timezone\n\ndef generate_timestamp(input_str):\n    input_format = '%m/%d/%Y %H:%M:%S'\n    output_format = '%Y-%m-%d %H:%M:%S'\n    dt = datetime.strptime(input_str, input_format)\n    utc_dt = timezone('').localize(dt)\n    output_str = utc_dt.strftime(output_format)\n    return output_str"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+"""
+QUESTION:
+A n digit number has n*(n+1)/2 sub-numbers.  For example, all possible sub-numbers of 975 are 9 7 5 97 75 975. A number is called Lucky if all sub-numbers have different digit product.  Digit product of a number is product of its digits.   
+For example, the number 23 is Lucky.  Sub-numbers of it are 2, 3 and 23 and digit products are 2, 3 and 6 respectively (All digit products are different). 975 is also lucky. Print 1 if given Number is Lucky else Print 0.
+ 
+Example 1:
+Input:
+N = 324
+Output:
+1
+Explanation:
+All subsequences form different Digit
+Products. So, Output is 1.
+Example 2:
+Input:
+N = 323
+Output:
+0
+Explanation:
+Subsequences 32, and 23 form same
+Digit Product, i.e, 6. So, Output is 0.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function isLuckyOrNot() which takes an Integer N as input and returns the answer.
+ 
+Expected Time Complexity: O((Number of Digits)^{2})
+Expected Auxiliary Space: O(Number of Digits)
+ 
+Constraints:
+1 <= N <= 10^{18}
+"""
+
+def is_lucky_number(N: int) -> int:
+    s = str(N)
+    n = len(s)
+    digit_products = set()
+    
+    for i in range(n):
+        product = 1
+        for j in range(i, n):
+            product *= int(s[j])
+            digit_products.add(product)
+    
+    if len(digit_products) == n * (n + 1) // 2:
+        return 1
+    return 0

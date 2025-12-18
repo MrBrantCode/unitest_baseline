@@ -1,0 +1,83 @@
+"""
+QUESTION:
+The student council has a shared document file. Every day, some members of the student council write the sequence TMT (short for Towa Maji Tenshi) in it.
+
+However, one day, the members somehow entered the sequence into the document at the same time, creating a jumbled mess. Therefore, it is Suguru Doujima's task to figure out whether the document has malfunctioned. Specifically, he is given a string of length $n$ whose characters are all either T or M, and he wants to figure out if it is possible to partition it into some number of disjoint subsequences, all of which are equal to TMT. That is, each character of the string should belong to exactly one of the subsequences.
+
+A string $a$ is a subsequence of a string $b$ if $a$ can be obtained from $b$ by deletion of several (possibly, zero) characters.
+
+
+-----Input-----
+
+The first line contains an integer $t$ ($1 \le t \le 5000$)  — the number of test cases.
+
+The first line of each test case contains an integer $n$ ($3 \le n < 10^5$), the number of characters in the string entered in the document. It is guaranteed that $n$ is divisible by $3$.
+
+The second line of each test case contains a string of length $n$ consisting of only the characters T and M.
+
+It is guaranteed that the sum of $n$ over all test cases does not exceed $10^5$.
+
+
+-----Output-----
+
+For each test case, print a single line containing YES if the described partition exists, and a single line containing NO otherwise.
+
+
+-----Examples-----
+
+Input
+5
+3
+TMT
+3
+MTT
+6
+TMTMTT
+6
+TMTTTT
+6
+TTMMTT
+Output
+YES
+NO
+YES
+NO
+YES
+
+
+-----Note-----
+
+In the first test case, the string itself is already a sequence equal to TMT.
+
+In the third test case, we may partition the string into the subsequences TMTMTT. Both the bolded and the non-bolded subsequences are equal to TMT.
+"""
+
+def is_valid_tmt_partition(n, s):
+    if n % 3 != 0 or s.count('M') != n // 3:
+        return "NO"
+    
+    t_count = 0
+    m_count = 0
+    
+    # Check from left to right
+    for char in s:
+        if char == 'T':
+            t_count += 1
+        elif char == 'M':
+            m_count += 1
+            if m_count > t_count:
+                return "NO"
+    
+    t_count = 0
+    m_count = 0
+    
+    # Check from right to left
+    for char in reversed(s):
+        if char == 'T':
+            t_count += 1
+        elif char == 'M':
+            m_count += 1
+            if m_count > t_count:
+                return "NO"
+    
+    return "YES"

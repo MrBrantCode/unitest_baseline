@@ -1,0 +1,105 @@
+"""
+QUESTION:
+You are given an array B of length 2N . You have an unknown array A which is sorted and contains *distinct* elements. You need to find out the array A. B contains all the medians of each prefix and suffix of the array A.
+
+A median is the middle element in a sorted array . [1,2,3,4] has median 2 and [1,3,4] has 3 as median.
+
+Determine whether B is a valid array of some array A. If yes find the array A else print -1.
+
+------ Input Format ------ 
+
+- The first line of input contains a single integer T denoting the number of test cases. The description of T test cases follows.
+- The first line of each test case contains an integer N.
+- The second line of each test case contains 2N space-separated integers B_{1}, B_{2}, \dots, B_{N}.
+
+------ Output Format ------ 
+
+For each testcase, output the valid array A or -1 if not possible.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1 ≤ N ≤ 10^{5}$
+$1 ≤B_{i} ≤10^{6}$
+- Sum of N overall testcases won't exceed $2*10^{5}$.
+
+------ subtasks ------ 
+
+100 points : Original Constraints
+
+----- Sample Input 1 ------ 
+2
+3
+6 5 5 7 6 6
+3
+1 2 1 4 2 4
+----- Sample Output 1 ------ 
+5 6 7
+-1
+----- explanation 1 ------ 
+- Test case $1$: Assume the array $A$ be $[5,6,7]$. The medians of the prefix arrays of $A$ are 
+- $[5]$ = $5$
+- $[5,6]$ = $5$
+- $[5,6,7]$ = $6$
+
+The medians of the suffix arrays of $A$ are 
+- $[7]$ = $7$
+- $[6,7]$ = $6$
+- $[5,6,7]$ = $6$
+
+Hence $B$ contains all the medians above with the element $5$ repeating exactly $2$ times,
+$6$ repeating exactly $3$ times and $7$ repeating only once.
+
+- Test case $2$: no valid array $A$ can be found.
+"""
+
+def find_valid_array_A(T, test_cases):
+    results = []
+    
+    for case in test_cases:
+        N, B = case
+        B.sort()
+        d = {}
+        
+        for k in range(2 * N):
+            if B[k] not in d:
+                d[B[k]] = 1
+            else:
+                d[B[k]] += 1
+        
+        c = list(set(B))
+        c.sort()
+        
+        if N == 1:
+            if B[0] == B[1]:
+                results.append([B[0]])
+            else:
+                results.append([-1])
+            continue
+        
+        valid = True
+        for k in range(len(c)):
+            if k == len(c) - 1:
+                if d[c[k]] == 1:
+                    pass
+                else:
+                    valid = False
+                    break
+            elif k == (N - 1) // 2:
+                if d[c[k]] == 3:
+                    pass
+                else:
+                    valid = False
+                    break
+            elif d[c[k]] == 2:
+                pass
+            else:
+                valid = False
+                break
+        
+        if valid:
+            results.append(c)
+        else:
+            results.append([-1])
+    
+    return results

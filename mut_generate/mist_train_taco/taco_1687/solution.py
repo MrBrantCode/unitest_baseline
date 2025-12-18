@@ -1,0 +1,41 @@
+"""
+QUESTION:
+Thomson is very weak in set theory. Recently, he came across the following problem:
+Given a set X with N distinct elements, in how many ways can you select two sets A and B such that both A and B are subsets of X and A is also a subset of B.
+Help Thomson solve the above problem. As the answer can be very large, print it modulo 10^9+7.
+
+Input:
+
+The first line will contain an integer T denoting the number of testcases.
+Each test case will contain only 1 line containing the cardinality (i.e. number of elements) of the set.
+
+Output:
+
+For each test case, print the answer modulo 10^9+7.
+
+Constraints:
+1 ≤ T ≤ 10^5
+0 ≤ N ≤ 10^9
+
+SAMPLE INPUT
+2
+9
+50
+
+SAMPLE OUTPUT
+19683
+710104287
+"""
+
+def calculate_subset_combinations(n: int, mod: int = 10**9 + 7) -> int:
+    """
+    Calculate the number of ways to select two sets A and B such that A is a subset of B and both are subsets of X.
+
+    Parameters:
+    - n (int): The cardinality of the set X.
+    - mod (int, optional): The modulo value to use. Default is 10^9 + 7.
+
+    Returns:
+    - int: The number of ways modulo the given modulo value.
+    """
+    return pow(3, n, mod)

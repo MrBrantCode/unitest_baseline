@@ -1,0 +1,61 @@
+"""
+QUESTION:
+Chef calls a pair of integers (A, B) *equivalent* if there exist some positive integers X and Y such that A^{X} = B^{Y}.
+
+Given A and B, determine whether the pair is *equivalent* or not.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases.
+- Each test case consists of two space-separated integers A and B, as mentioned in statement.
+
+------ Output Format ------ 
+
+For each test case, output YES if (A, B) is an *equivalent* pair, NO otherwise.
+
+The output is case-insensitive. Thus, the strings Yes, YES, yes, and yeS are all considered identical.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$2 ≤ A, B ≤ 10^{6}$
+
+----- Sample Input 1 ------ 
+3
+2 3
+8 4
+12 24
+
+----- Sample Output 1 ------ 
+NO
+YES
+NO
+
+----- explanation 1 ------ 
+Test case $1$: There are no positive integers $X$ and $Y$ which satisfy $A^{X} = B^{Y}$.
+
+Test case $2$: Let $X = 2$ and $Y = 3$. Thus, $A^{X} = 8^{2} = 64$ and $B^{Y} = 4^{3} = 64$. Thus, the pair $(8, 4)$ is *equivalent*.
+
+Test case $3$: There are no positive integers $X$ and $Y$ which satisfy $A^{X} = B^{Y}$.
+"""
+
+def are_equivalent_pairs(A: int, B: int) -> str:
+    """
+    Determines if the pair of integers (A, B) is equivalent.
+
+    Args:
+        A (int): The first integer.
+        B (int): The second integer.
+
+    Returns:
+        str: "YES" if the pair is equivalent, "NO" otherwise.
+    """
+    c, d = A, B
+    for _ in range(40):
+        if c == d:
+            return 'YES'
+        elif c < d:
+            c *= A
+        else:
+            d *= B
+    return 'NO'

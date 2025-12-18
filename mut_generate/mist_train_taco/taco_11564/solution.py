@@ -1,0 +1,40 @@
+"""
+QUESTION:
+According to rules of the Berland fashion, a jacket should be fastened by all the buttons except only one, but not necessarily it should be the last one. Also if the jacket has only one button, it should be fastened, so the jacket will not swinging open.
+
+You are given a jacket with n buttons. Determine if it is fastened in a right way.
+
+
+-----Input-----
+
+The first line contains integer n (1 ≤ n ≤ 1000) — the number of buttons on the jacket.
+
+The second line contains n integers a_{i} (0 ≤ a_{i} ≤ 1). The number a_{i} = 0 if the i-th button is not fastened. Otherwise a_{i} = 1.
+
+
+-----Output-----
+
+In the only line print the word "YES" if the jacket is fastened in a right way. Otherwise print the word "NO".
+
+
+-----Examples-----
+Input
+3
+1 0 1
+
+Output
+YES
+
+Input
+3
+1 0 0
+
+Output
+NO
+"""
+
+def is_jacket_fastened_correctly(n, a):
+    if n > 1 and sum(a) == n - 1 or (n == 1 and a[0] == 1):
+        return 'YES'
+    else:
+        return 'NO'

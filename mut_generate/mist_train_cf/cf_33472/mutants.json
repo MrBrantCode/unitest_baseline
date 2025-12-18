@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_33472",
+  "entry_point": "colorizeMessage",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if applyColor and colorCode.upper() in colorMap:",
+      "mutated_line": "return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'",
+      "code": "def colorizeMessage(message, colorCode, applyColor):\n    colorMap = {'LBLUE': '\\x1b[94m'}\n    if applyColor or colorCode.upper() in colorMap:\n        return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'\n    else:\n        return message"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "\"LBLUE\": \"\\033[94m\",  # Light Blue color code",
+      "mutated_line": "colorMap = {'': '\\x1b[94m'}",
+      "code": "def colorizeMessage(message, colorCode, applyColor):\n    colorMap = {'': '\\x1b[94m'}\n    if applyColor and colorCode.upper() in colorMap:\n        return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'\n    else:\n        return message"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "\"LBLUE\": \"\\033[94m\",  # Light Blue color code",
+      "mutated_line": "colorMap = {'LBLUE': ''}",
+      "code": "def colorizeMessage(message, colorCode, applyColor):\n    colorMap = {'LBLUE': ''}\n    if applyColor and colorCode.upper() in colorMap:\n        return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'\n    else:\n        return message"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if applyColor and colorCode.upper() in colorMap:",
+      "mutated_line": "return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'",
+      "code": "def colorizeMessage(message, colorCode, applyColor):\n    colorMap = {'LBLUE': '\\x1b[94m'}\n    if applyColor and colorCode.upper() not in colorMap:\n        return f'{colorMap[colorCode.upper()]}{message}\\x1b[0m'\n    else:\n        return message"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "return f\"{colorMap[colorCode.upper()]}{message}\\033[0m\"  # Apply color and reset to default",
+      "mutated_line": "return f'{colorMap[colorCode.upper()]}{message}'",
+      "code": "def colorizeMessage(message, colorCode, applyColor):\n    colorMap = {'LBLUE': '\\x1b[94m'}\n    if applyColor and colorCode.upper() in colorMap:\n        return f'{colorMap[colorCode.upper()]}{message}'\n    else:\n        return message"
+    }
+  ]
+}

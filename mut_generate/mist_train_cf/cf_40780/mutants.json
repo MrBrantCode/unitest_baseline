@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_40780",
+  "entry_point": "aggregate_logs",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "logs = server_response.get(\"logs\", [])",
+      "mutated_line": "logs = server_response.get('', [])",
+      "code": "def aggregate_logs(server_response: dict) -> dict:\n    logs = server_response.get('', [])\n    aggregated_logs = {}\n    for log in logs:\n        timestamp = log.get('timestamp')\n        message = log.get('message')\n        if timestamp and message:\n            aggregated_logs.setdefault(timestamp, []).append(message)\n    return aggregated_logs"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if timestamp and message:",
+      "mutated_line": "if timestamp or message:",
+      "code": "def aggregate_logs(server_response: dict) -> dict:\n    logs = server_response.get('logs', [])\n    aggregated_logs = {}\n    for log in logs:\n        timestamp = log.get('timestamp')\n        message = log.get('message')\n        if timestamp or message:\n            aggregated_logs.setdefault(timestamp, []).append(message)\n    return aggregated_logs"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "timestamp = log.get(\"timestamp\")",
+      "mutated_line": "timestamp = log.get('')",
+      "code": "def aggregate_logs(server_response: dict) -> dict:\n    logs = server_response.get('logs', [])\n    aggregated_logs = {}\n    for log in logs:\n        timestamp = log.get('')\n        message = log.get('message')\n        if timestamp and message:\n            aggregated_logs.setdefault(timestamp, []).append(message)\n    return aggregated_logs"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "message = log.get(\"message\")",
+      "mutated_line": "message = log.get('')",
+      "code": "def aggregate_logs(server_response: dict) -> dict:\n    logs = server_response.get('logs', [])\n    aggregated_logs = {}\n    for log in logs:\n        timestamp = log.get('timestamp')\n        message = log.get('')\n        if timestamp and message:\n            aggregated_logs.setdefault(timestamp, []).append(message)\n    return aggregated_logs"
+    }
+  ]
+}

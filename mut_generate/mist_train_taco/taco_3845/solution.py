@@ -1,0 +1,82 @@
+"""
+QUESTION:
+Recently, you bought a brand new smart lamp with programming features. At first, you set up a schedule to the lamp. Every day it will turn power on at moment $0$ and turn power off at moment $M$. Moreover, the lamp allows you to set a program of switching its state (states are "lights on" and "lights off"). Unfortunately, some program is already installed into the lamp.
+
+The lamp allows only good programs. Good program can be represented as a non-empty array $a$, where $0 < a_1 < a_2 < \dots < a_{|a|} < M$. All $a_i$ must be integers. Of course, preinstalled program is a good program.
+
+The lamp follows program $a$ in next manner: at moment $0$ turns power and light on. Then at moment $a_i$ the lamp flips its state to opposite (if it was lit, it turns off, and vice versa). The state of the lamp flips instantly: for example, if you turn the light off at moment $1$ and then do nothing, the total time when the lamp is lit will be $1$. Finally, at moment $M$ the lamp is turning its power off regardless of its state.
+
+Since you are not among those people who read instructions, and you don't understand the language it's written in, you realize (after some testing) the only possible way to alter the preinstalled program. You can insert at most one element into the program $a$, so it still should be a good program after alteration. Insertion can be done between any pair of consecutive elements of $a$, or even at the begining or at the end of $a$.
+
+Find such a way to alter the program that the total time when the lamp is lit is maximum possible. Maybe you should leave program untouched. If the lamp is lit from $x$ till moment $y$, then its lit for $y - x$ units of time. Segments of time when the lamp is lit are summed up.
+
+
+-----Input-----
+
+First line contains two space separated integers $n$ and $M$ ($1 \le n \le 10^5$, $2 \le M \le 10^9$) — the length of program $a$ and the moment when power turns off.
+
+Second line contains $n$ space separated integers $a_1, a_2, \dots, a_n$ ($0 < a_1 < a_2 < \dots < a_n < M$) — initially installed program $a$.
+
+
+-----Output-----
+
+Print the only integer — maximum possible total time when the lamp is lit.
+
+
+-----Examples-----
+Input
+3 10
+4 6 7
+
+Output
+8
+
+Input
+2 12
+1 10
+
+Output
+9
+
+Input
+2 7
+3 4
+
+Output
+6
+
+
+
+-----Note-----
+
+In the first example, one of possible optimal solutions is to insert value $x = 3$ before $a_1$, so program will be $[3, 4, 6, 7]$ and time of lamp being lit equals $(3 - 0) + (6 - 4) + (10 - 7) = 8$. Other possible solution is to insert $x = 5$ in appropriate place.
+
+In the second example, there is only one optimal solution: to insert $x = 2$ between $a_1$ and $a_2$. Program will become $[1, 2, 10]$, and answer will be $(1 - 0) + (10 - 2) = 9$.
+
+In the third example, optimal answer is to leave program untouched, so answer will be $(3 - 0) + (7 - 4) = 6$.
+"""
+
+def max_lit_time(n: int, M: int, a: list) -> int:
+    # Extend the array a with start (0) and end (M) moments
+    ls = [0] + a + [M]
+    
+    # Calculate the initial lit time without any insertion
+    b = 0
+    for i in range(0, n + 1, 2):
+        b += ls[i + 1] - ls[i]
+    
+    # Initialize the answer with the initial lit time
+    ans = b
+    
+    # Calculate the potential lit time if an element is inserted at the beginning
+    b = M - b + ls[1] - 1
+    if ls[1] != 1 or ls[2] - ls[1] != 1:
+        ans = max(ans, b)
+    
+    # Calculate the potential lit time if an element is inserted between any pair of consecutive elements
+    for i in range(1, n - 1, 2):
+        b = b + ls[i] + ls[i + 2] - 2 * ls[i + 1]
+        if ls[i + 2] - 1 != ls[i + 1] or ls[i + 2] + 1 != ls[i + 3]:
+            ans = max(ans, b)
+    
+    return ans

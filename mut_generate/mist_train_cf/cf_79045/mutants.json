@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_79045",
+  "entry_point": "get_size_of_tuple",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "size += get_size_of_tuple(el) # recursively call to measure nested tuples",
+      "mutated_line": "size -= get_size_of_tuple(el)",
+      "code": "import sys\n\ndef get_size_of_tuple(t):\n    size = sys.getsizeof(t)\n    for el in t:\n        if isinstance(el, tuple):\n            size -= get_size_of_tuple(el)\n        elif not isinstance(el, (str, int)):\n            size += sys.getsizeof(el)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 11,
+      "original_line": "size += sys.getsizeof(el)",
+      "mutated_line": "size -= sys.getsizeof(el)",
+      "code": "import sys\n\ndef get_size_of_tuple(t):\n    size = sys.getsizeof(t)\n    for el in t:\n        if isinstance(el, tuple):\n            size += get_size_of_tuple(el)\n        elif not isinstance(el, (str, int)):\n            size -= sys.getsizeof(el)\n    return size"
+    }
+  ]
+}

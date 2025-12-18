@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_61298",
+  "entry_point": "extract_nested_dicts",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "data = json.loads(data.replace(\"'\",'\"'))",
+      "mutated_line": "data = json.loads(data.replace('', '\"'))",
+      "code": "import json\n\ndef extract_nested_dicts(data):\n    nested_dicts = []\n\n    def extract(data):\n        if isinstance(data, dict):\n            nested_dicts.append(data)\n            for value in data.values():\n                extract(value)\n        elif isinstance(data, list):\n            for value in data:\n                extract(value)\n    data = json.loads(data.replace('', '\"'))\n    extract(data)\n    return nested_dicts"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "data = json.loads(data.replace(\"'\",'\"'))",
+      "mutated_line": "data = json.loads(data.replace(\"'\", ''))",
+      "code": "import json\n\ndef extract_nested_dicts(data):\n    nested_dicts = []\n\n    def extract(data):\n        if isinstance(data, dict):\n            nested_dicts.append(data)\n            for value in data.values():\n                extract(value)\n        elif isinstance(data, list):\n            for value in data:\n                extract(value)\n    data = json.loads(data.replace(\"'\", ''))\n    extract(data)\n    return nested_dicts"
+    }
+  ]
+}

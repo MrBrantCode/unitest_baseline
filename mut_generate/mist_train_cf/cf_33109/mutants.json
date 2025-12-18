@@ -1,0 +1,63 @@
+{
+  "task_id": "cf_33109",
+  "entry_point": "which",
+  "mutant_count": 8,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if sys.platform == \"win32\":",
+      "mutated_line": "if sys.platform != 'win32':",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform != 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "return os.path.isfile(path) and os.access(path, os.X_OK)",
+      "mutated_line": "return os.path.isfile(path) or os.access(path, os.X_OK)",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) or os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "if sys.platform == \"win32\":",
+      "mutated_line": "if sys.platform == '':",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == '':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if os.path.isfile(program) and is_executable_file(program):",
+      "mutated_line": "if os.path.isfile(program) or is_executable_file(program):",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) or is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "return search_path(program + \".exe\")",
+      "mutated_line": "return search_path(program - '.exe')",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program - '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "return search_path(program + \".exe\")",
+      "mutated_line": "return search_path(program * '.exe')",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program * '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "path_dirs = os.environ[\"PATH\"].split(os.pathsep)",
+      "mutated_line": "path_dirs = os.environ[''].split(os.pathsep)",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ[''].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '.exe')\n    else:\n        return search_path(program)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "return search_path(program + \".exe\")",
+      "mutated_line": "return search_path(program + '')",
+      "code": "import os\nimport stat\nimport sys\n\ndef which(program):\n\n    def is_executable_file(path):\n        return os.path.isfile(path) and os.access(path, os.X_OK)\n\n    def search_path(program):\n        path_dirs = os.environ['PATH'].split(os.pathsep)\n        for path_dir in path_dirs:\n            exe_file = os.path.join(path_dir, program)\n            if is_executable_file(exe_file):\n                return exe_file\n        return None\n    if sys.platform == 'win32':\n        if os.path.isfile(program) and is_executable_file(program):\n            return program\n        else:\n            return search_path(program + '')\n    else:\n        return search_path(program)"
+    }
+  ]
+}

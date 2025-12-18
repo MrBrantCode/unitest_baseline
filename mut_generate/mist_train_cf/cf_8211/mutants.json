@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_8211",
+  "entry_point": "get_person_details",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "query = \"\"\"",
+      "mutated_line": "query = ''",
+      "code": "import sqlite3\n\ndef get_person_details(age_threshold, city, order_amount_threshold):\n    conn = sqlite3.connect('database.db')\n    cursor = conn.cursor()\n    query = ''\n    cursor.execute(query, (age_threshold, city, order_amount_threshold))\n    result = cursor.fetchall()\n    cursor.close()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "conn = sqlite3.connect('database.db')",
+      "mutated_line": "conn = sqlite3.connect('')",
+      "code": "import sqlite3\n\ndef get_person_details(age_threshold, city, order_amount_threshold):\n    conn = sqlite3.connect('')\n    cursor = conn.cursor()\n    query = '\\n    SELECT person.name, person.address, person.phone, person.email, orders.order_date, orders.total_amount, products.product_name\\n    FROM person\\n    JOIN orders ON person.id = orders.person_id\\n    JOIN order_items ON orders.order_id = order_items.order_id\\n    JOIN products ON order_items.product_id = products.product_id\\n    WHERE person.age > ?\\n    AND person.city = ?\\n    AND orders.total_amount > ?\\n    '\n    cursor.execute(query, (age_threshold, city, order_amount_threshold))\n    result = cursor.fetchall()\n    cursor.close()\n    conn.close()\n    return result"
+    }
+  ]
+}

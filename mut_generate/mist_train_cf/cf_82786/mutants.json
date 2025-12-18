@@ -1,0 +1,98 @@
+{
+  "task_id": "cf_82786",
+  "entry_point": "get_size",
+  "mutant_count": 13,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"Recursively find the size of object in bytes\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if seen is None:",
+      "mutated_line": "if seen is not None:",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is not None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if obj_id in seen:",
+      "mutated_line": "if obj_id not in seen:",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id not in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 13,
+      "original_line": "size += sum([get_size(v, seen) for v in obj.values()])",
+      "mutated_line": "size -= sum([get_size(v, seen) for v in obj.values()])",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size -= sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "size += sum([get_size(k, seen) for k in obj.keys()])",
+      "mutated_line": "size -= sum([get_size(k, seen) for k in obj.keys()])",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size -= sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return -1\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 16,
+      "original_line": "size += get_size(obj.__dict__, seen)",
+      "mutated_line": "size -= get_size(obj.__dict__, seen)",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size -= get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "elif hasattr(obj, '__dict__'):",
+      "mutated_line": "elif hasattr(obj, ''):",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, ''):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 17,
+      "original_line": "elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(obj, '__iter__') or not isinstance(obj, (str, bytes, bytearray)):",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') or not isinstance(obj, (str, bytes, bytearray)):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 18,
+      "original_line": "size += sum([get_size(i, seen) for i in obj])",
+      "mutated_line": "size -= sum([get_size(i, seen) for i in obj])",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '__iter__') and (not isinstance(obj, (str, bytes, bytearray))):\n        size -= sum([get_size(i, seen) for i in obj])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(obj, '') and (not isinstance(obj, (str, bytes, bytearray))):",
+      "code": "import sys\n\ndef get_size(obj, seen=None):\n    \"\"\"Recursively find the size of object in bytes\"\"\"\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, dict):\n        size += sum([get_size(v, seen) for v in obj.values()])\n        size += sum([get_size(k, seen) for k in obj.keys()])\n    elif hasattr(obj, '__dict__'):\n        size += get_size(obj.__dict__, seen)\n    elif hasattr(obj, '') and (not isinstance(obj, (str, bytes, bytearray))):\n        size += sum([get_size(i, seen) for i in obj])\n    return size"
+    }
+  ]
+}

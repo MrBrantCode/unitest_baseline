@@ -1,0 +1,49 @@
+{
+  "task_id": "cf_59614",
+  "entry_point": "two_key_encryption",
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x ^ y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x ^ encryption_key[i % key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('latin1')"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return encrypted_data.decode('latin1')",
+      "mutated_line": "return encrypted_data.decode('')",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\n    This function uses two symmetric keys to encrypt data in such a way that either key can be used for decryption.\n\n    Args:\n        key1 (str): The first encryption key.\n        key2 (str): The second encryption key.\n        data (str): The data to be encrypted.\n\n    Returns:\n        str: The encrypted data.\n    \"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x ^ y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x ^ encryption_key[i % key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('')"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "encryption_key = bytes(x ^ y for x, y in zip(key1_bytes, key2_bytes))",
+      "mutated_line": "encryption_key = bytes((x | y for (x, y) in zip(key1_bytes, key2_bytes)))",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\n    This function uses two symmetric keys to encrypt data in such a way that either key can be used for decryption.\n\n    Args:\n        key1 (str): The first encryption key.\n        key2 (str): The second encryption key.\n        data (str): The data to be encrypted.\n\n    Returns:\n        str: The encrypted data.\n    \"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x | y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x ^ encryption_key[i % key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('latin1')"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "encrypted_data = bytes(x ^ encryption_key[i % key_length] for i, x in enumerate(data_bytes))",
+      "mutated_line": "encrypted_data = bytes((x | encryption_key[i % key_length] for (i, x) in enumerate(data_bytes)))",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\n    This function uses two symmetric keys to encrypt data in such a way that either key can be used for decryption.\n\n    Args:\n        key1 (str): The first encryption key.\n        key2 (str): The second encryption key.\n        data (str): The data to be encrypted.\n\n    Returns:\n        str: The encrypted data.\n    \"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x ^ y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x | encryption_key[i % key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('latin1')"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "encrypted_data = bytes(x ^ encryption_key[i % key_length] for i, x in enumerate(data_bytes))",
+      "mutated_line": "encrypted_data = bytes((x ^ encryption_key[i * key_length] for (i, x) in enumerate(data_bytes)))",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\n    This function uses two symmetric keys to encrypt data in such a way that either key can be used for decryption.\n\n    Args:\n        key1 (str): The first encryption key.\n        key2 (str): The second encryption key.\n        data (str): The data to be encrypted.\n\n    Returns:\n        str: The encrypted data.\n    \"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x ^ y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x ^ encryption_key[i * key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('latin1')"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "encrypted_data = bytes(x ^ encryption_key[i % key_length] for i, x in enumerate(data_bytes))",
+      "mutated_line": "encrypted_data = bytes((x ^ encryption_key[i + key_length] for (i, x) in enumerate(data_bytes)))",
+      "code": "def two_key_encryption(key1, key2, data):\n    \"\"\"\n    This function uses two symmetric keys to encrypt data in such a way that either key can be used for decryption.\n\n    Args:\n        key1 (str): The first encryption key.\n        key2 (str): The second encryption key.\n        data (str): The data to be encrypted.\n\n    Returns:\n        str: The encrypted data.\n    \"\"\"\n    key1_bytes = key1.encode()\n    key2_bytes = key2.encode()\n    data_bytes = data.encode()\n    encryption_key = bytes((x ^ y for (x, y) in zip(key1_bytes, key2_bytes)))\n    key_length = len(encryption_key)\n    encrypted_data = bytes((x ^ encryption_key[i + key_length] for (i, x) in enumerate(data_bytes)))\n    return encrypted_data.decode('latin1')"
+    }
+  ]
+}

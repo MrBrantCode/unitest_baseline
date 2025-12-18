@@ -1,0 +1,77 @@
+{
+  "task_id": "cf_27039",
+  "entry_point": "dispatch_url",
+  "mutant_count": 10,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if pattern == requested_url:",
+      "mutated_line": "if pattern != requested_url:",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern != requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "if len(pattern_parts) == len(requested_url_parts):",
+      "mutated_line": "if len(pattern_parts) != len(requested_url_parts):",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) != len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "pattern_parts = pattern.split('/')",
+      "mutated_line": "pattern_parts = pattern.split('')",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "requested_url_parts = requested_url.split('/')",
+      "mutated_line": "requested_url_parts = requested_url.split('')",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "match = True",
+      "mutated_line": "match = False",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = False\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "if pattern_parts[i] != requested_url_parts[i] and not pattern_parts[i].startswith('<') and not pattern_parts[i].endswith('>'):",
+      "mutated_line": "if pattern_parts[i] != requested_url_parts[i] or not pattern_parts[i].startswith('<') or (not pattern_parts[i].endswith('>')):",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] or not pattern_parts[i].startswith('<') or (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if pattern_parts[i] != requested_url_parts[i] and not pattern_parts[i].startswith('<') and not pattern_parts[i].endswith('>'):",
+      "mutated_line": "if pattern_parts[i] == requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] == requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "match = False",
+      "mutated_line": "match = True",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('>')):\n                        match = True\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "if pattern_parts[i] != requested_url_parts[i] and not pattern_parts[i].startswith('<') and not pattern_parts[i].endswith('>'):",
+      "mutated_line": "if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('')) and (not pattern_parts[i].endswith('>')):",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('')) and (not pattern_parts[i].endswith('>')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "if pattern_parts[i] != requested_url_parts[i] and not pattern_parts[i].startswith('<') and not pattern_parts[i].endswith('>'):",
+      "mutated_line": "if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('')):",
+      "code": "from typing import List, Tuple, Callable, Optional\n\ndef dispatch_url(url_patterns: List[Tuple[str, Callable]], requested_url: str) -> Optional[Callable]:\n    for (pattern, view_function) in url_patterns:\n        if pattern == requested_url:\n            return view_function\n        else:\n            pattern_parts = pattern.split('/')\n            requested_url_parts = requested_url.split('/')\n            if len(pattern_parts) == len(requested_url_parts):\n                match = True\n                for i in range(len(pattern_parts)):\n                    if pattern_parts[i] != requested_url_parts[i] and (not pattern_parts[i].startswith('<')) and (not pattern_parts[i].endswith('')):\n                        match = False\n                        break\n                if match:\n                    return view_function\n    return None"
+    }
+  ]
+}

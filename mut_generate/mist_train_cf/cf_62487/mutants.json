@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_62487",
+  "entry_point": "swap_tuple",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 1,
+      "original_line": "def swap_tuple(nested_tuple, target, first_occurrence=True):",
+      "mutated_line": "def swap_tuple(nested_tuple, target, first_occurrence=False):",
+      "code": "def swap_tuple(nested_tuple, target, first_occurrence=False):\n    swapped = []\n    for element in nested_tuple:\n        if isinstance(element, tuple):\n            new_element = swap_tuple(element, target, first_occurrence=first_occurrence)\n        elif element == target:\n            new_element = [target, target] if not first_occurrence else target\n            first_occurrence = False\n        else:\n            new_element = element\n        swapped.append(new_element)\n    return tuple(swapped)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "elif element == target:",
+      "mutated_line": "elif element != target:",
+      "code": "def swap_tuple(nested_tuple, target, first_occurrence=True):\n    swapped = []\n    for element in nested_tuple:\n        if isinstance(element, tuple):\n            new_element = swap_tuple(element, target, first_occurrence=first_occurrence)\n        elif element != target:\n            new_element = [target, target] if not first_occurrence else target\n            first_occurrence = False\n        else:\n            new_element = element\n        swapped.append(new_element)\n    return tuple(swapped)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "first_occurrence = False",
+      "mutated_line": "first_occurrence = True",
+      "code": "def swap_tuple(nested_tuple, target, first_occurrence=True):\n    swapped = []\n    for element in nested_tuple:\n        if isinstance(element, tuple):\n            new_element = swap_tuple(element, target, first_occurrence=first_occurrence)\n        elif element == target:\n            new_element = [target, target] if not first_occurrence else target\n            first_occurrence = True\n        else:\n            new_element = element\n        swapped.append(new_element)\n    return tuple(swapped)"
+    }
+  ]
+}

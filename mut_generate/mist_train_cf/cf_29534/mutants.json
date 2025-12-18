@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_29534",
+  "entry_point": "tcp_parser",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def tcp_parser(input_data):\n    \"\"\"\"\"\"\n    reassembled_data = {}\n    for line in input_data:\n        (stream_id, tcp_data) = line.split()\n        if stream_id not in reassembled_data:\n            reassembled_data[stream_id] = []\n        reassembled_data[stream_id].append(tcp_data)\n    final_data = {}\n    for (stream_id, data) in reassembled_data.items():\n        final_data[stream_id] = ''.join(data)\n    return final_data"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if stream_id not in reassembled_data:",
+      "mutated_line": "if stream_id in reassembled_data:",
+      "code": "def tcp_parser(input_data):\n    \"\"\"\n    Parse and reassemble TCP data from the output of a network traffic extraction tool.\n\n    Args:\n        input_data (list): A collection of lines containing TCP data.\n\n    Returns:\n        dict: A dictionary where keys are the stream IDs and values are the corresponding reassembled TCP data.\n    \"\"\"\n    reassembled_data = {}\n    for line in input_data:\n        (stream_id, tcp_data) = line.split()\n        if stream_id in reassembled_data:\n            reassembled_data[stream_id] = []\n        reassembled_data[stream_id].append(tcp_data)\n    final_data = {}\n    for (stream_id, data) in reassembled_data.items():\n        final_data[stream_id] = ''.join(data)\n    return final_data"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "final_data[stream_id] = ''.join(data)",
+      "mutated_line": "final_data[stream_id] = 'MUTATED'.join(data)",
+      "code": "def tcp_parser(input_data):\n    \"\"\"\n    Parse and reassemble TCP data from the output of a network traffic extraction tool.\n\n    Args:\n        input_data (list): A collection of lines containing TCP data.\n\n    Returns:\n        dict: A dictionary where keys are the stream IDs and values are the corresponding reassembled TCP data.\n    \"\"\"\n    reassembled_data = {}\n    for line in input_data:\n        (stream_id, tcp_data) = line.split()\n        if stream_id not in reassembled_data:\n            reassembled_data[stream_id] = []\n        reassembled_data[stream_id].append(tcp_data)\n    final_data = {}\n    for (stream_id, data) in reassembled_data.items():\n        final_data[stream_id] = 'MUTATED'.join(data)\n    return final_data"
+    }
+  ]
+}

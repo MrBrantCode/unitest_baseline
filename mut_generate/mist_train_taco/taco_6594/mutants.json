@@ -1,0 +1,28 @@
+{
+  "task_id": "taco_6594",
+  "entry_point": "find_gatecrashers",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "crashers_set = {guest for inviter, invited_list in invitations for guest in [inviter] + invited_list}",
+      "mutated_line": "crashers_set = {guest for (inviter, invited_list) in invitations for guest in [inviter] - invited_list}",
+      "code": "def find_gatecrashers(party_members, invitations):\n    crashers_set = {guest for (inviter, invited_list) in invitations for guest in [inviter] - invited_list}\n    gatecrashers = [member for member in party_members if member not in crashers_set]\n    return sorted(gatecrashers)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 3,
+      "original_line": "crashers_set = {guest for inviter, invited_list in invitations for guest in [inviter] + invited_list}",
+      "mutated_line": "crashers_set = {guest for (inviter, invited_list) in invitations for guest in [inviter] * invited_list}",
+      "code": "def find_gatecrashers(party_members, invitations):\n    crashers_set = {guest for (inviter, invited_list) in invitations for guest in [inviter] * invited_list}\n    gatecrashers = [member for member in party_members if member not in crashers_set]\n    return sorted(gatecrashers)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "gatecrashers = [member for member in party_members if member not in crashers_set]",
+      "mutated_line": "gatecrashers = [member for member in party_members if member in crashers_set]",
+      "code": "def find_gatecrashers(party_members, invitations):\n    crashers_set = {guest for (inviter, invited_list) in invitations for guest in [inviter] + invited_list}\n    gatecrashers = [member for member in party_members if member in crashers_set]\n    return sorted(gatecrashers)"
+    }
+  ]
+}

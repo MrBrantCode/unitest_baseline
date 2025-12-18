@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_85663",
+  "entry_point": "extract_html_mime_type",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "from email.message import Message\n\ndef extract_html_mime_type(message: Message) -> str:\n    \"\"\"\"\"\"\n    if message.get_content_type() == 'text/html':\n        return message.get_payload()\n    elif message.get_content_type().startswith('multipart'):\n        for part in message.get_payload():\n            content = extract_html_mime_type(part)\n            if content is not None:\n                return content\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if message.get_content_type() == 'text/html':",
+      "mutated_line": "if message.get_content_type() != 'text/html':",
+      "code": "from email.message import Message\n\ndef extract_html_mime_type(message: Message) -> str:\n    \"\"\"\n    Recursively traverses a given email structure to find and return the content of the first part with the MIME type 'text/html'.\n\n    Args:\n    message (Message): The email message structure.\n\n    Returns:\n    str: The content of the first part with the MIME type 'text/html' or None if not found.\n    \"\"\"\n    if message.get_content_type() != 'text/html':\n        return message.get_payload()\n    elif message.get_content_type().startswith('multipart'):\n        for part in message.get_payload():\n            content = extract_html_mime_type(part)\n            if content is not None:\n                return content\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "if message.get_content_type() == 'text/html':",
+      "mutated_line": "if message.get_content_type() == '':",
+      "code": "from email.message import Message\n\ndef extract_html_mime_type(message: Message) -> str:\n    \"\"\"\n    Recursively traverses a given email structure to find and return the content of the first part with the MIME type 'text/html'.\n\n    Args:\n    message (Message): The email message structure.\n\n    Returns:\n    str: The content of the first part with the MIME type 'text/html' or None if not found.\n    \"\"\"\n    if message.get_content_type() == '':\n        return message.get_payload()\n    elif message.get_content_type().startswith('multipart'):\n        for part in message.get_payload():\n            content = extract_html_mime_type(part)\n            if content is not None:\n                return content\n    return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "elif message.get_content_type().startswith('multipart'):",
+      "mutated_line": "elif message.get_content_type().startswith(''):",
+      "code": "from email.message import Message\n\ndef extract_html_mime_type(message: Message) -> str:\n    \"\"\"\n    Recursively traverses a given email structure to find and return the content of the first part with the MIME type 'text/html'.\n\n    Args:\n    message (Message): The email message structure.\n\n    Returns:\n    str: The content of the first part with the MIME type 'text/html' or None if not found.\n    \"\"\"\n    if message.get_content_type() == 'text/html':\n        return message.get_payload()\n    elif message.get_content_type().startswith(''):\n        for part in message.get_payload():\n            content = extract_html_mime_type(part)\n            if content is not None:\n                return content\n    return None"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if content is not None:",
+      "mutated_line": "if content is None:",
+      "code": "from email.message import Message\n\ndef extract_html_mime_type(message: Message) -> str:\n    \"\"\"\n    Recursively traverses a given email structure to find and return the content of the first part with the MIME type 'text/html'.\n\n    Args:\n    message (Message): The email message structure.\n\n    Returns:\n    str: The content of the first part with the MIME type 'text/html' or None if not found.\n    \"\"\"\n    if message.get_content_type() == 'text/html':\n        return message.get_payload()\n    elif message.get_content_type().startswith('multipart'):\n        for part in message.get_payload():\n            content = extract_html_mime_type(part)\n            if content is None:\n                return content\n    return None"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "task_id": "taco_7085",
+  "entry_point": "merge_accounts",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if x != self.parents[x]:",
+      "mutated_line": "if x == self.parents[x]:",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x == self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]",
+      "mutated_line": "return [[accounts[i][0]] - sorted(emails) for (i, emails) in ans.items()]",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][0]] - sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]",
+      "mutated_line": "return [[accounts[i][0]] * sorted(emails) for (i, emails) in ans.items()]",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][0]] * sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if email in ownership:",
+      "mutated_line": "if email not in ownership:",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email not in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]",
+      "mutated_line": "return [[accounts[i][1]] + sorted(emails) for (i, emails) in ans.items()]",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][1]] + sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]",
+      "mutated_line": "return [[accounts[i][-1]] + sorted(emails) for (i, emails) in ans.items()]",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][-1]] + sorted(emails) for (i, emails) in ans.items()]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return [[accounts[i][0]] + sorted(emails) for (i, emails) in ans.items()]",
+      "mutated_line": "return [[accounts[i][1]] + sorted(emails) for (i, emails) in ans.items()]",
+      "code": "import collections\n\nclass UF:\n\n    def __init__(self, N):\n        self.parents = list(range(N))\n\n    def union(self, child, parent):\n        self.parents[self.find(child)] = self.find(parent)\n\n    def find(self, x):\n        if x != self.parents[x]:\n            self.parents[x] = self.find(self.parents[x])\n        return self.parents[x]\n\ndef merge_accounts(accounts):\n    uf = UF(len(accounts))\n    ownership = {}\n    for (i, (_, *emails)) in enumerate(accounts):\n        for email in emails:\n            if email in ownership:\n                uf.union(i, ownership[email])\n            ownership[email] = i\n    ans = collections.defaultdict(list)\n    for (email, owner) in ownership.items():\n        ans[uf.find(owner)].append(email)\n    return [[accounts[i][1]] + sorted(emails) for (i, emails) in ans.items()]"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+"""
+QUESTION:
+Abhinav and Manav both being one of the best coders of SVNIT went onto participate in ACM ICPC Regional Contest. Apparently Manav’s team the 3Horsemen stood ahead of Abhinav’s team akatsuki11 in the contest though both solved the same number of questions .Manav is Abhinav’s greatest rival and Abhinav being adamant about him being The Best gives Manav a challenge described below:
+
+For each positive number N consider the number mirror(N) which is obtained from N by replacing every digit d in the decimal notation(base 10) of N with the digit (9-d). We can now say that mirror(N) is the mirror image of N. For example, reflection of 325 equals 674. Note that leading zeros (if any) should be omitted. So the mirror image of 9 equals 0, so mirror(91) equals 8.
+Let us define weight as the product of the number and its mirror image i.e. N * mirror(N). Thus, the weight of the number 20 is equal to 20 ·79 = 1580.
+
+Manav is very weak in mathematics and also he doesn’t want to lose this challenge. So now it’s your job to save Manav from Abhinav’s arrogance. Your task is to find the maximum weight of the numbers in the given range [L,R] (including boundaries).
+
+Input:
+
+First line of input contains number of test cases T. Next T lines contain two positive numbers L and R.
+
+Output:
+
+Find the maximum weight of the numbers in the given range [L, R] for each test case.
+
+Constraints:
+
+1 ≤ T ≤ 24
+
+1 ≤ L ≤ R ≤ 10^9
+
+SAMPLE INPUT
+3
+3 7
+1 1
+8 10
+
+SAMPLE OUTPUT
+20
+8
+890
+
+Explanation
+
+For test case 3 
+
+8 * mirror(8) = 8 * 1 = 1
+
+9 * mirror(9) = 9 * 0 = 0
+
+10 * mirror(10) = 10 * 89 = 890
+
+So max(1,0,890) = 890
+"""
+
+def find_max_weight_in_range(L, R):
+    def mirror_image(n):
+        return int(''.join(str(9 - int(d)) for d in str(n)))
+    
+    max_weight = 0
+    for num in range(L, R + 1):
+        mirror = mirror_image(num)
+        weight = num * mirror
+        if weight > max_weight:
+            max_weight = weight
+    
+    return max_weight

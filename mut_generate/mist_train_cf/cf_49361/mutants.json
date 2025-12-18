@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_49361",
+  "entry_point": "dfs",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "if node.id == goal:",
+      "mutated_line": "if node.id != goal:",
+      "code": "class Node:\n\n    def __init__(self, id, data):\n        self.id = id\n        self.data = data\n        self.children = []\n        self.parent = None\n\nclass Tree:\n\n    def __init__(self):\n        self.nodes = {}\n        self.root = None\n\n    def add_node(self, id, data, parent_id=None):\n        node = Node(id, data)\n        if self.root is None:\n            self.root = node\n        else:\n            parent = self.nodes[parent_id]\n            parent.children.append(node)\n            node.parent = parent\n        self.nodes[id] = node\n\ndef dfs(tree, node, goal, path):\n    path.append(node.id)\n    if node.id != goal:\n        return path\n    for child in node.children:\n        result = dfs(tree, child, goal, list(path))\n        if result is not None:\n            return result\n    return None\n\ndef find_shortest_path(tree, goal):\n    return dfs(tree, tree.root, goal, [])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if self.root is None:",
+      "mutated_line": "if self.root is not None:",
+      "code": "class Node:\n\n    def __init__(self, id, data):\n        self.id = id\n        self.data = data\n        self.children = []\n        self.parent = None\n\nclass Tree:\n\n    def __init__(self):\n        self.nodes = {}\n        self.root = None\n\n    def add_node(self, id, data, parent_id=None):\n        node = Node(id, data)\n        if self.root is not None:\n            self.root = node\n        else:\n            parent = self.nodes[parent_id]\n            parent.children.append(node)\n            node.parent = parent\n        self.nodes[id] = node\n\ndef dfs(tree, node, goal, path):\n    path.append(node.id)\n    if node.id == goal:\n        return path\n    for child in node.children:\n        result = dfs(tree, child, goal, list(path))\n        if result is not None:\n            return result\n    return None\n\ndef find_shortest_path(tree, goal):\n    return dfs(tree, tree.root, goal, [])"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if result is not None:",
+      "mutated_line": "if result is None:",
+      "code": "class Node:\n\n    def __init__(self, id, data):\n        self.id = id\n        self.data = data\n        self.children = []\n        self.parent = None\n\nclass Tree:\n\n    def __init__(self):\n        self.nodes = {}\n        self.root = None\n\n    def add_node(self, id, data, parent_id=None):\n        node = Node(id, data)\n        if self.root is None:\n            self.root = node\n        else:\n            parent = self.nodes[parent_id]\n            parent.children.append(node)\n            node.parent = parent\n        self.nodes[id] = node\n\ndef dfs(tree, node, goal, path):\n    path.append(node.id)\n    if node.id == goal:\n        return path\n    for child in node.children:\n        result = dfs(tree, child, goal, list(path))\n        if result is None:\n            return result\n    return None\n\ndef find_shortest_path(tree, goal):\n    return dfs(tree, tree.root, goal, [])"
+    }
+  ]
+}

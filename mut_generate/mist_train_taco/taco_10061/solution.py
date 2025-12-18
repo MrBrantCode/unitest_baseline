@@ -1,0 +1,62 @@
+"""
+QUESTION:
+Your friend Mishka and you attend a calculus lecture. Lecture lasts n minutes. Lecturer tells a_{i} theorems during the i-th minute.
+
+Mishka is really interested in calculus, though it is so hard to stay awake for all the time of lecture. You are given an array t of Mishka's behavior. If Mishka is asleep during the i-th minute of the lecture then t_{i} will be equal to 0, otherwise it will be equal to 1. When Mishka is awake he writes down all the theorems he is being told — a_{i} during the i-th minute. Otherwise he writes nothing.
+
+You know some secret technique to keep Mishka awake for k minutes straight. However you can use it only once. You can start using it at the beginning of any minute between 1 and n - k + 1. If you use it on some minute i then Mishka will be awake during minutes j such that $j \in [ i, i + k - 1 ]$ and will write down all the theorems lecturer tells.
+
+You task is to calculate the maximum number of theorems Mishka will be able to write down if you use your technique only once to wake him up.
+
+
+-----Input-----
+
+The first line of the input contains two integer numbers n and k (1 ≤ k ≤ n ≤ 10^5) — the duration of the lecture in minutes and the number of minutes you can keep Mishka awake.
+
+The second line of the input contains n integer numbers a_1, a_2, ... a_{n} (1 ≤ a_{i} ≤ 10^4) — the number of theorems lecturer tells during the i-th minute.
+
+The third line of the input contains n integer numbers t_1, t_2, ... t_{n} (0 ≤ t_{i} ≤ 1) — type of Mishka's behavior at the i-th minute of the lecture.
+
+
+-----Output-----
+
+Print only one integer — the maximum number of theorems Mishka will be able to write down if you use your technique only once to wake him up.
+
+
+-----Example-----
+Input
+6 3
+1 3 5 2 5 4
+1 1 0 1 0 0
+
+Output
+16
+
+
+
+-----Note-----
+
+In the sample case the better way is to use the secret technique at the beginning of the third minute. Then the number of theorems Mishka will be able to write down will be equal to 16.
+"""
+
+def calculate_max_theorems(n, k, theorems, behavior):
+    # Calculate the initial sum of theorems Mishka writes down when awake
+    initial_theorems = 0
+    for i in range(n):
+        if behavior[i] == 1:
+            initial_theorems += theorems[i]
+            theorems[i] = 0  # Set to 0 to avoid double counting
+    
+    # Calculate the initial sum of theorems in the first k minutes
+    current_sum = sum(theorems[:k])
+    max_sum = current_sum
+    
+    # Sliding window to find the maximum sum of theorems in any k-minute window
+    for i in range(1, n - k + 1):
+        current_sum = current_sum - theorems[i - 1] + theorems[i + k - 1]
+        if current_sum > max_sum:
+            max_sum = current_sum
+    
+    # The maximum number of theorems Mishka can write down
+    max_theorems = initial_theorems + max_sum
+    return max_theorems

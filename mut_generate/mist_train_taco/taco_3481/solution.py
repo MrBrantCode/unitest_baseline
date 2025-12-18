@@ -1,0 +1,100 @@
+"""
+QUESTION:
+JJ has a binary string S of length N. JJ can perform the following operation on S:
+Select an i such that 1 ≤ i ≤ N, and flip S_{i} (i.e. change 0 to 1 and 1 to 0)
+
+JJ wants to minimize the number of inversions in S by performing the above operation at most K times. Can you help JJ do so?
+
+Recall that a pair of indices (i, j) in S is called an inversion if i < j and S_{i} > S_{j}.
+
+------ Input Format ------ 
+
+- The first line contains a single integer T - the number of test cases. Then the test cases follow.
+- The first line of each test case contains two integers N and K - the length of the binary string S and the maximum number of times JJ can perform the given operation.
+- The second line of each test case contains a binary string S of length N containing 0s and 1s only.
+
+------ Output Format ------ 
+
+For each test case, output the minimum number of inversions possible after performing the given operation at most K times.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$1 ≤ N ≤ 10^{5}$
+$0 ≤ K ≤ N$
+- Sum of $N$ over all test cases does not exceed $2 \cdot 10^{5}$
+
+----- Sample Input 1 ------ 
+3
+8 3
+00010111
+5 1
+10100
+6 2
+111000
+
+----- Sample Output 1 ------ 
+0
+2
+3
+
+----- explanation 1 ------ 
+Test case 1: We are allowed to perform at most $3$ operations. We can perform the following operation on $S$: $0001\underline{0}111 \rightarrow 00011111$ which has $0$ inversions. Therefore $0$ is the answer.
+
+Test case 2: We can perform the following operation on $S$: $\underline{1}0100 \rightarrow 00100$ which has $2$ inversions. It can be proven that this is the minimum number of inversions possible.
+
+Test case 3: We can perform the following operations on $S$: $1110\underline{0}0 \rightarrow 11101\underline{0} \rightarrow 111011$ which has $3$ inversions. It can be proven that this is the minimum number of inversions possible.
+"""
+
+def minimize_inversions(N, K, S):
+    zs = [0]
+    os = [0]
+    for c in S:
+        if c == '1':
+            zs.append(zs[-1])
+            os.append(os[-1] + 1)
+        else:
+            zs.append(zs[-1] + 1)
+            os.append(os[-1])
+    
+    tzs = zs[-1]
+    tos = os[-1]
+    
+    zr = []
+    ol = []
+    
+    for i in range(N):
+        if S[i] == '1':
+            v = tzs - zs[i + 1]
+            if v == 0:
+                break
+            else:
+                zr.append(v)
+    
+    for i in range(N - 1, -1, -1):
+        if S[i] == '0':
+            v = os[i + 1]
+            if v == 0:
+                break
+            else:
+                ol.append(v)
+    
+    if K >= len(zr) or K >= len(ol):
+        return 0
+    
+    a1 = [0]
+    for kk in zr:
+        a1.append(a1[-1] + kk)
+    
+    a2 = [0]
+    for kk in ol:
+        a2.append(a2[-1] + kk)
+    
+    mv = float('inf')
+    diff = sum(zr)
+    
+    for i in range(K + 1):
+        j = K - i
+        mv = min(mv, diff - a1[i] - a2[j] + i * j)
+    
+    return max(0, mv)

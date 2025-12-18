@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_44014",
+  "entry_point": "analyze_subgroup_treatment_effects",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def analyze_subgroup_treatment_effects(matched_data, covariate, treatment, outcome):\n    \"\"\"\"\"\"\n    subgroup_effects = {}\n    for subgroup in matched_data[covariate].unique():\n        subgroup_data = matched_data[matched_data[covariate] == subgroup]\n        treatment_effect = subgroup_data[treatment].corr(subgroup_data[outcome])\n        subgroup_effects[subgroup] = treatment_effect\n    return subgroup_effects"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "subgroup_data = matched_data[matched_data[covariate] == subgroup]",
+      "mutated_line": "subgroup_data = matched_data[matched_data[covariate] != subgroup]",
+      "code": "def analyze_subgroup_treatment_effects(matched_data, covariate, treatment, outcome):\n    \"\"\"\n    This function determines if treatment effects differ across subsets of the original matched data,\n    considering a specified covariate. It should be used cautiously to avoid the 'Table 2 fallacy'\n    and considers statistical power and multiple comparisons.\n\n    Parameters:\n    matched_data (DataFrame): The original matched data\n    covariate (str): The covariate to consider (e.g., high vs. low risk scores, 0 vs. 1+ ER visits in the baseline time period)\n    treatment (str): The treatment column\n    outcome (str): The outcome column\n\n    Returns:\n    A dictionary with treatment effects for each subgroup\n    \"\"\"\n    subgroup_effects = {}\n    for subgroup in matched_data[covariate].unique():\n        subgroup_data = matched_data[matched_data[covariate] != subgroup]\n        treatment_effect = subgroup_data[treatment].corr(subgroup_data[outcome])\n        subgroup_effects[subgroup] = treatment_effect\n    return subgroup_effects"
+    }
+  ]
+}

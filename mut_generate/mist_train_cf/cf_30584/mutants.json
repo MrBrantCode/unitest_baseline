@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_30584",
+  "entry_point": "validate_redirect_url",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "return bool(parsed_url.netloc) and parsed_url.netloc == host",
+      "mutated_line": "return bool(parsed_url.netloc) or parsed_url.netloc == host",
+      "code": "from urllib.parse import urlparse\n\ndef validate_redirect_url(redirect_to, login_redirect_url, current_host):\n\n    def is_safe_url(url, host):\n        parsed_url = urlparse(url)\n        return bool(parsed_url.netloc) or parsed_url.netloc == host\n\n    def resolve_url(url):\n        if url.startswith('/'):\n            return url\n        else:\n            return login_redirect_url\n    if not is_safe_url(redirect_to, current_host):\n        return resolve_url(login_redirect_url)\n    else:\n        return redirect_to"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return bool(parsed_url.netloc) and parsed_url.netloc == host",
+      "mutated_line": "return bool(parsed_url.netloc) and parsed_url.netloc != host",
+      "code": "from urllib.parse import urlparse\n\ndef validate_redirect_url(redirect_to, login_redirect_url, current_host):\n\n    def is_safe_url(url, host):\n        parsed_url = urlparse(url)\n        return bool(parsed_url.netloc) and parsed_url.netloc != host\n\n    def resolve_url(url):\n        if url.startswith('/'):\n            return url\n        else:\n            return login_redirect_url\n    if not is_safe_url(redirect_to, current_host):\n        return resolve_url(login_redirect_url)\n    else:\n        return redirect_to"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "if url.startswith('/'):",
+      "mutated_line": "if url.startswith(''):",
+      "code": "from urllib.parse import urlparse\n\ndef validate_redirect_url(redirect_to, login_redirect_url, current_host):\n\n    def is_safe_url(url, host):\n        parsed_url = urlparse(url)\n        return bool(parsed_url.netloc) and parsed_url.netloc == host\n\n    def resolve_url(url):\n        if url.startswith(''):\n            return url\n        else:\n            return login_redirect_url\n    if not is_safe_url(redirect_to, current_host):\n        return resolve_url(login_redirect_url)\n    else:\n        return redirect_to"
+    }
+  ]
+}

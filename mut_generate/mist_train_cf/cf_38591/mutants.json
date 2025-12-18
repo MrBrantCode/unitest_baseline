@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_38591",
+  "entry_point": "entrance",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if package in visited:",
+      "mutated_line": "if package not in visited:",
+      "code": "def entrance(package_name, packages):\n    visited = set()\n\n    def dfs(package):\n        if package not in visited:\n            return\n        visited.add(package)\n        for dependency in packages.get(package, {}).get('dependencies', []):\n            dfs(dependency)\n    dfs(package_name)\n    return list(visited - {package_name})"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return list(visited - {package_name})",
+      "mutated_line": "return list(visited + {package_name})",
+      "code": "def entrance(package_name, packages):\n    visited = set()\n\n    def dfs(package):\n        if package in visited:\n            return\n        visited.add(package)\n        for dependency in packages.get(package, {}).get('dependencies', []):\n            dfs(dependency)\n    dfs(package_name)\n    return list(visited + {package_name})"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "return list(visited - {package_name})",
+      "mutated_line": "return list(visited * {package_name})",
+      "code": "def entrance(package_name, packages):\n    visited = set()\n\n    def dfs(package):\n        if package in visited:\n            return\n        visited.add(package)\n        for dependency in packages.get(package, {}).get('dependencies', []):\n            dfs(dependency)\n    dfs(package_name)\n    return list(visited * {package_name})"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "for dependency in packages.get(package, {}).get('dependencies', []):",
+      "mutated_line": "for dependency in packages.get(package, {}).get('', []):",
+      "code": "def entrance(package_name, packages):\n    visited = set()\n\n    def dfs(package):\n        if package in visited:\n            return\n        visited.add(package)\n        for dependency in packages.get(package, {}).get('', []):\n            dfs(dependency)\n    dfs(package_name)\n    return list(visited - {package_name})"
+    }
+  ]
+}

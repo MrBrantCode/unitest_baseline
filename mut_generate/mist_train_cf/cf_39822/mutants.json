@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_39822",
+  "entry_point": "filter_ignored_fields",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if record_type in IGNORE:",
+      "mutated_line": "if record_type not in IGNORE:",
+      "code": "def filter_ignored_fields(IGNORE: dict, data_records: list) -> list:\n    filtered_records = []\n    for record in data_records:\n        record_type = record['type']\n        if record_type not in IGNORE:\n            ignored_fields = IGNORE[record_type]\n            filtered_record = {key: value for (key, value) in record.items() if key not in ignored_fields}\n            filtered_records.append(filtered_record)\n        else:\n            filtered_records.append(record)\n    return filtered_records"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "record_type = record['type']",
+      "mutated_line": "record_type = record['']",
+      "code": "def filter_ignored_fields(IGNORE: dict, data_records: list) -> list:\n    filtered_records = []\n    for record in data_records:\n        record_type = record['']\n        if record_type in IGNORE:\n            ignored_fields = IGNORE[record_type]\n            filtered_record = {key: value for (key, value) in record.items() if key not in ignored_fields}\n            filtered_records.append(filtered_record)\n        else:\n            filtered_records.append(record)\n    return filtered_records"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "filtered_record = {key: value for key, value in record.items() if key not in ignored_fields}",
+      "mutated_line": "filtered_record = {key: value for (key, value) in record.items() if key in ignored_fields}",
+      "code": "def filter_ignored_fields(IGNORE: dict, data_records: list) -> list:\n    filtered_records = []\n    for record in data_records:\n        record_type = record['type']\n        if record_type in IGNORE:\n            ignored_fields = IGNORE[record_type]\n            filtered_record = {key: value for (key, value) in record.items() if key in ignored_fields}\n            filtered_records.append(filtered_record)\n        else:\n            filtered_records.append(record)\n    return filtered_records"
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "task_id": "cf_62689",
+  "entry_point": "parse_command",
+  "mutant_count": 30,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), '': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "print('I do not understand that command.')",
+      "mutated_line": "print('')",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('')\n    return lamp_on"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 11,
+      "original_line": "if cmd == 'use' and 'lamp' in command:",
+      "mutated_line": "if cmd == 'use' or 'lamp' in command:",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' or 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' not in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if cmd == 'use' and 'lamp' in command:",
+      "mutated_line": "if cmd != 'use' and 'lamp' in command:",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd != 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if cmd == 'use' and 'lamp' in command:",
+      "mutated_line": "if cmd == 'use' and 'lamp' not in command:",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' not in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return False\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on or 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print('' if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if '' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if cmd == 'use' and 'lamp' in command:",
+      "mutated_line": "if cmd == '' and 'lamp' in command:",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == '' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if cmd == 'use' and 'lamp' in command:",
+      "mutated_line": "if cmd == 'use' and '' in command:",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and '' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' not in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' not in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else '' if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on or 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and '' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if '' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' not in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else '' if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else ''), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' not in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' not in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else '' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else '') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'),",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if '' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and '' in args else 'You turned the lamp on.' if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "'use': lambda args: print(\"The lamp is already on.\" if lamp_on and 'lamp' in args else \"You turned the lamp on.\" if 'lamp' in args else 'I do not understand that command.') if 'use' in command else None",
+      "mutated_line": "for (cmd, action) in commands.items():",
+      "code": "import re\n\ndef parse_command(command, lamp_on):\n    commands = {'look': lambda args: print(\"There's a lamp here. It's on.\" if lamp_on and 'lamp' in args else \"There's a lamp here. It's off.\" if 'lamp' in args else \"You're in a room. There's a table with a lamp on it.\" if 'room' in args else 'I do not understand that command.'), 'use': lambda args: print('The lamp is already on.' if lamp_on and 'lamp' in args else 'You turned the lamp on.' if '' in args else 'I do not understand that command.') if 'use' in command else None}\n    for (cmd, action) in commands.items():\n        if re.match(cmd, command):\n            if cmd == 'use' and 'lamp' in command:\n                return True\n            action(command.split())\n            return lamp_on\n    print('I do not understand that command.')\n    return lamp_on"
+    }
+  ]
+}

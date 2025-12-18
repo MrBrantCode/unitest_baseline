@@ -1,0 +1,76 @@
+"""
+QUESTION:
+A *segment* is a range of non-negative integers L, L + 1, L + 2, \ldots, R, denoted [L, R] where L ≤ R.
+
+Chef has a set S consisting of all segments [L, R] such that either L + R = X or L\cdot R = Y.
+
+For example, if X = 5 and Y = 6, then Chef's set is S = \{[0, 5], [1, 4], [1, 6], [2, 3]\}.
+
+Given the integers X and Y, can you help Chef find two non-intersecting segments from his set S? If it is not possible to find two such non-intersecting segments, print -1. If there are multiple possible answers, you may output any of them.
+
+Note: Two segments are said to be non-intersecting if they have no number in common. For example, 
+[1, 4] and [10, 42] are non-intersecting
+[1, 4] and [3, 10] are intersecting since they have 3 and 4 in common.
+[1, 4] and [4, 6] are intersecting since they have 4 in common.
+
+------ Input Format ------ 
+
+- The first line of input will contain a single integer T, denoting the number of test cases.
+- Each test case consists of a single line containing two space separated integers X and Y.
+
+------ Output Format ------ 
+
+- If there are non-intersecting segments, then output two lines:
+- In the first line, output two space-separated integers L_{1}, R_{1} denoting the first segment.
+- In the second line, output two space-separated integers L_{2}, R_{2} denoting the second segment. 
+- If there are no such segments, print -1 on a single line. 
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10$
+$1 ≤ X, Y ≤ 10^{12}$
+
+----- Sample Input 1 ------ 
+3
+4 24
+1 1
+3 30
+
+----- Sample Output 1 ------ 
+1 3
+4 6
+-1
+5 6
+0 3
+
+----- explanation 1 ------ 
+Test case $1$: $1+3 = 4$ and $4 \cdot 6 = 24$, so $[1, 3]$ and $[4, 6]$ are both valid segments. Clearly, they also don't intersect.
+
+Test case $2$: When $X = Y = 1$, we have $S = \{[0, 1], [1, 1]\}$. The only two segments intersect with each other, so there is no answer.
+"""
+
+def find_non_intersecting_segments(X, Y):
+    for i in range(1, int(Y ** (1 / 2)) + 1):
+        if Y % i == 0:
+            z = i
+    c = Y // z
+    v = min(c, z)
+    f = max(c, z)
+    
+    if X < v:
+        return ((0, X), (min(c, z), max(c, z)))
+    elif X > f:
+        b = X - f - 1
+        m = X - v + 1
+        if b > f:
+            return ((min(b, abs(X - b)), max(b, abs(X - b))), (min(c, z), max(c, z)))
+        elif m < v:
+            return ((min(m, abs(X - m)), max(m, abs(X - m))), (min(c, z), max(c, z)))
+        else:
+            return -1
+    else:
+        b = X - v + 1
+        if b < v:
+            return ((min(b, abs(X - b)), max(b, abs(X - b))), (min(c, z), max(c, z)))
+        else:
+            return -1

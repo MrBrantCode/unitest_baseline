@@ -1,0 +1,88 @@
+"""
+QUESTION:
+Naman has two binary strings $s$ and $t$ of length $n$ (a binary string is a string which only consists of the characters "0" and "1"). He wants to convert $s$ into $t$ using the following operation as few times as possible.
+
+In one operation, he can choose any subsequence of $s$ and rotate it clockwise once.
+
+For example, if $s = 1\textbf{1}101\textbf{00}$, he can choose a subsequence corresponding to indices ($1$-based) $\{2, 6, 7 \}$ and rotate them clockwise. The resulting string would then be $s = 1\textbf{0}101\textbf{10}$.
+
+A string $a$ is said to be a subsequence of string $b$ if $a$ can be obtained from $b$ by deleting some characters without changing the ordering of the remaining characters.
+
+To perform a clockwise rotation on a sequence $c$ of size $k$ is to perform an operation which sets $c_1:=c_k, c_2:=c_1, c_3:=c_2, \ldots, c_k:=c_{k-1}$ simultaneously.
+
+Determine the minimum number of operations Naman has to perform to convert $s$ into $t$ or say that it is impossible. 
+
+
+-----Input-----
+
+The first line contains a single integer $n$ $(1 \le n \le 10^6)$ — the length of the strings.
+
+The second line contains the binary string $s$ of length $n$.
+
+The third line contains the binary string $t$ of length $n$.
+
+
+-----Output-----
+
+If it is impossible to convert $s$ to $t$ after any number of operations, print $-1$.
+
+Otherwise, print the minimum number of operations required.
+
+
+-----Examples-----
+Input
+6
+010000
+000001
+
+Output
+1
+Input
+10
+1111100000
+0000011111
+
+Output
+5
+Input
+8
+10101010
+01010101
+
+Output
+1
+Input
+10
+1111100000
+1111100001
+
+Output
+-1
+
+
+-----Note-----
+
+In the first test, Naman can choose the subsequence corresponding to indices $\{2, 6\}$ and rotate it once to convert $s$ into $t$.
+
+In the second test, he can rotate the subsequence corresponding to all indices $5$ times. It can be proved, that it is the minimum required number of operations.
+
+In the last test, it is impossible to convert $s$ into $t$.
+"""
+
+def min_operations_to_convert_binary_strings(n, s, t):
+    if s.count('1') != t.count('1'):
+        return -1
+    
+    m1 = 0
+    m2 = 0
+    balance = 0
+    
+    for i in range(n):
+        if s[i] == '1':
+            balance += 1
+        if t[i] == '1':
+            balance -= 1
+        m1 = max(m1, balance)
+        m2 = min(m2, balance)
+    
+    return m1 - m2

@@ -1,0 +1,41 @@
+"""
+QUESTION:
+Mathematician Shikhar has invented  a new type of fibonacci series in which 
+
+fib(1)=a
+
+fib(2)=b
+
+fib(n)=(fib(n-1)+fib(n-2))%1000000007  for all n>2
+
+and now help him find the nth term of this series.
+
+Input contains 3 space separated integers a,b and n.
+
+Input
+2 4 35
+
+NOTE You do not need to create a program for this problem you have to write your answers of small input and large input in given code snippet.
+To see how to submit solution please check this link
+
+SAMPLE INPUT
+2 3 3
+
+SAMPLE OUTPUT
+5
+"""
+
+def nth_fibonacci_term(a: int, b: int, n: int) -> int:
+    MOD = 1000000007
+    
+    if n == 1:
+        return a
+    elif n == 2:
+        return b
+    
+    for _ in range(n - 2):
+        t = a
+        a = b
+        b = (a + t) % MOD
+    
+    return b

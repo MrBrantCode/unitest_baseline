@@ -1,0 +1,238 @@
+{
+  "task_id": "cf_36672",
+  "entry_point": "calculate_moving_average",
+  "mutant_count": 33,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def calculate_moving_average(data, window_size, skipna=False, iterate=True):",
+      "mutated_line": "def calculate_moving_average(data, window_size, skipna=True, iterate=True):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=True, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def calculate_moving_average(data, window_size, skipna=False, iterate=True):",
+      "mutated_line": "def calculate_moving_average(data, window_size, skipna=False, iterate=False):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=False):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "cumsum = [0] + list(itertools.accumulate(data))",
+      "mutated_line": "cumsum = [0] - list(itertools.accumulate(data))",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] - list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "cumsum = [0] + list(itertools.accumulate(data))",
+      "mutated_line": "cumsum = [0] * list(itertools.accumulate(data))",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] * list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) - window_size - 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size - 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range((len(data) - window_size) * 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range((len(data) - window_size) * 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) - 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) - 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) * 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) * 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "subset_sum = cumsum[i] - cumsum[i - window_size]",
+      "mutated_line": "subset_sum = cumsum[i] + cumsum[i - window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] + cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "subset_sum = cumsum[i] - cumsum[i - window_size]",
+      "mutated_line": "subset_sum = cumsum[i] * cumsum[i - window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] * cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "average = subset_sum / window_size",
+      "mutated_line": "average = subset_sum * window_size",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum * window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "average = subset_sum / window_size",
+      "mutated_line": "average = subset_sum // window_size",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum // window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) + window_size + 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) + window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) * window_size + 1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) * window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) - window_size + 2):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 2):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) - window_size + 0):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 0):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) - window_size + 0):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 0):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "for i in range(len(data) - window_size + 1):",
+      "mutated_line": "for i in range(len(data) - window_size + -1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + -1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "average = sum(subset) / len(subset) if subset else None",
+      "mutated_line": "average = sum(subset) * len(subset) if subset else None",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) * len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "average = sum(subset) / len(subset) if subset else None",
+      "mutated_line": "average = sum(subset) // len(subset) if subset else None",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) // len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "cumsum = [0] + list(itertools.accumulate(data))",
+      "mutated_line": "cumsum = [1] + list(itertools.accumulate(data))",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [1] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "cumsum = [0] + list(itertools.accumulate(data))",
+      "mutated_line": "cumsum = [-1] + list(itertools.accumulate(data))",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [-1] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "cumsum = [0] + list(itertools.accumulate(data))",
+      "mutated_line": "cumsum = [1] + list(itertools.accumulate(data))",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [1] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) + 2):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 2):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) + 0):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 0):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) + 0):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 0):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for i in range(window_size, len(data) + 1):",
+      "mutated_line": "for i in range(window_size, len(data) + -1):",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + -1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "subset = data[i:i + window_size]",
+      "mutated_line": "subset = data[i:i - window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i - window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "subset = data[i:i + window_size]",
+      "mutated_line": "subset = data[i:i * window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i * window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]",
+      "mutated_line": "data = [x for x in data if not isinstance(x, float) and (not math.isnan(x))]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) and (not math.isnan(x))]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "subset_sum = cumsum[i] - cumsum[i - window_size]",
+      "mutated_line": "subset_sum = cumsum[i] - cumsum[i + window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i + window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "subset_sum = cumsum[i] - cumsum[i - window_size]",
+      "mutated_line": "subset_sum = cumsum[i] - cumsum[i * window_size]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i * window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "subset = [x for x in subset if not isinstance(x, float) or not math.isnan(x)]",
+      "mutated_line": "subset = [x for x in subset if not isinstance(x, float) and (not math.isnan(x))]",
+      "code": "import math\nimport itertools\n\ndef calculate_moving_average(data, window_size, skipna=False, iterate=True):\n    moving_averages = []\n    if iterate:\n        for i in range(len(data) - window_size + 1):\n            subset = data[i:i + window_size]\n            if skipna:\n                subset = [x for x in subset if not isinstance(x, float) and (not math.isnan(x))]\n            average = sum(subset) / len(subset) if subset else None\n            moving_averages.append(average)\n    else:\n        if skipna:\n            data = [x for x in data if not isinstance(x, float) or not math.isnan(x)]\n        cumsum = [0] + list(itertools.accumulate(data))\n        for i in range(window_size, len(data) + 1):\n            subset_sum = cumsum[i] - cumsum[i - window_size]\n            average = subset_sum / window_size\n            moving_averages.append(average)\n    return moving_averages"
+    }
+  ]
+}

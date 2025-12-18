@@ -1,0 +1,56 @@
+{
+  "task_id": "cf_21179",
+  "entry_point": "replace_synonyms",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "node.is_end_of_word = True",
+      "mutated_line": "node.is_end_of_word = False",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = False\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if lower_word in synonyms:",
+      "mutated_line": "if lower_word not in synonyms:",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word not in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "self.is_end_of_word = False",
+      "mutated_line": "self.is_end_of_word = True",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = True\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if char not in node.children:",
+      "mutated_line": "if char in node.children:",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if char not in node.children:",
+      "mutated_line": "if char in node.children:",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ' '.join(replaced_words)",
+      "mutated_line": "return ''.join(replaced_words)",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ''.join(replaced_words)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "class SynonymTrie:\n\n    class Node:\n\n        def __init__(self):\n            self.children = {}\n            self.is_end_of_word = False\n\n    def __init__(self):\n        self.root = self.Node()\n\n    def insert(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = self.Node()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def search(self, word):\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return True\n            node = node.children[char]\n        return node.is_end_of_word\n\ndef replace_synonyms(text, word, synonyms):\n    trie = SynonymTrie()\n    for synonym in synonyms:\n        trie.insert(synonym)\n    words = text.split()\n    replaced_words = []\n    for original_word in words:\n        lower_word = original_word.lower()\n        if lower_word in synonyms:\n            if original_word.istitle():\n                replaced_words.append(synonyms[lower_word].capitalize())\n            elif original_word.isupper():\n                replaced_words.append(synonyms[lower_word].upper())\n            else:\n                replaced_words.append(synonyms[lower_word])\n        else:\n            replaced_words.append(original_word)\n    return ' '.join(replaced_words)"
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "task_id": "cf_91627",
+  "entry_point": "detect_python_version",
+  "mutant_count": 29,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):",
+      "mutated_line": "if isinstance(left, ast.Attribute) or isinstance(left.value, ast.Attribute):",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) or isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return \"Python version not supported\"",
+      "mutated_line": "return ''",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return ''"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 11,
+      "original_line": "if left.value.value.id == 'sys' and left.value.attr == 'version_info':",
+      "mutated_line": "if left.value.value.id == 'sys' or left.value.attr == 'version_info':",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' or left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if left.value.value.id == 'sys' and left.value.attr == 'version_info':",
+      "mutated_line": "if left.value.value.id != 'sys' and left.value.attr == 'version_info':",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id != 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if left.value.value.id == 'sys' and left.value.attr == 'version_info':",
+      "mutated_line": "if left.value.value.id == 'sys' and left.value.attr != 'version_info':",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr != 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if left.value.value.id == 'sys' and left.value.attr == 'version_info':",
+      "mutated_line": "if left.value.value.id == '' and left.value.attr == 'version_info':",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == '' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if left.value.value.id == 'sys' and left.value.attr == 'version_info':",
+      "mutated_line": "if left.value.value.id == 'sys' and left.value.attr == '':",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == '':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) != 2:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) != 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if isinstance(node.test.comparators[0], ast.Tuple):",
+      "mutated_line": "if isinstance(node.test.comparators[1], ast.Tuple):",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[1], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if isinstance(node.test.comparators[0], ast.Tuple):",
+      "mutated_line": "if isinstance(node.test.comparators[-1], ast.Tuple):",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[-1], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if isinstance(node.test.comparators[0], ast.Tuple):",
+      "mutated_line": "if isinstance(node.test.comparators[1], ast.Tuple):",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[1], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) == 3:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 3:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) == 1:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 1:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) == 0:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 0:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) == 1:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 1:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if len(comparators) == 2:",
+      "mutated_line": "if len(comparators) == -2:",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == -2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "comparators = node.test.comparators[0].elts",
+      "mutated_line": "comparators = node.test.comparators[1].elts",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[1].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "comparators = node.test.comparators[0].elts",
+      "mutated_line": "comparators = node.test.comparators[-1].elts",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[-1].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "comparators = node.test.comparators[0].elts",
+      "mutated_line": "comparators = node.test.comparators[1].elts",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[1].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "self.version = f\"Python {major}.{minor} or higher required\"",
+      "mutated_line": "self.version = f'{major}.{minor} or higher required'",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'{major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "self.version = f\"Python {major}.{minor} or higher required\"",
+      "mutated_line": "self.version = f'Python {major}{minor} or higher required'",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "self.version = f\"Python {major}.{minor} or higher required\"",
+      "mutated_line": "self.version = f'Python {major}.{minor}'",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor}'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "major = comparators[0].n",
+      "mutated_line": "major = comparators[1].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[1].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "major = comparators[0].n",
+      "mutated_line": "major = comparators[-1].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[-1].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "major = comparators[0].n",
+      "mutated_line": "major = comparators[1].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[1].n\n                            minor = comparators[1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "minor = comparators[1].n",
+      "mutated_line": "minor = comparators[2].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[2].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "minor = comparators[1].n",
+      "mutated_line": "minor = comparators[0].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[0].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "minor = comparators[1].n",
+      "mutated_line": "minor = comparators[0].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[0].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "minor = comparators[1].n",
+      "mutated_line": "minor = comparators[-1].n",
+      "code": "import ast\n\nclass VersionVisitor(ast.NodeVisitor):\n\n    def __init__(self):\n        self.version = None\n\n    def visit_If(self, node):\n        if isinstance(node.test, ast.Compare):\n            left = node.test.left\n            if isinstance(left, ast.Attribute) and isinstance(left.value, ast.Attribute):\n                if left.value.value.id == 'sys' and left.value.attr == 'version_info':\n                    if isinstance(node.test.comparators[0], ast.Tuple):\n                        comparators = node.test.comparators[0].elts\n                        if len(comparators) == 2:\n                            major = comparators[0].n\n                            minor = comparators[-1].n\n                            self.version = f'Python {major}.{minor} or higher required'\n\ndef detect_python_version(script):\n    try:\n        tree = ast.parse(script)\n        visitor = VersionVisitor()\n        visitor.visit(tree)\n        return visitor.version\n    except SyntaxError:\n        return 'Python version not supported'"
+    }
+  ]
+}

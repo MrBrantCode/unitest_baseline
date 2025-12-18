@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_52246",
+  "entry_point": "traverse_dict",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 2,
+      "original_line": "if path is None:",
+      "mutated_line": "if path is not None:",
+      "code": "def traverse_dict(d, path=None, out=None):\n    if path is not None:\n        path = []\n    if out is None:\n        out = {}\n    for (k, v) in d.items():\n        new_path = path + [k]\n        if isinstance(v, dict):\n            traverse_dict(v, new_path, out)\n        elif isinstance(v, (int, float)):\n            out['.'.join(new_path)] = v\n    return out"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if out is None:",
+      "mutated_line": "if out is not None:",
+      "code": "def traverse_dict(d, path=None, out=None):\n    if path is None:\n        path = []\n    if out is not None:\n        out = {}\n    for (k, v) in d.items():\n        new_path = path + [k]\n        if isinstance(v, dict):\n            traverse_dict(v, new_path, out)\n        elif isinstance(v, (int, float)):\n            out['.'.join(new_path)] = v\n    return out"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "new_path = path + [k]",
+      "mutated_line": "new_path = path - [k]",
+      "code": "def traverse_dict(d, path=None, out=None):\n    if path is None:\n        path = []\n    if out is None:\n        out = {}\n    for (k, v) in d.items():\n        new_path = path - [k]\n        if isinstance(v, dict):\n            traverse_dict(v, new_path, out)\n        elif isinstance(v, (int, float)):\n            out['.'.join(new_path)] = v\n    return out"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "new_path = path + [k]",
+      "mutated_line": "new_path = path * [k]",
+      "code": "def traverse_dict(d, path=None, out=None):\n    if path is None:\n        path = []\n    if out is None:\n        out = {}\n    for (k, v) in d.items():\n        new_path = path * [k]\n        if isinstance(v, dict):\n            traverse_dict(v, new_path, out)\n        elif isinstance(v, (int, float)):\n            out['.'.join(new_path)] = v\n    return out"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "out['.'.join(new_path)] = v",
+      "mutated_line": "out[''.join(new_path)] = v",
+      "code": "def traverse_dict(d, path=None, out=None):\n    if path is None:\n        path = []\n    if out is None:\n        out = {}\n    for (k, v) in d.items():\n        new_path = path + [k]\n        if isinstance(v, dict):\n            traverse_dict(v, new_path, out)\n        elif isinstance(v, (int, float)):\n            out[''.join(new_path)] = v\n    return out"
+    }
+  ]
+}

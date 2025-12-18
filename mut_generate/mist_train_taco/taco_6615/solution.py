@@ -1,0 +1,45 @@
+"""
+QUESTION:
+You are given a decimal number n. You need to find the gray code of the number n and convert it into decimal.
+Gray code is a binary numeral system where two successive values differ in only one bit.
+For example, the sequence of Gray codes for 3-bit numbers is: 000, 001, 011, 010, 110, 111, 101, 100, so G(4)=6.
+Example 1:
+Input:
+n  = 7
+Output:
+4
+Explanation:
+7 is represented as 111 in binary form.
+The gray code of 111 is 100, in the binary
+form whose decimal equivalent is 4.
+Example 2:
+Input:
+n  = 10
+Output:
+15
+Explanation:
+10 is represented as 1010 in binary form.
+The gray code of 1010 is 1111, in the binary
+form whose decimal equivalent is 15.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function getGray() which takes an Integer n as input and returns the answer.
+ 
+Expected Time Complexity: O(1)
+Expected Auxiliary Space: O(1)
+ 
+Constraints:
+0 <= n <= 10^{8}
+"""
+
+def decimal_to_gray_code_decimal(n: int) -> int:
+    """
+    Converts a given decimal number to its Gray code and then back to decimal.
+
+    Parameters:
+    n (int): The decimal number to be converted.
+
+    Returns:
+    int: The decimal equivalent of the Gray code of the input number.
+    """
+    return n ^ (n >> 1)

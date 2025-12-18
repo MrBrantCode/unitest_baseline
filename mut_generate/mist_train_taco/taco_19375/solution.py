@@ -1,0 +1,56 @@
+"""
+QUESTION:
+Seyyed and MoJaK are friends of Sajjad. Sajjad likes a permutation. Seyyed wants to change the permutation in a way that Sajjad won't like it. Seyyed thinks more swaps yield more probability to do that, so he makes MoJaK to perform a swap between every pair of positions (i, j), where i < j, exactly once. MoJaK doesn't like to upset Sajjad.
+
+Given the permutation, determine whether it is possible to swap all pairs of positions so that the permutation stays the same. If it is possible find how to do that. 
+
+
+-----Input-----
+
+The first line contains single integer n (1 ≤ n ≤ 1000) — the size of the permutation.
+
+As the permutation is not important, you can consider a_{i} = i, where the permutation is a_1, a_2, ..., a_{n}.
+
+
+-----Output-----
+
+If it is not possible to swap all pairs of positions so that the permutation stays the same, print "NO",
+
+Otherwise print "YES", then print $\frac{n(n - 1)}{2}$ lines: the i-th of these lines should contain two integers a and b (a < b) — the positions where the i-th swap is performed.
+
+
+-----Examples-----
+Input
+3
+
+Output
+NO
+
+Input
+1
+
+Output
+YES
+"""
+
+def can_maintain_permutation_with_swaps(n):
+    def p(a, b):
+        return (a + 1, b + 1)
+    
+    if n % 4 > 1:
+        return "NO"
+    
+    swaps = []
+    for i in range(n % 4, n, 4):
+        for x in range(2):
+            for j in range(i):
+                swaps.append(p(j, i + 2 * x))
+            swaps.append(p(i + 2 * x, i + 2 * x + 1))
+            for j in range(i, 0, -1):
+                swaps.append(p(j - 1, i + 2 * x + 1))
+        swaps.append(p(i, i + 3))
+        swaps.append(p(i + 1, i + 2))
+        swaps.append(p(i, i + 2))
+        swaps.append(p(i + 1, i + 3))
+    
+    return "YES", swaps

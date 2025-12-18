@@ -1,0 +1,80 @@
+"""
+QUESTION:
+Read problem statements in [Russian] and [Mandarin Chinese].
+
+Chef goes to a candy store that sells N different candies. For each candy, we know its price and sweetness. Chef has D dollars and can take a maximum of 2 candies, one in each hand. Find the maximum total sweetness he can buy under the given constraints.
+
+NOTE: Since the input-output is large, prefer using fast input-output methods. 
+
+------ Input Format ------ 
+
+- The first line contains an integer T, the number of test cases. Then the test cases follow. 
+- Each test case contains three lines of input.
+- First line will contain 2 space separated integers N and D, the number of different candies and the amount of money Chef has. 
+- Second line contains N space separated integers P_{1}, P_{2}, \ldots, P_{N}, where P_{i} is the price of the i^{th} candy.
+- Third line contains N space separated integers S_{1}, S_{2}, \ldots, S_{N}, where S_{i} is the sweetness of the i^{th} candy. 
+
+------ Output Format ------ 
+
+For each testcase, output in a single line, the maximum total sweetness Chef can buy with the money he has, and with at most two candies.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 2.5*10^{5}$
+$1 ≤ N ≤ 10^{5}$
+$1 ≤ D ≤ 10^{9}$
+$1 ≤ P_{i}, S_{i} ≤ 10^{9}$
+- Sum $N$ over all testcases is atmost $10^{6}$.
+
+----- Sample Input 1 ------ 
+3
+2 10
+1 2 
+2 1 
+5 7
+1 2 3 4 5
+1 2 3 4 5
+5 7
+6 6 6 6 6
+5 4 3 2 1
+----- Sample Output 1 ------ 
+3
+7
+5
+----- explanation 1 ------ 
+TestCase $1$: Chef can collect both the candies available with the money he has.
+
+TestCase $2$: Chef can collect candies at index $[2, 5]$ or $[3, 4]$. In both cases, he will get the total sweetness of $7$.
+
+TestCase $3$: Since the price of all candies is the same, it's always optimal to choose the candies with maximum sweetness. Also, in this case, no more than one candy can be chosen.
+"""
+
+from bisect import insort, bisect
+
+def max_total_sweetness(T, test_cases):
+    results = []
+    for case in test_cases:
+        N, D, prices, sweetness = case
+        l = [(prices[i], sweetness[i]) for i in range(N)]
+        l.sort()
+        values = []
+        ans = 0
+        i, j = N - 1, 0
+        if D < l[0][0]:
+            results.append(0)
+            continue
+        while i >= 0:
+            if l[i][0] > D:
+                i -= 1
+                continue
+            ans = max(ans, l[i][1])
+            while j < i and l[j][0] <= D - l[i][0]:
+                insort(values, l[j][1])
+                j += 1
+            if i < j:
+                values.pop(bisect(values, l[i][1]) - 1)
+            if values:
+                ans = max(ans, l[i][1] + values[-1])
+            i -= 1
+        results.append(ans)
+    return results

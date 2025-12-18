@@ -1,0 +1,266 @@
+{
+  "task_id": "taco_18422",
+  "entry_point": "is_red_tree_achievable",
+  "mutant_count": 37,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 44,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return False"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if v in s[u]:",
+      "mutated_line": "if v not in s[u]:",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v not in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if f[x] == x:",
+      "mutated_line": "if f[x] != x:",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] != x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if u == v:",
+      "mutated_line": "if u != v:",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u != v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 27,
+      "original_line": "if len(s[u]) < len(s[v]):",
+      "mutated_line": "if len(s[u]) <= len(s[v]):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) <= len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 27,
+      "original_line": "if len(s[u]) < len(s[v]):",
+      "mutated_line": "if len(s[u]) >= len(s[v]):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) >= len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 27,
+      "original_line": "if len(s[u]) < len(s[v]):",
+      "mutated_line": "if len(s[u]) != len(s[v]):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) != len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "root = find(1)",
+      "mutated_line": "root = find(2)",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(2)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "root = find(1)",
+      "mutated_line": "root = find(0)",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(0)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "root = find(1)",
+      "mutated_line": "root = find(0)",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(0)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "root = find(1)",
+      "mutated_line": "root = find(-1)",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(-1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(3, N + 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(3, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(1, N + 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(1, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(0, N + 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(0, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(1, N + 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(1, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(-2, N + 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(-2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N - 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N - 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N * 1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N * 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 42,
+      "original_line": "if find(i) != root:",
+      "mutated_line": "if find(i) == root:",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) == root:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if u in s[x]:",
+      "mutated_line": "if u not in s[x]:",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u not in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N + 2):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 2):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N + 0):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 0):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N + 0):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 0):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "for i in range(2, N + 1):",
+      "mutated_line": "for i in range(2, N + -1):",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + -1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return True\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N - 1)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N - 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N * 1)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N * 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N - 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N * 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N + 2)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 2)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N + 0)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 0)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N + 0)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 0)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "s = [set() for _ in range(N + 1)]",
+      "mutated_line": "s = [set() for _ in range(N + -1)]",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + -1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 2)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 0)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + 0)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "f = [i for i in range(N + 1)]",
+      "mutated_line": "",
+      "code": "import queue\n\ndef is_red_tree_achievable(N, blue_edges, red_edges):\n    s = [set() for _ in range(N + 1)]\n    q = queue.Queue()\n    for (u, v) in blue_edges:\n        if v in s[u]:\n            q.put((u, v))\n        else:\n            s[u].add(v)\n            s[v].add(u)\n    f = [i for i in range(N + -1)]\n\n    def find(x):\n        if f[x] == x:\n            return x\n        else:\n            f[x] = find(f[x])\n            return f[x]\n    while not q.empty():\n        (u, v) = map(find, q.get())\n        if u == v:\n            continue\n        if len(s[u]) < len(s[v]):\n            (u, v) = (v, u)\n        s[u].remove(v)\n        s[v].remove(u)\n        for x in s[v]:\n            s[x].remove(v)\n            if u in s[x]:\n                q.put((u, x))\n            else:\n                s[u].add(x)\n                s[x].add(u)\n        (s[v], f[v]) = ([], u)\n    root = find(1)\n    for i in range(2, N + 1):\n        if find(i) != root:\n            return False\n    return True"
+    }
+  ]
+}

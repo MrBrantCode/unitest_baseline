@@ -1,0 +1,98 @@
+{
+  "task_id": "cf_62232",
+  "entry_point": "tuple_memory_usage",
+  "mutant_count": 13,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"Recursively finds size of objects\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if seen is None:",
+      "mutated_line": "if seen is not None:",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is not None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if obj_id in seen:",
+      "mutated_line": "if obj_id not in seen:",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id not in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "size += sum([tuple_memory_usage(v, seen) for v in t.values()])",
+      "mutated_line": "size -= sum([tuple_memory_usage(v, seen) for v in t.values()])",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size -= sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 15,
+      "original_line": "size += sum([tuple_memory_usage(k, seen) for k in t.keys()])",
+      "mutated_line": "size -= sum([tuple_memory_usage(k, seen) for k in t.keys()])",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size -= sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return -1\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 17,
+      "original_line": "size += tuple_memory_usage(t.__dict__, seen)",
+      "mutated_line": "size -= tuple_memory_usage(t.__dict__, seen)",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size -= tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "elif hasattr(t, '__dict__'):",
+      "mutated_line": "elif hasattr(t, ''):",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, ''):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "elif hasattr(t, '__iter__') and not isinstance(t, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(t, '__iter__') or not isinstance(t, (str, bytes, bytearray)):",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') or not isinstance(t, (str, bytes, bytearray)):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 19,
+      "original_line": "size += sum([tuple_memory_usage(i, seen) for i in t])",
+      "mutated_line": "size -= sum([tuple_memory_usage(i, seen) for i in t])",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '__iter__') and (not isinstance(t, (str, bytes, bytearray))):\n        size -= sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif hasattr(t, '__iter__') and not isinstance(t, (str, bytes, bytearray)):",
+      "mutated_line": "elif hasattr(t, '') and (not isinstance(t, (str, bytes, bytearray))):",
+      "code": "import sys\n\ndef tuple_memory_usage(t, seen=None):\n    \"\"\"Recursively finds size of objects\"\"\"\n    size = sys.getsizeof(t)\n    if seen is None:\n        seen = set()\n    obj_id = id(t)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(t, dict):\n        size += sum([tuple_memory_usage(v, seen) for v in t.values()])\n        size += sum([tuple_memory_usage(k, seen) for k in t.keys()])\n    elif hasattr(t, '__dict__'):\n        size += tuple_memory_usage(t.__dict__, seen)\n    elif hasattr(t, '') and (not isinstance(t, (str, bytes, bytearray))):\n        size += sum([tuple_memory_usage(i, seen) for i in t])\n    return size"
+    }
+  ]
+}

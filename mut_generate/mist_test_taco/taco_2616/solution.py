@@ -1,0 +1,42 @@
+"""
+QUESTION:
+In a company an emplopyee is paid as under: 
+If his basic salary is less than Rs. 1500, then HRA = 10% of base salary and DA = 90% of basic salary. 
+If his salary is either equal to or above Rs. 1500, then HRA = Rs. 500 and DA = 98% of basic salary. If the Employee's salary is input, write a program to find his gross salary.
+
+NOTE: Gross Salary = Basic Salary + HRA + DA 
+
+------ Input ------ 
+
+The first line contains an integer T, total number of testcases. Then follow T lines, each line contains an integer salary. 
+
+------ Output ------ 
+
+For each test case, output the gross salary of the employee in a new line. Your answer will be considered correct if the absolute error is less than 10^{-2}.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 1000$
+$1 ≤ salary ≤ 100000$
+
+----- Sample Input 1 ------ 
+3
+1203
+10042
+1312
+----- Sample Output 1 ------ 
+2406.00
+20383.16
+2624
+"""
+
+def calculate_gross_salary(basic_salary):
+    if basic_salary < 1500:
+        hra = 0.1 * basic_salary
+        da = 0.9 * basic_salary
+    else:
+        hra = 500
+        da = 0.98 * basic_salary
+    
+    gross_salary = basic_salary + hra + da
+    return gross_salary

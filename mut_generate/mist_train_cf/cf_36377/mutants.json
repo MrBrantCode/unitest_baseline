@@ -1,0 +1,91 @@
+{
+  "task_id": "cf_36377",
+  "entry_point": "s_get_full_url",
+  "mutant_count": 12,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "scheme=url_parsed.scheme or base_parsed.scheme,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme and base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 14,
+      "original_line": "netloc=url_parsed.netloc or base_parsed.netloc,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc and base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path or base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' - url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else (base_parsed.path + '/') * url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path - url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path * url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path - '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path * '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '/' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path,",
+      "mutated_line": "return urlunparse(full_url)",
+      "code": "from urllib.parse import urlparse, urlunparse, ParseResult\n\ndef s_get_full_url(url, base=None):\n    if not base:\n        return url\n    base_parsed = urlparse(base)\n    url_parsed = urlparse(url)\n    full_url = ParseResult(scheme=url_parsed.scheme or base_parsed.scheme, netloc=url_parsed.netloc or base_parsed.netloc, path=url_parsed.path if url_parsed.path.startswith('/') else base_parsed.path + '' + url_parsed.path if base_parsed.path and base_parsed.path.endswith('/') else base_parsed.path + url_parsed.path, params=url_parsed.params, query=url_parsed.query, fragment=url_parsed.fragment)\n    return urlunparse(full_url)"
+    }
+  ]
+}

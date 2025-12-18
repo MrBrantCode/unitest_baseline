@@ -1,0 +1,117 @@
+"""
+QUESTION:
+Just to remind, girls in Arpa's land are really nice.
+
+Mehrdad wants to invite some Hoses to the palace for a dancing party. Each Hos has some weight wi and some beauty bi. Also each Hos may have some friends. Hoses are divided in some friendship groups. Two Hoses x and y are in the same friendship group if and only if there is a sequence of Hoses a1, a2, ..., ak such that ai and ai + 1 are friends for each 1 ≤ i < k, and a1 = x and ak = y.
+
+<image>
+
+Arpa allowed to use the amphitheater of palace to Mehrdad for this party. Arpa's amphitheater can hold at most w weight on it. 
+
+Mehrdad is so greedy that he wants to invite some Hoses such that sum of their weights is not greater than w and sum of their beauties is as large as possible. Along with that, from each friendship group he can either invite all Hoses, or no more than one. Otherwise, some Hoses will be hurt. Find for Mehrdad the maximum possible total beauty of Hoses he can invite so that no one gets hurt and the total weight doesn't exceed w.
+
+Input
+
+The first line contains integers n, m and w (1 ≤ n ≤ 1000, <image>, 1 ≤ w ≤ 1000) — the number of Hoses, the number of pair of friends and the maximum total weight of those who are invited.
+
+The second line contains n integers w1, w2, ..., wn (1 ≤ wi ≤ 1000) — the weights of the Hoses.
+
+The third line contains n integers b1, b2, ..., bn (1 ≤ bi ≤ 106) — the beauties of the Hoses.
+
+The next m lines contain pairs of friends, the i-th of them contains two integers xi and yi (1 ≤ xi, yi ≤ n, xi ≠ yi), meaning that Hoses xi and yi are friends. Note that friendship is bidirectional. All pairs (xi, yi) are distinct.
+
+Output
+
+Print the maximum possible total beauty of Hoses Mehrdad can invite so that no one gets hurt and the total weight doesn't exceed w.
+
+Examples
+
+Input
+
+3 1 5
+3 2 5
+2 4 2
+1 2
+
+
+Output
+
+6
+
+
+Input
+
+4 2 11
+2 4 6 6
+6 4 2 1
+1 2
+2 3
+
+
+Output
+
+7
+
+Note
+
+In the first sample there are two friendship groups: Hoses {1, 2} and Hos {3}. The best way is to choose all of Hoses in the first group, sum of their weights is equal to 5 and sum of their beauty is 6.
+
+In the second sample there are two friendship groups: Hoses {1, 2, 3} and Hos {4}. Mehrdad can't invite all the Hoses from the first group because their total weight is 12 > 11, thus the best way is to choose the first Hos from the first group and the only one from the second group. The total weight will be 8, and the total beauty will be 7.
+"""
+
+from collections import defaultdict
+
+class DisjointSetUnion:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+        self.num_sets = n
+
+    def find(self, a):
+        acopy = a
+        while a != self.parent[a]:
+            a = self.parent[a]
+        while acopy != a:
+            (self.parent[acopy], acopy) = (a, self.parent[acopy])
+        return a
+
+    def union(self, a, b):
+        (a, b) = (self.find(a), self.find(b))
+        if a != b:
+            if self.size[a] < self.size[b]:
+                (a, b) = (b, a)
+            self.num_sets -= 1
+            self.parent[b] = a
+            self.size[a] += self.size[b]
+
+    def set_size(self, a):
+        return self.size[self.find(a)]
+
+    def __len__(self):
+        return self.num_sets
+
+def max_total_beauty(n, m, w, weights, beauties, friendships):
+    DSU = DisjointSetUnion(n)
+    for h1, h2 in friendships:
+        DSU.union(h1 - 1, h2 - 1)
+    
+    groups = defaultdict(list)
+    for i in range(n):
+        DSU.find(i)
+    for hose, parent in enumerate(DSU.parent):
+        groups[parent].append(hose)
+    
+    dp = [0] * (w + 1)
+    for friends in groups.values():
+        dp_aux = dp[:]
+        group_weight = group_beauty = 0
+        for friend in friends:
+            f_weight, f_beauty = weights[friend], beauties[friend]
+            group_weight += f_weight
+            group_beauty += f_beauty
+            for weight in range(f_weight, w + 1):
+                dp[weight] = max(dp[weight], dp_aux[weight - f_weight] + f_beauty)
+        for weight in range(group_weight, w + 1):
+            dp[weight] = max(dp[weight], dp_aux[weight - group_weight] + group_beauty)
+    
+    return dp[-1]

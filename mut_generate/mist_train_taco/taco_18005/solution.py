@@ -1,0 +1,107 @@
+"""
+QUESTION:
+Read problems statements in [Mandarin Chinese], [Russian], and [Bengali] as well.
+
+You are given an array $A$ with $N$ integers. An array's score is defined as the bitwise AND of all its elements. You need to find the bitwise OR of the scores of all possible non-empty subarrays of $A$.
+
+Furthermore, there are $Q$ queries. Each query consists of two integers $X$ and $V$. You need to change the value of the element at index $X$ to $V$. After each query, you again need to find the bitwise OR of the scores of all possible non-empty subarrays.
+
+See the example for more clarification.
+
+------ Input: ------
+The first line of the input contains a single integer $T$ - the number of test cases. The description of $T$ test cases follows.
+
+The first line of each test case contains two space-separated integers $N$ and $Q$ - the size of the array and the number of queries, respectively.
+
+The second line contains $N$ space-separated integers $A_{1},\ldots,A_{N}$.
+
+Each of the next $Q$ lines contains two space-separated integers $X$ and $V$ - the position and the new value of the query, respectively.
+
+------ Output: ------
+For each test case print $Q+1$ lines. In the first line print the answer for the original array and in the next $Q$ lines print the answer after every query.
+
+------ Constraints  ------
+$1 ≤ T ≤ 100$
+
+$1 ≤ N, Q ≤ 10^{5}$
+
+$0 ≤ A_{i} ≤ 2^{31}-1$
+
+$1 ≤ X ≤ N$
+
+$0 ≤ V ≤ 2^{31}-1$
+
+The sum of $N$ over all test cases does not exceed $10^{5}$
+
+The sum of $Q$ over all test cases does not exceed $10^{5}$
+
+----- Sample Input 1 ------ 
+2
+3 2
+1 2 3
+1 4
+3 0
+4 1
+1 2 3 4
+4 0
+----- Sample Output 1 ------ 
+3
+7
+6
+7
+3
+----- explanation 1 ------ 
+Example case 1: For the original array, all possible subarrays and their scores are as follows.
+
+$AND(1) = 1$, $AND(2) = 2$, $AND(3) = 3$, $AND(1,2) = 0$, $AND(2,3) = 2$, $AND(1,2,3) = 0$.
+
+The bitwise OR of all possible subarray's score is $OR(1,2,3,0,2,0) = 3$.
+
+After the first query new array will be $[4,2,3]$ and the answer will be $7$.
+
+After the second query new array will be $[4,2,0]$ and the answer will be $6$.
+"""
+
+from collections import defaultdict
+
+def calculate_bitwise_or_of_subarray_scores(array, queries):
+    def update_bit_counts(value, increment):
+        for j in range(32):
+            b = value >> j & 1
+            if b:
+                bit_counts[j] += increment
+    
+    def calculate_result(bit_counts):
+        result = 0
+        for i in bit_counts:
+            if bit_counts[i]:
+                result += 2 ** i
+        return result
+    
+    bit_counts = defaultdict(int)
+    
+    # Initialize bit counts for the original array
+    for num in array:
+        update_bit_counts(num, 1)
+    
+    results = []
+    
+    # Calculate result for the original array
+    results.append(calculate_result(bit_counts))
+    
+    # Process each query
+    for X, V in queries:
+        X -= 1  # Convert to 0-based index
+        old_value = array[X]
+        array[X] = V
+        
+        # Update bit counts for the old value (decrement)
+        update_bit_counts(old_value, -1)
+        
+        # Update bit counts for the new value (increment)
+        update_bit_counts(V, 1)
+        
+        # Calculate result after the query
+        results.append(calculate_result(bit_counts))
+    
+    return results

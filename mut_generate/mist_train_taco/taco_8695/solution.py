@@ -1,0 +1,34 @@
+"""
+QUESTION:
+As we know , Professor Dalton is teaching Compiler Design.
+During his first class, he found that the students are very talkative.
+so,he decided to divide the class into two sections, A & B
+such that the difference between the strength  of two sections
+is minimum. 
+Print the strength of two sections in non decreasing 
+order. 
+
+Input : First line of the input contains number of test cases T,followed by T integers (n) (total sum of their strengths)
+
+1≤T≤100000 , 1≤n≤100000
+
+Output :For each test cases print strength of both section in non decreasing order
+
+SAMPLE INPUT
+2
+6
+8
+
+SAMPLE OUTPUT
+3 3
+4 4
+"""
+
+def divide_class_strength(test_cases):
+    results = []
+    for strength in test_cases:
+        mid = strength // 2
+        section_a = mid
+        section_b = strength - mid
+        results.append((min(section_a, section_b), max(section_a, section_b)))
+    return results

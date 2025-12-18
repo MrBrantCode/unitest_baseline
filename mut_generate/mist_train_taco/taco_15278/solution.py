@@ -1,0 +1,43 @@
+"""
+QUESTION:
+A palindrome is a word that reads the same forward and backward. Given a string s, you need to make it a palindrome by adding 0 or more characters to the end of s, and remember, we want the palindrome to be as short as possible.
+
+INPUT
+
+First line is T, the number of test cases. T strings follow, every string s needs to be converted to palindrome.
+
+OUTPUT
+
+Print the shortest possible length of a palindrome that John can generate.
+
+CONSTRAINTS
+1 ≤ T ≤ 50
+s will contain between 1 and 50 characters,
+   inclusive, palindrome can be larger in length. Each character of s
+   will be a lowercase letter ('a' - 'z').
+
+SAMPLE INPUT
+3
+abab
+abacaba
+qwerty
+
+SAMPLE OUTPUT
+5
+7
+11
+"""
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+def shortest_palindrome_length(s):
+    n = len(s)
+    if is_palindrome(s):
+        return n
+    
+    mlength = 2 * n
+    for i in range(n, mlength):
+        st = s + s[i-n::-1]
+        if is_palindrome(st):
+            return len(st)

@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_3329",
+  "entry_point": "filter_keywords",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "filtered_text = ' '.join(filtered_words)",
+      "mutated_line": "filtered_text = ''.join(filtered_words)",
+      "code": "def filter_keywords(text, keywords):\n    lowercase_keywords = set((keyword.lower() for keyword in keywords))\n    words = text.split()\n    filtered_words = []\n    for word in words:\n        lowercase_word = word.lower()\n        should_filter = any((keyword in lowercase_word for keyword in lowercase_keywords))\n        if not should_filter:\n            filtered_words.append(word)\n    filtered_text = ''.join(filtered_words)\n    return filtered_text"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "should_filter = any(keyword in lowercase_word for keyword in lowercase_keywords)",
+      "mutated_line": "should_filter = any((keyword not in lowercase_word for keyword in lowercase_keywords))",
+      "code": "def filter_keywords(text, keywords):\n    lowercase_keywords = set((keyword.lower() for keyword in keywords))\n    words = text.split()\n    filtered_words = []\n    for word in words:\n        lowercase_word = word.lower()\n        should_filter = any((keyword not in lowercase_word for keyword in lowercase_keywords))\n        if not should_filter:\n            filtered_words.append(word)\n    filtered_text = ' '.join(filtered_words)\n    return filtered_text"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+"""
+QUESTION:
+Chef loves sorting! Chef recently learnt about a new form of sorting, endsort! 
+
+While performing endsort of an array $A$ of $N$ distinct elements, Chef can move any element to the end of the array. 
+
+However, Chef fears that this will take too much time. Help Chef find the number of moves to sort the given array in ascending order using endsort!
+
+------ Input: ------
+
+The first line contains a single integer $T$, the number of test cases. 
+The first line of each test case contains a single integer $N$, the number of elements of given array $A$. 
+The next line would contain $N$ space separated integers, the elements of the array. 
+
+------ Output: ------
+
+Print a single integer, the minimum number of moves to sort the array in ascending order using endsort.
+
+------ Constraints  ------
+$1 ≤ T ≤ 10$
+$1 ≤ N ≤ 100000$
+$1 ≤ A_{i} ≤ 10^{9}$
+
+----- Sample Input 1 ------ 
+2
+5
+1 2 3 4 5
+5
+1 3 2 5 4
+----- Sample Output 1 ------ 
+0
+3
+----- explanation 1 ------ 
+For the second sample, in the first move, we move 3 to the end of the array. In the second move, we move 4 to the end and finally in the third move, we move 5 to the end.
+"""
+
+def minimum_endsort_moves(A):
+    """
+    Calculate the minimum number of moves required to sort the array A in ascending order using endsort.
+
+    Parameters:
+    A (list of int): The array to be sorted.
+
+    Returns:
+    int: The minimum number of moves required.
+    """
+    N = len(A)
+    sorted_A = sorted(A)
+    j = 0
+    for i in range(N):
+        if A[i] == sorted_A[j]:
+            j += 1
+    return N - j

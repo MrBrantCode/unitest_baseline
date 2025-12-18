@@ -1,0 +1,112 @@
+{
+  "task_id": "cf_41343",
+  "entry_point": "generate_tag_suffix",
+  "mutant_count": 15,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "if re.match(r'devel-\\d+', branch):",
+      "mutated_line": "if re.match('', branch):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "return '-devel'",
+      "mutated_line": "return ''",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return ''\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "elif re.match(r'master-\\d+', branch):",
+      "mutated_line": "elif re.match('', branch):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return '-pre-release'",
+      "mutated_line": "return ''",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return ''\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 8,
+      "original_line": "elif re.match(r'feature-\\d+', branch) or re.match(r'bugfix-\\d+', branch):",
+      "mutated_line": "elif re.match('feature-\\\\d+', branch) and re.match('bugfix-\\\\d+', branch):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) and re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "return '-' + '-'.join(tag_regex.search(branch).groups())",
+      "mutated_line": "return '-' - '-'.join(tag_regex.search(branch).groups())",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' - '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "return '-' + '-'.join(tag_regex.search(branch).groups())",
+      "mutated_line": "return '-' * '-'.join(tag_regex.search(branch).groups())",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' * '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "elif tag and tag.startswith('release/'):",
+      "mutated_line": "elif tag or tag.startswith('release/'):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag or tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif re.match(r'feature-\\d+', branch) or re.match(r'bugfix-\\d+', branch):",
+      "mutated_line": "elif re.match('', branch) or re.match('bugfix-\\\\d+', branch):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "elif re.match(r'feature-\\d+', branch) or re.match(r'bugfix-\\d+', branch):",
+      "mutated_line": "elif re.match('feature-\\\\d+', branch) or re.match('', branch):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return '-' + '-'.join(tag_regex.search(branch).groups())",
+      "mutated_line": "return '' + '-'.join(tag_regex.search(branch).groups())",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return ''",
+      "mutated_line": "return 'MUTATED'",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return 'MUTATED'\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return '-'",
+      "mutated_line": "return ''",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "elif tag and tag.startswith('release/'):",
+      "mutated_line": "elif tag and tag.startswith(''):",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + '-'.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith(''):\n        return ''\n    else:\n        return '-'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return '-' + '-'.join(tag_regex.search(branch).groups())",
+      "mutated_line": "return '-' + ''.join(tag_regex.search(branch).groups())",
+      "code": "import re\n\ndef generate_tag_suffix(branch: str, tag: str, tag_regex: re.Pattern) -> str:\n    if re.match('devel-\\\\d+', branch):\n        return '-devel'\n    elif re.match('master-\\\\d+', branch):\n        return '-pre-release'\n    elif re.match('feature-\\\\d+', branch) or re.match('bugfix-\\\\d+', branch):\n        return '-' + ''.join(tag_regex.search(branch).groups())\n    elif tag and tag.startswith('release/'):\n        return ''\n    else:\n        return '-'"
+    }
+  ]
+}

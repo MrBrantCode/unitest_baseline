@@ -1,0 +1,378 @@
+{
+  "task_id": "cf_65349",
+  "entry_point": "find_frequency_and_remove_outliers",
+  "mutant_count": 53,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "IQR = Q3 - Q1",
+      "mutated_line": "IQR = Q3 + Q1",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 + Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 17,
+      "original_line": "IQR = Q3 - Q1",
+      "mutated_line": "IQR = Q3 * Q1",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 * Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if i in freq_dict:",
+      "mutated_line": "if i not in freq_dict:",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i not in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 7,
+      "original_line": "freq_dict[i] += 1",
+      "mutated_line": "freq_dict[i] -= 1",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] -= 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "mutated_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) * np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) * np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "mutated_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) // np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) // np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "Q1 = np.percentile(z_scores, 25)",
+      "mutated_line": "Q1 = np.percentile(z_scores, 26)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 26)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "Q1 = np.percentile(z_scores, 25)",
+      "mutated_line": "Q1 = np.percentile(z_scores, 24)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 24)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "Q1 = np.percentile(z_scores, 25)",
+      "mutated_line": "Q1 = np.percentile(z_scores, 0)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 0)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "Q1 = np.percentile(z_scores, 25)",
+      "mutated_line": "Q1 = np.percentile(z_scores, 1)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 1)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "Q1 = np.percentile(z_scores, 25)",
+      "mutated_line": "Q1 = np.percentile(z_scores, -25)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, -25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "Q3 = np.percentile(z_scores, 75)",
+      "mutated_line": "Q3 = np.percentile(z_scores, 76)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 76)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "Q3 = np.percentile(z_scores, 75)",
+      "mutated_line": "Q3 = np.percentile(z_scores, 74)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 74)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "Q3 = np.percentile(z_scores, 75)",
+      "mutated_line": "Q3 = np.percentile(z_scores, 0)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 0)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "Q3 = np.percentile(z_scores, 75)",
+      "mutated_line": "Q3 = np.percentile(z_scores, 1)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 1)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "Q3 = np.percentile(z_scores, 75)",
+      "mutated_line": "Q3 = np.percentile(z_scores, -75)",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, -75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "freq_dict[i] += 1",
+      "mutated_line": "freq_dict[i] += 2",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 2\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "freq_dict[i] += 1",
+      "mutated_line": "freq_dict[i] += 0",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 0\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "freq_dict[i] += 1",
+      "mutated_line": "freq_dict[i] += 0",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 0\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "freq_dict[i] += 1",
+      "mutated_line": "freq_dict[i] += -1",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += -1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "freq_dict[i] = 1",
+      "mutated_line": "freq_dict[i] = 2",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 2\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "freq_dict[i] = 1",
+      "mutated_line": "freq_dict[i] = 0",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 0\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "freq_dict[i] = 1",
+      "mutated_line": "freq_dict[i] = 0",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 0\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "freq_dict[i] = 1",
+      "mutated_line": "freq_dict[i] = -1",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = -1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "mutated_line": "z_scores = [(x + np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x + np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "mutated_line": "z_scores = [x * np.mean(list(freq_dict.values())) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [x * np.mean(list(freq_dict.values())) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR and x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR and x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x <= Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x <= Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x >= Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x >= Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x != Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x != Q1 - 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x >= Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x >= Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x <= Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x <= Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x != Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x != Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 + 1.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 + 1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 * (1.5 * IQR) or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 * (1.5 * IQR) or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 - 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 - 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 * (1.5 * IQR)]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 * (1.5 * IQR)]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 / IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 / IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - (1.5 + IQR) or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - (1.5 + IQR) or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 ** IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 ** IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 / IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 / IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + (1.5 + IQR)]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + (1.5 + IQR)]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 ** IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1.5 ** IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 2.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 2.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 0.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 0.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 0 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 0 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - -1.5 * IQR or x > Q3 + 1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - -1.5 * IQR or x > Q3 + 1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 2.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 2.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 0.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 0.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 0 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 0 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + 1 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "outlier_indexes = [i for i, x in enumerate(z_scores) if x < (Q1 - 1.5*IQR) or x > (Q3 + 1.5*IQR)]",
+      "mutated_line": "outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + -1.5 * IQR]",
+      "code": "import numpy as np\n\ndef find_frequency_and_remove_outliers(my_list):\n    freq_dict = {}\n    for i in my_list:\n        if i in freq_dict:\n            freq_dict[i] += 1\n        else:\n            freq_dict[i] = 1\n    z_scores = [(x - np.mean(list(freq_dict.values()))) / np.std(list(freq_dict.values())) for x in list(freq_dict.values())]\n    Q1 = np.percentile(z_scores, 25)\n    Q3 = np.percentile(z_scores, 75)\n    IQR = Q3 - Q1\n    outlier_indexes = [i for (i, x) in enumerate(z_scores) if x < Q1 - 1.5 * IQR or x > Q3 + -1.5 * IQR]\n    outlier_keys = [list(freq_dict.keys())[i] for i in outlier_indexes]\n    for k in outlier_keys:\n        del freq_dict[k]\n    return freq_dict"
+    }
+  ]
+}

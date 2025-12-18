@@ -1,0 +1,70 @@
+{
+  "task_id": "cf_47116",
+  "entry_point": "softmax_numerical_stability",
+  "mutant_count": 9,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if C is None:",
+      "mutated_line": "if C is not None:",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is not None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "softmax_y = [math.exp(score) / sum_exp_y for score in y]",
+      "mutated_line": "softmax_y = [math.exp(score) * sum_exp_y for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) * sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "softmax_y = [math.exp(score) / sum_exp_y for score in y]",
+      "mutated_line": "softmax_y = [math.exp(score) // sum_exp_y for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) // sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]",
+      "mutated_line": "softmax_y_with_C = [math.exp(score + C) * sum_exp_y_with_C for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) * sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]",
+      "mutated_line": "softmax_y_with_C = [math.exp(score + C) // sum_exp_y_with_C for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) // sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "sum_exp_y_with_C = sum(math.exp(score + C) for score in y)",
+      "mutated_line": "sum_exp_y_with_C = sum((math.exp(score - C) for score in y))",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score - C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "sum_exp_y_with_C = sum(math.exp(score + C) for score in y)",
+      "mutated_line": "sum_exp_y_with_C = sum((math.exp(score * C) for score in y))",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score * C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]",
+      "mutated_line": "softmax_y_with_C = [math.exp(score - C) / sum_exp_y_with_C for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score - C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "softmax_y_with_C = [math.exp(score + C) / sum_exp_y_with_C for score in y]",
+      "mutated_line": "softmax_y_with_C = [math.exp(score * C) / sum_exp_y_with_C for score in y]",
+      "code": "import math\n\ndef softmax_numerical_stability(y, C=None):\n    if C is None:\n        C = max(y)\n    sum_exp_y = sum((math.exp(score) for score in y))\n    sum_exp_y_with_C = sum((math.exp(score + C) for score in y))\n    softmax_y = [math.exp(score) / sum_exp_y for score in y]\n    softmax_y_with_C = [math.exp(score * C) / sum_exp_y_with_C for score in y]\n    return math.isclose(sum(softmax_y), sum(softmax_y_with_C))"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_16041",
+  "entry_point": "convert_utc_to_local",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "utc_time = datetime.strptime(utc_time_str, \"%Y-%m-%d %H:%M:%S\")",
+      "mutated_line": "utc_time = datetime.strptime(utc_time_str, '')",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_utc_to_local(utc_time_str, timezone_str):\n    try:\n        utc_time = datetime.strptime(utc_time_str, '')\n        timezone = pytz.timezone(timezone_str)\n        local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(timezone)\n        return local_time.strftime('%Y-%m-%d %H:%M:%S')\n    except ValueError:\n        print('Invalid input format.')\n        return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return local_time.strftime(\"%Y-%m-%d %H:%M:%S\")",
+      "mutated_line": "return local_time.strftime('')",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_utc_to_local(utc_time_str, timezone_str):\n    try:\n        utc_time = datetime.strptime(utc_time_str, '%Y-%m-%d %H:%M:%S')\n        timezone = pytz.timezone(timezone_str)\n        local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(timezone)\n        return local_time.strftime('')\n    except ValueError:\n        print('Invalid input format.')\n        return None"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "print(\"Invalid input format.\")",
+      "mutated_line": "print('')",
+      "code": "from datetime import datetime\nimport pytz\n\ndef convert_utc_to_local(utc_time_str, timezone_str):\n    try:\n        utc_time = datetime.strptime(utc_time_str, '%Y-%m-%d %H:%M:%S')\n        timezone = pytz.timezone(timezone_str)\n        local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(timezone)\n        return local_time.strftime('%Y-%m-%d %H:%M:%S')\n    except ValueError:\n        print('')\n        return None"
+    }
+  ]
+}

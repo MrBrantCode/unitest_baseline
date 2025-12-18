@@ -1,0 +1,63 @@
+{
+  "task_id": "cf_64079",
+  "entry_point": "manage_data_skew",
+  "mutant_count": 8,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)",
+      "mutated_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=False)",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=False)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return {f'reducer_{i}': dict(reducer) for i, reducer in enumerate(reducers)}",
+      "mutated_line": "return {f'{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)",
+      "mutated_line": "sorted_data = sorted(data.items(), key=lambda x: x[2], reverse=True)",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[2], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)",
+      "mutated_line": "sorted_data = sorted(data.items(), key=lambda x: x[0], reverse=True)",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[0], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)",
+      "mutated_line": "sorted_data = sorted(data.items(), key=lambda x: x[0], reverse=True)",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[0], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)",
+      "mutated_line": "sorted_data = sorted(data.items(), key=lambda x: x[-1], reverse=True)",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[-1], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i % num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "reducers[i % num_reducers].append((key, frequency))",
+      "mutated_line": "return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i * num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "reducers[i % num_reducers].append((key, frequency))",
+      "mutated_line": "return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}",
+      "code": "def manage_data_skew(data, num_reducers):\n    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)\n    reducers = [[] for _ in range(num_reducers)]\n    for (i, (key, frequency)) in enumerate(sorted_data):\n        reducers[i + num_reducers].append((key, frequency))\n    return {f'reducer_{i}': dict(reducer) for (i, reducer) in enumerate(reducers)}"
+    }
+  ]
+}

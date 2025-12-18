@@ -1,0 +1,224 @@
+{
+  "task_id": "cf_38389",
+  "entry_point": "select_transactions",
+  "mutant_count": 31,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "total_size = 0",
+      "mutated_line": "total_size = 1",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 1\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "total_size = 0",
+      "mutated_line": "total_size = -1",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = -1\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "total_size = 0",
+      "mutated_line": "total_size = 1",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 1\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if total_size + size <= block_size_limit:",
+      "mutated_line": "if total_size + size < block_size_limit:",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size < block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if total_size + size <= block_size_limit:",
+      "mutated_line": "if total_size + size > block_size_limit:",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size > block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if total_size + size <= block_size_limit:",
+      "mutated_line": "if total_size + size == block_size_limit:",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size == block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 15,
+      "original_line": "total_size += size",
+      "mutated_line": "total_size -= size",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size -= size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee * (size * 1024 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee * (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee // (size * 1024 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee // (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)",
+      "mutated_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=False)",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=False)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "if total_size + size <= block_size_limit:",
+      "mutated_line": "if total_size - size <= block_size_limit:",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size - size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "if total_size + size <= block_size_limit:",
+      "mutated_line": "if total_size * size <= block_size_limit:",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size * size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 / 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 / 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 + 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 + 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024) ** 1024, size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024) ** 1024, size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size / 1024 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size / 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / ((size + 1024) * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / ((size + 1024) * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size ** 1024 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size ** 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 * 1025), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1025), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 * 1023), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1023), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 * 0), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 0), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 * 1), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1024 * -1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * -1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)",
+      "mutated_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[1], reverse=True)",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[1], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)",
+      "mutated_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[-1], reverse=True)",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[-1], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)",
+      "mutated_line": "sorted_transactions = sorted(fee_rates, key=lambda x: x[1], reverse=True)",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[1], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1025 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1025 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1023 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1023 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 0 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 0 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * 1 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * 1 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "fee_rates = [(fee / (size * 1024 * 1024), size, fee) for size, fee in transactions]",
+      "mutated_line": "fee_rates = [(fee / (size * -1024 * 1024), size, fee) for (size, fee) in transactions]",
+      "code": "from typing import List, Tuple\n\ndef select_transactions(transactions: List[Tuple[float, int]], block_size_limit: int) -> List[Tuple[float, int]]:\n    fee_rates = [(fee / (size * -1024 * 1024), size, fee) for (size, fee) in transactions]\n    sorted_transactions = sorted(fee_rates, key=lambda x: x[0], reverse=True)\n    selected_transactions = []\n    total_size = 0\n    for (_, size, fee) in sorted_transactions:\n        if total_size + size <= block_size_limit:\n            selected_transactions.append((size, fee))\n            total_size += size\n        else:\n            break\n    return selected_transactions"
+    }
+  ]
+}

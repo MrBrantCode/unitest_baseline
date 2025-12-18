@@ -1,0 +1,71 @@
+"""
+QUESTION:
+JJ has an array A of length N and an integer X. JJ can perform the following operation at most once:
+Select a [subsequence] of A and add X to all the elements of that subsequence.
+
+For example, if A = [2, 1, 6, 3, 5] and X = 7, we can select the subsequence [2, 3, 5] and add X to all the elements. Now the array A becomes [2 + 7, 1, 6, 3 + 7, 5 + 7] = [9, 1, 6, 10, 12].
+
+JJ wants to maximize the value of \displaystyle \sum_{i = 2}^{N} (A_{i - 1} \oplus A_{i}). Can you help him to do so?
+
+Here, \oplus denotes the [bitwise XOR operation].
+
+& & kya
+& 
+
+------ Input Format ------ 
+
+- The first line contains a single integer T — the number of test cases. Then the test cases follow.
+- The first line of each test case contains two space-separated integers N and X — the size of the array A and the parameter X mentioned in the statement.
+- The second line of each test case contains N space-separated integers A_{1}, A_{2}, \ldots, A_{N} denoting the array A.
+
+------ Output Format ------ 
+
+For each test case, output the maximum value of \displaystyle \sum_{i = 2}^{n} (A_{i - 1} \oplus A_{i}) which can be obtained after applying the given operation at most once.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$1 ≤ N ≤ 10^{5}$
+$1 ≤X ≤10^{9}$
+$1 ≤A_{i} ≤10^{9}$
+- The sum of $N$ over all test cases does not exceed $2 \cdot 10^{5}$.
+
+----- Sample Input 1 ------ 
+3
+2 1
+1 2
+4 1
+2 2 3 3
+5 2
+5 3 6 2 8
+
+----- Sample Output 1 ------ 
+3
+15
+43
+
+----- explanation 1 ------ 
+Test case $1$: It is optimal to not perform the given operation. So the answer will equal $1 \oplus 2 = 3$.
+
+Test case $2$: It is optimal to add $X = 1$ to the $2^{nd}$ and the $3^{rd}$ element. So $A$ will become $[2, 3, 4, 3]$ and the answer will be $(2 \oplus 3) + (3 \oplus 4) + (4 \oplus 3) = 15$.
+"""
+
+def maximize_xor_sum(A, X):
+    """
+    This function calculates the maximum value of the sum of bitwise XOR operations
+    after performing the given operation at most once on a subsequence of the array A.
+
+    Parameters:
+    A (list of int): The array of integers.
+    X (int): The integer value to be added to the subsequence.
+
+    Returns:
+    int: The maximum value of the sum of bitwise XOR operations.
+    """
+    n = len(A)
+    p, q = 0, 0
+    for i in range(1, n):
+        same = max(p + (A[i] ^ A[i - 1]), q + (A[i] ^ (A[i - 1] + X)))
+        change = max(p + ((A[i] + X) ^ A[i - 1]), q + ((A[i] + X) ^ (A[i - 1] + X)))
+        p, q = same, change
+    return max(p, q)

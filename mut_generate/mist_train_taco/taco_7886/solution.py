@@ -1,0 +1,70 @@
+"""
+QUESTION:
+This winter is so cold in Nvodsk! A group of n friends decided to buy k bottles of a soft drink called "Take-It-Light" to warm up a bit. Each bottle has l milliliters of the drink. Also they bought c limes and cut each of them into d slices. After that they found p grams of salt.
+
+To make a toast, each friend needs nl milliliters of the drink, a slice of lime and np grams of salt. The friends want to make as many toasts as they can, provided they all drink the same amount. How many toasts can each friend make?
+
+Input
+
+The first and only line contains positive integers n, k, l, c, d, p, nl, np, not exceeding 1000 and no less than 1. The numbers are separated by exactly one space.
+
+Output
+
+Print a single integer — the number of toasts each friend can make.
+
+Examples
+
+Input
+
+3 4 5 10 8 100 3 1
+
+
+Output
+
+2
+
+
+Input
+
+5 100 10 1 19 90 4 3
+
+
+Output
+
+3
+
+
+Input
+
+10 1000 1000 25 23 1 50 1
+
+
+Output
+
+0
+
+Note
+
+A comment to the first sample: 
+
+Overall the friends have 4 * 5 = 20 milliliters of the drink, it is enough to make 20 / 3 = 6 toasts. The limes are enough for 10 * 8 = 80 toasts and the salt is enough for 100 / 1 = 100 toasts. However, there are 3 friends in the group, so the answer is min(6, 80, 100) / 3 = 2.
+"""
+
+def calculate_toasts(n, k, l, c, d, p, nl, np):
+    # Calculate total resources
+    total_drink = k * l
+    total_limes = c * d
+    total_salt = p
+    
+    # Calculate required resources per toast for all friends
+    required_drink_per_toast = n * nl
+    required_limes_per_toast = n
+    required_salt_per_toast = n * np
+    
+    # Calculate maximum toasts possible with each resource
+    max_toasts_by_drink = total_drink // required_drink_per_toast
+    max_toasts_by_limes = total_limes // required_limes_per_toast
+    max_toasts_by_salt = total_salt // required_salt_per_toast
+    
+    # The number of toasts each friend can make is limited by the scarcest resource
+    return min(max_toasts_by_drink, max_toasts_by_limes, max_toasts_by_salt)

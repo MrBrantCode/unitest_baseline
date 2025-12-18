@@ -1,0 +1,30 @@
+"""
+QUESTION:
+Create a `play_rpsls(player1, player2)` function that takes two strings representing the shapes formed by each player in a game of rock-paper-scissors-lizard-Spock. The function should return the result of the game in the format "Player X wins!" or "It's a tie!" without using if-else statements and comparison operators. Assume valid input: "rock", "paper", "scissors", "lizard", or "Spock".
+"""
+
+def play_rpsls(player1, player2):
+    rules = {
+        ("rock", "lizard"): "Player 1 wins!",
+        ("rock", "scissors"): "Player 1 wins!",
+        ("paper", "rock"): "Player 1 wins!",
+        ("paper", "Spock"): "Player 1 wins!",
+        ("scissors", "paper"): "Player 1 wins!",
+        ("scissors", "lizard"): "Player 1 wins!",
+        ("lizard", "Spock"): "Player 1 wins!",
+        ("lizard", "paper"): "Player 1 wins!",
+        ("Spock", "rock"): "Player 1 wins!",
+        ("Spock", "scissors"): "Player 1 wins!",
+        ("rock", "rock"): "It's a tie!",
+        ("paper", "paper"): "It's a tie!",
+        ("scissors", "scissors"): "It's a tie!",
+        ("lizard", "lizard"): "It's a tie!",
+        ("Spock", "Spock"): "It's a tie!"
+    }
+    
+    result = rules.get((player1, player2))
+    
+    if result:
+        return result
+    else:
+        return "Player 2 wins!"

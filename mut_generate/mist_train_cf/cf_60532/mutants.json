@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_60532",
+  "entry_point": "merge_dictionaries",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if key in dict1:",
+      "mutated_line": "if key not in dict1:",
+      "code": "def merge_dictionaries(dict1, dict2):\n    for key in dict2:\n        if key not in dict1:\n            if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):\n                merge_dictionaries(dict1[key], dict2[key])\n            elif isinstance(dict1[key], (int, float)) and isinstance(dict2[key], (int, float)):\n                dict1[key] += dict2[key]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 4,
+      "original_line": "if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):",
+      "mutated_line": "if isinstance(dict1[key], dict) or isinstance(dict2[key], dict):",
+      "code": "def merge_dictionaries(dict1, dict2):\n    for key in dict2:\n        if key in dict1:\n            if isinstance(dict1[key], dict) or isinstance(dict2[key], dict):\n                merge_dictionaries(dict1[key], dict2[key])\n            elif isinstance(dict1[key], (int, float)) and isinstance(dict2[key], (int, float)):\n                dict1[key] += dict2[key]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "elif isinstance(dict1[key], (int, float)) and isinstance(dict2[key], (int, float)):",
+      "mutated_line": "elif isinstance(dict1[key], (int, float)) or isinstance(dict2[key], (int, float)):",
+      "code": "def merge_dictionaries(dict1, dict2):\n    for key in dict2:\n        if key in dict1:\n            if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):\n                merge_dictionaries(dict1[key], dict2[key])\n            elif isinstance(dict1[key], (int, float)) or isinstance(dict2[key], (int, float)):\n                dict1[key] += dict2[key]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 7,
+      "original_line": "dict1[key] += dict2[key]",
+      "mutated_line": "dict1[key] -= dict2[key]",
+      "code": "def merge_dictionaries(dict1, dict2):\n    for key in dict2:\n        if key in dict1:\n            if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):\n                merge_dictionaries(dict1[key], dict2[key])\n            elif isinstance(dict1[key], (int, float)) and isinstance(dict2[key], (int, float)):\n                dict1[key] -= dict2[key]\n        else:\n            dict1[key] = dict2[key]\n    return dict1"
+    }
+  ]
+}

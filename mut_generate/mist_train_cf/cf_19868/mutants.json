@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_19868",
+  "entry_point": "entrance",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 29,
+      "original_line": "if phone_number in self.customers:",
+      "mutated_line": "if phone_number not in self.customers:",
+      "code": "class Customer:\n\n    def __init__(self, name, address, phone_number, purchases=None):\n        self.name = name\n        self.address = address\n        self.phone_number = phone_number\n        self.purchases = purchases if purchases is not None else []\n\nclass CustomerDatabase:\n\n    def __init__(self):\n        self.customers = {}\n\n    def add_customer(self, customer):\n        self.customers[customer.phone_number] = customer\n\n    def get_customer(self, phone_number):\n        return self.customers.get(phone_number)\n\n    def update_customer(self, phone_number, name=None, address=None, purchases=None):\n        customer = self.get_customer(phone_number)\n        if customer:\n            if name:\n                customer.name = name\n            if address:\n                customer.address = address\n            if purchases:\n                customer.purchases = purchases\n\n    def delete_customer(self, phone_number):\n        if phone_number not in self.customers:\n            del self.customers[phone_number]\n\ndef entrance(name, address, phone_number, purchases=None):\n    customer = Customer(name, address, phone_number, purchases)\n    database = CustomerDatabase()\n    database.add_customer(customer)\n    return database"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "self.purchases = purchases if purchases is not None else []",
+      "mutated_line": "self.purchases = purchases if purchases is None else []",
+      "code": "class Customer:\n\n    def __init__(self, name, address, phone_number, purchases=None):\n        self.name = name\n        self.address = address\n        self.phone_number = phone_number\n        self.purchases = purchases if purchases is None else []\n\nclass CustomerDatabase:\n\n    def __init__(self):\n        self.customers = {}\n\n    def add_customer(self, customer):\n        self.customers[customer.phone_number] = customer\n\n    def get_customer(self, phone_number):\n        return self.customers.get(phone_number)\n\n    def update_customer(self, phone_number, name=None, address=None, purchases=None):\n        customer = self.get_customer(phone_number)\n        if customer:\n            if name:\n                customer.name = name\n            if address:\n                customer.address = address\n            if purchases:\n                customer.purchases = purchases\n\n    def delete_customer(self, phone_number):\n        if phone_number in self.customers:\n            del self.customers[phone_number]\n\ndef entrance(name, address, phone_number, purchases=None):\n    customer = Customer(name, address, phone_number, purchases)\n    database = CustomerDatabase()\n    database.add_customer(customer)\n    return database"
+    }
+  ]
+}

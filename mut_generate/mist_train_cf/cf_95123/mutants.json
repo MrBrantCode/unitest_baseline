@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_95123",
+  "entry_point": "filter_words",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "word = ''.join(char for char in word if char.isalnum())",
+      "mutated_line": "word = 'MUTATED'.join((char for char in word if char.isalnum()))",
+      "code": "import string\n\ndef filter_words(characters, words):\n    if isinstance(characters, str):\n        characters = list(characters.lower())\n    else:\n        characters = [char.lower() for char in characters]\n    filtered_words = []\n    for word in words:\n        word = word.lower()\n        word = 'MUTATED'.join((char for char in word if char.isalnum()))\n        if all((char in characters for char in word)):\n            filtered_words.append(word)\n    return filtered_words"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if all(char in characters for char in word):",
+      "mutated_line": "if all((char not in characters for char in word)):",
+      "code": "import string\n\ndef filter_words(characters, words):\n    if isinstance(characters, str):\n        characters = list(characters.lower())\n    else:\n        characters = [char.lower() for char in characters]\n    filtered_words = []\n    for word in words:\n        word = word.lower()\n        word = ''.join((char for char in word if char.isalnum()))\n        if all((char not in characters for char in word)):\n            filtered_words.append(word)\n    return filtered_words"
+    }
+  ]
+}

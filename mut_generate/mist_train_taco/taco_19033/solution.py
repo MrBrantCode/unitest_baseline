@@ -1,0 +1,36 @@
+"""
+QUESTION:
+Given an array of n positive integers. Find the sum of the maximum sum subsequence of the given array such that the integers in the subsequence are sorted in strictly increasing order i.e. a strictly increasing subsequence. 
+Example 1:
+Input: N = 5, arr[] = {1, 101, 2, 3, 100} 
+Output: 106
+Explanation:The maximum sum of a
+increasing sequence is obtained from
+{1, 2, 3, 100}
+Example 2:
+Input: N = 3, arr[] = {1, 2, 3}
+Output: 6
+Explanation:The maximum sum of a
+increasing sequence is obtained from
+{1, 2, 3}
+Your Task:  
+You don't need to read input or print anything. Complete the function maxSumIS() which takes N and array arr as input parameters and returns the maximum value.
+Expected Time Complexity: O(N^{2})
+Expected Auxiliary Space: O(N)
+Constraints:
+1 ≤ N ≤ 10^{3}
+1 ≤ arr[i] ≤ 10^{5}
+"""
+
+def max_sum_increasing_subsequence(arr, n=None):
+    if n is None:
+        n = len(arr)
+    
+    T = [arr[i] for i in range(n)]
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                T[i] = max(T[i], T[j] + arr[i])
+    
+    return max(T)

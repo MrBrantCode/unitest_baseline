@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_97348",
+  "entry_point": "count_character_matches",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "xor_result = [a ^ b for a, b in zip(ascii1, ascii2)]",
+      "mutated_line": "xor_result = [a | b for (a, b) in zip(ascii1, ascii2)]",
+      "code": "def count_character_matches(str1, str2):\n    ascii1 = [ord(c) for c in str1]\n    ascii2 = [ord(c) for c in str2]\n    xor_result = [a | b for (a, b) in zip(ascii1, ascii2)]\n    not_result = [~x for x in xor_result]\n    and_result = [a & b for (a, b) in zip(xor_result, not_result)]\n    not_and_result = [~x for x in and_result]\n    final_result = [a & b for (a, b) in zip(and_result, not_and_result)]\n    matches = sum((bin(x).count('1') for x in final_result))\n    return matches"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 9,
+      "original_line": "and_result = [a & b for a, b in zip(xor_result, not_result)]",
+      "mutated_line": "and_result = [a | b for (a, b) in zip(xor_result, not_result)]",
+      "code": "def count_character_matches(str1, str2):\n    ascii1 = [ord(c) for c in str1]\n    ascii2 = [ord(c) for c in str2]\n    xor_result = [a ^ b for (a, b) in zip(ascii1, ascii2)]\n    not_result = [~x for x in xor_result]\n    and_result = [a | b for (a, b) in zip(xor_result, not_result)]\n    not_and_result = [~x for x in and_result]\n    final_result = [a & b for (a, b) in zip(and_result, not_and_result)]\n    matches = sum((bin(x).count('1') for x in final_result))\n    return matches"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "final_result = [a & b for a, b in zip(and_result, not_and_result)]",
+      "mutated_line": "final_result = [a | b for (a, b) in zip(and_result, not_and_result)]",
+      "code": "def count_character_matches(str1, str2):\n    ascii1 = [ord(c) for c in str1]\n    ascii2 = [ord(c) for c in str2]\n    xor_result = [a ^ b for (a, b) in zip(ascii1, ascii2)]\n    not_result = [~x for x in xor_result]\n    and_result = [a & b for (a, b) in zip(xor_result, not_result)]\n    not_and_result = [~x for x in and_result]\n    final_result = [a | b for (a, b) in zip(and_result, not_and_result)]\n    matches = sum((bin(x).count('1') for x in final_result))\n    return matches"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "matches = sum(bin(x).count('1') for x in final_result)",
+      "mutated_line": "matches = sum((bin(x).count('') for x in final_result))",
+      "code": "def count_character_matches(str1, str2):\n    ascii1 = [ord(c) for c in str1]\n    ascii2 = [ord(c) for c in str2]\n    xor_result = [a ^ b for (a, b) in zip(ascii1, ascii2)]\n    not_result = [~x for x in xor_result]\n    and_result = [a & b for (a, b) in zip(xor_result, not_result)]\n    not_and_result = [~x for x in and_result]\n    final_result = [a & b for (a, b) in zip(and_result, not_and_result)]\n    matches = sum((bin(x).count('') for x in final_result))\n    return matches"
+    }
+  ]
+}

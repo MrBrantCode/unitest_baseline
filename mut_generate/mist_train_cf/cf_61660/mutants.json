@@ -1,0 +1,847 @@
+{
+  "task_id": "cf_61660",
+  "entry_point": "findBall",
+  "mutant_count": 120,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m or 0 <= y < n or 0 <= z < p",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m or 0 <= y < n or 0 <= z < p\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 10,
+      "original_line": "if not is_valid(x, y, z) or visited[x][y][z]:",
+      "mutated_line": "if not is_valid(x, y, z) and visited[x][y][z]:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) and visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x != m - 1:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x != m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited[x][y][z] = True",
+      "mutated_line": "visited[x][y][z] = False",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = False\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(-1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(-1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(1, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 2, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 2, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 0, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 0, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 0, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 0, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, -1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, -1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, -1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, -1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 1), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (1, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (1, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (-1, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (-1, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (1, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (1, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, +1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, +1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 1), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 1), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, -1), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, -1), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 1), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 1), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (+1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (+1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 1, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 1, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, -1, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, -1, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 1, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 1, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 1), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 1), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, -1), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, -1), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 1), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 1), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (2, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (2, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (0, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (0, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (0, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (0, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 1, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 1, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, -1, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, -1, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 1, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 1, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 1)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 1)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, -1)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, -1)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 1)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 1)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 < x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 < x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 > x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 > x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 == x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 == x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 < y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 < y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 > y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 > y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 == y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 == y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (0 < z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 < z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (0 > z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 > z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (0 == z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 == z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 11,
+      "original_line": "return -1",
+      "mutated_line": "return +1",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return +1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m + 1:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m + 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m * 1:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m * 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x - dx, y + dy, z + dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x - dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x * dx, y + dy, z + dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x * dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x + dx, y - dy, z + dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y - dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x + dx, y * dy, z + dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y * dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x + dx, y + dy, z - dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z - dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "nx, ny, nz = x + dx, y + dy, z + dz",
+      "mutated_line": "(nx, ny, nz) = (x + dx, y + dy, z * dz)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z * dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "visited = [[[False]*p for _ in range(n)] for _ in range(m)]",
+      "mutated_line": "visited = [[[False] / p for _ in range(n)] for _ in range(m)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] / p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "visited = [[[False]*p for _ in range(n)] for _ in range(m)]",
+      "mutated_line": "visited = [[[False] + p for _ in range(n)] for _ in range(m)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] + p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "visited = [[[False]*p for _ in range(n)] for _ in range(m)]",
+      "mutated_line": "visited = [[[False] ** p for _ in range(n)] for _ in range(m)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] ** p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(1, i, 0, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(1, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(-1, i, 0, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(-1, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(1, i, 0, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(1, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(0, i, 1, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 1, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(0, i, -1, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, -1, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "res = [dfs(0, i, 0, visited) for i in range(n)]",
+      "mutated_line": "res = [dfs(0, i, 1, visited) for i in range(n)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 1, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[1]), len(grid[0][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[1]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[-1]), len(grid[0][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[-1]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[1]), len(grid[0][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[1]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[0][1]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][1]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[0][-1]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][-1]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[0][1]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][1]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -2, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -2, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -0, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -0, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -0, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -0, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, --1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, --1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-2, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-2, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-0, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-0, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (-0, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-0, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]",
+      "mutated_line": "directions = [(0, 1, 0), (0, -1, 0), (--1, 0, 0), (1, 0, 0)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (--1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 1 <= x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 1 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return -1 <= x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return -1 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 1 <= x < m and 0 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 1 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 1 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 1 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and -1 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and -1 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 1 <= y < n and (0 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 1 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (1 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (1 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (-1 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (-1 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return 0 <= x < m and 0 <= y < n and 0 <= z < p",
+      "mutated_line": "return 0 <= x < m and 0 <= y < n and (1 <= z < p)",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (1 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return -1",
+      "mutated_line": "return -2",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -2\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -0\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -0\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "return -1",
+      "mutated_line": "return --1",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return --1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m - 2:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 2:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m - 0:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 0:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m - 0:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 0:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if x == m - 1:",
+      "mutated_line": "if x == m - -1:",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - -1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] not in [-2, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] not in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] / abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] / abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] * abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] * abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] - 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] - 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] * 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] * 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[1][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[1][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[-1][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[-1][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "m, n, p = len(grid), len(grid[0]), len(grid[0][0])",
+      "mutated_line": "(m, n, p) = (len(grid), len(grid[0]), len(grid[1][0]))",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[1][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 2]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 2]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 0]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 0]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 0]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 0]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + -1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + -1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "visited = [[[False]*p for _ in range(n)] for _ in range(m)]",
+      "mutated_line": "visited = [[[True] * p for _ in range(n)] for _ in range(m)]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[True] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [+2, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [+2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 3] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 3] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 1] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 1] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 0] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 0] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 1] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, 1] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, -2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-2, -2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-3, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-3, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-1, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-1, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-0, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-0, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-1, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [-1, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "dx, dy, dz = directions[grid[x][y][z]//abs(grid[x][y][z]) if grid[x][y][z] in [-2, 2] else (grid[x][y][z] + 1)]",
+      "mutated_line": "(dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [--2, 2] else grid[x][y][z] + 1]",
+      "code": "def findBall(grid):\n    (m, n, p) = (len(grid), len(grid[0]), len(grid[0][0]))\n    directions = [(0, 1, 0), (0, -1, 0), (-1, 0, 0), (1, 0, 0)]\n\n    def is_valid(x, y, z):\n        return 0 <= x < m and 0 <= y < n and (0 <= z < p)\n\n    def dfs(x, y, z, visited):\n        if not is_valid(x, y, z) or visited[x][y][z]:\n            return -1\n        if x == m - 1:\n            return y\n        visited[x][y][z] = True\n        (dx, dy, dz) = directions[grid[x][y][z] // abs(grid[x][y][z]) if grid[x][y][z] in [--2, 2] else grid[x][y][z] + 1]\n        (nx, ny, nz) = (x + dx, y + dy, z + dz)\n        return dfs(nx, ny, nz, visited)\n    visited = [[[False] * p for _ in range(n)] for _ in range(m)]\n    res = [dfs(0, i, 0, visited) for i in range(n)]\n    return res"
+    }
+  ]
+}

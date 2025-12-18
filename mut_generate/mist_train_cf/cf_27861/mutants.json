@@ -1,0 +1,196 @@
+{
+  "task_id": "cf_27861",
+  "entry_point": "softmax_loss",
+  "mutant_count": 27,
+  "mutants": [
+    {
+      "operator": "ASR",
+      "lineno": 24,
+      "original_line": "dx[range(N), y] -= 1",
+      "mutated_line": "dx[range(N), y] += 1",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] += 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 25,
+      "original_line": "dx /= N",
+      "mutated_line": "dx *= N",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx *= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores * np.sum(exp_scores, axis=1, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores * np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores // np.sum(exp_scores, axis=1, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores // np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 20,
+      "original_line": "correct_logprobs = -np.log(probs[range(N), y])",
+      "mutated_line": "correct_logprobs = +np.log(probs[range(N), y])",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = +np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "loss = np.sum(correct_logprobs) / N",
+      "mutated_line": "loss = np.sum(correct_logprobs) * N",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) * N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "loss = np.sum(correct_logprobs) / N",
+      "mutated_line": "loss = np.sum(correct_logprobs) // N",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) // N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "dx[range(N), y] -= 1",
+      "mutated_line": "dx[range(N), y] -= 2",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 2\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "dx[range(N), y] -= 1",
+      "mutated_line": "dx[range(N), y] -= 0",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 0\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "dx[range(N), y] -= 1",
+      "mutated_line": "dx[range(N), y] -= 0",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 0\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "dx[range(N), y] -= 1",
+      "mutated_line": "dx[range(N), y] -= -1",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= -1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "N = x.shape[0]",
+      "mutated_line": "N = x.shape[1]",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[1]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "N = x.shape[0]",
+      "mutated_line": "N = x.shape[-1]",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[-1]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "N = x.shape[0]",
+      "mutated_line": "N = x.shape[1]",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[1]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x + np.max(x, axis=1, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x + np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x * np.max(x, axis=1, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x * np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores / np.sum(exp_scores, axis=2, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=2, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores / np.sum(exp_scores, axis=0, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=0, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores / np.sum(exp_scores, axis=0, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=0, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)",
+      "mutated_line": "probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=False)",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=False)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x - np.max(x, axis=2, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=2, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x - np.max(x, axis=0, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=0, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x - np.max(x, axis=0, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=0, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x - np.max(x, axis=-1, keepdims=True))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=-1, keepdims=True))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))",
+      "mutated_line": "exp_scores = np.exp(x - np.max(x, axis=1, keepdims=False))",
+      "code": "import numpy as np\n\ndef softmax_loss(x, y):\n    \"\"\"\n    Computes the softmax loss and its gradient with respect to the input scores.\n\n    Inputs:\n    - x: Input scores, of shape (N, C) where x[i, j] is the score for the jth class\n         for the ith input.\n    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and\n         0 <= y[i] < C\n\n    Returns a tuple of:\n    - loss: Scalar giving the loss\n    - dx: Gradient of the loss with respect to x\n    \"\"\"\n    N = x.shape[0]\n    exp_scores = np.exp(x - np.max(x, axis=1, keepdims=False))\n    probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)\n    correct_logprobs = -np.log(probs[range(N), y])\n    loss = np.sum(correct_logprobs) / N\n    dx = probs.copy()\n    dx[range(N), y] -= 1\n    dx /= N\n    return (loss, dx)"
+    }
+  ]
+}

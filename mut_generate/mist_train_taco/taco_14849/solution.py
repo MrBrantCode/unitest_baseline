@@ -1,0 +1,75 @@
+"""
+QUESTION:
+There are N sweets in the store. The cost of the i^{th} sweet is A_{i} rupees. Chef is a regular customer, so after buying the i^{th} sweet, he gets a cashback of B_{i} rupees.
+
+Chef has R rupees. He is fond of all the sweets, so he wants you to calculate the maximum number of sweets he can buy. Note that he can buy the same type of sweet multiple times, as long as he has the money to do so.
+
+------ Input Format ------ 
+
+- The first line of input will contain T, the number of test cases.
+- Each test case consists of three lines of input.
+- The first line of each test case contains two space-separated integers N and R — the number of sweets in the shop and the amount of money Chef has.
+- The second line of each test case contains N space-separated integers A_{1}, A_{2}, \ldots, A_{N}.
+- The third line of each test case contains N space-separated integers B_{1}, B_{2}, \ldots, B_{N}.
+
+------ Output Format ------ 
+
+For each query, print on a new line the maximum number of sweets Chef can buy.
+
+------ Constraints ------ 
+
+$1 ≤T ≤2 \cdot 10^{5}$
+$1 ≤N ≤2 \cdot 10^{5}$
+$1 ≤B_{i} < A_{i} ≤10^{9}$
+$1 ≤R ≤ 10^{9}$
+- It is guaranteed that the sum of $N$ over all test cases does not exceed $2 \cdot 10^{5}$
+
+----- Sample Input 1 ------ 
+3
+3 3
+2 3 4
+1 1 1
+2 4
+5 4
+1 2
+4 10
+4 4 5 5
+1 2 4 2
+----- Sample Output 1 ------ 
+2
+1
+7
+
+----- explanation 1 ------ 
+Test case $1$: Chef buys the first sweet, which costs $2$ rupees and has a cashback of $1$ rupee. He now has $3 - 2 + 1 = 2$ rupees remaining. He once again buys the first sweet, which leaves him with $1$ rupee, at which point no more sweets can be bought.
+
+Test case $2$: Chef buys the second sweet once.
+"""
+
+import math
+
+def max_sweets_buyable(N, R, A, B):
+    # Create a list of tuples (cost, cashback)
+    pv_list = [(A[i], B[i]) for i in range(N)]
+    
+    # Sort by price first, then by difference (cost - cashback)
+    sort_by_p_list = sorted(pv_list, key=lambda x: x[0])
+    sorted_pv_list = sorted(sort_by_p_list, key=lambda x: x[0] - x[1])
+    
+    count = 0
+    r = R
+    
+    while True:
+        for i in range(N):
+            if r >= sorted_pv_list[i][0]:
+                budget = r - sorted_pv_list[i][0]
+                to_buy = 0
+                if budget > 0:
+                    to_buy = math.floor(budget / (sorted_pv_list[i][0] - sorted_pv_list[i][1]))
+                r = r - (to_buy + 1) * (sorted_pv_list[i][0] - sorted_pv_list[i][1])
+                count += to_buy + 1
+                break
+        else:
+            break
+    
+    return count

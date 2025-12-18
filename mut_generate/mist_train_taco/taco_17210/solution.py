@@ -1,0 +1,57 @@
+"""
+QUESTION:
+Stepan has the newest electronic device with a display. Different digits can be shown on it. Each digit is shown on a seven-section indicator like it is shown on the picture below. [Image] 
+
+So, for example, to show the digit 3 on the display, 5 sections must be highlighted; and for the digit 6, 6 sections must be highlighted. 
+
+The battery of the newest device allows to highlight at most n sections on the display. 
+
+Stepan wants to know the maximum possible integer number which can be shown on the display of his newest device. Your task is to determine this number. Note that this number must not contain leading zeros. Assume that the size of the display is enough to show any integer.
+
+
+-----Input-----
+
+The first line contains the integer n (2 ≤ n ≤ 100 000) — the maximum number of sections which can be highlighted on the display.
+
+
+-----Output-----
+
+Print the maximum integer which can be shown on the display of Stepan's newest device.
+
+
+-----Examples-----
+Input
+2
+
+Output
+1
+
+Input
+3
+
+Output
+7
+"""
+
+def max_display_number(n: int) -> str:
+    """
+    Calculate the maximum possible integer number which can be shown on the display
+    of Stepan's newest device given the maximum number of sections that can be highlighted.
+
+    Args:
+        n (int): The maximum number of sections which can be highlighted on the display.
+
+    Returns:
+        str: The maximum integer which can be shown on the display.
+    """
+    ones = n // 2
+    print_seven = False
+    
+    if n % 2 != 0:
+        ones -= 1
+        print_seven = True
+    
+    result = '7' if print_seven else ''
+    result += '1' * ones
+    
+    return result

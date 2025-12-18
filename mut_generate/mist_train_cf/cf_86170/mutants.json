@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_86170",
+  "entry_point": "killProcesses",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if processPriority[process] <= processPriority[kill]:",
+      "mutated_line": "if processPriority[process] < processPriority[kill]:",
+      "code": "from collections import defaultdict\n\ndef killProcesses(pid, ppid, priority, kill):\n    graph = defaultdict(list)\n    processPriority = {}\n    for i in range(len(ppid)):\n        graph[ppid[i]].append(pid[i])\n        processPriority[pid[i]] = priority[i]\n    killList = []\n    stack = [kill]\n    while stack:\n        process = stack.pop()\n        if processPriority[process] < processPriority[kill]:\n            killList.append(process)\n            stack.extend(graph[process])\n    return killList"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if processPriority[process] <= processPriority[kill]:",
+      "mutated_line": "if processPriority[process] > processPriority[kill]:",
+      "code": "from collections import defaultdict\n\ndef killProcesses(pid, ppid, priority, kill):\n    graph = defaultdict(list)\n    processPriority = {}\n    for i in range(len(ppid)):\n        graph[ppid[i]].append(pid[i])\n        processPriority[pid[i]] = priority[i]\n    killList = []\n    stack = [kill]\n    while stack:\n        process = stack.pop()\n        if processPriority[process] > processPriority[kill]:\n            killList.append(process)\n            stack.extend(graph[process])\n    return killList"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "if processPriority[process] <= processPriority[kill]:",
+      "mutated_line": "if processPriority[process] == processPriority[kill]:",
+      "code": "from collections import defaultdict\n\ndef killProcesses(pid, ppid, priority, kill):\n    graph = defaultdict(list)\n    processPriority = {}\n    for i in range(len(ppid)):\n        graph[ppid[i]].append(pid[i])\n        processPriority[pid[i]] = priority[i]\n    killList = []\n    stack = [kill]\n    while stack:\n        process = stack.pop()\n        if processPriority[process] == processPriority[kill]:\n            killList.append(process)\n            stack.extend(graph[process])\n    return killList"
+    }
+  ]
+}

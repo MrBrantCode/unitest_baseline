@@ -1,0 +1,280 @@
+{
+  "task_id": "cf_38898",
+  "entry_point": "process_migrations",
+  "mutant_count": 39,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if model_name not in graph:",
+      "mutated_line": "if model_name in graph:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 25,
+      "original_line": "indegree[dependent_model] -= 1",
+      "mutated_line": "indegree[dependent_model] += 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] += 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "model_name = operation[1]",
+      "mutated_line": "model_name = operation[2]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[2]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "model_name = operation[1]",
+      "mutated_line": "model_name = operation[0]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[0]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "model_name = operation[1]",
+      "mutated_line": "model_name = operation[0]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[0]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "model_name = operation[1]",
+      "mutated_line": "model_name = operation[-1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[-1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "dependencies = operation[2]",
+      "mutated_line": "dependencies = operation[3]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[3]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "dependencies = operation[2]",
+      "mutated_line": "dependencies = operation[1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[1]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "dependencies = operation[2]",
+      "mutated_line": "dependencies = operation[0]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[0]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "dependencies = operation[2]",
+      "mutated_line": "dependencies = operation[1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[1]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "dependencies = operation[2]",
+      "mutated_line": "dependencies = operation[-2]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[-2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "indegree[model_name] = 0",
+      "mutated_line": "indegree[model_name] = 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 1\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "indegree[model_name] = 0",
+      "mutated_line": "indegree[model_name] = -1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = -1\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "indegree[model_name] = 0",
+      "mutated_line": "indegree[model_name] = 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 1\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if dependency not in graph:",
+      "mutated_line": "if dependency in graph:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if model_name not in graph[dependency]:",
+      "mutated_line": "if model_name in graph[dependency]:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 17,
+      "original_line": "indegree[model_name] += 1",
+      "mutated_line": "indegree[model_name] -= 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] -= 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "queue = [model for model in indegree if indegree[model] == 0]",
+      "mutated_line": "queue = [model for model in indegree if indegree[model] != 0]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] != 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_model = queue.pop(0)",
+      "mutated_line": "current_model = queue.pop(1)",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(1)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_model = queue.pop(0)",
+      "mutated_line": "current_model = queue.pop(-1)",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(-1)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "current_model = queue.pop(0)",
+      "mutated_line": "current_model = queue.pop(1)",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(1)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "indegree[dependent_model] -= 1",
+      "mutated_line": "indegree[dependent_model] -= 2",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 2\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "indegree[dependent_model] -= 1",
+      "mutated_line": "indegree[dependent_model] -= 0",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 0\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "indegree[dependent_model] -= 1",
+      "mutated_line": "indegree[dependent_model] -= 0",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 0\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "indegree[dependent_model] -= 1",
+      "mutated_line": "indegree[dependent_model] -= -1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= -1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "if indegree[dependent_model] == 0:",
+      "mutated_line": "if indegree[dependent_model] != 0:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] != 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "indegree[dependency] = 0",
+      "mutated_line": "indegree[dependency] = 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 1\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "indegree[dependency] = 0",
+      "mutated_line": "indegree[dependency] = -1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = -1\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "indegree[dependency] = 0",
+      "mutated_line": "indegree[dependency] = 1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 1\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "indegree[model_name] += 1",
+      "mutated_line": "indegree[model_name] += 2",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 2\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "indegree[model_name] += 1",
+      "mutated_line": "indegree[model_name] += 0",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 0\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "indegree[model_name] += 1",
+      "mutated_line": "indegree[model_name] += 0",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 0\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "indegree[model_name] += 1",
+      "mutated_line": "indegree[model_name] += -1",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += -1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "queue = [model for model in indegree if indegree[model] == 0]",
+      "mutated_line": "queue = [model for model in indegree if indegree[model] == 1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 1]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "queue = [model for model in indegree if indegree[model] == 0]",
+      "mutated_line": "queue = [model for model in indegree if indegree[model] == -1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == -1]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "queue = [model for model in indegree if indegree[model] == 0]",
+      "mutated_line": "queue = [model for model in indegree if indegree[model] == 1]",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 1]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 0:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "if indegree[dependent_model] == 0:",
+      "mutated_line": "if indegree[dependent_model] == 1:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 1:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "if indegree[dependent_model] == 0:",
+      "mutated_line": "if indegree[dependent_model] == -1:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == -1:\n                queue.append(dependent_model)\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "if indegree[dependent_model] == 0:",
+      "mutated_line": "if indegree[dependent_model] == 1:",
+      "code": "def process_migrations(operations):\n    graph = {}\n    indegree = {}\n    for operation in operations:\n        model_name = operation[1]\n        dependencies = operation[2]\n        if model_name not in graph:\n            graph[model_name] = set()\n            indegree[model_name] = 0\n        for dependency in dependencies:\n            if dependency not in graph:\n                graph[dependency] = set()\n                indegree[dependency] = 0\n            if model_name not in graph[dependency]:\n                graph[dependency].add(model_name)\n                indegree[model_name] += 1\n    queue = [model for model in indegree if indegree[model] == 0]\n    result = []\n    while queue:\n        current_model = queue.pop(0)\n        result.append(current_model)\n        for dependent_model in graph[current_model]:\n            indegree[dependent_model] -= 1\n            if indegree[dependent_model] == 1:\n                queue.append(dependent_model)\n    return result"
+    }
+  ]
+}

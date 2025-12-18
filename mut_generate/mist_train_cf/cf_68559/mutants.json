@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_68559",
+  "entry_point": "prevent_data_skew",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def prevent_data_skew(file_sizes):\n    \"\"\"\"\"\"\n    file_sizes.sort(reverse=True)\n    num_nodes = len(file_sizes)\n    partitioning_plan = [[] for _ in range(num_nodes)]\n    for (i, file_size) in enumerate(file_sizes):\n        partitioning_plan[i % num_nodes].append(file_size)\n    return partitioning_plan"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "file_sizes.sort(reverse=True)",
+      "mutated_line": "file_sizes.sort(reverse=False)",
+      "code": "def prevent_data_skew(file_sizes):\n    \"\"\"\n    This function prevents data skew in Hadoop by ensuring even distribution of data across nodes in a Hadoop cluster.\n\n    Args:\n        file_sizes (list): A list of file sizes.\n\n    Returns:\n        list: A partitioning plan that minimizes data skew.\n    \"\"\"\n    file_sizes.sort(reverse=False)\n    num_nodes = len(file_sizes)\n    partitioning_plan = [[] for _ in range(num_nodes)]\n    for (i, file_size) in enumerate(file_sizes):\n        partitioning_plan[i % num_nodes].append(file_size)\n    return partitioning_plan"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "partitioning_plan[i % num_nodes].append(file_size)",
+      "mutated_line": "partitioning_plan[i * num_nodes].append(file_size)",
+      "code": "def prevent_data_skew(file_sizes):\n    \"\"\"\n    This function prevents data skew in Hadoop by ensuring even distribution of data across nodes in a Hadoop cluster.\n\n    Args:\n        file_sizes (list): A list of file sizes.\n\n    Returns:\n        list: A partitioning plan that minimizes data skew.\n    \"\"\"\n    file_sizes.sort(reverse=True)\n    num_nodes = len(file_sizes)\n    partitioning_plan = [[] for _ in range(num_nodes)]\n    for (i, file_size) in enumerate(file_sizes):\n        partitioning_plan[i * num_nodes].append(file_size)\n    return partitioning_plan"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 21,
+      "original_line": "partitioning_plan[i % num_nodes].append(file_size)",
+      "mutated_line": "partitioning_plan[i + num_nodes].append(file_size)",
+      "code": "def prevent_data_skew(file_sizes):\n    \"\"\"\n    This function prevents data skew in Hadoop by ensuring even distribution of data across nodes in a Hadoop cluster.\n\n    Args:\n        file_sizes (list): A list of file sizes.\n\n    Returns:\n        list: A partitioning plan that minimizes data skew.\n    \"\"\"\n    file_sizes.sort(reverse=True)\n    num_nodes = len(file_sizes)\n    partitioning_plan = [[] for _ in range(num_nodes)]\n    for (i, file_size) in enumerate(file_sizes):\n        partitioning_plan[i + num_nodes].append(file_size)\n    return partitioning_plan"
+    }
+  ]
+}

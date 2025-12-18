@@ -1,0 +1,777 @@
+{
+  "task_id": "cf_97306",
+  "entry_point": "get_day_name_and_holiday",
+  "mutant_count": 110,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) and year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = (year % 4 == 0 and year % 100 != 0) and year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "country = \"United States\"  # Replace with the desired country",
+      "mutated_line": "country = ''",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = ''\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "if (month, day) in holidays.get(country, {}):",
+      "mutated_line": "return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) not in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "day_name = datetime.datetime.strptime(date, \"%Y-%m-%d\").strftime(\"%A\")",
+      "mutated_line": "day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('')",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = (year % 4 == 0 or year % 100 != 0) or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = (year % 4 == 0 or year % 100 != 0) or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 != 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 != 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "\"United States\": {",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "\"United Kingdom\": {",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, '': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\"",
+      "mutated_line": "return ''",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "year, month, day = map(int, date.split(\"-\"))",
+      "mutated_line": "(year, month, day) = map(int, date.split(''))",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split(''))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 != 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 != 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 == 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 == 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year * 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year * 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year + 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year + 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 1",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 1\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == -1",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == -1\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 1",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 1\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): '', (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): '', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): ''}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): '', (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): '', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): ''}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return f\"{day_name}, {date} is a public holiday in {country}: {holiday_name}\"",
+      "mutated_line": "return f'{day_name}{date} is a public holiday in {country}: {holiday_name}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}{date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return f\"{day_name}, {date} is a public holiday in {country}: {holiday_name}\"",
+      "mutated_line": "return f'{day_name}, {date}{country}: {holiday_name}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date}{country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "return f\"{day_name}, {date} is a public holiday in {country}: {holiday_name}\"",
+      "mutated_line": "return f'{day_name}, {date} is a public holiday in {country}{holiday_name}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}{holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return f\"{day_name}, {date} is not a public holiday in {country}\"",
+      "mutated_line": "return f'{day_name}{date} is not a public holiday in {country}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}{date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "return f\"{day_name}, {date} is not a public holiday in {country}\"",
+      "mutated_line": "return f'{day_name}, {date}{country}'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date}{country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "day_name = datetime.datetime.strptime(date, \"%Y-%m-%d\").strftime(\"%A\")",
+      "mutated_line": "day_name = datetime.datetime.strptime(date, '').strftime('%A')",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year * 4 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year * 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year + 4 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year + 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 1 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 1 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == -1 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == -1 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 1 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 1 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year * 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year * 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year + 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year + 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 1 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 1 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != -1 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != -1 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 1 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 1 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 401 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 401 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 399 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 399 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 0 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 0 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 1 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 1 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 100 != 0 or year % -400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % -400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(2, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(0, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(0, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(-1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 2): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 0): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 0): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, -1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (8, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (6, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (0, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (1, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (-7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 5): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 3): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 0): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 1): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "(7, 4): \"Independence Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, -4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (13, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (11, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (0, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (1, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (-12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 26): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 24): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 0): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 1): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "(12, 25): \"Christmas Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, -25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(2, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(0, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(0, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(-1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 2): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 0): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 0): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "(1, 1): \"New Year's Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, -1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (13, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (11, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (0, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (1, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (-12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 26): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 24): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 0): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 1): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "(12, 25): \"Christmas Day\",",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, -25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (13, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (11, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (0, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (1, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (-12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 27): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 25): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 0): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 1): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "(12, 26): \"Boxing Day\"",
+      "mutated_line": "country = 'United States'",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, -26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 5 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 5 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 3 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 3 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 0 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 0 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 1 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 1 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % -4 == 0 and year % 100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % -4 == 0 and year % 100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 101 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 101 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 99 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 99 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 0 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 0 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % 1 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % 1 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "is_leap_year = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)",
+      "mutated_line": "is_leap_year = year % 4 == 0 and year % -100 != 0 or year % 400 == 0",
+      "code": "import datetime\n\ndef get_day_name_and_holiday(date):\n    try:\n        day_name = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%A')\n        (year, month, day) = map(int, date.split('-'))\n        is_leap_year = year % 4 == 0 and year % -100 != 0 or year % 400 == 0\n        holidays = {'United States': {(1, 1): \"New Year's Day\", (7, 4): 'Independence Day', (12, 25): 'Christmas Day'}, 'United Kingdom': {(1, 1): \"New Year's Day\", (12, 25): 'Christmas Day', (12, 26): 'Boxing Day'}}\n        country = 'United States'\n        if (month, day) in holidays.get(country, {}):\n            holiday_name = holidays[country][month, day]\n            return f'{day_name}, {date} is a public holiday in {country}: {holiday_name}'\n        else:\n            return f'{day_name}, {date} is not a public holiday in {country}'\n    except ValueError:\n        return \"Invalid date format. Please use the format 'YYYY-MM-DD'.\""
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+"""
+QUESTION:
+Given an array arr of N integers and an integer K, find the number of subsets of arr having XOR of elements as K.
+ 
+Example 1:
+Input:
+N = 4
+k = 6
+arr: 6 9 4 2
+Output:
+2
+Explanation:
+The subsets are 
+{4,2} and {6}
+Example 2:
+Input:
+N = 5
+K = 4
+arr: 1 2 3 4 5
+Output:
+4
+Explanation:
+The subsets are {1, 5},
+{4}, {1, 2, 3, 4},
+and {2, 3, 5}
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function subsetXOR() which takes the array arr[], its size N, and an integer K as input parameters and returns the number of subsets having xor as K
+ 
+Expected Time Complexity: O(N*M)
+Expected Space Complexity: O(N*M)
+Note: M = maximum value any XOR subset will acquire
+ 
+Constraints:
+1<=N<=20
+1<=K<=100
+0<=arr[i]<=100
+"""
+
+def count_subsets_with_xor(arr, N, K):
+    # Initialize a 2D DP array with dimensions (N+1) x 128
+    dp = [[0 for _ in range(128)] for _ in range(N + 1)]
+    
+    # Base case: There is one way to get XOR of 0 with an empty subset
+    dp[0][0] = 1
+    
+    # Fill the DP table
+    for i in range(1, N + 1):
+        for j in range(128):
+            dp[i][j] = dp[i - 1][j] + dp[i - 1][j ^ arr[i - 1]]
+    
+    # The answer is the number of subsets that result in XOR of K
+    return dp[N][K]

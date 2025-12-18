@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_47003",
+  "entry_point": "extract_urls",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "potential_urls = re.findall('https://[^\\s]*', input_string)",
+      "mutated_line": "potential_urls = re.findall('', input_string)",
+      "code": "import re\nfrom urllib.parse import urlparse\n\ndef extract_urls(input_string):\n    potential_urls = re.findall('', input_string)\n    valid_urls = [url for url in potential_urls if urlparse(url).scheme and urlparse(url).netloc and urlparse(url).path]\n    return valid_urls"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "valid_urls = [url for url in potential_urls if urlparse(url).scheme and urlparse(url).netloc and urlparse(url).path]",
+      "mutated_line": "valid_urls = [url for url in potential_urls if urlparse(url).scheme or urlparse(url).netloc or urlparse(url).path]",
+      "code": "import re\nfrom urllib.parse import urlparse\n\ndef extract_urls(input_string):\n    potential_urls = re.findall('https://[^\\\\s]*', input_string)\n    valid_urls = [url for url in potential_urls if urlparse(url).scheme or urlparse(url).netloc or urlparse(url).path]\n    return valid_urls"
+    }
+  ]
+}

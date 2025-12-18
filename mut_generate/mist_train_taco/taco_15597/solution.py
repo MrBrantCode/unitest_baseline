@@ -1,0 +1,62 @@
+"""
+QUESTION:
+A map of some object is a rectangular field consisting of n rows and n columns. Each cell is initially occupied by the sea but you can cover some some cells of the map with sand so that exactly k islands appear on the map. We will call a set of sand cells to be island if it is possible to get from each of them to each of them by moving only through sand cells and by moving from a cell only to a side-adjacent cell. The cells are called to be side-adjacent if they share a vertical or horizontal side. It is easy to see that islands do not share cells (otherwise they together form a bigger island).
+
+Find a way to cover some cells with sand so that exactly k islands appear on the n × n map, or determine that no such way exists. 
+
+Input
+
+The single line contains two positive integers n, k (1 ≤ n ≤ 100, 0 ≤ k ≤ n2) — the size of the map and the number of islands you should form.
+
+Output
+
+If the answer doesn't exist, print "NO" (without the quotes) in a single line.
+
+Otherwise, print "YES" in the first line. In the next n lines print the description of the map. Each of the lines of the description must consist only of characters 'S' and 'L', where 'S' is a cell that is occupied by the sea and 'L' is the cell covered with sand. The length of each line of the description must equal n.
+
+If there are multiple answers, you may print any of them.
+
+You should not maximize the sizes of islands.
+
+Examples
+
+Input
+
+5 2
+
+
+Output
+
+YES
+SSSSS
+LLLLL
+SSSSS
+LLLLL
+SSSSS
+
+
+Input
+
+5 25
+
+
+Output
+
+NO
+"""
+
+def generate_islands_map(n, k):
+    if k > (n * n + 1) // 2:
+        return "NO", None
+    
+    map_grid = [['S' for _ in range(n)] for _ in range(n)]
+    islands_count = 0
+    
+    for i in range(n):
+        for j in range(n):
+            if (i + j) % 2 == 0 and islands_count < k:
+                map_grid[i][j] = 'L'
+                islands_count += 1
+    
+    map_description = [''.join(row) for row in map_grid]
+    return "YES", map_description

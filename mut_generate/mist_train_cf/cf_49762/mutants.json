@@ -1,0 +1,63 @@
+{
+  "task_id": "cf_49762",
+  "entry_point": "build_cross_currency_funding_curve",
+  "mutant_count": 8,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "\"\"\"",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "adjusted_curve = {tenor: rate + unsecured_secured_spread for tenor, rate in risk_free_discount_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate - unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 20,
+      "original_line": "adjusted_curve = {tenor: rate + unsecured_secured_spread for tenor, rate in risk_free_discount_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate * unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for tenor, rate in adjusted_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate / foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for tenor, rate in adjusted_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate + foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 23,
+      "original_line": "converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for tenor, rate in adjusted_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate ** foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate + collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for tenor, rate in converted_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate - collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate - collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 26,
+      "original_line": "cross_currency_curve = {tenor: rate + collateral_funding_cost for tenor, rate in converted_curve.items()}",
+      "mutated_line": "cross_currency_curve = {tenor: rate * collateral_funding_cost for (tenor, rate) in converted_curve.items()}",
+      "code": "def build_cross_currency_funding_curve(risk_free_discount_curve, unsecured_secured_spread, foreign_exchange_forward_rates, collateral_funding_cost):\n    \"\"\"\n    Construct a cross-currency funding curve given market data inputs.\n\n    Parameters:\n    risk_free_discount_curve (dict): The risk-free discount curve in the payment currency.\n    unsecured_secured_spread (float): The spread between unsecured and secured funding rates in the payment currency.\n    foreign_exchange_forward_rates (dict): Foreign exchange forward rates to convert the curve to the collateral currency.\n    collateral_funding_cost (float): The funding cost of the collateral currency.\n\n    Returns:\n    dict: The resultant curve representing the time value of money in the payment currency, \n          adjusted for the cost of sourcing collateral in the collateral currency.\n    \"\"\"\n    adjusted_curve = {tenor: rate + unsecured_secured_spread for (tenor, rate) in risk_free_discount_curve.items()}\n    converted_curve = {tenor: rate * foreign_exchange_forward_rates[tenor] for (tenor, rate) in adjusted_curve.items()}\n    cross_currency_curve = {tenor: rate * collateral_funding_cost for (tenor, rate) in converted_curve.items()}\n    return cross_currency_curve"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "task_id": "taco_18636",
+  "entry_point": "do_math",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "xs = [int(''.join(filter(str.isdigit, x))) for x in xs]",
+      "mutated_line": "xs = [int('MUTATED'.join(filter(str.isdigit, x))) for x in xs]",
+      "code": "from functools import reduce\nfrom itertools import cycle\nfrom operator import add, truediv, mul, sub\n\ndef do_math(s: str) -> int:\n    xs = s.split()\n    xs.sort(key=lambda x: next((c for c in x if c.isalpha())))\n    xs = [int('MUTATED'.join(filter(str.isdigit, x))) for x in xs]\n    ops = cycle([add, sub, mul, truediv])\n    result = reduce(lambda a, b: next(ops)(a, b), xs)\n    return round(result)"
+    }
+  ]
+}

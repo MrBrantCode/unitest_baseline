@@ -1,0 +1,105 @@
+{
+  "task_id": "cf_51698",
+  "entry_point": "getImportance",
+  "mutant_count": 14,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if emap[eid].level > level_limit:",
+      "mutated_line": "if emap[eid].level >= level_limit:",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level >= level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if emap[eid].level > level_limit:",
+      "mutated_line": "if emap[eid].level <= level_limit:",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level <= level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if emap[eid].level > level_limit:",
+      "mutated_line": "if emap[eid].level != level_limit:",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level != level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance - sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance - sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance * sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance * sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 1\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return -1\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 1\n        return emap[eid].importance + sum((dfs(sid, level_limit - 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit + 1) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit + 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit * 1) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit * 1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit - 2) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 2) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit - 0) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 0) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit - 0) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - 0) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "return emap[eid].importance + sum(dfs(sid, level_limit - 1) for sid in emap[eid].subordinates)",
+      "mutated_line": "return emap[eid].importance + sum((dfs(sid, level_limit - -1) for sid in emap[eid].subordinates))",
+      "code": "class Employee:\n\n    def __init__(self, id: int, importance: int, level: int, subordinates: list):\n        self.id = id\n        self.importance = importance\n        self.level = level\n        self.subordinates = subordinates\n\ndef getImportance(employees: list, id: int, level: int) -> int:\n    emap = {e.id: e for e in employees}\n\n    def dfs(eid, level_limit):\n        if emap[eid].level > level_limit:\n            return 0\n        return emap[eid].importance + sum((dfs(sid, level_limit - -1) for sid in emap[eid].subordinates))\n    return dfs(id, level)"
+    }
+  ]
+}

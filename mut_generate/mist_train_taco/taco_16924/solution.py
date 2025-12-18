@@ -1,0 +1,45 @@
+"""
+QUESTION:
+Takahashi has a deposit of 100 yen (the currency of Japan) in AtCoder Bank.
+The bank pays an annual interest rate of 1 % compounded annually. (A fraction of less than one yen is discarded.)
+Assuming that nothing other than the interest affects Takahashi's balance, in how many years does the balance reach X yen or above for the first time?
+
+-----Constraints-----
+ -  101 \le X \le 10^{18} 
+ - All values in input are integers.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+X
+
+-----Output-----
+Print the number of years it takes for Takahashi's balance to reach X yen or above for the first time.
+
+-----Sample Input-----
+103
+
+-----Sample Output-----
+3
+
+ - The balance after one year is 101 yen.
+ - The balance after two years is 102 yen.
+ - The balance after three years is 103 yen.
+Thus, it takes three years for the balance to reach 103 yen or above.
+"""
+
+def calculate_years_to_reach_balance(X: int) -> int:
+    """
+    Calculate the number of years it takes for Takahashi's balance to reach or exceed X yen.
+
+    Parameters:
+    X (int): The target balance that Takahashi wants to reach or exceed.
+
+    Returns:
+    int: The number of years it takes for the balance to reach or exceed X.
+    """
+    balance = 100
+    years = 0
+    while balance < X:
+        balance = int(balance * 1.01)
+        years += 1
+    return years

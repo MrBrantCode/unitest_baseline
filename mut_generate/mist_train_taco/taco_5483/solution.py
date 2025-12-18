@@ -1,0 +1,92 @@
+"""
+QUESTION:
+Petya has an array of integers a_1, a_2, …, a_n. He only likes sorted arrays. Unfortunately, the given array could be arbitrary, so Petya wants to sort it.
+
+Petya likes to challenge himself, so he wants to sort array using only 3-cycles. More formally, in one operation he can pick 3 pairwise distinct indices i, j, and k (1 ≤ i, j, k ≤ n) and apply i → j → k → i cycle to the array a. It simultaneously places a_i on position j, a_j on position k, and a_k on position i, without changing any other element.
+
+For example, if a is [10, 50, 20, 30, 40, 60] and he chooses i = 2, j = 1, k = 5, then the array becomes [\underline{50}, \underline{40}, 20, 30, \underline{10}, 60].
+
+Petya can apply arbitrary number of 3-cycles (possibly, zero). You are to determine if Petya can sort his array a, i. e. make it non-decreasing.
+
+Input
+
+Each test contains multiple test cases. The first line contains the number of test cases t (1 ≤ t ≤ 5 ⋅ 10^5). Description of the test cases follows.
+
+The first line of each test case contains a single integer n (1 ≤ n ≤ 5 ⋅ 10^5) — the length of the array a.
+
+The second line of each test case contains n integers a_1, a_2, …, a_n (1 ≤ a_i ≤ n).
+
+It is guaranteed that the sum of n over all test cases does not exceed 5 ⋅ 10^5.
+
+Output
+
+For each test case, print "YES" (without quotes) if Petya can sort the array a using 3-cycles, and "NO" (without quotes) otherwise. You can print each letter in any case (upper or lower).
+
+Example
+
+Input
+
+
+7
+1
+1
+2
+2 2
+2
+2 1
+3
+1 2 3
+3
+2 1 3
+3
+3 1 2
+4
+2 1 4 3
+
+
+Output
+
+
+YES
+YES
+NO
+YES
+NO
+YES
+YES
+
+Note
+
+In the 6-th test case Petya can use the 3-cycle 1 → 3 → 2 → 1 to sort the array.
+
+In the 7-th test case Petya can apply 1 → 3 → 2 → 1 and make a = [1, 4, 2, 3]. Then he can apply 2 → 4 → 3 → 2 and finally sort the array.
+"""
+
+def can_sort_using_3_cycles(test_cases):
+    results = []
+    
+    for n, a in test_cases:
+        if len(set(a)) < n:
+            results.append('YES')
+            continue
+        
+        sorted_a = sorted(a)
+        num2i = {num: i for i, num in enumerate(sorted_a)}
+        vis = [0] * n
+        ans = 0
+        
+        for i in range(n):
+            if vis[i]:
+                continue
+            size, cur = 0, i
+            while not vis[cur]:
+                vis[cur] = 1
+                size, cur = size + 1, num2i[a[cur]]
+            ans += size % 2 == 0
+        
+        if ans == 0 or ans % 2 == 0:
+            results.append('YES')
+        else:
+            results.append('NO')
+    
+    return results

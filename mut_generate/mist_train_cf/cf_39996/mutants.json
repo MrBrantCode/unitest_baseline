@@ -1,0 +1,259 @@
+{
+  "task_id": "cf_39996",
+  "entry_point": "validate_ibound",
+  "mutant_count": 36,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 19,
+      "original_line": "return condition1 and condition2 and condition3 and condition4",
+      "mutated_line": "return condition1 or condition2 or condition3 or condition4",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 or condition2 or condition3 or condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all(((thicknesses >= min_thickness) | (ibound == 0)) & (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all(((thicknesses >= min_thickness) | (ibound == 0)) & (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all(((thicknesses >= min_thickness) | (ibound == 0)) ^ (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all(((thicknesses >= min_thickness) | (ibound == 0)) ^ (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "condition3 = np.all(ibound[np.isnan(top)] == 0)",
+      "mutated_line": "condition3 = np.all(ibound[np.isnan(top)] != 0)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] != 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] != 0)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] != 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=2)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=0)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=0)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=-1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) & (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) & (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) ^ (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) ^ (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses <= min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses <= min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses >= min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses >= min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses != min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses != min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "condition3 = np.all(ibound[np.isnan(top)] == 0)",
+      "mutated_line": "condition3 = np.all(ibound[np.isnan(top)] == 1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 1)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "condition3 = np.all(ibound[np.isnan(top)] == 0)",
+      "mutated_line": "condition3 = np.all(ibound[np.isnan(top)] == -1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == -1)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "condition3 = np.all(ibound[np.isnan(top)] == 0)",
+      "mutated_line": "condition3 = np.all(ibound[np.isnan(top)] == 1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 1)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 1)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == -1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == -1)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 1)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 1)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=2), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=0), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=0), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=-1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses > min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses > min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses < min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses < min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses == min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses == min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound != 0) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound != 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness - tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness - tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness * tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness * tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 1) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 1) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == -1) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == -1) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < (min_thickness + tolerance)))",
+      "mutated_line": "condition2 = np.all((thicknesses >= min_thickness) | (ibound == 1) | (thicknesses < min_thickness + tolerance))",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 1) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=1)] == 0)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=1)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=-1)] == 0)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=-1)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=0)] == 0)",
+      "mutated_line": "condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=1)] == 0)",
+      "code": "import numpy as np\n\ndef validate_ibound(ibound, botm, top, min_thickness, tolerance):\n    condition1 = np.array_equal(ibound.astype(bool), ~np.isnan(botm))\n    thicknesses = np.diff(np.concatenate((botm, top[:, None]), axis=1), axis=1)\n    condition2 = np.all((thicknesses >= min_thickness) | (ibound == 0) | (thicknesses < min_thickness + tolerance))\n    condition3 = np.all(ibound[np.isnan(top)] == 0)\n    condition4 = np.all(ibound[:, np.all(np.isnan(botm), axis=1)] == 0)\n    return condition1 and condition2 and condition3 and condition4"
+    }
+  ]
+}

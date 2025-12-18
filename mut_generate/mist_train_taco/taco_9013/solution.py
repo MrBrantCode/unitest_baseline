@@ -1,0 +1,31 @@
+"""
+QUESTION:
+AtCoder Inc. holds a contest every Saturday.
+There are two types of contests called ABC and ARC, and just one of them is held at a time.
+The company holds these two types of contests alternately: an ARC follows an ABC and vice versa.
+Given a string S representing the type of the contest held last week, print the string representing the type of the contest held this week.
+
+-----Constraints-----
+ - S is ABC or ARC.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+S
+
+-----Output-----
+Print the string representing the type of the contest held this week.
+
+-----Sample Input-----
+ABC
+
+-----Sample Output-----
+ARC
+
+They held an ABC last week, so they will hold an ARC this week.
+"""
+
+def determine_next_contest_type(last_week_contest_type: str) -> str:
+    if last_week_contest_type == 'ABC':
+        return 'ARC'
+    else:
+        return 'ABC'

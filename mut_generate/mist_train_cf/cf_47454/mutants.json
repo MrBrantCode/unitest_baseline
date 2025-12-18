@@ -1,0 +1,245 @@
+{
+  "task_id": "cf_47454",
+  "entry_point": "alienOrder",
+  "mutant_count": 34,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 42,
+      "original_line": "if len(res) == len(nodes):",
+      "mutated_line": "if len(res) != len(nodes):",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) != len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 46,
+      "original_line": "return \"\"",
+      "mutated_line": "return 'MUTATED'",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return 'MUTATED'"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 37,
+      "original_line": "indegree[neighbor] -= 1",
+      "mutated_line": "indegree[neighbor] += 1",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] += 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "nodes = {c: {'in': set(), 'out': set()} for c in chars}",
+      "mutated_line": "nodes = {c: {'': set(), 'out': set()} for c in chars}",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "nodes = {c: {'in': set(), 'out': set()} for c in chars}",
+      "mutated_line": "nodes = {c: {'in': set(), '': set()} for c in chars}",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), '': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if ch1 != ch2:",
+      "mutated_line": "if ch1 == ch2:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 == ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "for neighbor in nodes[curr]['out']:",
+      "mutated_line": "for neighbor in nodes[curr]['']:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "indegree[neighbor] -= 1",
+      "mutated_line": "indegree[neighbor] -= 2",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 2\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "indegree[neighbor] -= 1",
+      "mutated_line": "indegree[neighbor] -= 0",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 0\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "indegree[neighbor] -= 1",
+      "mutated_line": "indegree[neighbor] -= 0",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 0\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "indegree[neighbor] -= 1",
+      "mutated_line": "indegree[neighbor] -= -1",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= -1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 38,
+      "original_line": "if indegree[neighbor] == 0:",
+      "mutated_line": "if indegree[neighbor] != 0:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] != 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "chars = set(''.join(words))",
+      "mutated_line": "chars = set('MUTATED'.join(words))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set('MUTATED'.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "for word1, word2 in zip(words, words[1:]):",
+      "mutated_line": "for (ch1, ch2) in zip(word1, word2):",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[2:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "for word1, word2 in zip(words, words[1:]):",
+      "mutated_line": "for (ch1, ch2) in zip(word1, word2):",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[0:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "for word1, word2 in zip(words, words[1:]):",
+      "mutated_line": "for (ch1, ch2) in zip(word1, word2):",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[0:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "for word1, word2 in zip(words, words[1:]):",
+      "mutated_line": "for (ch1, ch2) in zip(word1, word2):",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[-1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if len(word2) < len(word1):",
+      "mutated_line": "return ''",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) <= len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if len(word2) < len(word1):",
+      "mutated_line": "return ''",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) >= len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if len(word2) < len(word1):",
+      "mutated_line": "return ''",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) != len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "q = deque(node for node, count in indegree.items() if count == 0)",
+      "mutated_line": "q = deque((node for (node, count) in indegree.items() if count != 0))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count != 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "if indegree[neighbor] == 0:",
+      "mutated_line": "if indegree[neighbor] == 1:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 1:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "if indegree[neighbor] == 0:",
+      "mutated_line": "if indegree[neighbor] == -1:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == -1:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "if indegree[neighbor] == 0:",
+      "mutated_line": "if indegree[neighbor] == 1:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 1:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 43,
+      "original_line": "return ''.join(res)",
+      "mutated_line": "return 'MUTATED'.join(res)",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return 'MUTATED'.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return \"\"",
+      "mutated_line": "for (ch1, ch2) in constraints:",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return 'MUTATED'\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "nodes[ch2]['in'].add(ch1)",
+      "mutated_line": "nodes[ch2][''].add(ch1)",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2][''].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "nodes[ch1]['out'].add(ch2)",
+      "mutated_line": "nodes[ch1][''].add(ch2)",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1][''].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 25,
+      "original_line": "indegree = Counter({node: len(edges['in']) for node, edges in nodes.items()})",
+      "mutated_line": "q = deque((node for (node, count) in indegree.items() if count == 0))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "q = deque(node for node, count in indegree.items() if count == 0)",
+      "mutated_line": "q = deque((node for (node, count) in indegree.items() if count == 1))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 1))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "q = deque(node for node, count in indegree.items() if count == 0)",
+      "mutated_line": "q = deque((node for (node, count) in indegree.items() if count == -1))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == -1))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "q = deque(node for node, count in indegree.items() if count == 0)",
+      "mutated_line": "q = deque((node for (node, count) in indegree.items() if count == 1))",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 1))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "nodes[ch2]['in'].add(ch1)",
+      "mutated_line": "nodes[ch2][''].add(ch1)",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2][''].add(ch1)\n                nodes[ch1]['out'].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "nodes[ch1]['out'].add(ch2)",
+      "mutated_line": "nodes[ch1][''].add(ch2)",
+      "code": "from collections import defaultdict, deque, Counter\n\ndef alienOrder(words, constraints):\n    chars = set(''.join(words))\n    nodes = {c: {'in': set(), 'out': set()} for c in chars}\n    for (word1, word2) in zip(words, words[1:]):\n        for (ch1, ch2) in zip(word1, word2):\n            if ch1 != ch2:\n                nodes[ch2]['in'].add(ch1)\n                nodes[ch1][''].add(ch2)\n                break\n            elif len(word2) < len(word1):\n                return ''\n    for (ch1, ch2) in constraints:\n        nodes[ch2]['in'].add(ch1)\n        nodes[ch1]['out'].add(ch2)\n    indegree = Counter({node: len(edges['in']) for (node, edges) in nodes.items()})\n    q = deque((node for (node, count) in indegree.items() if count == 0))\n    res = []\n    while q:\n        curr = q.popleft()\n        res.append(curr)\n        for neighbor in nodes[curr]['out']:\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                q.append(neighbor)\n    if len(res) == len(nodes):\n        return ''.join(res)\n    return ''"
+    }
+  ]
+}

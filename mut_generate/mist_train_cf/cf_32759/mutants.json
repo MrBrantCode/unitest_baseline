@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_32759",
+  "entry_point": "process_queue",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "results[result[\"id\"]] = result[\"result\"]",
+      "mutated_line": "results[result['id']] = result['']",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 2}, task).result()\n                results[result['id']] = result['']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "results[result[\"id\"]] = result[\"result\"]",
+      "mutated_line": "results[result['']] = result['result']",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 2}, task).result()\n                results[result['']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "results[task[\"id\"]] = f\"Error processing task: {str(e)}\"",
+      "mutated_line": "results[task['id']] = f'{str(e)}'",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'{str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "results[task[\"id\"]] = f\"Error processing task: {str(e)}\"",
+      "mutated_line": "results[task['']] = f'Error processing task: {str(e)}'",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'': task['id'], 'result': task['data'] * 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'': task['id'], 'result': task['data'] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], '': task['data'] * 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], '': task['data'] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] / 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] / 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] + 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] + 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] ** 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] ** 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task[''], 'result': task['data'] * 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task[''], 'result': task['data'] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 3}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 3}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 1}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 1}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 0}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 0}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 1}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * 1}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * -2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task['data'] * -2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "result = executor.submit(lambda task: {\"id\": task[\"id\"], \"result\": task[\"data\"] * 2}, task).result()",
+      "mutated_line": "result = executor.submit(lambda task: {'id': task['id'], 'result': task[''] * 2}, task).result()",
+      "code": "import json\nfrom concurrent.futures import ThreadPoolExecutor\n\ndef process_queue(task_queue, num_threads):\n    results = {}\n    with ThreadPoolExecutor(max_workers=num_threads) as executor:\n        while not task_queue.empty():\n            task = task_queue.get()\n            try:\n                result = executor.submit(lambda task: {'id': task['id'], 'result': task[''] * 2}, task).result()\n                results[result['id']] = result['result']\n            except Exception as e:\n                results[task['id']] = f'Error processing task: {str(e)}'\n            finally:\n                task_queue.task_done()\n    return results"
+    }
+  ]
+}

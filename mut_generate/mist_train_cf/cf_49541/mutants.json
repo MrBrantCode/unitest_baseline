@@ -1,0 +1,532 @@
+{
+  "task_id": "cf_49541",
+  "entry_point": "count_unique_paths",
+  "mutant_count": 75,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 and px > N and (py < 1) and (py > M) and visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 and px > N and (py < 1) and (py > M) and visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if (px, py) == goal:",
+      "mutated_line": "if (px, py) != goal:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) != goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "visited[px][py] = True",
+      "mutated_line": "",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = False\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) - dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) - dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = (dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1)) * dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = (dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1)) * dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "visited[px][py] = False",
+      "mutated_line": "visited[px][py] = True",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = True\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[True for _ in range(M + 1)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[True for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px <= 1 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px <= 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px >= 1 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px >= 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px != 1 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px != 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px >= N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px >= N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px <= N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px <= N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px != N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px != N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py <= 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py <= 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py >= 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py >= 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py != 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py != 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 1 or (py >= M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py >= M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 1 or (py <= M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py <= M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 1 or (py != M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py != M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 1\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return -1\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 1\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return 1",
+      "mutated_line": "return 2",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 2\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return 1",
+      "mutated_line": "return 0",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 0\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return 1",
+      "mutated_line": "return 0",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 0\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "return 1",
+      "mutated_line": "return -1",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return -1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) - dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) - dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = (dfs(px - 1, py) + dfs(px + 1, py)) * dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = (dfs(px - 1, py) + dfs(px + 1, py)) * dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N - 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N - 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N * 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N * 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 2 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 2 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 0 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 0 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 0 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 0 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < -1 or px > N or py < 1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < -1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 2 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 2 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 0 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 0 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < 0 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 0 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if px < 1 or px > N or py < 1 or py > M or visited[px][py]:",
+      "mutated_line": "if px < 1 or px > N or py < -1 or (py > M) or visited[px][py]:",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < -1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) - dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) - dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) * dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) * dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py - 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py - 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py * 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py * 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M - 1)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M - 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M * 1)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M * 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N + 2)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 2)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N + 0)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 0)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N + 0)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 0)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 1)] for _ in range(N + -1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + -1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py + 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py + 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py * 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py * 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 2)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 2)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 0)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 0)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 0)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 0)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "dfs(px, py+1)",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + -1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + -1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 2)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 2)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 0)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 0)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + 0)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 0)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "visited = [[False for _ in range(M+1)] for _ in range(N+1)]",
+      "mutated_line": "visited = [[False for _ in range(M + -1)] for _ in range(N + 1)]",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + -1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px + 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px + 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px * 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px * 1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px - 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px - 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px * 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px * 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 2) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 2) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 0) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 0) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 0) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - 0) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "dfs(px, py-1) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - -1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 1, py) + dfs(px, py - -1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 2, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 2, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 0, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 0, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - 0, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 0, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "dfs(px-1, py) +",
+      "mutated_line": "paths = dfs(px - -1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - -1, py) + dfs(px + 1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 2, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 2, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 0, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 0, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + 0, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + 0, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "dfs(px+1, py) +",
+      "mutated_line": "paths = dfs(px - 1, py) + dfs(px + -1, py) + dfs(px, py - 1) + dfs(px, py + 1)",
+      "code": "def count_unique_paths(N, M, start, goal):\n    \"\"\"\n    Calculate the number of unique paths from a given start point to a goal point in an NxM grid.\n\n    Args:\n        N (int): The number of rows in the grid.\n        M (int): The number of columns in the grid.\n        start (tuple): The start point (px, py).\n        goal (tuple): The goal point (gx, gy).\n\n    Returns:\n        int: The number of unique paths from start to goal.\n    \"\"\"\n    visited = [[False for _ in range(M + 1)] for _ in range(N + 1)]\n\n    def dfs(px, py):\n        if px < 1 or px > N or py < 1 or (py > M) or visited[px][py]:\n            return 0\n        if (px, py) == goal:\n            return 1\n        visited[px][py] = True\n        paths = dfs(px - 1, py) + dfs(px + -1, py) + dfs(px, py - 1) + dfs(px, py + 1)\n        visited[px][py] = False\n        return paths\n    return dfs(*start)"
+    }
+  ]
+}

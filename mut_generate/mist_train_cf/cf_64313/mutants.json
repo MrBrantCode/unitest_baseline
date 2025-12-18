@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_64313",
+  "entry_point": "advanced_filter",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "if head.startswith(prefix) and head.endswith(suffix) and infix in head:",
+      "mutated_line": "if head.startswith(prefix) or head.endswith(suffix) or infix in head:",
+      "code": "from typing import List, Tuple\n\ndef advanced_filter(strings: List[str], prefix_suffix_inner: Tuple[str, str, str]) -> List[str]:\n    if not strings:\n        return []\n    (prefix, suffix, infix) = prefix_suffix_inner\n    (head, *tail) = strings\n    if head.startswith(prefix) or head.endswith(suffix) or infix in head:\n        return [head] + advanced_filter(tail, prefix_suffix_inner)\n    else:\n        return advanced_filter(tail, prefix_suffix_inner)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if head.startswith(prefix) and head.endswith(suffix) and infix in head:",
+      "mutated_line": "if head.startswith(prefix) and head.endswith(suffix) and (infix not in head):",
+      "code": "from typing import List, Tuple\n\ndef advanced_filter(strings: List[str], prefix_suffix_inner: Tuple[str, str, str]) -> List[str]:\n    if not strings:\n        return []\n    (prefix, suffix, infix) = prefix_suffix_inner\n    (head, *tail) = strings\n    if head.startswith(prefix) and head.endswith(suffix) and (infix not in head):\n        return [head] + advanced_filter(tail, prefix_suffix_inner)\n    else:\n        return advanced_filter(tail, prefix_suffix_inner)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "return [head] + advanced_filter(tail, prefix_suffix_inner)",
+      "mutated_line": "return [head] - advanced_filter(tail, prefix_suffix_inner)",
+      "code": "from typing import List, Tuple\n\ndef advanced_filter(strings: List[str], prefix_suffix_inner: Tuple[str, str, str]) -> List[str]:\n    if not strings:\n        return []\n    (prefix, suffix, infix) = prefix_suffix_inner\n    (head, *tail) = strings\n    if head.startswith(prefix) and head.endswith(suffix) and (infix in head):\n        return [head] - advanced_filter(tail, prefix_suffix_inner)\n    else:\n        return advanced_filter(tail, prefix_suffix_inner)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 15,
+      "original_line": "return [head] + advanced_filter(tail, prefix_suffix_inner)",
+      "mutated_line": "return [head] * advanced_filter(tail, prefix_suffix_inner)",
+      "code": "from typing import List, Tuple\n\ndef advanced_filter(strings: List[str], prefix_suffix_inner: Tuple[str, str, str]) -> List[str]:\n    if not strings:\n        return []\n    (prefix, suffix, infix) = prefix_suffix_inner\n    (head, *tail) = strings\n    if head.startswith(prefix) and head.endswith(suffix) and (infix in head):\n        return [head] * advanced_filter(tail, prefix_suffix_inner)\n    else:\n        return advanced_filter(tail, prefix_suffix_inner)"
+    }
+  ]
+}

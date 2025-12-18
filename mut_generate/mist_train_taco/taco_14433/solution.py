@@ -1,0 +1,44 @@
+"""
+QUESTION:
+Takahashi is solving quizzes. He has easily solved all but the last one.
+The last quiz has three choices: 1, 2, and 3.
+With his supernatural power, Takahashi has found out that the choices A and B are both wrong.
+Print the correct choice for this problem.
+
+-----Constraints-----
+ - Each of the numbers A and B is 1, 2, or 3.
+ - A and B are different.
+
+-----Input-----
+Input is given from Standard Input in the following format:
+A
+B
+
+-----Output-----
+Print the correct choice.
+
+-----Sample Input-----
+3
+1
+
+-----Sample Output-----
+2
+
+When we know 3 and 1 are both wrong, the correct choice is 2.
+"""
+
+def find_correct_choice(A: int, B: int) -> int:
+    """
+    Finds the correct choice from the quiz given that A and B are wrong choices.
+
+    Parameters:
+    - A (int): One of the wrong choices (1, 2, or 3).
+    - B (int): The other wrong choice (1, 2, or 3).
+
+    Returns:
+    - int: The correct choice (1, 2, or 3).
+    """
+    choices = [1, 2, 3]
+    choices.remove(A)
+    choices.remove(B)
+    return choices[0]

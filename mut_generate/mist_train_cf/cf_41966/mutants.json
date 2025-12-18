@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_41966",
+  "entry_point": "entrance",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "reconstructed_A = np.dot(U[:, :k] * S[:k], Vt[:k, :])",
+      "mutated_line": "reconstructed_A = np.dot(U[:, :k] / S[:k], Vt[:k, :])",
+      "code": "from typing import List\nimport numpy as np\n\ndef entrance(A: List[List[float]], k: int) -> List[List[float]]:\n    A = np.array(A)\n    (U, S, Vt) = np.linalg.svd(A, full_matrices=False)\n    reconstructed_A = np.dot(U[:, :k] / S[:k], Vt[:k, :])\n    return reconstructed_A.tolist()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "reconstructed_A = np.dot(U[:, :k] * S[:k], Vt[:k, :])",
+      "mutated_line": "reconstructed_A = np.dot(U[:, :k] + S[:k], Vt[:k, :])",
+      "code": "from typing import List\nimport numpy as np\n\ndef entrance(A: List[List[float]], k: int) -> List[List[float]]:\n    A = np.array(A)\n    (U, S, Vt) = np.linalg.svd(A, full_matrices=False)\n    reconstructed_A = np.dot(U[:, :k] + S[:k], Vt[:k, :])\n    return reconstructed_A.tolist()"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "reconstructed_A = np.dot(U[:, :k] * S[:k], Vt[:k, :])",
+      "mutated_line": "reconstructed_A = np.dot(U[:, :k] ** S[:k], Vt[:k, :])",
+      "code": "from typing import List\nimport numpy as np\n\ndef entrance(A: List[List[float]], k: int) -> List[List[float]]:\n    A = np.array(A)\n    (U, S, Vt) = np.linalg.svd(A, full_matrices=False)\n    reconstructed_A = np.dot(U[:, :k] ** S[:k], Vt[:k, :])\n    return reconstructed_A.tolist()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "U, S, Vt = np.linalg.svd(A, full_matrices=False)",
+      "mutated_line": "(U, S, Vt) = np.linalg.svd(A, full_matrices=True)",
+      "code": "from typing import List\nimport numpy as np\n\ndef entrance(A: List[List[float]], k: int) -> List[List[float]]:\n    A = np.array(A)\n    (U, S, Vt) = np.linalg.svd(A, full_matrices=True)\n    reconstructed_A = np.dot(U[:, :k] * S[:k], Vt[:k, :])\n    return reconstructed_A.tolist()"
+    }
+  ]
+}

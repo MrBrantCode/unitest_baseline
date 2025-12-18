@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_66213",
+  "entry_point": "process_text",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "if stop_words is None:",
+      "mutated_line": "if stop_words is not None:",
+      "code": "import re\n\ndef process_text(input_text, stop_words=None):\n    if stop_words is not None:\n        stop_words = []\n    sentences = re.split('(?<=[^A-Z].[.?]) +(?=[A-Z])', input_text)\n    words_in_sentences = []\n    for sentence in sentences:\n        words = re.findall('\\\\b\\\\w+\\\\b', sentence)\n        words = [word for word in words if word.lower() not in stop_words]\n        if words:\n            words_in_sentences.append(words)\n    return words_in_sentences"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "sentences = re.split(r'(?<=[^A-Z].[.?]) +(?=[A-Z])', input_text)",
+      "mutated_line": "sentences = re.split('', input_text)",
+      "code": "import re\n\ndef process_text(input_text, stop_words=None):\n    if stop_words is None:\n        stop_words = []\n    sentences = re.split('', input_text)\n    words_in_sentences = []\n    for sentence in sentences:\n        words = re.findall('\\\\b\\\\w+\\\\b', sentence)\n        words = [word for word in words if word.lower() not in stop_words]\n        if words:\n            words_in_sentences.append(words)\n    return words_in_sentences"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "words = re.findall(r'\\b\\w+\\b', sentence)",
+      "mutated_line": "words = re.findall('', sentence)",
+      "code": "import re\n\ndef process_text(input_text, stop_words=None):\n    if stop_words is None:\n        stop_words = []\n    sentences = re.split('(?<=[^A-Z].[.?]) +(?=[A-Z])', input_text)\n    words_in_sentences = []\n    for sentence in sentences:\n        words = re.findall('', sentence)\n        words = [word for word in words if word.lower() not in stop_words]\n        if words:\n            words_in_sentences.append(words)\n    return words_in_sentences"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "words = [word for word in words if word.lower() not in stop_words]",
+      "mutated_line": "words = [word for word in words if word.lower() in stop_words]",
+      "code": "import re\n\ndef process_text(input_text, stop_words=None):\n    if stop_words is None:\n        stop_words = []\n    sentences = re.split('(?<=[^A-Z].[.?]) +(?=[A-Z])', input_text)\n    words_in_sentences = []\n    for sentence in sentences:\n        words = re.findall('\\\\b\\\\w+\\\\b', sentence)\n        words = [word for word in words if word.lower() in stop_words]\n        if words:\n            words_in_sentences.append(words)\n    return words_in_sentences"
+    }
+  ]
+}

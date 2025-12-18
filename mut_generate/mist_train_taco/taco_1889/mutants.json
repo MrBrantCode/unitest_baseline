@@ -1,0 +1,14 @@
+{
+  "task_id": "taco_1889",
+  "entry_point": "create_overloaded_class",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "prep['_Meta__DCT'] = prep",
+      "mutated_line": "prep[''] = prep",
+      "code": "from collections import defaultdict\n\ndef create_overloaded_class(base_class, overloaded_methods):\n\n    def setter(prep, k, v, supSetter):\n        if callable(v):\n\n            def wrap(*args):\n                f = prep.d[k][len(args)]\n                if isinstance(f, int):\n                    raise AttributeError()\n                return f(*args)\n            prep.d[k][v.__code__.co_argcount] = v\n            v = wrap\n        supSetter(k, v)\n\n    class Prep(dict):\n\n        def __init__(self):\n            self.d = defaultdict(lambda : defaultdict(int))\n\n        def __setitem__(self, k, v):\n            setter(self, k, v, super().__setitem__)\n\n    class Meta(type):\n\n        @classmethod\n        def __prepare__(cls, *args, **kwds):\n            return Prep()\n\n        def __new__(metacls, name, bases, prep, **kwargs):\n            prep[''] = prep\n            return super().__new__(metacls, name, bases, prep, **kwargs)\n\n        def __setattr__(self, k, v):\n            setter(self.__DCT, k, v, super().__setattr__)\n\n    class OverloadedClass(base_class, metaclass=Meta):\n        pass\n    for (method_name, method_list) in overloaded_methods.items():\n        for method in method_list:\n            setattr(OverloadedClass, method_name, method)\n    return OverloadedClass"
+    }
+  ]
+}

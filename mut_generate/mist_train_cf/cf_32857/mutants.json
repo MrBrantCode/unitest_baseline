@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_32857",
+  "entry_point": "password",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "command = f'powershell -command \"&{{Write-Host \\\\\"User: {user} | Password: {password}\\\\\"}}\"'",
+      "mutated_line": "command = f'{user} | Password: {password}\\\\\"}}\"'",
+      "code": "from typing import Tuple, Callable\n\nclass CommandLine:\n\n    def __init__(self, command: str):\n        self.command = command\n\ndef password(user: str, password: str) -> Tuple[CommandLine, Callable[[str], None]]:\n    command = f'{user} | Password: {password}\\\\\"}}\"'\n\n    def recover_files(directory: str) -> None:\n        pass\n    return (CommandLine(command), recover_files)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "command = f'powershell -command \"&{{Write-Host \\\\\"User: {user} | Password: {password}\\\\\"}}\"'",
+      "mutated_line": "command = f'powershell -command \"&{{Write-Host \\\\\"User: {user}{password}\\\\\"}}\"'",
+      "code": "from typing import Tuple, Callable\n\nclass CommandLine:\n\n    def __init__(self, command: str):\n        self.command = command\n\ndef password(user: str, password: str) -> Tuple[CommandLine, Callable[[str], None]]:\n    command = f'powershell -command \"&{{Write-Host \\\\\"User: {user}{password}\\\\\"}}\"'\n\n    def recover_files(directory: str) -> None:\n        pass\n    return (CommandLine(command), recover_files)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "command = f'powershell -command \"&{{Write-Host \\\\\"User: {user} | Password: {password}\\\\\"}}\"'",
+      "mutated_line": "command = f'powershell -command \"&{{Write-Host \\\\\"User: {user} | Password: {password}'",
+      "code": "from typing import Tuple, Callable\n\nclass CommandLine:\n\n    def __init__(self, command: str):\n        self.command = command\n\ndef password(user: str, password: str) -> Tuple[CommandLine, Callable[[str], None]]:\n    command = f'powershell -command \"&{{Write-Host \\\\\"User: {user} | Password: {password}'\n\n    def recover_files(directory: str) -> None:\n        pass\n    return (CommandLine(command), recover_files)"
+    }
+  ]
+}

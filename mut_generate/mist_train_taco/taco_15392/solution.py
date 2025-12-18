@@ -1,0 +1,47 @@
+"""
+QUESTION:
+This challenge is based on [the kata](https://www.codewars.com/kata/n-smallest-elements-in-original-order) by GiacomoSorbi. Before doing this one it is advisable to complete the non-performance version first.
+
+___
+
+# Task
+
+You will be given an array of random integers and a number `n`. You have to extract `n` smallest integers out of it **preserving the original order**.
+
+# Examples
+
+```python
+performant_smallest([1, 2, 3, 4, 5], 3)     ==   [1, 2, 3]
+performant_smallest([5, 4, 3, 2, 1], 3)     ==   [3, 2, 1]
+performant_smallest([1, 2, 3, 4, 1], 3)     ==   [1, 2, 1]
+performant_smallest([2, 1, 3, 2, 3], 3)     ==   [2, 1, 2]
+```
+
+# Notes
+
+* There will be duplicates in the array, and they have to be returned in the order of their each separate appearence.
+* This kata is an example of the "know your data" principle. Remember this while searching for the correct approach.
+
+# Performance tests
+
+```python
+Tests: 15
+Array size: 800,000
+Values range: [1; 50]
+Number of elements to return: 25-50% of the array
+```
+"""
+
+from collections import Counter
+from itertools import count, islice
+
+def extract_n_smallest(arr, n):
+    cnts = Counter(arr)
+    total = 0
+    for (i, c) in sorted(cnts.items()):
+        total += c
+        if total >= n:
+            break
+    available = count(c + n - total, -1)
+    it = (x for x in arr if x < i or (x == i and next(available) > 0))
+    return list(islice(it, n))

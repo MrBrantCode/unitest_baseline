@@ -1,0 +1,67 @@
+"""
+QUESTION:
+Campus Ambassador has organized a Coding Contest in his college. Contest has multiple rounds, in each round a participant may gain or lose few points. At the end, there is only one participant with the maximum points. In the course of the contest, the number of points is written in the line as
+
+"name points", where name is the participant's name and points is, the number of points is gained.
+
+If the point is negative, this means the participant has lost in the round. If two partcipants have the maximum number of points, then winners is the one who scored at least m points first.
+
+Intially each participant has 0 points. It's guranteed that at the end of the game at least one participant has a positive number of points.
+
+Input
+
+The first line contains an integer N, total number of rounds. Then follow N lines, containing information about the rounds in "name points" format in chronological order.
+
+Output
+
+Print the Name of the winner of the Contest.
+
+Constraints
+
+1 ≤ N ≤ 1000
+
+'name' is the string of lower case letter 1 ≤ |name| ≤ 32
+
+-1000 ≤points ≤ 1000
+
+SAMPLE INPUT
+3
+mini 3
+rini 5
+mini 2
+
+SAMPLE OUTPUT
+rini
+
+Explanation
+
+After the contest both rini and mini have scored same points that is 5 ,
+but rini scored 5 points first, hence the winner.
+"""
+
+def find_contest_winner(rounds):
+    scores = {}
+    topper = ''
+    topscore = 0
+    toppers = []
+    
+    for name, score in rounds:
+        if name in scores:
+            scores[name] += score
+        else:
+            scores[name] = score
+        
+        temp = max(scores, key=scores.get)
+        tc = scores[temp]
+        current_toppers = [key for key in scores if scores[key] == tc]
+        
+        if len(current_toppers) == 1:
+            topper = current_toppers[0]
+            topscore = tc
+            toppers = current_toppers
+        elif tc > topscore:
+            topper = current_toppers[0]
+            topscore = tc
+            toppers = current_toppers
+    
+    return topper

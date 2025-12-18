@@ -1,0 +1,83 @@
+"""
+QUESTION:
+The Smart Beaver from ABBYY invented a new message encryption method and now wants to check its performance. Checking it manually is long and tiresome, so he decided to ask the ABBYY Cup contestants for help.
+
+A message is a sequence of n integers a1, a2, ..., an. Encryption uses a key which is a sequence of m integers b1, b2, ..., bm (m ≤ n). All numbers from the message and from the key belong to the interval from 0 to c - 1, inclusive, and all the calculations are performed modulo c.
+
+Encryption is performed in n - m + 1 steps. On the first step we add to each number a1, a2, ..., am a corresponding number b1, b2, ..., bm. On the second step we add to each number a2, a3, ..., am + 1 (changed on the previous step) a corresponding number b1, b2, ..., bm. And so on: on step number i we add to each number ai, ai + 1, ..., ai + m - 1 a corresponding number b1, b2, ..., bm. The result of the encryption is the sequence a1, a2, ..., an after n - m + 1 steps.
+
+Help the Beaver to write a program that will encrypt messages in the described manner.
+
+Input
+
+The first input line contains three integers n, m and c, separated by single spaces. 
+
+The second input line contains n integers ai (0 ≤ ai < c), separated by single spaces — the original message. 
+
+The third input line contains m integers bi (0 ≤ bi < c), separated by single spaces — the encryption key.
+
+The input limitations for getting 30 points are: 
+
+  * 1 ≤ m ≤ n ≤ 103
+  * 1 ≤ c ≤ 103
+
+
+
+The input limitations for getting 100 points are: 
+
+  * 1 ≤ m ≤ n ≤ 105
+  * 1 ≤ c ≤ 103
+
+Output
+
+Print n space-separated integers — the result of encrypting the original message.
+
+Examples
+
+Input
+
+4 3 2
+1 1 1 1
+1 1 1
+
+
+Output
+
+0 1 1 0
+
+
+Input
+
+3 1 5
+1 2 3
+4
+
+
+Output
+
+0 1 2
+
+Note
+
+In the first sample the encryption is performed in two steps: after the first step a = (0, 0, 0, 1) (remember that the calculations are performed modulo 2), after the second step a = (0, 1, 1, 0), and that is the answer.
+"""
+
+def encrypt_message(n: int, m: int, c: int, a: list[int], b: list[int]) -> list[int]:
+    """
+    Encrypts a message using the described encryption method.
+
+    Parameters:
+    - n (int): The length of the message.
+    - m (int): The length of the encryption key.
+    - c (int): The modulo value.
+    - a (list[int]): The original message as a list of integers.
+    - b (list[int]): The encryption key as a list of integers.
+
+    Returns:
+    - list[int]: The encrypted message as a list of integers.
+    """
+    encrypted_message = a[:]
+    for i in range(n - m + 1):
+        for j in range(m):
+            encrypted_message[i + j] = (encrypted_message[i + j] + b[j]) % c
+    return encrypted_message

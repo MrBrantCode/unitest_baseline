@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_88596",
+  "entry_point": "entrance",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "print(f\"Invalid JSON syntax: {e}\")",
+      "mutated_line": "print(f'{e}')",
+      "code": "import json\n\ndef entrance(json_string):\n    try:\n        parsed_data = json.loads(json_string)\n        return _process_json(parsed_data)\n    except json.JSONDecodeError as e:\n        print(f'{e}')\n        return None\n\ndef _process_json(data):\n    if isinstance(data, dict):\n        processed_dict = {}\n        for (key, value) in data.items():\n            if not isinstance(key, str):\n                key = str(key)\n            processed_dict[key] = _process_json(value)\n        return processed_dict\n    elif isinstance(data, list):\n        processed_list = []\n        for value in data:\n            processed_list.append(_process_json(value))\n        return processed_list\n    elif not isinstance(data, str):\n        return str(data)\n    else:\n        return data"
+    }
+  ]
+}

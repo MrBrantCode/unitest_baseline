@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_49999",
+  "entry_point": "convert_timezone",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if tz_name in pytz.all_timezones:",
+      "mutated_line": "if tz_name not in pytz.all_timezones:",
+      "code": "import pytz\nfrom datetime import datetime\n\ndef convert_timezone(ist_timestamps, tz_name):\n    if tz_name not in pytz.all_timezones:\n        ist = pytz.timezone('Asia/Kolkata')\n        target_tz = pytz.timezone(tz_name)\n        converted_timestamps = []\n        for ts in ist_timestamps:\n            target_time = ts.astimezone(target_tz)\n            converted_timestamps.append(target_time)\n        return converted_timestamps\n    else:\n        return 'Invalid timezone'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "return 'Invalid timezone'",
+      "mutated_line": "return ''",
+      "code": "import pytz\nfrom datetime import datetime\n\ndef convert_timezone(ist_timestamps, tz_name):\n    if tz_name in pytz.all_timezones:\n        ist = pytz.timezone('Asia/Kolkata')\n        target_tz = pytz.timezone(tz_name)\n        converted_timestamps = []\n        for ts in ist_timestamps:\n            target_time = ts.astimezone(target_tz)\n            converted_timestamps.append(target_time)\n        return converted_timestamps\n    else:\n        return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "ist = pytz.timezone('Asia/Kolkata')",
+      "mutated_line": "ist = pytz.timezone('')",
+      "code": "import pytz\nfrom datetime import datetime\n\ndef convert_timezone(ist_timestamps, tz_name):\n    if tz_name in pytz.all_timezones:\n        ist = pytz.timezone('')\n        target_tz = pytz.timezone(tz_name)\n        converted_timestamps = []\n        for ts in ist_timestamps:\n            target_time = ts.astimezone(target_tz)\n            converted_timestamps.append(target_time)\n        return converted_timestamps\n    else:\n        return 'Invalid timezone'"
+    }
+  ]
+}

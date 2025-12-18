@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_77589",
+  "entry_point": "validate_signature",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def validate_signature(sig_header, data, secret_key):\n    \"\"\"\"\"\"\n    signature = 'sha1=' + hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()\n    return hmac.compare_digest(signature, sig_header)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "signature = 'sha1=' + hmac.new(",
+      "mutated_line": "signature = 'sha1=' - hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()",
+      "code": "def validate_signature(sig_header, data, secret_key):\n    \"\"\"\n    Validate the signature of the received data using the provided secret key.\n\n    Args:\n        sig_header (str): The 'X-Hub-Signature' header received in the request.\n        data (bytes): The data received in the request.\n        secret_key (str): The secret key used for HMAC hashing.\n\n    Returns:\n        bool: True if the signature is valid, False otherwise.\n    \"\"\"\n    signature = 'sha1=' - hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()\n    return hmac.compare_digest(signature, sig_header)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "signature = 'sha1=' + hmac.new(",
+      "mutated_line": "signature = 'sha1=' * hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()",
+      "code": "def validate_signature(sig_header, data, secret_key):\n    \"\"\"\n    Validate the signature of the received data using the provided secret key.\n\n    Args:\n        sig_header (str): The 'X-Hub-Signature' header received in the request.\n        data (bytes): The data received in the request.\n        secret_key (str): The secret key used for HMAC hashing.\n\n    Returns:\n        bool: True if the signature is valid, False otherwise.\n    \"\"\"\n    signature = 'sha1=' * hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()\n    return hmac.compare_digest(signature, sig_header)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "signature = 'sha1=' + hmac.new(",
+      "mutated_line": "signature = '' + hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()",
+      "code": "def validate_signature(sig_header, data, secret_key):\n    \"\"\"\n    Validate the signature of the received data using the provided secret key.\n\n    Args:\n        sig_header (str): The 'X-Hub-Signature' header received in the request.\n        data (bytes): The data received in the request.\n        secret_key (str): The secret key used for HMAC hashing.\n\n    Returns:\n        bool: True if the signature is valid, False otherwise.\n    \"\"\"\n    signature = '' + hmac.new(key=secret_key.encode(), msg=data, digestmod=hashlib.sha1).hexdigest()\n    return hmac.compare_digest(signature, sig_header)"
+    }
+  ]
+}

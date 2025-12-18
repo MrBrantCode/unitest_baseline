@@ -1,0 +1,146 @@
+"""
+QUESTION:
+A robot in a two-dimensional maze again. The maze has an entrance and an exit this time, though.
+
+Just as in the previous problem, the maze is made up of H × W grid cells, its upper side faces north, and each cell is either empty or wall. Unlike the previous, on the other hand, one of the empty cells is connected to the entrance and another to the exit.
+
+The robot is rather complex - there is some control, but not full. It is associated with a controller that has two buttons, namely forward and turn. The forward button moves the robot forward to the next cell, if possible. The robot can not move into a wall nor outside the maze. The turn button turns the robot as programmed. Here the program is a finite sequence of N commands, each of which is either 'L' (indicating a left turn) or 'R' (a right turn). The first turn follows the first command; the second turn follows the second command; similar for the following turns. The turn button stops working once the commands are exhausted; the forward button still works in such a case though. The robot always turns by 90 degrees at once.
+
+The robot is initially put on the entrance cell, directed to the north. Your mission is to determine whether it can reach the exit cell if controlled properly.
+
+
+
+Input
+
+The input is a sequence of datasets. Each dataset is formatted as follows.
+
+H W N
+s1 ... sN
+c1,1c1,2...c1,W
+...
+cH,1cH,2...cH,W
+
+
+The first line of a dataset contains three integers H, W and N (1 ≤ H, W ≤ 1,000, 1 ≤ N ≤ 1,000,000).
+
+The second line contains a program of N commands.
+
+Each of the following H lines contains exactly W characters. Each of these characters represents a cell of the maze. "." indicates empty, "#" indicates a wall, "S" indicates an entrance, and "G" indicates an exit. There is exactly one entrance cell and one exit cell.
+
+The end of input is indicated by a line with three zeros.
+
+Output
+
+For each dataset, output whether the robot can reach the exit in a line: "Yes" if it can or "No" otherwise (without quotes).
+
+Examples
+
+Input
+
+2 2 1
+L
+G.
+#S
+2 2 2
+RR
+G.
+.S
+3 3 6
+LLLLLL
+G#.
+...
+.#S
+0 0 0
+
+
+Output
+
+Yes
+No
+Yes
+
+
+Input
+
+2 2 1
+L
+G.
+S
+2 2 2
+RR
+G.
+.S
+3 3 6
+LLLLLL
+G#.
+...
+.#S
+0 0 0
+
+
+Output
+
+Yes
+No
+Yes
+"""
+
+from heapq import heappush, heappop
+
+def can_robot_reach_exit(H, W, N, commands, maze):
+    dd = ((-1, 0), (0, -1), (1, 0), (0, 1))
+    
+    # Initialize the maze representation
+    C = [[0] * W for _ in range(H)]
+    sx = sy = gx = gy = 0
+    
+    # Parse the maze to find the entrance and exit
+    for i in range(H):
+        for j in range(W):
+            if maze[i][j] == '#':
+                C[i][j] = 1
+            elif maze[i][j] == 'S':
+                sx, sy = j, i
+            elif maze[i][j] == 'G':
+                gx, gy = j, i
+    
+    # Precompute the direction changes based on commands
+    S0 = [1] * (N + 1)
+    cur = 1
+    for i in range(N):
+        if commands[i] == 'L':
+            cur = (cur - 1) % 4
+        else:
+            cur = (cur + 1) % 4
+        S0[i + 1] = cur
+    
+    # Precompute the minimum cost to reach each direction
+    d = [N + 1] * 4
+    D = [None] * (N + 1)
+    for i in range(N, -1, -1):
+        d[S0[i]] = i
+        D[i] = d[:]
+    
+    # Initialize the cost matrix
+    T = [[N + 1] * W for _ in range(H)]
+    T[sy][sx] = 0
+    que = [(0, sx, sy)]
+    
+    # Perform the BFS to find the minimum cost to reach the exit
+    while que:
+        cost, x, y = heappop(que)
+        if T[y][x] < cost:
+            continue
+        d = D[cost]
+        for k in range(4):
+            dx, dy = dd[k]
+            n_cost = d[k]
+            nx, ny = x + dx, y + dy
+            if not (0 <= nx < W and 0 <= ny < H) or C[ny][nx]:
+                continue
+            if n_cost < T[ny][nx]:
+                T[ny][nx] = n_cost
+                heappush(que, (n_cost, nx, ny))
+    
+    # Return whether the exit can be reached
+    return T[gy][gx] < N + 1

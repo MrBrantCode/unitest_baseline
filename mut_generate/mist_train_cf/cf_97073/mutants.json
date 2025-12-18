@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_97073",
+  "entry_point": "parse_json",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "if isinstance(data, dict) and not any(isinstance(value, (list, dict)) for value in data.values()):",
+      "mutated_line": "if isinstance(data, dict) or not any((isinstance(value, (list, dict)) for value in data.values())):",
+      "code": "import json\n\ndef parse_json(json_string):\n    try:\n        data = json.loads(json_string)\n        if isinstance(data, dict) or not any((isinstance(value, (list, dict)) for value in data.values())):\n            return data\n        else:\n            return 'Error: JSON string contains nested dictionaries or lists, or has missing or invalid keys.'\n    except json.JSONDecodeError as e:\n        return str(e)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return \"Error: JSON string contains nested dictionaries or lists, or has missing or invalid keys.\"",
+      "mutated_line": "return ''",
+      "code": "import json\n\ndef parse_json(json_string):\n    try:\n        data = json.loads(json_string)\n        if isinstance(data, dict) and (not any((isinstance(value, (list, dict)) for value in data.values()))):\n            return data\n        else:\n            return ''\n    except json.JSONDecodeError as e:\n        return str(e)"
+    }
+  ]
+}

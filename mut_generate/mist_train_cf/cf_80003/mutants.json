@@ -1,0 +1,119 @@
+{
+  "task_id": "cf_80003",
+  "entry_point": "xml_to_json",
+  "mutant_count": 16,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) >= 0:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) >= 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) <= 0:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) <= 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) != 0:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) != 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=5, ensure_ascii=False)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=5, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=3, ensure_ascii=False)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=3, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=0, ensure_ascii=False)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=0, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=1, ensure_ascii=False)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=1, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=-4, ensure_ascii=False)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=-4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)",
+      "mutated_line": "return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=True)",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=True)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) > 1:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 1:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) > -1:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > -1:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "if len(elem.attrib) > 0:",
+      "mutated_line": "if len(elem.attrib) > 1:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 1:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if child.tag in dct:",
+      "mutated_line": "if child.tag not in dct:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag not in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if type(dct[child.tag]) is list:",
+      "mutated_line": "if type(dct[child.tag]) is not list:",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is not list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "dct['text'] = text",
+      "mutated_line": "dct[''] = text",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'attribute_{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct[''] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "dct.update({f'attribute_{k}': v for k, v in elem.attrib.items()})",
+      "mutated_line": "dct.update({f'{k}': v for (k, v) in elem.attrib.items()})",
+      "code": "import json\nimport xml.etree.ElementTree as ET\n\ndef xml_to_json(xml_str):\n\n    def xml_to_dict(elem):\n\n        def helper(elem):\n            dct = {}\n            if len(elem.attrib) > 0:\n                dct.update({f'{k}': v for (k, v) in elem.attrib.items()})\n            for child in elem:\n                child_dct = helper(child)\n                if child.tag in dct:\n                    if type(dct[child.tag]) is list:\n                        dct[child.tag].append(child_dct)\n                    else:\n                        dct[child.tag] = [dct[child.tag], child_dct]\n                else:\n                    dct[child.tag] = child_dct\n            if elem.text:\n                text = elem.text.strip()\n                if text:\n                    dct['text'] = text\n            return dct\n        return {elem.tag: helper(elem)}\n    root = ET.fromstring(xml_str)\n    return json.dumps(xml_to_dict(root), indent=4, ensure_ascii=False)"
+    }
+  ]
+}

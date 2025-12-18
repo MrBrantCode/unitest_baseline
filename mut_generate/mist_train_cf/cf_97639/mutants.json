@@ -1,0 +1,70 @@
+{
+  "task_id": "cf_97639",
+  "entry_point": "create_and_query_table",
+  "mutant_count": 9,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "column_str = \", \".join([f\"{key} {value}\" for key, value in columns.items()])",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ''.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "c.execute(f'''CREATE TABLE IF NOT EXISTS {table_name}",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'{table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "c.execute(f'''CREATE TABLE IF NOT EXISTS {table_name}",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}{column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "c.execute(f'''CREATE TABLE IF NOT EXISTS {table_name}",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str}')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "c.execute(f\"INSERT INTO {table_name} VALUES (?, ?)\", data)",
+      "mutated_line": "c.execute(f'{table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'{table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "c.execute(f\"INSERT INTO {table_name} VALUES (?, ?)\", data)",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name}', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name}', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "c.execute(f\"SELECT * FROM {table_name} WHERE age > ?\", (condition,))",
+      "mutated_line": "c.execute(f'{table_name} WHERE age > ?', (condition,))",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'{table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "c.execute(f\"SELECT * FROM {table_name} WHERE age > ?\", (condition,))",
+      "mutated_line": "c.execute(f'SELECT * FROM {table_name}', (condition,))",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key} {value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name}', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "column_str = \", \".join([f\"{key} {value}\" for key, value in columns.items()])",
+      "mutated_line": "c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)",
+      "code": "import sqlite3\n\ndef create_and_query_table(db_name, table_name, columns, data, condition):\n    conn = sqlite3.connect(db_name)\n    c = conn.cursor()\n    column_str = ', '.join([f'{key}{value}' for (key, value) in columns.items()])\n    c.execute(f'CREATE TABLE IF NOT EXISTS {table_name}\\n    ({column_str})')\n    c.execute(f'INSERT INTO {table_name} VALUES (?, ?)', data)\n    conn.commit()\n    c.execute(f'SELECT * FROM {table_name} WHERE age > ?', (condition,))\n    result = c.fetchall()\n    conn.close()\n    return result"
+    }
+  ]
+}

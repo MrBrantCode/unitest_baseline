@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_51481",
+  "entry_point": "estimate_transition_probabilities",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def estimate_transition_probabilities(transitions):\n    \"\"\"\"\"\"\n    transition_probabilities = {}\n    for (source_state, destinations) in transitions.items():\n        total_transitions = sum(destinations.values())\n        transition_probabilities[source_state] = {destination: transitions / total_transitions for (destination, transitions) in destinations.items()}\n    return transition_probabilities"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "transition_probabilities[source_state] = {destination: transitions / total_transitions for destination, transitions in destinations.items()}",
+      "mutated_line": "transition_probabilities[source_state] = {destination: transitions * total_transitions for (destination, transitions) in destinations.items()}",
+      "code": "def estimate_transition_probabilities(transitions):\n    \"\"\"\n    Estimate transition probabilities in a discrete time and space Markov chain.\n\n    Parameters:\n    transitions (dict): A dictionary where the keys are the source states and the values are dictionaries\n                        where the keys are the destination states and the values are the number of transitions.\n\n    Returns:\n    dict: A dictionary where the keys are the source states and the values are dictionaries\n          where the keys are the destination states and the values are the estimated transition probabilities.\n    \"\"\"\n    transition_probabilities = {}\n    for (source_state, destinations) in transitions.items():\n        total_transitions = sum(destinations.values())\n        transition_probabilities[source_state] = {destination: transitions * total_transitions for (destination, transitions) in destinations.items()}\n    return transition_probabilities"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "transition_probabilities[source_state] = {destination: transitions / total_transitions for destination, transitions in destinations.items()}",
+      "mutated_line": "transition_probabilities[source_state] = {destination: transitions // total_transitions for (destination, transitions) in destinations.items()}",
+      "code": "def estimate_transition_probabilities(transitions):\n    \"\"\"\n    Estimate transition probabilities in a discrete time and space Markov chain.\n\n    Parameters:\n    transitions (dict): A dictionary where the keys are the source states and the values are dictionaries\n                        where the keys are the destination states and the values are the number of transitions.\n\n    Returns:\n    dict: A dictionary where the keys are the source states and the values are dictionaries\n          where the keys are the destination states and the values are the estimated transition probabilities.\n    \"\"\"\n    transition_probabilities = {}\n    for (source_state, destinations) in transitions.items():\n        total_transitions = sum(destinations.values())\n        transition_probabilities[source_state] = {destination: transitions // total_transitions for (destination, transitions) in destinations.items()}\n    return transition_probabilities"
+    }
+  ]
+}

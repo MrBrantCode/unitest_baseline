@@ -1,0 +1,231 @@
+{
+  "task_id": "cf_66071",
+  "entry_point": "handle_missing_values",
+  "mutant_count": 32,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "def handle_missing_values(df, replace_with=\"mean\"):",
+      "mutated_line": "def handle_missing_values(df, replace_with=''):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with=''):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column >= 0]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column >= 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column <= 0]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column <= 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column != 0]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column != 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() / 100",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() / 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() + 100",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() + 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() ** 100",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() ** 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 16,
+      "original_line": "if replace_with == \"mean\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "if replace_with == 'mean' or np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' or np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 1]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 1]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > -1]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > -1]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]",
+      "mutated_line": "missing_cols = missing_val_count_by_column[missing_val_count_by_column > 1]",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 1]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() * 101",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 101\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() * 99",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 99\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() * 0",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 0\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() * 1",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 1\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "missing_percentage = df[col].isnull().mean() * 100",
+      "mutated_line": "missing_percentage = df[col].isnull().mean() * -100",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * -100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if replace_with == \"mean\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "if replace_with != 'mean' and np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with != 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "elif replace_with == \"median\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "elif replace_with == 'median' or np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' or np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f'{col} column has {missing_percentage: .2f} percent missing values.')",
+      "mutated_line": "print(f'{col}{missing_percentage: .2f} percent missing values.')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col}{missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f'{col} column has {missing_percentage: .2f} percent missing values.')",
+      "mutated_line": "print(f'{col} column has {missing_percentage: .2f}')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f}')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "if replace_with == \"mean\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "if replace_with == '' and np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == '' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "elif replace_with == \"median\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "elif replace_with != 'median' and np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with != 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "elif replace_with == \"mode\":",
+      "mutated_line": "elif replace_with != 'mode':",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with != 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "df[col].fillna(df[col].mean(), inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].mean(), inplace=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=False)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "elif replace_with == \"median\" and np.issubdtype(df[col].dtype, np.number):",
+      "mutated_line": "elif replace_with == '' and np.issubdtype(df[col].dtype, np.number):",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == '' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "elif replace_with == \"mode\":",
+      "mutated_line": "elif replace_with == '':",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == '':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "print(f'{col} column has {missing_percentage: .2f} percent missing values.')",
+      "mutated_line": "print(f'{col} column has {missing_percentage:} percent missing values.')",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage:} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "df[col].fillna(df[col].median(), inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].median(), inplace=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=False)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "df[col].fillna(df[col].mode()[0], inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].mode()[1], inplace=True)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[1], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "df[col].fillna(df[col].mode()[0], inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].mode()[-1], inplace=True)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[-1], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "df[col].fillna(df[col].mode()[0], inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].mode()[1], inplace=True)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[1], inplace=True)\n    return df"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "df[col].fillna(df[col].mode()[0], inplace=True)",
+      "mutated_line": "df[col].fillna(df[col].mode()[0], inplace=False)",
+      "code": "import pandas as pd\nimport numpy as np\n\ndef handle_missing_values(df, replace_with='mean'):\n    missing_val_count_by_column = df.isnull().sum()\n    missing_cols = missing_val_count_by_column[missing_val_count_by_column > 0]\n    for col in missing_cols.index:\n        missing_percentage = df[col].isnull().mean() * 100\n        print(f'{col} column has {missing_percentage: .2f} percent missing values.')\n    for col in missing_cols.index:\n        if replace_with == 'mean' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].mean(), inplace=True)\n        elif replace_with == 'median' and np.issubdtype(df[col].dtype, np.number):\n            df[col].fillna(df[col].median(), inplace=True)\n        elif replace_with == 'mode':\n            df[col].fillna(df[col].mode()[0], inplace=False)\n    return df"
+    }
+  ]
+}

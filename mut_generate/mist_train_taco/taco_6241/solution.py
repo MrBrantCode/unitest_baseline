@@ -1,0 +1,89 @@
+"""
+QUESTION:
+Convexity of a set of points on the plane is the size of the largest subset of points that form a convex polygon. Your task is to build a set of n points with the convexity of exactly m. Your set of points should not contain three points that lie on a straight line.
+
+Input
+
+The single line contains two integers n and m (3 ≤ m ≤ 100, m ≤ n ≤ 2m).
+
+Output
+
+If there is no solution, print "-1". Otherwise, print n pairs of integers — the coordinates of points of any set with the convexity of m. The coordinates shouldn't exceed 108 in their absolute value.
+
+Examples
+
+Input
+
+4 3
+
+
+Output
+
+0 0
+3 0
+0 3
+1 1
+
+
+Input
+
+6 3
+
+
+Output
+
+-1
+
+
+Input
+
+6 6
+
+
+Output
+
+10 0
+-10 0
+10 1
+9 1
+9 -1
+0 -2
+
+
+Input
+
+7 4
+
+
+Output
+
+176166 6377
+709276 539564
+654734 174109
+910147 434207
+790497 366519
+606663 21061
+859328 886001
+"""
+
+def generate_convex_points(n, m):
+    def f(x):
+        return int(x * x + 10000000.0)
+
+    def g(x):
+        return -f(x)
+
+    if m == 3:
+        if n == 3:
+            return [(0, 0), (1, 0), (0, 1)]
+        elif n == 4:
+            return [(0, 0), (1, 1), (10000, 0), (0, 10000)]
+        else:
+            return -1
+    else:
+        points = []
+        for i in range(m):
+            points.append((i, f(i)))
+        for i in range(n - m):
+            points.append((i, g(i)))
+        return points

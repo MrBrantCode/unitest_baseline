@@ -1,0 +1,49 @@
+{
+  "task_id": "cf_33335",
+  "entry_point": "buildFileIndex",
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "self.is_end_of_word = False",
+      "mutated_line": "self.is_end_of_word = True",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = True\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix + char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char not in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "node.is_end_of_word = True",
+      "mutated_line": "node.is_end_of_word = False",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = False\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = False\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix + char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char not in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if char not in node.children:",
+      "mutated_line": "if char in node.children:",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = False\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix + char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char not in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 40,
+      "original_line": "if char not in node.children:",
+      "mutated_line": "if char in node.children:",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = False\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix + char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "result.extend(self._dfs(child, prefix + char))",
+      "mutated_line": "result.extend(self._dfs(child, prefix - char))",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = False\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix - char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char not in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 25,
+      "original_line": "result.extend(self._dfs(child, prefix + char))",
+      "mutated_line": "result.extend(self._dfs(child, prefix * char))",
+      "code": "from typing import List\n\nclass TrieNode:\n\n    def __init__(self):\n        self.children = {}\n        self.is_end_of_word = False\n\nclass Trie:\n\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end_of_word = True\n\n    def _dfs(self, node: TrieNode, prefix: str) -> List[str]:\n        result = []\n        if node.is_end_of_word:\n            result.append(prefix)\n        for (char, child) in node.children.items():\n            result.extend(self._dfs(child, prefix * char))\n        return result\n\ndef buildFileIndex(file_paths: List[str]):\n    trie = Trie()\n    for file_path in file_paths:\n        trie.insert(file_path)\n\n    class FileIndex:\n\n        def __init__(self, trie):\n            self.trie = trie\n\n        def searchFiles(self, query: str) -> List[str]:\n            node = self.trie.root\n            for char in query:\n                if char not in node.children:\n                    return []\n                node = node.children[char]\n            return self.trie._dfs(node, query)\n    return FileIndex(trie)"
+    }
+  ]
+}

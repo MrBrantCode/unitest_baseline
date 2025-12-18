@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_40175",
+  "entry_point": "all_paths",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "visited[current] = True",
+      "mutated_line": "visited[current] = False",
+      "code": "def all_paths(graph, start, end):\n\n    def find_paths(current, end, path, visited, all_paths):\n        visited[current] = False\n        path.append(current)\n        if current == end:\n            all_paths.append(path.copy())\n        else:\n            for neighbor in graph[current]:\n                if not visited[neighbor]:\n                    find_paths(neighbor, end, path, visited, all_paths)\n        path.pop()\n        visited[current] = False\n    all_paths = []\n    visited = {node: False for node in graph}\n    find_paths(start, end, [], visited, all_paths)\n    return all_paths"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if current == end:",
+      "mutated_line": "if current != end:",
+      "code": "def all_paths(graph, start, end):\n\n    def find_paths(current, end, path, visited, all_paths):\n        visited[current] = True\n        path.append(current)\n        if current != end:\n            all_paths.append(path.copy())\n        else:\n            for neighbor in graph[current]:\n                if not visited[neighbor]:\n                    find_paths(neighbor, end, path, visited, all_paths)\n        path.pop()\n        visited[current] = False\n    all_paths = []\n    visited = {node: False for node in graph}\n    find_paths(start, end, [], visited, all_paths)\n    return all_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "visited[current] = False",
+      "mutated_line": "visited[current] = True",
+      "code": "def all_paths(graph, start, end):\n\n    def find_paths(current, end, path, visited, all_paths):\n        visited[current] = True\n        path.append(current)\n        if current == end:\n            all_paths.append(path.copy())\n        else:\n            for neighbor in graph[current]:\n                if not visited[neighbor]:\n                    find_paths(neighbor, end, path, visited, all_paths)\n        path.pop()\n        visited[current] = True\n    all_paths = []\n    visited = {node: False for node in graph}\n    find_paths(start, end, [], visited, all_paths)\n    return all_paths"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "visited = {node: False for node in graph}",
+      "mutated_line": "visited = {node: True for node in graph}",
+      "code": "def all_paths(graph, start, end):\n\n    def find_paths(current, end, path, visited, all_paths):\n        visited[current] = True\n        path.append(current)\n        if current == end:\n            all_paths.append(path.copy())\n        else:\n            for neighbor in graph[current]:\n                if not visited[neighbor]:\n                    find_paths(neighbor, end, path, visited, all_paths)\n        path.pop()\n        visited[current] = False\n    all_paths = []\n    visited = {node: True for node in graph}\n    find_paths(start, end, [], visited, all_paths)\n    return all_paths"
+    }
+  ]
+}

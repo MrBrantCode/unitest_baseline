@@ -1,0 +1,67 @@
+"""
+QUESTION:
+Given an integer N, find the number of tuples (w, x, y, z) such that 1 ≤ w, x, y, z ≤ N and \frac{w}{x} + \frac{y}{z} is an integer.
+
+For example, if N = 2, the tuple (1,2,1,2) satisfies both conditions, i.e. \frac{1}{2} + \frac{1}{2} = 1 is an integer, however (1,1,1,2) does not since \frac{1}{1} + \frac{1}{2} = 1.5 is not an integer.
+
+------ Input Format ------ 
+
+- The first line of input contains an integer T, denoting the number of test cases. The description of T test cases follows.
+- Each test case consists of a single line of input containing one integer, N.
+
+------ Output Format ------ 
+
+- For each test case, print a new line containing a single integer, the answer to that test case.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 150$
+$1 ≤ N ≤ 1000$
+- The sum of $N$ over all test cases does not exceed $10^{4}$
+
+----- Sample Input 1 ------ 
+3
+2
+3
+7
+----- Sample Output 1 ------ 
+10
+31
+355
+
+----- explanation 1 ------ 
+
+Test Case $1$: There are $2^{4} = 16$ tuples to consider, out of them the only ones that are invalid are those where one of the fractions is $\frac{1}{2}$ and the other is an integer.
+The valid tuples are $\{(1, 1, 1, 1), (1, 1, 2, 1), (1, 1, 2, 2), (1, 2, 1, 2), (2, 1, 1, 1), (2, 1, 2, 1), (2, 1, 2, 2), (2, 2, 1, 1), (2, 2, 2, 1), (2, 2, 2, 2)\}$.
+
+Test Cases $2$ and $3$: There are too many tuples to list them in these cases. However, you may verify that among the $3^{4} = 81$ and $7^{4} = 4901$ tuples respectively only $31$ and $355$ of them satisfy the conditions in the problem statement.
+"""
+
+from collections import defaultdict
+from math import gcd
+from functools import lru_cache
+
+@lru_cache(None)
+def rf(x, y):
+    g = gcd(x, y)
+    y = y // g
+    x = x // g
+    x -= y * (x // y)
+    return (x, y)
+
+def count_valid_tuples(N):
+    nums = [x for x in range(1, N + 1)]
+    ans = 0
+    d = defaultdict(int)
+    for x in nums:
+        for y in nums:
+            (sx, sy) = rf(x, y)
+            d[sx, sy] += 1
+    for (k, v) in d.items():
+        (sx, sy) = k
+        if sx > 0:
+            nsx = sy - sx
+        else:
+            nsx = sx
+        ans += d[nsx, sy] * d[sx, sy]
+    return ans

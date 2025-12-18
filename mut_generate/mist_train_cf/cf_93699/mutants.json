@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_93699",
+  "entry_point": "group_and_sort",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if key not in groups:",
+      "mutated_line": "if key in groups:",
+      "code": "def group_and_sort(lst, shared_key, other_key):\n    groups = {}\n    for item in lst:\n        key = item[shared_key]\n        if key in groups:\n            groups[key] = []\n        groups[key].append(item)\n    sorted_groups = sorted(groups.values(), key=lambda x: (sum((d[shared_key] for d in x)), min((d[other_key] for d in x))), reverse=True)\n    return sorted_groups"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "sorted_groups = sorted(groups.values(), key=lambda x: (sum(d[shared_key] for d in x), min(d[other_key] for d in x)), reverse=True)",
+      "mutated_line": "sorted_groups = sorted(groups.values(), key=lambda x: (sum((d[shared_key] for d in x)), min((d[other_key] for d in x))), reverse=False)",
+      "code": "def group_and_sort(lst, shared_key, other_key):\n    groups = {}\n    for item in lst:\n        key = item[shared_key]\n        if key not in groups:\n            groups[key] = []\n        groups[key].append(item)\n    sorted_groups = sorted(groups.values(), key=lambda x: (sum((d[shared_key] for d in x)), min((d[other_key] for d in x))), reverse=False)\n    return sorted_groups"
+    }
+  ]
+}

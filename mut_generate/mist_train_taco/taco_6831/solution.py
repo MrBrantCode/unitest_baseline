@@ -1,0 +1,16 @@
+"""
+QUESTION:
+Implement a function, `multiples(m, n)`, which returns an array of the first `m` multiples of the real number `n`. Assume that `m` is a positive integer.
+
+Ex.
+```
+multiples(3, 5.0)
+```
+should return
+```
+[5.0, 10.0, 15.0]
+```
+"""
+
+def generate_multiples(m: int, n: float) -> list[float]:
+    return [i * n for i in range(1, m + 1)]

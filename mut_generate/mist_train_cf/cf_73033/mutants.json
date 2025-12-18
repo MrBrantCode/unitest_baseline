@@ -1,0 +1,133 @@
+{
+  "task_id": "cf_73033",
+  "entry_point": "server_side_pagination",
+  "mutant_count": 18,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if condition is not None:",
+      "mutated_line": "if condition is None:",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 24,
+      "original_line": "if sort_order == 'asc':",
+      "mutated_line": "if sort_order != 'asc':",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order != 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - 1) / page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) / page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = page_number - 1 + page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = page_number - 1 + page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - 1) ** page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) ** page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "end_index = start_index + page_size",
+      "mutated_line": "end_index = start_index - page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index - page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "end_index = start_index + page_size",
+      "mutated_line": "end_index = start_index * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index * page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 24,
+      "original_line": "if sort_order == 'asc':",
+      "mutated_line": "if sort_order == '':",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == '':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 26,
+      "original_line": "elif sort_order == 'desc':",
+      "mutated_line": "elif sort_order != 'desc':",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order != 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number + 1) * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number + 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = page_number * 1 * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = page_number * 1 * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "elif sort_order == 'desc':",
+      "mutated_line": "elif sort_order == '':",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == '':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - 2) * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 2) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - 0) * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 0) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - 0) * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - 0) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "start_index = (page_number - 1) * page_size",
+      "mutated_line": "start_index = (page_number - -1) * page_size",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=True)\n    start_index = (page_number - -1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "data.sort(key=lambda x: x[column_name], reverse=True)",
+      "mutated_line": "data.sort(key=lambda x: x[column_name], reverse=False)",
+      "code": "def server_side_pagination(table, column_name, sort_order, page_size, page_number, condition=None):\n    \"\"\"\n    This function implements server-side pagination, filtering and sorting.\n    \n    Args:\n        table (list): A list of dictionaries representing the database table.\n        column_name (str): The name of the column to sort by.\n        sort_order (str): The order of sorting. Either 'asc' or 'desc'.\n        page_size (int): The number of records per page.\n        page_number (int): The current page number.\n        condition (function, optional): A function that takes a dictionary and returns a boolean. Defaults to None.\n\n    Returns:\n        list: A list of dictionaries representing the pertinent data from the database.\n    \"\"\"\n    if condition is not None:\n        data = [row for row in table if condition(row)]\n    else:\n        data = table\n    if sort_order == 'asc':\n        data.sort(key=lambda x: x[column_name])\n    elif sort_order == 'desc':\n        data.sort(key=lambda x: x[column_name], reverse=False)\n    start_index = (page_number - 1) * page_size\n    end_index = start_index + page_size\n    return data[start_index:end_index]"
+    }
+  ]
+}

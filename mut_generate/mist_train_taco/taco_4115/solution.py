@@ -1,0 +1,68 @@
+"""
+QUESTION:
+Tom and Jerry started fighting, as always! But this time the fight is on numbers. They ended up bringing a game to decide who is better.
+They have N marbles and they choose two integers M1 and M2, in each turn a player can take either M1 or M2 marbles(if available!). One who can't make any move further, loses.
+
+Game is started with Jerry's turn always.
+Given N, M1 and M2, and assuming that both are playing optimally, tell us whether Jerry will win or not.
+
+Input:
+
+ T, number of test cases then T lines containing three integers N, m1 and m2
+
+Output:
+
+ 1 If Jerry wins, 0 if Tom wins.
+
+Constraints:
+
+0<T<100
+
+0< m1 ≤ m2, N ≤1000000.    Note that m1 or m2 can be greater than N.
+
+Test files will be such that T*N < 10000000 .
+
+Register for IndiaHacksSAMPLE INPUT
+6
+1 1 2
+3 4 5
+2 1 2
+3 1 2
+4 2 5
+4 1 2
+
+SAMPLE OUTPUT
+1
+0
+1
+0
+0
+1
+
+Register for IndiaHacks
+"""
+
+def determine_winner(N, M1, M2):
+    j = True  # Jerry's turn initially
+    
+    # Calculate the number of full cycles of (M1 + M2) that can be taken from N
+    temp = N // (M1 + M2)
+    N -= temp * (M1 + M2)
+    
+    # Check the remaining marbles after full cycles
+    if N == M1 or N == M2:
+        pass  # Jerry's turn remains the same
+    elif N > M1 and N > M2:
+        pass  # Jerry's turn remains the same
+    elif N < M1 and N < M2:
+        j = not j  # Toggle turn
+    elif N - min(M1, M2) < min(M1, M2):
+        pass  # Jerry's turn remains the same
+    else:
+        m = min(M1, M2)
+        temp = N // m
+        if temp % 2 == 0:
+            j = not j  # Toggle turn if the number of moves is even
+    
+    # Return 1 if Jerry wins, 0 if Tom wins
+    return 1 if j else 0

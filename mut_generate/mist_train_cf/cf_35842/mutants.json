@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_35842",
+  "entry_point": "process_metadata",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if key in extracted_info:",
+      "mutated_line": "if key not in extracted_info:",
+      "code": "def process_metadata(metadata):\n    extracted_info = {}\n    for line in metadata:\n        (key, value) = line.split(':')\n        key = key.strip()\n        value = value.strip()\n        if key not in extracted_info:\n            extracted_info[key] += f', {value}'\n        else:\n            extracted_info[key] = value\n    return extracted_info"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 8,
+      "original_line": "extracted_info[key] += f\", {value}\"",
+      "mutated_line": "extracted_info[key] -= f', {value}'",
+      "code": "def process_metadata(metadata):\n    extracted_info = {}\n    for line in metadata:\n        (key, value) = line.split(':')\n        key = key.strip()\n        value = value.strip()\n        if key in extracted_info:\n            extracted_info[key] -= f', {value}'\n        else:\n            extracted_info[key] = value\n    return extracted_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "key, value = line.split(':')",
+      "mutated_line": "(key, value) = line.split('')",
+      "code": "def process_metadata(metadata):\n    extracted_info = {}\n    for line in metadata:\n        (key, value) = line.split('')\n        key = key.strip()\n        value = value.strip()\n        if key in extracted_info:\n            extracted_info[key] += f', {value}'\n        else:\n            extracted_info[key] = value\n    return extracted_info"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "extracted_info[key] += f\", {value}\"",
+      "mutated_line": "extracted_info[key] += f'{value}'",
+      "code": "def process_metadata(metadata):\n    extracted_info = {}\n    for line in metadata:\n        (key, value) = line.split(':')\n        key = key.strip()\n        value = value.strip()\n        if key in extracted_info:\n            extracted_info[key] += f'{value}'\n        else:\n            extracted_info[key] = value\n    return extracted_info"
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "task_id": "taco_7375",
+  "entry_point": "determine_winner",
+  "mutant_count": 35,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "nim = [None] * len(parents)",
+      "mutated_line": "nim = [None] / len(parents)",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] / len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "nim = [None] * len(parents)",
+      "mutated_line": "nim = [None] + len(parents)",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] + len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "nim = [None] * len(parents)",
+      "mutated_line": "nim = [None] ** len(parents)",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] ** len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 40,
+      "original_line": "unknown[parent] -= 1",
+      "mutated_line": "unknown[parent] += 1",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] += 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "stack = [vert for vert, u in enumerate(unknown) if u == 0]",
+      "mutated_line": "stack = [vert for (vert, u) in enumerate(unknown) if u != 0]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u != 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if i not in cset:",
+      "mutated_line": "if i in cset:",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "unknown[parent] -= 1",
+      "mutated_line": "unknown[parent] -= 2",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 2\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "unknown[parent] -= 1",
+      "mutated_line": "unknown[parent] -= 0",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 0\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "unknown[parent] -= 1",
+      "mutated_line": "unknown[parent] -= 0",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 0\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 40,
+      "original_line": "unknown[parent] -= 1",
+      "mutated_line": "unknown[parent] -= -1",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= -1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 41,
+      "original_line": "if unknown[parent] == 0:",
+      "mutated_line": "if unknown[parent] != 0:",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] != 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert - 1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert - 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert * 1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert * 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert - 1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert - 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert * 1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert * 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('Bumi' if score == 0 else 'Iroh')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score == 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('' if score != 0 else 'Iroh')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('Bumi' if score != 0 else '')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else '')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "stack = [vert for vert, u in enumerate(unknown) if u == 0]",
+      "mutated_line": "stack = [vert for (vert, u) in enumerate(unknown) if u == 1]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 1]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "stack = [vert for vert, u in enumerate(unknown) if u == 0]",
+      "mutated_line": "stack = [vert for (vert, u) in enumerate(unknown) if u == -1]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == -1]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "stack = [vert for vert, u in enumerate(unknown) if u == 0]",
+      "mutated_line": "stack = [vert for (vert, u) in enumerate(unknown) if u == 1]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 1]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "if unknown[parent] == 0:",
+      "mutated_line": "if unknown[parent] == 1:",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 1:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "if unknown[parent] == 0:",
+      "mutated_line": "if unknown[parent] == -1:",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == -1:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 41,
+      "original_line": "if unknown[parent] == 0:",
+      "mutated_line": "if unknown[parent] == 1:",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 1:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert + 2)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 2)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert + 0)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 0)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert + 0)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 0)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "children = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "children = [[] for _ in range(nvert + -1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + -1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert + 2)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 2)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert + 0)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 0)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert + 0)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 0)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "parents = [[] for _ in range(nvert + 1)]",
+      "mutated_line": "parents = [[] for _ in range(nvert + -1)]",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + -1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 0 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('Bumi' if score != 1 else 'Iroh')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 1 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('Bumi' if score != -1 else 'Iroh')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != -1 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 23,
+      "original_line": "results.append('Bumi' if score != 0 else 'Iroh')",
+      "mutated_line": "results.append('Bumi' if score != 1 else 'Iroh')",
+      "code": "from functools import reduce\nfrom operator import xor\nfrom itertools import count\n\ndef determine_winner(nvert, nedges, edges, queries):\n    children = [[] for _ in range(nvert + 1)]\n    parents = [[] for _ in range(nvert + 1)]\n    for (start, stop) in edges:\n        children[start].append(stop)\n        parents[stop].append(start)\n    nim = get_nim_values(parents, children)\n    results = []\n    for query in queries:\n        (K, initial_locations) = query\n        score = reduce(xor, (nim[piece] for piece in initial_locations))\n        results.append('Bumi' if score != 1 else 'Iroh')\n    return results\n\ndef get_nim_values(parents, children):\n    nim = [None] * len(parents)\n    unknown = [len(c) for c in children]\n    stack = [vert for (vert, u) in enumerate(unknown) if u == 0]\n    while stack:\n        vert = stack.pop()\n        cset = set((nim[child] for child in children[vert]))\n        for i in count():\n            if i not in cset:\n                nim[vert] = i\n                break\n        for parent in parents[vert]:\n            unknown[parent] -= 1\n            if unknown[parent] == 0:\n                stack.append(parent)\n    return nim"
+    }
+  ]
+}

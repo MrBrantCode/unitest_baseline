@@ -1,0 +1,49 @@
+"""
+QUESTION:
+You are given a string that is made up of words separated by spaces. Your task is to find the word with highest frequency, i.e. it appears maximum times in the sentence. If multiple words have maximum frequency, then print the word that occurs first in the sentence.
+Example 1:
+ 
+Input : S = "the devil in the sky"
+Output : the 2
+Explanation:
+The frequency of the is 2, so we return "the" and
+its frequency "2" i.e., "the 2" 
+Example 2:
+Input : S = "this is not right"
+Output : this 1
+Explanation:
+Every word has the frequency of "1", so we return 
+"this 1" as this occurs first in the sentence. 
+Your Task:
+This is a function problem. The input is already taken care of by the driver code. You only need to complete the function maximumFrequency() that takes a string S and return the answer as a string. The driver code takes care of the printing.
+Expected Time Complexity: O(N).
+Expected Auxiliary Space: O(N).
+Constraints:
+1 ≤ |S| ≤ 10^{5}
+"""
+
+def find_most_frequent_word(s: str) -> str:
+    # Split the string into words
+    words = s.split(' ')
+    
+    # Dictionary to store word frequencies
+    word_freq = {}
+    
+    # Calculate the frequency of each word
+    for word in words:
+        if word in word_freq:
+            word_freq[word] += 1
+        else:
+            word_freq[word] = 1
+    
+    # Find the word with the highest frequency
+    most_frequent_word = ''
+    max_frequency = 0
+    
+    for word in words:
+        if word_freq[word] > max_frequency:
+            most_frequent_word = word
+            max_frequency = word_freq[word]
+    
+    # Return the most frequent word and its frequency
+    return f"{most_frequent_word} {max_frequency}"

@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_87942",
+  "entry_point": "recursive_delete",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "deleted = False",
+      "mutated_line": "deleted = True",
+      "code": "def recursive_delete(dictionary, key):\n    deleted = True\n    for k in list(dictionary.keys()):\n        if isinstance(dictionary[k], dict):\n            deleted = recursive_delete(dictionary[k], key) or deleted\n        elif k == key:\n            deleted = True\n            dictionary.pop(k)\n    return deleted"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "deleted = recursive_delete(dictionary[k], key) or deleted",
+      "mutated_line": "deleted = recursive_delete(dictionary[k], key) and deleted",
+      "code": "def recursive_delete(dictionary, key):\n    deleted = False\n    for k in list(dictionary.keys()):\n        if isinstance(dictionary[k], dict):\n            deleted = recursive_delete(dictionary[k], key) and deleted\n        elif k == key:\n            deleted = True\n            dictionary.pop(k)\n    return deleted"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "elif k == key:",
+      "mutated_line": "elif k != key:",
+      "code": "def recursive_delete(dictionary, key):\n    deleted = False\n    for k in list(dictionary.keys()):\n        if isinstance(dictionary[k], dict):\n            deleted = recursive_delete(dictionary[k], key) or deleted\n        elif k != key:\n            deleted = True\n            dictionary.pop(k)\n    return deleted"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "deleted = True",
+      "mutated_line": "deleted = False",
+      "code": "def recursive_delete(dictionary, key):\n    deleted = False\n    for k in list(dictionary.keys()):\n        if isinstance(dictionary[k], dict):\n            deleted = recursive_delete(dictionary[k], key) or deleted\n        elif k == key:\n            deleted = False\n            dictionary.pop(k)\n    return deleted"
+    }
+  ]
+}

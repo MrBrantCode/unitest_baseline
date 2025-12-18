@@ -1,0 +1,42 @@
+{
+  "task_id": "cf_39968",
+  "entry_point": "find_cycle_edge",
+  "mutant_count": 5,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if y not in parents:",
+      "mutated_line": "if y in parents:",
+      "code": "from typing import List, Tuple\n\ndef find_cycle_edge(edges: List[Tuple[int, int]]) -> Tuple[int, int]:\n    parents = {}\n\n    def find(y):\n        if y in parents:\n            parents[y] = y\n        if parents[y] != y:\n            parents[y] = find(parents[y])\n        return parents[y]\n\n    def union(x, y):\n        parent_x = find(x)\n        parent_y = find(y)\n        if parent_x == parent_y:\n            return False\n        parents[parent_x] = parent_y\n        return True\n    for (origin, destination) in edges:\n        if not union(origin, destination):\n            return (origin, destination)\n    return ()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "if parents[y] != y:",
+      "mutated_line": "if parents[y] == y:",
+      "code": "from typing import List, Tuple\n\ndef find_cycle_edge(edges: List[Tuple[int, int]]) -> Tuple[int, int]:\n    parents = {}\n\n    def find(y):\n        if y not in parents:\n            parents[y] = y\n        if parents[y] == y:\n            parents[y] = find(parents[y])\n        return parents[y]\n\n    def union(x, y):\n        parent_x = find(x)\n        parent_y = find(y)\n        if parent_x == parent_y:\n            return False\n        parents[parent_x] = parent_y\n        return True\n    for (origin, destination) in edges:\n        if not union(origin, destination):\n            return (origin, destination)\n    return ()"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if parent_x == parent_y:",
+      "mutated_line": "if parent_x != parent_y:",
+      "code": "from typing import List, Tuple\n\ndef find_cycle_edge(edges: List[Tuple[int, int]]) -> Tuple[int, int]:\n    parents = {}\n\n    def find(y):\n        if y not in parents:\n            parents[y] = y\n        if parents[y] != y:\n            parents[y] = find(parents[y])\n        return parents[y]\n\n    def union(x, y):\n        parent_x = find(x)\n        parent_y = find(y)\n        if parent_x != parent_y:\n            return False\n        parents[parent_x] = parent_y\n        return True\n    for (origin, destination) in edges:\n        if not union(origin, destination):\n            return (origin, destination)\n    return ()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from typing import List, Tuple\n\ndef find_cycle_edge(edges: List[Tuple[int, int]]) -> Tuple[int, int]:\n    parents = {}\n\n    def find(y):\n        if y not in parents:\n            parents[y] = y\n        if parents[y] != y:\n            parents[y] = find(parents[y])\n        return parents[y]\n\n    def union(x, y):\n        parent_x = find(x)\n        parent_y = find(y)\n        if parent_x == parent_y:\n            return False\n        parents[parent_x] = parent_y\n        return False\n    for (origin, destination) in edges:\n        if not union(origin, destination):\n            return (origin, destination)\n    return ()"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from typing import List, Tuple\n\ndef find_cycle_edge(edges: List[Tuple[int, int]]) -> Tuple[int, int]:\n    parents = {}\n\n    def find(y):\n        if y not in parents:\n            parents[y] = y\n        if parents[y] != y:\n            parents[y] = find(parents[y])\n        return parents[y]\n\n    def union(x, y):\n        parent_x = find(x)\n        parent_y = find(y)\n        if parent_x == parent_y:\n            return True\n        parents[parent_x] = parent_y\n        return True\n    for (origin, destination) in edges:\n        if not union(origin, destination):\n            return (origin, destination)\n    return ()"
+    }
+  ]
+}

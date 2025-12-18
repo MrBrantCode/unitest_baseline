@@ -1,0 +1,147 @@
+{
+  "task_id": "cf_26676",
+  "entry_point": "process_query_params",
+  "mutant_count": 20,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if query.keys() != args.keys():",
+      "mutated_line": "if query.keys() == args.keys():",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() == args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if \"p1\" in args:",
+      "mutated_line": "if query['p1'] != [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' not in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 18,
+      "original_line": "if \"p2\" in args and isinstance(args[\"p2\"], float):",
+      "mutated_line": "if query['p2'] != ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args or isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "return True",
+      "mutated_line": "return False",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return False"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return True\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if \"p1\" in args:",
+      "mutated_line": "if query['p1'] != [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if '' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "if query[\"p1\"] != [json.dumps(p1_graft.isoformat())]:",
+      "mutated_line": "if query['p1'] == [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] == [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 18,
+      "original_line": "if \"p2\" in args and isinstance(args[\"p2\"], float):",
+      "mutated_line": "if query['p2'] != ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' not in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "if query[\"p2\"] != [\"2.2\"]:",
+      "mutated_line": "if query['p2'] == ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] == ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "query = parse_qs(params, strict_parsing=True, keep_blank_values=True)",
+      "mutated_line": "query = parse_qs(params, strict_parsing=False, keep_blank_values=True)",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=False, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "query = parse_qs(params, strict_parsing=True, keep_blank_values=True)",
+      "mutated_line": "query = parse_qs(params, strict_parsing=True, keep_blank_values=False)",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=False)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "p1_graft = datetime.strptime(args[\"p1\"], \"%Y-%m-%d %H:%M:%S\")",
+      "mutated_line": "if query['p1'] != [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return False",
+      "mutated_line": "return False",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return True\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if \"p2\" in args and isinstance(args[\"p2\"], float):",
+      "mutated_line": "if query['p2'] != ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if '' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return True\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "p1_graft = datetime.strptime(args[\"p1\"], \"%Y-%m-%d %H:%M:%S\")",
+      "mutated_line": "if query['p1'] != [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args[''], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "if query[\"p1\"] != [json.dumps(p1_graft.isoformat())]:",
+      "mutated_line": "if query[''] != [json.dumps(p1_graft.isoformat())]:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query[''] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "if \"p2\" in args and isinstance(args[\"p2\"], float):",
+      "mutated_line": "if query['p2'] != ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args[''], float):\n        if query['p2'] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if query[\"p2\"] != [\"2.2\"]:",
+      "mutated_line": "if query[''] != ['2.2']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query[''] != ['2.2']:\n            return False\n    return True"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "if query[\"p2\"] != [\"2.2\"]:",
+      "mutated_line": "if query['p2'] != ['']:",
+      "code": "from urllib.parse import parse_qs\nimport json\n\ndef process_query_params(params, args):\n    query = parse_qs(params, strict_parsing=True, keep_blank_values=True)\n    if query.keys() != args.keys():\n        return False\n    if 'p1' in args:\n        p1_graft = datetime.strptime(args['p1'], '%Y-%m-%d %H:%M:%S')\n        if query['p1'] != [json.dumps(p1_graft.isoformat())]:\n            return False\n    if 'p2' in args and isinstance(args['p2'], float):\n        if query['p2'] != ['']:\n            return False\n    return True"
+    }
+  ]
+}

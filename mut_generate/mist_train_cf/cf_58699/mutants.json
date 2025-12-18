@@ -1,0 +1,238 @@
+{
+  "task_id": "cf_58699",
+  "entry_point": "analyze_text",
+  "mutant_count": 33,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cleaned_text = re.sub('[^a-z\\s]', '', text.lower())",
+      "mutated_line": "cleaned_text = re.sub('', '', text.lower())",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cleaned_text = re.sub('[^a-z\\s]', '', text.lower())",
+      "mutated_line": "cleaned_text = re.sub('[^a-z\\\\s]', 'MUTATED', text.lower())",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', 'MUTATED', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 16,
+      "original_line": "if sorted_word_tuple in anagrams:",
+      "mutated_line": "if sorted_word_tuple not in anagrams:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple not in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] or len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] or len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 27,
+      "original_line": "'word_count': dict(word_counts),",
+      "mutated_line": "results = {'': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), '': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), '': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "'palindromes': list(palindromes)",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, '': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, '': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word != word[::-1] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word != word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) >= 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) >= 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) <= 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) <= 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) != 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) != 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) + 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) + 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) * 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) * 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) > 2:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 2:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) > 0:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 0:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) > 0:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 0:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-1] and len(word) > -1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > -1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 2 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 2 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 0 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 0 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 0 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 0 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - -1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - -1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) >= 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) >= 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) <= 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) <= 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) != 1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) != 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 2}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 2}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 0}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 0}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 0}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 0}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "'anagrams': {k: len(v) - 1 for k, v in anagrams.items() if len(v) > 1},",
+      "mutated_line": "results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > -1}, 'palindromes': list(palindromes)}",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > -1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::+1] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::+1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-2] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-2] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-0] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-0] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::-0] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::-0] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "if word == word[::-1] and len(word) > 1:",
+      "mutated_line": "if word == word[::--1] and len(word) > 1:",
+      "code": "import collections\nimport re\n\ndef analyze_text(text):\n    cleaned_text = re.sub('[^a-z\\\\s]', '', text.lower())\n    words = cleaned_text.split()\n    word_counts = collections.Counter(words)\n    anagrams = {}\n    palindromes = set()\n    for word in words:\n        sorted_word_tuple = tuple(sorted(word))\n        if sorted_word_tuple in anagrams:\n            anagrams[sorted_word_tuple].add(word)\n        else:\n            anagrams[sorted_word_tuple] = {word}\n        if word == word[::--1] and len(word) > 1:\n            palindromes.add(word)\n    results = {'word_count': dict(word_counts), 'anagrams': {k: len(v) - 1 for (k, v) in anagrams.items() if len(v) > 1}, 'palindromes': list(palindromes)}\n    return results"
+    }
+  ]
+}

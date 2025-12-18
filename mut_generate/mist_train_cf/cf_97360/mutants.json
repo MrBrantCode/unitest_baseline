@@ -1,0 +1,350 @@
+{
+  "task_id": "cf_97360",
+  "entry_point": "predict_next_letter",
+  "mutant_count": 49,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 20,
+      "original_line": "if len(frequencies) == 0:",
+      "mutated_line": "return 'Pattern not found.'",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) != 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if text[i:i+len(pattern)] == pattern:",
+      "mutated_line": "if text[i:i + len(pattern)] != pattern:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] != pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) - 1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) - 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) * 1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) * 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if len(frequencies) == 0:",
+      "mutated_line": "return 'Pattern not found.'",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 1:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if len(frequencies) == 0:",
+      "mutated_line": "return 'Pattern not found.'",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == -1:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "if len(frequencies) == 0:",
+      "mutated_line": "return 'Pattern not found.'",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 1:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "return \"Pattern not found.\"",
+      "mutated_line": "return ''",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return ''\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 28,
+      "original_line": "last_occurrence = occurrences[-1]",
+      "mutated_line": "last_occurrence = occurrences[+1]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[+1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "closest_letter = predicted_letters[0]",
+      "mutated_line": "closest_letter = predicted_letters[1]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[1]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "closest_letter = predicted_letters[0]",
+      "mutated_line": "closest_letter = predicted_letters[-1]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[-1]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 29,
+      "original_line": "closest_letter = predicted_letters[0]",
+      "mutated_line": "closest_letter = predicted_letters[1]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[1]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "distance = last_occurrence + text[last_occurrence:].find(letter)",
+      "mutated_line": "distance = last_occurrence - text[last_occurrence:].find(letter)",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence - text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "distance = last_occurrence + text[last_occurrence:].find(letter)",
+      "mutated_line": "distance = last_occurrence * text[last_occurrence:].find(letter)",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence * text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if distance < closest_distance:",
+      "mutated_line": "if distance <= closest_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance <= closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if distance < closest_distance:",
+      "mutated_line": "if distance >= closest_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance >= closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 33,
+      "original_line": "if distance < closest_distance:",
+      "mutated_line": "if distance != closest_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance != closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "return f\"Predicted letter: {closest_letter}\"",
+      "mutated_line": "return f'{closest_letter}'",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'{closest_letter}'"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 and i - occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 and i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "letters = [text[i+len(pattern)] for i in occurrences]",
+      "mutated_line": "letters = [text[i - len(pattern)] for i in occurrences]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i - len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 13,
+      "original_line": "letters = [text[i+len(pattern)] for i in occurrences]",
+      "mutated_line": "letters = [text[i * len(pattern)] for i in occurrences]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i * len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) + 2",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 2\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) + 0",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 0\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) + 0",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 0\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 0) + -1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + -1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 25,
+      "original_line": "predicted_letters = [letter for letter, freq in frequencies.items() if freq == max_frequency]",
+      "mutated_line": "predicted_letters = [letter for (letter, freq) in frequencies.items() if freq != max_frequency]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq != max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "last_occurrence = occurrences[-1]",
+      "mutated_line": "last_occurrence = occurrences[-2]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-2]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "last_occurrence = occurrences[-1]",
+      "mutated_line": "last_occurrence = occurrences[-0]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-0]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "last_occurrence = occurrences[-1]",
+      "mutated_line": "last_occurrence = occurrences[-0]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-0]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 28,
+      "original_line": "last_occurrence = occurrences[-1]",
+      "mutated_line": "last_occurrence = occurrences[--1]",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[--1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) != 0 or i - occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) != 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-1] < max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] < max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-1] > max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] > max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-1] == max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] == max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 1) + 1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 1) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, -1) + 1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, -1) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 18,
+      "original_line": "frequencies[letter] = frequencies.get(letter, 0) + 1",
+      "mutated_line": "frequencies[letter] = frequencies.get(letter, 1) + 1",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 1) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "if text[i:i+len(pattern)] == pattern:",
+      "mutated_line": "if text[i:i - len(pattern)] == pattern:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i - len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 6,
+      "original_line": "if text[i:i+len(pattern)] == pattern:",
+      "mutated_line": "if text[i:i * len(pattern)] == pattern:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i * len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 1 or i - occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 1 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == -1 or i - occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == -1 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 1 or i - occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 1 or i - occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i + occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i + occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i * occurrences[-1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i * occurrences[-1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[+1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[+1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-2] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-2] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-0] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-0] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[-0] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[-0] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if len(occurrences) == 0 or (i - occurrences[-1]) <= max_distance:",
+      "mutated_line": "if len(occurrences) == 0 or i - occurrences[--1] <= max_distance:",
+      "code": "def predict_next_letter(pattern, text, max_distance):\n    occurrences = []\n    for i in range(len(text)):\n        if text[i:i + len(pattern)] == pattern:\n            if len(occurrences) == 0 or i - occurrences[--1] <= max_distance:\n                occurrences.append(i)\n            else:\n                break\n    letters = [text[i + len(pattern)] for i in occurrences]\n    frequencies = {}\n    for letter in letters:\n        frequencies[letter] = frequencies.get(letter, 0) + 1\n    if len(frequencies) == 0:\n        return 'Pattern not found.'\n    max_frequency = max(frequencies.values())\n    predicted_letters = [letter for (letter, freq) in frequencies.items() if freq == max_frequency]\n    last_occurrence = occurrences[-1]\n    closest_letter = predicted_letters[0]\n    closest_distance = len(text)\n    for letter in predicted_letters:\n        distance = last_occurrence + text[last_occurrence:].find(letter)\n        if distance < closest_distance:\n            closest_letter = letter\n            closest_distance = distance\n    return f'Predicted letter: {closest_letter}'"
+    }
+  ]
+}

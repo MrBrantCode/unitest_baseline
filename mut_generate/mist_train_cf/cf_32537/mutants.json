@@ -1,0 +1,14 @@
+{
+  "task_id": "cf_32537",
+  "entry_point": "filter_file_paths",
+  "mutant_count": 1,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if any(fnmatch.fnmatch(file_path, pattern) for pattern in include.split(',')):",
+      "mutated_line": "if any((fnmatch.fnmatch(file_path, pattern) for pattern in include.split(''))):",
+      "code": "from typing import List\nimport fnmatch\n\ndef filter_file_paths(file_paths: List[str], include: str, omit: List[str]) -> List[str]:\n    included_files = []\n    for file_path in file_paths:\n        if any((fnmatch.fnmatch(file_path, pattern) for pattern in include.split(''))):\n            if not any((fnmatch.fnmatch(file_path, pattern) for pattern in omit)):\n                included_files.append(file_path)\n    return included_files"
+    }
+  ]
+}

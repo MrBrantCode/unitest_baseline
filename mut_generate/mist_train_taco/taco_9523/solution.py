@@ -1,0 +1,62 @@
+"""
+QUESTION:
+Read problems statements in Mandarin chinese, Russian and Vietnamese as well. 
+
+You are given a score log of a football match between two teams. Every time when one of the teams scored a goal, the name of that team was written in the score log on a separate line.
+At the end of the match, the team that scored strictly more goals than the other team wins the match. If both teams scored an equal number of goals, the match ends in a tie. Determine the name of the winning team or that the match ended in a tie.
+
+------ Input ------ 
+
+The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.
+The first line of each test case contains a single integer n denoting the number of records in the score log (the total number of goals scored during the match).
+Each of the following n lines contains a string s denoting the name of the team that scored a goal.
+
+------ Output ------ 
+
+For each test case, print a single line containing one string — the name of the winning team or "Draw" (without quotes) in case of a tie.
+
+------ Constraints ------ 
+
+$1 ≤ T ≤ 10^{5}$
+$0 ≤ n ≤ 10^{5}$
+$1 ≤ |s| ≤ 20$
+$s consists only of lowercase English letters$
+$sum of n over all test cases ≤ 10^{5}$
+$for each test case, there are at most two different team names$
+
+----- Sample Input 1 ------ 
+2
+4
+ab
+bc
+bc
+ab
+3
+xxx
+yyy
+yyy
+----- Sample Output 1 ------ 
+Draw
+yyy
+"""
+
+def determine_match_result(T, score_logs):
+    results = []
+    
+    for log in score_logs:
+        if not log:
+            results.append("Draw")
+            continue
+        
+        team1_count = log.count(log[0])
+        team2_count = len(log) - team1_count
+        
+        if team1_count == team2_count:
+            results.append("Draw")
+        elif team1_count > team2_count:
+            results.append(log[0])
+        else:
+            team2_name = next(name for name in log if name != log[0])
+            results.append(team2_name)
+    
+    return results

@@ -1,0 +1,49 @@
+{
+  "task_id": "cf_40085",
+  "entry_point": "decode_basic_auth_token",
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')",
+      "mutated_line": "auth_pair = base64.b64decode(b_token, validate=True).decode('')",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=True).decode('')\n        (username, password) = auth_pair.split(':')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('Invalid base64-encoded token') from e\n    except ValueError as e:\n        raise BasicAuthException('Invalid username:password format') from e\n    except TypeError as e:\n        raise BasicAuthException('Error occurred during decoding') from e"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "username, password = auth_pair.split(':')",
+      "mutated_line": "(username, password) = auth_pair.split('')",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')\n        (username, password) = auth_pair.split('')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('Invalid base64-encoded token') from e\n    except ValueError as e:\n        raise BasicAuthException('Invalid username:password format') from e\n    except TypeError as e:\n        raise BasicAuthException('Error occurred during decoding') from e"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "raise BasicAuthException(\"Invalid base64-encoded token\") from e",
+      "mutated_line": "raise BasicAuthException('') from e",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')\n        (username, password) = auth_pair.split(':')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('') from e\n    except ValueError as e:\n        raise BasicAuthException('Invalid username:password format') from e\n    except TypeError as e:\n        raise BasicAuthException('Error occurred during decoding') from e"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "raise BasicAuthException(\"Invalid username:password format\") from e",
+      "mutated_line": "raise BasicAuthException('') from e",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')\n        (username, password) = auth_pair.split(':')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('Invalid base64-encoded token') from e\n    except ValueError as e:\n        raise BasicAuthException('') from e\n    except TypeError as e:\n        raise BasicAuthException('Error occurred during decoding') from e"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "raise BasicAuthException(\"Error occurred during decoding\") from e",
+      "mutated_line": "raise BasicAuthException('') from e",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')\n        (username, password) = auth_pair.split(':')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('Invalid base64-encoded token') from e\n    except ValueError as e:\n        raise BasicAuthException('Invalid username:password format') from e\n    except TypeError as e:\n        raise BasicAuthException('') from e"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 8,
+      "original_line": "auth_pair = base64.b64decode(b_token, validate=True).decode('utf-8')",
+      "mutated_line": "auth_pair = base64.b64decode(b_token, validate=False).decode('utf-8')",
+      "code": "import base64\n\nclass BasicAuthException(Exception):\n    pass\n\ndef decode_basic_auth_token(b_token):\n    try:\n        auth_pair = base64.b64decode(b_token, validate=False).decode('utf-8')\n        (username, password) = auth_pair.split(':')\n        return (username, password)\n    except base64.binascii.Error as e:\n        raise BasicAuthException('Invalid base64-encoded token') from e\n    except ValueError as e:\n        raise BasicAuthException('Invalid username:password format') from e\n    except TypeError as e:\n        raise BasicAuthException('Error occurred during decoding') from e"
+    }
+  ]
+}

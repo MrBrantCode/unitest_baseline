@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_48358",
+  "entry_point": "largestString",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 8,
+      "original_line": "if self.p[x] != x:",
+      "mutated_line": "if self.p[x] == x:",
+      "code": "from collections import defaultdict\n\nclass DSU:\n\n    def __init__(self, N):\n        self.p = list(range(N))\n\n    def find(self, x):\n        if self.p[x] == x:\n            self.p[x] = self.find(self.p[x])\n        return self.p[x]\n\n    def union(self, x, y):\n        xr = self.find(x)\n        yr = self.find(y)\n        self.p[xr] = yr\n\ndef largestString(s, pairs):\n    dsu = DSU(len(s))\n    for (x, y) in pairs:\n        dsu.union(x, y)\n    group = defaultdict(list)\n    for i in range(len(s)):\n        group[dsu.find(i)].append(s[i])\n    for (_, v) in group.items():\n        v.sort(reverse=True)\n    ans = []\n    for i in range(len(s)):\n        ans.append(group[dsu.find(i)].pop())\n    return ''.join(ans)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "return \"\".join(ans)",
+      "mutated_line": "return 'MUTATED'.join(ans)",
+      "code": "from collections import defaultdict\n\nclass DSU:\n\n    def __init__(self, N):\n        self.p = list(range(N))\n\n    def find(self, x):\n        if self.p[x] != x:\n            self.p[x] = self.find(self.p[x])\n        return self.p[x]\n\n    def union(self, x, y):\n        xr = self.find(x)\n        yr = self.find(y)\n        self.p[xr] = yr\n\ndef largestString(s, pairs):\n    dsu = DSU(len(s))\n    for (x, y) in pairs:\n        dsu.union(x, y)\n    group = defaultdict(list)\n    for i in range(len(s)):\n        group[dsu.find(i)].append(s[i])\n    for (_, v) in group.items():\n        v.sort(reverse=True)\n    ans = []\n    for i in range(len(s)):\n        ans.append(group[dsu.find(i)].pop())\n    return 'MUTATED'.join(ans)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "v.sort(reverse=True)",
+      "mutated_line": "v.sort(reverse=False)",
+      "code": "from collections import defaultdict\n\nclass DSU:\n\n    def __init__(self, N):\n        self.p = list(range(N))\n\n    def find(self, x):\n        if self.p[x] != x:\n            self.p[x] = self.find(self.p[x])\n        return self.p[x]\n\n    def union(self, x, y):\n        xr = self.find(x)\n        yr = self.find(y)\n        self.p[xr] = yr\n\ndef largestString(s, pairs):\n    dsu = DSU(len(s))\n    for (x, y) in pairs:\n        dsu.union(x, y)\n    group = defaultdict(list)\n    for i in range(len(s)):\n        group[dsu.find(i)].append(s[i])\n    for (_, v) in group.items():\n        v.sort(reverse=False)\n    ans = []\n    for i in range(len(s)):\n        ans.append(group[dsu.find(i)].pop())\n    return ''.join(ans)"
+    }
+  ]
+}

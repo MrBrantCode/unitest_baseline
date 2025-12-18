@@ -1,0 +1,1008 @@
+{
+  "task_id": "taco_9840",
+  "entry_point": "can_escape_labyrinth",
+  "mutant_count": 143,
+  "mutants": [
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], +1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], +1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -1, +1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, +1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits or exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] >= 0]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] >= 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] <= 0]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] <= 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] != 0]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] != 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[2], reverse=False)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=False)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][3], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][3], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][1], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][1], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][0], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][0], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][1], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][1], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][-2], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][-2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -2, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -2, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -0, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -0, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -0, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -0, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], --1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], --1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -1, -2):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -2):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -1, -0):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -0):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -1, -0):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -0):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[0][2], -1, --1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, --1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] != time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 22,
+      "original_line": "result[R][C] = 'Y'",
+      "mutated_line": "result[R][C] = ''",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = ''\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 or result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 or result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 or result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 or result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 or result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 or result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 or result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 or result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 38,
+      "original_line": "result[R][C] = 'Y'",
+      "mutated_line": "result[R][C] = ''",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = ''\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] != -1 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] != -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == -1 else '' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else '' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 1]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 1]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > -1]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > -1]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]",
+      "mutated_line": "exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 1]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 1]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[1][2], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[1][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[-1][2], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[-1][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "for time_left in range(exits[0][2], -1, -1):",
+      "mutated_line": "for time_left in range(exits[1][2], -1, -1):",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[1][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "R, C, _ = exits.pop(0)",
+      "mutated_line": "(R, C, _) = exits.pop(1)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(1)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "R, C, _ = exits.pop(0)",
+      "mutated_line": "(R, C, _) = exits.pop(-1)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(-1)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 20,
+      "original_line": "R, C, _ = exits.pop(0)",
+      "mutated_line": "(R, C, _) = exits.pop(1)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(1)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R >= 0 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R >= 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R <= 0 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R <= 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R != 0 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R != 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - 1][C] != 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] != 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C <= M - 1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C <= M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C >= M - 1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C >= M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C != M - 1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C != M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + 1] != 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] != 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R <= N - 1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R <= N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R >= N - 1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R >= N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R != N - 1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R != N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + 1][C] != 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] != 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C >= 0 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C >= 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C <= 0 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C <= 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C != 0 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C != 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - 1] != 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] != 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == +1 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == +1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[3], reverse=True)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[3], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[1], reverse=True)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[1], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[0], reverse=True)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[0], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[1], reverse=True)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[1], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "exits.sort(key=lambda x: x[2], reverse=True)",
+      "mutated_line": "exits.sort(key=lambda x: x[-2], reverse=True)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[-2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][3] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][1] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][0] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][1] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][-2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 1 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 1 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > -1 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > -1 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 1 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 1 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - 1][C] == '':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == '':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M + 1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M + 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M * 1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M * 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + 1] == '':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == '':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N + 1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N + 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N * 1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N * 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + 1][C] == '':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == '':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 1 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 1 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > -1 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > -1 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 1 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 1 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - 1] == '':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == '':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == -2 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -2 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == -0 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -0 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == -0 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -0 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]",
+      "mutated_line": "result = [['B' if grid[R][C] == --1 else 'N' for C in range(M)] for R in range(N)]",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == --1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[1][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[-1][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 19,
+      "original_line": "while exits and exits[0][2] == time_left:",
+      "mutated_line": "(R, C, _) = exits.pop(0)",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[1][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R + 1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R * 1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R * 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 2 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 2 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 0 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 0 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 0 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 0 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - -1 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - -1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C - 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C * 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C * 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C - 1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C * 1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C * 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 2 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 2 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 0 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 0 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 0 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 0 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - -1 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - -1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R - 1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R * 1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R * 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C + 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C * 1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C * 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C + 1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C * 1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C * 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R + 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R * 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R * 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R - 2, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 2, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R - 0, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 0, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R - 0, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 0, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 31,
+      "original_line": "next_tiles_to_check.add((R - 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R - -1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - -1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + 2] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 2] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + 0] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 0] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + 0] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 0] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 32,
+      "original_line": "if C < M - 1 and result[R][C + 1] == 'N':",
+      "mutated_line": "if C < M - 1 and result[R][C + -1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + -1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C + 2))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 2))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C + 0))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 0))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C + 0))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 0))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 33,
+      "original_line": "next_tiles_to_check.add((R, C + 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C + -1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + -1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R - 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R * 1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R * 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R + 2, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 2, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R + 0, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 0, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R + 0, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 0, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 35,
+      "original_line": "next_tiles_to_check.add((R + 1, C))",
+      "mutated_line": "next_tiles_to_check.add((R + -1, C))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + -1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - 2] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 2] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - 0] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 0] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - 0] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 0] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 36,
+      "original_line": "if C > 0 and result[R][C - 1] == 'N':",
+      "mutated_line": "if C > 0 and result[R][C - -1] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - -1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C - 2))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 2))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C - 0))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 0))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C - 0))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 0))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 37,
+      "original_line": "next_tiles_to_check.add((R, C - 1))",
+      "mutated_line": "next_tiles_to_check.add((R, C - -1))",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - -1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - 2][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 2][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - 0][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 0][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - 0][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 0][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 30,
+      "original_line": "if R > 0 and result[R - 1][C] == 'N':",
+      "mutated_line": "if R > 0 and result[R - -1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - -1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + 2][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 2][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + 0][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 0][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + 0][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + 0][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 34,
+      "original_line": "if R < N - 1 and result[R + 1][C] == 'N':",
+      "mutated_line": "if R < N - 1 and result[R + -1][C] == 'N':",
+      "code": "def can_escape_labyrinth(N, M, grid):\n    result = [['B' if grid[R][C] == -1 else 'N' for C in range(M)] for R in range(N)]\n    exits = [(R, C, grid[R][C]) for R in range(N) for C in range(M) if grid[R][C] > 0]\n    exits.sort(key=lambda x: x[2], reverse=True)\n    if not exits:\n        return result\n    tiles_to_check = set()\n    for time_left in range(exits[0][2], -1, -1):\n        while exits and exits[0][2] == time_left:\n            (R, C, _) = exits.pop(0)\n            tiles_to_check.add((R, C))\n            result[R][C] = 'Y'\n        next_tiles_to_check = set()\n        for (R, C) in tiles_to_check:\n            if R > 0 and result[R - 1][C] == 'N':\n                next_tiles_to_check.add((R - 1, C))\n            if C < M - 1 and result[R][C + 1] == 'N':\n                next_tiles_to_check.add((R, C + 1))\n            if R < N - 1 and result[R + -1][C] == 'N':\n                next_tiles_to_check.add((R + 1, C))\n            if C > 0 and result[R][C - 1] == 'N':\n                next_tiles_to_check.add((R, C - 1))\n            result[R][C] = 'Y'\n        tiles_to_check = next_tiles_to_check\n    return result"
+    }
+  ]
+}

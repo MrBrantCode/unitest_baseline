@@ -1,0 +1,35 @@
+{
+  "task_id": "cf_27845",
+  "entry_point": "autodiscover_admins",
+  "mutant_count": 4,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith('Admin'):",
+      "mutated_line": "if hasattr(attr, '__module__') or attr.__module__ == module_name or attr_name.startswith('Admin'):",
+      "code": "def autodiscover_admins(modules: list) -> dict:\n    result = {}\n    for module in modules:\n        module_name = module.__name__\n        for attr_name in dir(module):\n            attr = getattr(module, attr_name)\n            if hasattr(attr, '__module__') or attr.__module__ == module_name or attr_name.startswith('Admin'):\n                result[module_name] = attr\n    return result"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith('Admin'):",
+      "mutated_line": "if hasattr(attr, '__module__') and attr.__module__ != module_name and attr_name.startswith('Admin'):",
+      "code": "def autodiscover_admins(modules: list) -> dict:\n    result = {}\n    for module in modules:\n        module_name = module.__name__\n        for attr_name in dir(module):\n            attr = getattr(module, attr_name)\n            if hasattr(attr, '__module__') and attr.__module__ != module_name and attr_name.startswith('Admin'):\n                result[module_name] = attr\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith('Admin'):",
+      "mutated_line": "if hasattr(attr, '') and attr.__module__ == module_name and attr_name.startswith('Admin'):",
+      "code": "def autodiscover_admins(modules: list) -> dict:\n    result = {}\n    for module in modules:\n        module_name = module.__name__\n        for attr_name in dir(module):\n            attr = getattr(module, attr_name)\n            if hasattr(attr, '') and attr.__module__ == module_name and attr_name.startswith('Admin'):\n                result[module_name] = attr\n    return result"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith('Admin'):",
+      "mutated_line": "if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith(''):",
+      "code": "def autodiscover_admins(modules: list) -> dict:\n    result = {}\n    for module in modules:\n        module_name = module.__name__\n        for attr_name in dir(module):\n            attr = getattr(module, attr_name)\n            if hasattr(attr, '__module__') and attr.__module__ == module_name and attr_name.startswith(''):\n                result[module_name] = attr\n    return result"
+    }
+  ]
+}

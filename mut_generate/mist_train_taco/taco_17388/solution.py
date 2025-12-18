@@ -1,0 +1,41 @@
+"""
+QUESTION:
+Given three integers a, b and c. The task is to check if it is possible to make right angled triangle with sides of length a, b and c.
+ 
+Example 1:
+Input:
+a = 3, b = 4, c = 5
+Output:
+Yes
+Explanation:
+We can form a right angled triangle
+with sides of length 3, 4 and 5.
+Example 2:
+Input:
+a = 2, b = 5, c = 8
+Output:
+No
+Explanation:
+We can't form a right angled triangle
+with sides of length 2, 5 and 8.
+ 
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function rightAngTri() which takes 3 Integers a,b and c as input and returns "Yes" if it is possible to form a right angled triangle with sides of length a, b, and c, else return "No".
+ 
+Expected Time Complexity: O(log(max(a,b,c)))
+Expected Auxiliary Space: O(1)
+ 
+Constraints:
+1 <= a,b,c <= 10^{8}
+"""
+
+def is_right_angled_triangle(a: int, b: int, c: int) -> str:
+    # Sort the sides to ensure a <= b <= c
+    sides = sorted([a, b, c])
+    a, b, c = sides[0], sides[1], sides[2]
+    
+    # Check the Pythagorean theorem
+    if a * a + b * b == c * c:
+        return 'Yes'
+    else:
+        return 'No'

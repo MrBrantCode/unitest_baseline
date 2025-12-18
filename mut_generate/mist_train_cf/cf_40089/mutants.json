@@ -1,0 +1,56 @@
+{
+  "task_id": "cf_40089",
+  "entry_point": "AsyncCache",
+  "mutant_count": 7,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "\"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) >= max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "\"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"",
+      "mutated_line": "\"\"\"\"\"\"",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) >= max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if key in cache:",
+      "mutated_line": "if key not in cache:",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key not in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) >= max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) > max_size:",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) > max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) < max_size:",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) < max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "if len(cache) >= max_size:",
+      "mutated_line": "if len(cache) == max_size:",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) == max_size:\n                cache.popitem(last=False)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "cache.popitem(last=False)  # Remove the oldest item when the cache is full",
+      "mutated_line": "cache.popitem(last=True)",
+      "code": "import asyncio\nfrom typing import Any, Callable\nfrom collections import OrderedDict\n\ndef AsyncCache(max_size: int):\n    cache = OrderedDict()\n    lock = asyncio.Lock()\n\n    async def cache(key: str, coro: Callable[..., Any]) -> Any:\n        \"\"\"Asynchronously cache the result of coro with the specified key.\"\"\"\n        async with lock:\n            if key in cache:\n                return cache[key]\n            result = await coro()\n            if len(cache) >= max_size:\n                cache.popitem(last=True)\n            cache[key] = result\n            return result\n\n    async def get(key: str) -> Any:\n        \"\"\"Asynchronously retrieve the cached result associated with key.\"\"\"\n        async with lock:\n            return cache.get(key)\n    return (cache, get)"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+"""
+QUESTION:
+As lockdown is going on so no is allowed to go outside , so Chef has come with an innovative idea for food home delivery using drone.  But there is an issue with it , the drone can move forward or backward a fix number of steps $x$ . 
+All the houses and chef restaurant are all in a straight line . Homes which need delivery are located at $H[i]$ and chef is located at $y$ coordinate . 
+If Drone is at a location $R$, then it can move to $R-x$ or $R+x$ . 
+Help chef find maximum value of $x$ to complete all the deliveries as he is busy managing the orders.
+
+-----Input:-----
+- First line will contain $n$ and $R$, number of houses that need delivery and the correct coordinate of chef (Drone).
+- Second line contains $n$ integers , the coordinate of all homes that need delivery. 
+
+-----Output:-----
+- The maximum value of $x$ , so that drone delivers to all houses.
+
+-----Constraints-----
+- $1 \leq n \leq 1000$
+- $1 \leq R \leq 10^9$
+- $1 \leq hi \leq 10^9$
+- $1 \leq x  \leq 10^9$
+
+-----Sample Input:-----
+3 1
+3 5 11
+
+-----Sample Output:-----
+2
+
+-----EXPLANATION:-----
+Chef's drone is at 1 initially and he needs to visit 3,5,11 , so optimal solution will be (maximum value of x ) equal to 2.
+"""
+
+import math
+
+def find_max_step_size(n, R, homes):
+    # Sort the list of home coordinates
+    homes.sort()
+    
+    # Initialize the maximum step size with the absolute difference between the first home and the restaurant
+    max_step_size = abs(homes[0] - R)
+    
+    # Iterate through each home coordinate
+    for home in homes:
+        # Calculate the absolute difference between the current home and the restaurant
+        step_size = abs(home - R)
+        
+        # Update the maximum step size using the greatest common divisor (GCD)
+        max_step_size = math.gcd(step_size, max_step_size)
+    
+    # Return the maximum step size
+    return max_step_size

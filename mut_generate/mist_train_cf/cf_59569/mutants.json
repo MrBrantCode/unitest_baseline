@@ -1,0 +1,84 @@
+{
+  "task_id": "cf_59569",
+  "entry_point": "get_size_of_tuple",
+  "mutant_count": 11,
+  "mutants": [
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "if seen is None:",
+      "mutated_line": "if seen is not None:",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is not None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if obj_id in seen:",
+      "mutated_line": "if obj_id not in seen:",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id not in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 19,
+      "original_line": "size += sum(get_size_of_tuple(item, seen) for item in obj)",
+      "mutated_line": "size -= sum((get_size_of_tuple(item, seen) for item in obj))",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size -= sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 28,
+      "original_line": "size -= sys.getsizeof(obj)",
+      "mutated_line": "size += sys.getsizeof(obj)",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size += sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return -1",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return -1\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return 0",
+      "mutated_line": "return 1",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 1\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 21,
+      "original_line": "size += sum(get_size_of_tuple(v, seen) for v in obj.values())",
+      "mutated_line": "size -= sum((get_size_of_tuple(v, seen) for v in obj.values()))",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size -= sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 22,
+      "original_line": "size += sum(get_size_of_tuple(k, seen) for k in obj.keys())",
+      "mutated_line": "size -= sum((get_size_of_tuple(k, seen) for k in obj.keys()))",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size -= sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 23,
+      "original_line": "elif isinstance(obj, list) or isinstance(obj, set):",
+      "mutated_line": "elif isinstance(obj, list) and isinstance(obj, set):",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) and isinstance(obj, set):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 24,
+      "original_line": "size += sum(get_size_of_tuple(item, seen) for item in obj)",
+      "mutated_line": "size -= sum((get_size_of_tuple(item, seen) for item in obj))",
+      "code": "import sys\n\ndef get_size_of_tuple(obj, seen=None):\n    size = sys.getsizeof(obj)\n    if seen is None:\n        seen = set()\n    obj_id = id(obj)\n    if obj_id in seen:\n        return 0\n    seen.add(obj_id)\n    if isinstance(obj, tuple):\n        size += sum((get_size_of_tuple(item, seen) for item in obj))\n    elif isinstance(obj, dict):\n        size += sum((get_size_of_tuple(v, seen) for v in obj.values()))\n        size += sum((get_size_of_tuple(k, seen) for k in obj.keys()))\n    elif isinstance(obj, list) or isinstance(obj, set):\n        size -= sum((get_size_of_tuple(item, seen) for item in obj))\n    if isinstance(obj, (str, int, float)):\n        size -= sys.getsizeof(obj)\n    return size"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "task_id": "cf_27601",
+  "entry_point": "estimate_time_shift",
+  "mutant_count": 3,
+  "mutants": [
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "time_shift = len(camera_rates) - max_corr_index",
+      "mutated_line": "time_shift = len(camera_rates) + max_corr_index",
+      "code": "from typing import List\nimport numpy as np\n\ndef estimate_time_shift(camera_rates: List[float], imu_rates: List[float]) -> int:\n    cross_corr = np.correlate(camera_rates, imu_rates, mode='full')\n    max_corr_index = np.argmax(cross_corr)\n    time_shift = len(camera_rates) + max_corr_index\n    return time_shift"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "time_shift = len(camera_rates) - max_corr_index",
+      "mutated_line": "time_shift = len(camera_rates) * max_corr_index",
+      "code": "from typing import List\nimport numpy as np\n\ndef estimate_time_shift(camera_rates: List[float], imu_rates: List[float]) -> int:\n    cross_corr = np.correlate(camera_rates, imu_rates, mode='full')\n    max_corr_index = np.argmax(cross_corr)\n    time_shift = len(camera_rates) * max_corr_index\n    return time_shift"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "cross_corr = np.correlate(camera_rates, imu_rates, mode='full')",
+      "mutated_line": "cross_corr = np.correlate(camera_rates, imu_rates, mode='')",
+      "code": "from typing import List\nimport numpy as np\n\ndef estimate_time_shift(camera_rates: List[float], imu_rates: List[float]) -> int:\n    cross_corr = np.correlate(camera_rates, imu_rates, mode='')\n    max_corr_index = np.argmax(cross_corr)\n    time_shift = len(camera_rates) - max_corr_index\n    return time_shift"
+    }
+  ]
+}

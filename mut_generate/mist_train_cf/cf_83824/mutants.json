@@ -1,0 +1,770 @@
+{
+  "task_id": "cf_83824",
+  "entry_point": "monotonic",
+  "mutant_count": 109,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 1,
+      "original_line": "def monotonic(l: list, strict: bool = False, heavy_positive: bool = False, irregular: bool = False):",
+      "mutated_line": "def monotonic(l: list, strict: bool=True, heavy_positive: bool=False, irregular: bool=False):",
+      "code": "def monotonic(l: list, strict: bool=True, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 1,
+      "original_line": "def monotonic(l: list, strict: bool = False, heavy_positive: bool = False, irregular: bool = False):",
+      "mutated_line": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=True, irregular: bool=False):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=True, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 1,
+      "original_line": "def monotonic(l: list, strict: bool = False, heavy_positive: bool = False, irregular: bool = False):",
+      "mutated_line": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=True):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=True):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive or len(l) > 1 or l[0] < l[1]:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive or len(l) > 1 or l[0] < l[1]:\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) and all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) and all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) >= 1 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) >= 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) <= 1 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) <= 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) != 1 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) != 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] <= l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] <= l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] >= l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] >= l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] != l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] != l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 and indices[-1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 and indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 10,
+      "original_line": "return l == sorted(positive_vals)",
+      "mutated_line": "return l != sorted(positive_vals)",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l != sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 2 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 2 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 0 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 0 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 0 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 0 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > -1 and (l[0] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > -1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) != 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) != 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] <= len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] <= len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] >= len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] >= len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] != len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] != len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return False",
+      "mutated_line": "return True",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return True\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 13,
+      "original_line": "return diff == sorted(diff, reverse=True) or diff == sorted(diff)",
+      "mutated_line": "return diff == sorted(diff, reverse=True) and diff == sorted(diff)",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) and diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "LCR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) and all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) and all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[1] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[1] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[-1] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[-1] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[1] < l[1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[1] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] < l[2]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[2]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] < l[0]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[0]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] < l[0]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[0]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "if heavy_positive and len(l) > 1 and l[0] < l[1]:",
+      "mutated_line": "if heavy_positive and len(l) > 1 and (l[0] < l[-1]):",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[-1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val >= 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val >= 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val <= 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val <= 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val != 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val != 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 1 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 1 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == -1 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == -1 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 1 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 1 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] + indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] + indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] * indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] * indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) / 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) / 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) + 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) + 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) ** 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) ** 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x >= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x >= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x != y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x != y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x <= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x <= y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x != y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x != y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x >= 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x >= 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x <= 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x <= 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x != 0]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x != 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] + l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] + l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] * l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] * l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return diff == sorted(diff, reverse=True) or diff == sorted(diff)",
+      "mutated_line": "return diff != sorted(diff, reverse=True) or diff == sorted(diff)",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff != sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "return diff == sorted(diff, reverse=True) or diff == sorted(diff)",
+      "mutated_line": "return diff == sorted(diff, reverse=True) or diff != sorted(diff)",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff != sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val > 1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 1]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val > -1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > -1]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "indices = [i for i, val in enumerate(l) if val > 0]",
+      "mutated_line": "indices = [i for (i, val) in enumerate(l) if val > 1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 1]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 1.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 1.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * -0.25:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * -0.25:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 1:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 1:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * -0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * -0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x > 1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 1]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x > -1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > -1]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 9,
+      "original_line": "positive_vals = [x for x in l if x > 0]",
+      "mutated_line": "positive_vals = [x for x in l if x > 1]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 1]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[+1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[+1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[1] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[1] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[-1] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[-1] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-1] - indices[1] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[1] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i - 1] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i - 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i * 1] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i * 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) + 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) + 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) * 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) * 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x > y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x > y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x == y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x == y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x < y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x < y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x == y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x == y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-2] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-2] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-0] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-0] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[-0] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-0] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:",
+      "mutated_line": "if len(indices) == 0 or indices[--1] - indices[0] < len(indices) * 0.75:",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[--1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 2] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 2] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 0] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 0] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 0] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 0] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + -1] - l[i] for i in range(len(l) - 1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + -1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) - 2)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 2)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) - 0)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 0)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) - 0)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 0)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "diff = [l[i+1]-l[i] for i in range(len(l)-1)]",
+      "mutated_line": "diff = [l[i + 1] - l[i] for i in range(len(l) - -1)]",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - -1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return diff == sorted(diff, reverse=True) or diff == sorted(diff)",
+      "mutated_line": "return diff == sorted(diff, reverse=False) or diff == sorted(diff)",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=False) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[2:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[2:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[0:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[0:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[0:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[0:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[-1:]))) or all((x > y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[-1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[2:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[2:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[0:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[0:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 7,
+      "original_line": "return all(x < y for x, y in zip(l, l[1:])) or all(x > y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[-1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[-1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[2:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[2:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[0:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[0:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[0:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[0:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[-1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[-1:]))) or all((x >= y for (x, y) in zip(l, l[1:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[2:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[2:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[0:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[0:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[0:])))"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return all(x <= y for x, y in zip(l, l[1:])) or all(x >= y for x, y in zip(l, l[1:]))",
+      "mutated_line": "return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[-1:])))",
+      "code": "def monotonic(l: list, strict: bool=False, heavy_positive: bool=False, irregular: bool=False):\n    if strict:\n        if heavy_positive and len(l) > 1 and (l[0] < l[1]):\n            indices = [i for (i, val) in enumerate(l) if val > 0]\n            if len(indices) == 0 or indices[-1] - indices[0] < len(indices) * 0.75:\n                return False\n        return all((x < y for (x, y) in zip(l, l[1:]))) or all((x > y for (x, y) in zip(l, l[1:])))\n    elif heavy_positive:\n        positive_vals = [x for x in l if x > 0]\n        return l == sorted(positive_vals)\n    elif irregular:\n        diff = [l[i + 1] - l[i] for i in range(len(l) - 1)]\n        return diff == sorted(diff, reverse=True) or diff == sorted(diff)\n    else:\n        return all((x <= y for (x, y) in zip(l, l[1:]))) or all((x >= y for (x, y) in zip(l, l[-1:])))"
+    }
+  ]
+}

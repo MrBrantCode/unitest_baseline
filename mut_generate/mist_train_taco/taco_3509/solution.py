@@ -1,0 +1,67 @@
+"""
+QUESTION:
+Read problems statements in [Hindi], [Mandarin Chinese], [Russian], [Vietnamese], and [Bengali] as well.
+
+You are a warrior and you have to fight $N$ enemy warriors (numbered $1$ through $N$) one by one, in any order you choose. You have to win as many of these fights as possible.
+
+Each warrior has some amount of power, which changes when the warrior fights. For each $i$, the $i$-th enemy warrior has power $P_{i}$. When you have power $x$ and you fight an enemy warrior with power $y$, the following happens:
+if $x > y$, you kill the enemy warrior and your power changes to $2(x-y)$
+otherwise (if $x ≤ y$), the enemy warrior kills you
+
+You should answer $Q$ queries. In each query, you are given your initial power $X$ and you should find the maximum number of warriors you can kill if you are starting with power $X$.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first line of each test case contains two space-separated integers $N$ and $Q$.
+The second line contains $N$ space-separated integers $P_{1}, P_{2}, \ldots, P_{N}$.
+$Q$ lines follow. Each of these lines contains a single integer $X$ describing a query.
+
+------  Output ------
+For each query, print a single line containing one integer — the maximum number of warriors you can kill.
+
+------  Constraints  ------
+$1 ≤ T ≤ 10$
+$1 ≤ N, Q ≤ 10^{5}$
+$1 ≤ P_{i} ≤ 10^{9}$ for each valid $i$
+$1 ≤ X ≤ 10^{9}$
+
+----- Sample Input 1 ------ 
+1
+3 4
+1 2 1
+10
+2
+3
+1
+----- Sample Output 1 ------ 
+3
+2
+3
+0
+"""
+
+import math
+import bisect
+
+def max_warriors_killed(N, P, queries):
+    A = sorted(P)
+    c = 0
+    V = []
+    m = A[0] + 1
+    V.append(m)
+    r = 2
+    for i in range(1, N):
+        if r > A[i]:
+            r = 2 * (r - A[i])
+            V.append(m)
+        else:
+            c = math.floor((A[i] - r) / 2 ** i) + 1
+            m += c
+            V.append(m)
+            r = 2 * (r + 2 ** i * c - A[i])
+    
+    results = []
+    for q in queries:
+        results.append(bisect.bisect_right(V, q))
+    
+    return results

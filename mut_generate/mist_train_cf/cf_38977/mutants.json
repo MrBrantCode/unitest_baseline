@@ -1,0 +1,224 @@
+{
+  "task_id": "cf_38977",
+  "entry_point": "parse_listen_addr",
+  "mutant_count": 31,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 4,
+      "original_line": "ip_pattern = r'(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})|(\\[?[0-9a-fA-F:]+\\]?)'",
+      "mutated_line": "ip_pattern = ''",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = ''\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 5,
+      "original_line": "port_pattern = r'(\\d{1,5})'",
+      "mutated_line": "port_pattern = ''",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = ''\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 12,
+      "original_line": "if ':' in ip:  # IPv6 address",
+      "mutated_line": "if ':' not in ip:",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' not in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "return 'Invalid listen address format'",
+      "mutated_line": "return ''",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return ''"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "pattern = re.compile(f'({ip_pattern}):({port_pattern})')",
+      "mutated_line": "pattern = re.compile(f'{ip_pattern}):({port_pattern})')",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'{ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "pattern = re.compile(f'({ip_pattern}):({port_pattern})')",
+      "mutated_line": "pattern = re.compile(f'({ip_pattern}{port_pattern})')",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}{port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "pattern = re.compile(f'({ip_pattern}):({port_pattern})')",
+      "mutated_line": "pattern = re.compile(f'({ip_pattern}):({port_pattern}')",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern}')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "port = match.group(3)",
+      "mutated_line": "port = match.group(4)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(4)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "port = match.group(3)",
+      "mutated_line": "port = match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(2)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "port = match.group(3)",
+      "mutated_line": "port = match.group(0)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(0)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "port = match.group(3)",
+      "mutated_line": "port = match.group(1)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(1)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "port = match.group(3)",
+      "mutated_line": "port = match.group(-3)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(-3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 12,
+      "original_line": "if ':' in ip:  # IPv6 address",
+      "mutated_line": "if '' in ip:",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if '' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(2) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(2) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(0) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(0) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(0) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(0) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(-1) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(-1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(2) if match.group(1) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(2) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(0) if match.group(1) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(0) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(0) if match.group(1) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(0) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(-1) if match.group(1) else match.group(2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(-1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(1) else match.group(3)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(3)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(1) else match.group(1)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(1)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(1) else match.group(0)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(0)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(1) else match.group(1)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(1)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "ip = match.group(1) if match.group(1) else match.group(2)",
+      "mutated_line": "ip = match.group(1) if match.group(1) else match.group(-2)",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(-2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return f'tcp:{port}:interface=[{ip}]'",
+      "mutated_line": "return f'{port}:interface=[{ip}]'",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return f'tcp:{port}:interface=[{ip}]'",
+      "mutated_line": "return f'tcp:{port}{ip}]'",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}{ip}]'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "return f'tcp:{port}:interface=[{ip}]'",
+      "mutated_line": "return f'tcp:{port}:interface=[{ip}'",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}'\n        else:\n            return f'tcp:{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return f'tcp:{port}:interface={ip}'",
+      "mutated_line": "return f'{port}:interface={ip}'",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'{port}:interface={ip}'\n    else:\n        return 'Invalid listen address format'"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "return f'tcp:{port}:interface={ip}'",
+      "mutated_line": "return f'tcp:{port}{ip}'",
+      "code": "import re\n\ndef parse_listen_addr(listen_addr):\n    ip_pattern = '(\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3}\\\\.\\\\d{1,3})|(\\\\[?[0-9a-fA-F:]+\\\\]?)'\n    port_pattern = '(\\\\d{1,5})'\n    pattern = re.compile(f'({ip_pattern}):({port_pattern})')\n    match = pattern.match(listen_addr)\n    if match:\n        ip = match.group(1) if match.group(1) else match.group(2)\n        port = match.group(3)\n        if ':' in ip:\n            return f'tcp:{port}:interface=[{ip}]'\n        else:\n            return f'tcp:{port}{ip}'\n    else:\n        return 'Invalid listen address format'"
+    }
+  ]
+}

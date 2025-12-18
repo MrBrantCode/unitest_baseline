@@ -1,0 +1,98 @@
+{
+  "task_id": "cf_60059",
+  "entry_point": "etree_to_dict",
+  "mutant_count": 13,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 19,
+      "original_line": "if children or t.attrib:",
+      "mutated_line": "if children and t.attrib:",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children and t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[0] if len(v) != 1 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) != 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())",
+      "mutated_line": "d[t.tag].update((('@' - k, v) for (k, v) in t.attrib.items()))",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' - k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 16,
+      "original_line": "d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())",
+      "mutated_line": "d[t.tag].update((('@' * k, v) for (k, v) in t.attrib.items()))",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' * k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 21,
+      "original_line": "d[t.tag]['#text'] = text",
+      "mutated_line": "d[t.tag][''] = text",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag][''] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[0] if len(v) == 2 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 2 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[0] if len(v) == 0 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 0 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[0] if len(v) == 0 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 0 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[0] if len(v) == -1 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == -1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[1] if len(v) == 1 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[1] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[-1] if len(v) == 1 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[-1] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "d = {t.tag: {k: v[0] if len(v) == 1 else v for k, v in dd.items()}}",
+      "mutated_line": "d = {t.tag: {k: v[1] if len(v) == 1 else v for (k, v) in dd.items()}}",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[1] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('@' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 16,
+      "original_line": "d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())",
+      "mutated_line": "d[t.tag].update((('' + k, v) for (k, v) in t.attrib.items()))",
+      "code": "import xml.etree.ElementTree as ET\n\ndef etree_to_dict(t):\n    d = {t.tag: {} if t.attrib else None}\n    children = list(t)\n    if children:\n        dd = {}\n        for dc in map(etree_to_dict, children):\n            for (k, v) in dc.items():\n                try:\n                    dd[k].append(v)\n                except KeyError:\n                    dd[k] = [v]\n        d = {t.tag: {k: v[0] if len(v) == 1 else v for (k, v) in dd.items()}}\n    if t.attrib:\n        d[t.tag].update((('' + k, v) for (k, v) in t.attrib.items()))\n    if t.text:\n        text = t.text.strip()\n        if children or t.attrib:\n            if text:\n                d[t.tag]['#text'] = text\n        else:\n            d[t.tag] = text\n    return d"
+    }
+  ]
+}

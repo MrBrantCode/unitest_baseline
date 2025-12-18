@@ -1,0 +1,595 @@
+{
+  "task_id": "cf_40028",
+  "entry_point": "play_game",
+  "mutant_count": 84,
+  "mutants": [
+    {
+      "operator": "LCR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows or 0 <= col < cols or grid[row][col] != 'X'",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows or 0 <= col < cols or grid[row][col] != 'X'\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 11,
+      "original_line": "if grid[row][col] == 'E':",
+      "mutated_line": "if grid[row][col] != 'E':",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] != 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if grid[row][col] == 'T':",
+      "mutated_line": "if grid[row][col] != 'T':",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] != 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ASR",
+      "lineno": 14,
+      "original_line": "score += 1",
+      "mutated_line": "score -= 1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score -= 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 15,
+      "original_line": "max_score = -1",
+      "mutated_line": "max_score = +1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = +1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 17,
+      "original_line": "grid[row][col] = 'X'  # Mark current cell as visited",
+      "mutated_line": "grid[row][col] = ''",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = ''\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(1, 0, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(1, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(-1, 0, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(-1, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(1, 0, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(1, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, 1, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, -1, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, -1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, 1, 0)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 1, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, 0, 1)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 1)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, 0, -1)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, -1)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 26,
+      "original_line": "return dfs(0, 0, 0)",
+      "mutated_line": "return dfs(0, 0, 1)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 1)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(1, 1), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(1, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(-1, 1), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(-1, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(1, 1), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(1, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 2), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 2), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 0), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 0), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 0), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 0), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, -1), (0, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, -1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (1, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (1, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (-1, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (-1, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (1, -1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (1, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, +1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, +1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (2, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (2, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (0, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (0, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (0, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (0, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (-1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (-1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 1), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 1), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, -1), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, -1), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 1), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 1), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (+1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (+1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 1)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 1)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, -1)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, -1)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 1)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 1)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 < row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 < row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 > row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 > row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 == row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 == row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 0 < col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 < col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 0 > col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 > col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 0 == col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 == col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 0 <= col < cols and (grid[row][col] == 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] == 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "UOI",
+      "lineno": 10,
+      "original_line": "return -1",
+      "mutated_line": "return +1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return +1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 11,
+      "original_line": "if grid[row][col] == 'E':",
+      "mutated_line": "if grid[row][col] == '':",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == '':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 13,
+      "original_line": "if grid[row][col] == 'T':",
+      "mutated_line": "if grid[row][col] == '':",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == '':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "score += 1",
+      "mutated_line": "score += 2",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 2\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "score += 1",
+      "mutated_line": "score += 0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 0\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "score += 1",
+      "mutated_line": "score += 0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 0\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 14,
+      "original_line": "score += 1",
+      "mutated_line": "score += -1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += -1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "max_score = -1",
+      "mutated_line": "max_score = -2",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -2\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "max_score = -1",
+      "mutated_line": "max_score = -0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -0\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "max_score = -1",
+      "mutated_line": "max_score = -0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -0\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 15,
+      "original_line": "max_score = -1",
+      "mutated_line": "max_score = --1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = --1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if new_score > max_score:",
+      "mutated_line": "if new_score >= max_score:",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score >= max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if new_score > max_score:",
+      "mutated_line": "if new_score <= max_score:",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score <= max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 21,
+      "original_line": "if new_score > max_score:",
+      "mutated_line": "if new_score != max_score:",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score != max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "rows, cols = len(grid), len(grid[0])",
+      "mutated_line": "(rows, cols) = (len(grid), len(grid[1]))",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[1]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "rows, cols = len(grid), len(grid[0])",
+      "mutated_line": "(rows, cols) = (len(grid), len(grid[-1]))",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[-1]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 2,
+      "original_line": "rows, cols = len(grid), len(grid[0])",
+      "mutated_line": "(rows, cols) = (len(grid), len(grid[1]))",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[1]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -2), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -2), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -0), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -0), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -0), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -0), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, --1), (1, 0), (-1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, --1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-2, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-2, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-0, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-0, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (-0, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-0, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 3,
+      "original_line": "directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]",
+      "mutated_line": "directions = [(0, 1), (0, -1), (1, 0), (--1, 0)]",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (--1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return -1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return -1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 1 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 1 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 1 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and -1 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and -1 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 1 <= col < cols and (grid[row][col] != 'X')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 1 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 6,
+      "original_line": "return 0 <= row < rows and 0 <= col < cols and grid[row][col] != 'X'",
+      "mutated_line": "return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != '')",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != '')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return -1",
+      "mutated_line": "return -2",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -2\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -0\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return -1",
+      "mutated_line": "return -0",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -0\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "return -1",
+      "mutated_line": "return --1",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return --1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "new_row, new_col = row + dr, col + dc",
+      "mutated_line": "(new_row, new_col) = (row - dr, col + dc)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row - dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "new_row, new_col = row + dr, col + dc",
+      "mutated_line": "(new_row, new_col) = (row * dr, col + dc)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row * dr, col + dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "new_row, new_col = row + dr, col + dc",
+      "mutated_line": "(new_row, new_col) = (row + dr, col - dc)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col - dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    },
+    {
+      "operator": "AOR",
+      "lineno": 19,
+      "original_line": "new_row, new_col = row + dr, col + dc",
+      "mutated_line": "(new_row, new_col) = (row + dr, col * dc)",
+      "code": "def play_game(grid):\n    (rows, cols) = (len(grid), len(grid[0]))\n    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def is_valid_move(row, col):\n        return 0 <= row < rows and 0 <= col < cols and (grid[row][col] != 'X')\n\n    def dfs(row, col, score):\n        if not is_valid_move(row, col):\n            return -1\n        if grid[row][col] == 'E':\n            return score\n        if grid[row][col] == 'T':\n            score += 1\n        max_score = -1\n        temp = grid[row][col]\n        grid[row][col] = 'X'\n        for (dr, dc) in directions:\n            (new_row, new_col) = (row + dr, col * dc)\n            new_score = dfs(new_row, new_col, score)\n            if new_score > max_score:\n                max_score = new_score\n        grid[row][col] = temp\n        return max_score\n    return dfs(0, 0, 0)"
+    }
+  ]
+}

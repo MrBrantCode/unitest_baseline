@@ -1,0 +1,21 @@
+{
+  "task_id": "cf_61343",
+  "entry_point": "construct_tree",
+  "mutant_count": 2,
+  "mutants": [
+    {
+      "operator": "CRP",
+      "lineno": 10,
+      "original_line": "root = TreeNode(\"Dataset\")",
+      "mutated_line": "root = TreeNode('')",
+      "code": "class TreeNode:\n\n    def __init__(self, value):\n        self.value = value\n        self.children = []\n\n    def add_child(self, child):\n        self.children.append(child)\n\ndef construct_tree(data):\n    root = TreeNode('')\n    categories = {}\n    for (name, category) in data:\n        if category in categories:\n            node = TreeNode(name)\n            categories[category].append(node)\n        else:\n            categories[category] = [TreeNode(name)]\n    for (k, v) in categories.items():\n        category_node = TreeNode(k)\n        root.add_child(category_node)\n        for child in v:\n            category_node.add_child(child)\n    return root"
+    },
+    {
+      "operator": "ROR",
+      "lineno": 13,
+      "original_line": "if category in categories:",
+      "mutated_line": "if category not in categories:",
+      "code": "class TreeNode:\n\n    def __init__(self, value):\n        self.value = value\n        self.children = []\n\n    def add_child(self, child):\n        self.children.append(child)\n\ndef construct_tree(data):\n    root = TreeNode('Dataset')\n    categories = {}\n    for (name, category) in data:\n        if category not in categories:\n            node = TreeNode(name)\n            categories[category].append(node)\n        else:\n            categories[category] = [TreeNode(name)]\n    for (k, v) in categories.items():\n        category_node = TreeNode(k)\n        root.add_child(category_node)\n        for child in v:\n            category_node.add_child(child)\n    return root"
+    }
+  ]
+}

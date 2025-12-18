@@ -1,0 +1,71 @@
+"""
+QUESTION:
+Read problems statements in [Hindi], [Mandarin Chinese], [Russian], [Vietnamese] and [Bengali] as well.
+
+You have $C = 100,000$ cakes, numbered $1$ through $C$. Each cake has an integer height; initially, the height of each cake is $0$.
+
+There are $N$ operations. In each operation, you are given two integers $L$ and $R$, and you should increase by $1$ the height of each of the cakes $L, L+1, \ldots, R$. One of these $N$ operations should be removed and the remaining $N-1$ operations are then performed.
+
+Chef wants to remove one operation in such a way that after the remaining $N-1$ operations are performed, the number of cakes with height exactly $K$ is maximum possible. Since Chef is a bit busy these days, he has asked for your help. You need to find the maximum number of cakes with height exactly $K$ that can be achieved by removing one operation.
+
+------  Input ------
+The first line of the input contains a single integer $T$ denoting the number of test cases. The description of $T$ test cases follows.
+The first line of each test case contains two space-separated integers $N$ and $K$.
+Each of the next $N$ lines contains two space-separated integers $L$ and $R$ describing one operation.
+
+------  Output ------
+For each test case, print a single line containing one integer — the maximum possible number of cakes with height $K$.
+
+------  Constraints  ------
+$1 ≤ T ≤ 100$
+$2 ≤ N ≤ 10^{5}$
+$1 ≤ K ≤ N$
+$1 ≤ L ≤ R ≤ 10^{5}$
+the sum of $N$ over all test cases does not exceed $10^{6}$
+
+----- Sample Input 1 ------ 
+1
+3 2
+2 6
+4 9
+1 4
+----- Sample Output 1 ------ 
+3
+----- explanation 1 ------ 
+Example case 1: Let's look at what happens after an operation is removed.
+- Removing operation $1$: The heights of cakes $4$ through $9$ increase by $1$. Then, the heights of cakes $1$ through $4$ increase by $1$. The resulting sequence of heights is $[1, 1, 1, 2, 1, 1, 1, 1, 1]$ (for cakes $1$ through $9$; the other cakes have heights $0$). The number of cakes with height $2$ is $1$.
+- Removing operation $2$: The resulting sequence of heights of cakes $1$ through $9$ is $[1, 2, 2, 2, 1, 1, 0, 0, 0]$. The number of cakes with height $2$ is $3$.
+- Removing operation $3$: The resulting sequence of heights of cakes $1$ through $9$ is $[0, 1, 1, 2, 2, 2, 1, 1, 1]$. The number of cakes with height $2$ is $3$.
+
+The maximum number of cakes with height $2$ is $3$.
+"""
+
+def max_cakes_with_height_k(N, K, operations):
+    sz = max(r for _, r in operations)
+    arr = [0] * (sz + 2)
+    k1 = [0] * (sz + 2)
+    k2 = [0] * (sz + 2)
+    
+    for l, r in operations:
+        arr[l] += 1
+        arr[r + 1] -= 1
+    
+    res = [0] * (sz + 2)
+    res[0] = arr[0]
+    
+    for i in range(1, sz + 2):
+        res[i] = arr[i] + res[i - 1]
+        k1[i] = k1[i - 1]
+        k2[i] = k2[i - 1]
+        if res[i] == K:
+            k1[i] += 1
+        if res[i] == K + 1:
+            k2[i] += 1
+    
+    ans = -1
+    for l, r in operations:
+        kval = k1[r] - k1[l - 1]
+        k1val = k2[r] - k2[l - 1]
+        ans = max(ans, k1[-1] - kval + k1val)
+    
+    return ans
